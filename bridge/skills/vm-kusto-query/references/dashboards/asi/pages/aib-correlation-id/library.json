@@ -1,0 +1,263 @@
+{
+  "service": "Azure VM Image Builder",
+  "page": "correlationID",
+  "pageId": "43c7a678-7171-4e65-aa53-b4dc0d521465",
+  "pageInputs": {
+    "correlationID": ""
+  },
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "b687c460-846d-4b38-9beb-af7efdd5f735",
+          "name": "Retrieve Resource \"correlationID\"",
+          "groupId": "303743ea-04ca-4910-be41-425974b7f54b",
+          "majorVersion": 3,
+          "minorVersion": 1,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "ResourceGet",
+          "widgetType": "CompoundWidgetContainer",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_correlationID",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "correlationID",
+              "type": "string"
+            },
+            {
+              "name": "operationID",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "RPSector",
+              "type": "string"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionID",
+              "type": "string"
+            },
+            {
+              "name": "min_PreciseTimeStamp",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_correlationID",
+              "externalSourceName": "correlationID",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AsyncContextActivity\r\n| where correlationID == local_correlationID\r\n| summarize min(PreciseTimeStamp) by correlationID, operationID, serviceBuild, RPSector, RPTenant, resourceGroupName, resourceName, subscriptionID\r\n| take 1",
+          "panelPath": []
+        },
+        {
+          "id": "d863a946-5a3e-4d1a-8c61-f211dd2299a2",
+          "name": "AsyncContextActivity by CorrelationID",
+          "groupId": "259b9872-2e21-4946-a72b-500b4d2393f1",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "AsyncContextActivity errors",
+          "params": [
+            {
+              "name": "correlationID",
+              "type": "guid",
+              "optional": false
+            },
+            {
+              "name": "level",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "operationID",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            },
+            {
+              "name": "fileName",
+              "type": "string"
+            },
+            {
+              "name": "lineNumber",
+              "type": "long"
+            },
+            {
+              "name": "msg",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationID",
+              "externalSourceName": "correlationID",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "ArbitraryString",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "level",
+              "externalSourceName": "Arbitrary String",
+              "required": false,
+              "default": "error",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let correlationIdInput = correlationID;\r\nlet levelInput = level;\r\nAsyncContextActivity\r\n| where correlationID == correlationIdInput\r\n| where level == levelInput\r\n| project PreciseTimeStamp,operationID, serviceBuild, level, fileName, lineNumber, msg",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:12:12.041Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 3
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "version": "1.0.4",
+  "id": "00000000-0000-0000-0000-000000000000",
+  "developer": {
+    "name": "PRC-CSU-CAIP",
+    "websiteUrl": "https://example.com",
+    "privacyUrl": "https://example.com/privacy",
+    "termsOfUseUrl": "https://example.com/terms"
+  },
+  "name": {
+    "short": "SRE Bridge",
+    "full": "SRE Bridge - Troubleshooting Agent"
+  },
+  "description": {
+    "short": "Azure cloud Troubleshooting Bot live in varied IM software",
+    "full": "Troubleshooting expert，在群聊中通过多轮对话协助定位问题。根据内网IP定位虚拟机、查询性能指标(CPU/内存/网络)，多轮对话协助定位故障。"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#0078D4",
+  "bots": [
+    {
+      "botId": "00000000-0000-0000-0000-000000000000",
+      "scopes": ["personal", "team", "groupChat"],
+      "supportsFiles": true,
+      "isNotificationOnly": false,
+      "commandLists": [
+        {
+          "scopes": ["personal", "team", "groupChat"],
+          "commands": [
+            {
+              "title": "/env <environment>",
+              "description": "选择环境：例如 /env prod 或 /env delegated"
+            },
+            {
+              "title": "查询类：VM 在哪个 node",
+              "description": "[subscription_id] [private_ip/vm name] 在哪个 node 上？"
+            },
+            {
+              "title": "分析类：时间点排障",
+              "description": "帮我看下 10.83.4.46 在 2026-07-12 17:36 有没有问题"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "permissions": ["identity", "messageTeamMembers"],
+  "validDomains": ["*.devtunnels.ms", "*.ngrok-free.app", "*.azurewebsites.net"]
+}

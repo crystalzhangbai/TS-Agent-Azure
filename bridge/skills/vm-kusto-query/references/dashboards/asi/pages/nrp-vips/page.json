@@ -1,0 +1,1219 @@
+{
+  "properties": {
+    "alwaysExpandHeader": true
+  },
+  "entityType": "Page",
+  "id": "ad03454c-13e2-4012-aa26-f378ff18a4c8",
+  "description": "This page tracks changes related to VIPs and VIP Prefix Allocations and Reservations in NRP.\n\nThe Allocations property on a PublicIP/PublicIPPrefix use new APIs which go directly to the downstream microservice VipManager vs the existing method of SviManager-> VipManager.",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "e010c3e7-ac83-468c-a0ec-29d50b6732f8",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "NRP VIPs",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "bda656e7-7f79-4320-ab88-d4d663fea4d4",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "28d527fc-daa0-4c01-8d15-fdf96920544d",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Markdown",
+                "id": "50c8aa60-4096-454d-b251-1b78dfb6b180",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Overview",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {
+                  "markdown": "This page tracks changes related to Vip and IP Prefix Allocations and Reservations.\n\nThe Allocations property on a PublicIP/PublicIPPrefix use new APIs which go directly to the downstream microservice VipManager vs the existing method of SviManager-> VipManager.",
+                  "componentDateType": "none"
+                },
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "TabPane",
+                "id": "00f33211-8381-4608-a07b-935c7eeab817",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [
+                  {
+                    "type": "Tab",
+                    "id": "a027bc11-c9ad-464b-94e6-a2f279a0ad36",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "VIP",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "35e06d33-7479-407e-b492-6fba18dc93b7",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "8fb290e4-0080-4319-8a45-6ca00808bc98",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "TimeSeries",
+                                "id": "5e42ada7-1b37-4d91-878c-d88b83b1cbf5",
+                                "dateSelectEnabled": true,
+                                "props": {
+                                  "title": "Put/Delete Public IP Operation Health",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "Region",
+                                    "externalSourceName": "queryRegion",
+                                    "required": false,
+                                    "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                  }
+                                ],
+                                "selectedProperties": [],
+                                "inputs": [
+                                  {
+                                    "name": "Region",
+                                    "description": "",
+                                    "type": "string",
+                                    "optional": false,
+                                    "useTestValueAsDefault": false,
+                                    "typeSpecificOptions": {
+                                      "enumTypeData": "[]"
+                                    },
+                                    "displayConditions": []
+                                  }
+                                ],
+                                "queries": [
+                                  {
+                                    "id": "2074ba01-91b2-459f-b21b-853fb9b30829",
+                                    "idForPopups": "2074ba01-91b2-459f-b21b-853fb9b30829",
+                                    "groupId": "183bd3a5-0685-4278-a1ce-b28282b4523d",
+                                    "majorVersion": 1,
+                                    "minorVersion": 1,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "component_time_selector",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "componentFrom",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "component_time_selector",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "componentTo",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "node_input",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryRegion",
+                                        "externalSourceName": "Region",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {
+                                  "componentDateType": "lastx",
+                                  "componentDateLastDuration": "30",
+                                  "componentDateLastType": "days"
+                                },
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "1cdb9634-1a84-482a-867b-b492d4d0bd2a",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Put/Delete Public IP +VIP Related QOS Errors",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "b433d1c0-f935-4fe2-8af0-157370465a8a",
+                                    "idForPopups": "b433d1c0-f935-4fe2-8af0-157370465a8a",
+                                    "groupId": "dc5cccd9-6991-407e-b3f8-744a2a465c71",
+                                    "majorVersion": 1,
+                                    "minorVersion": 3,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryRegion",
+                                        "externalSourceName": "queryRegion",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "9ea7c9c0-5ad2-41bc-9249-30f4e5e3f406",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Total VIP Allocation/Reservation Count (within region)",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [
+                                  {
+                                    "type": "Popup",
+                                    "id": "54426d8e-3a9a-4297-90a6-3d6ed939597a",
+                                    "dateSelectEnabled": false,
+                                    "props": {
+                                      "title": "",
+                                      "helpTextLocation": "Inline"
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "Row",
+                                        "id": "8dcf8c85-ed22-4ac8-aea3-1e52a1ebda2a",
+                                        "dateSelectEnabled": false,
+                                        "props": {
+                                          "title": "",
+                                          "helpTextLocation": "Inline"
+                                        },
+                                        "children": [
+                                          {
+                                            "type": "Column",
+                                            "id": "0db8304a-b117-4a40-8579-fbaf9c5f75e1",
+                                            "dateSelectEnabled": false,
+                                            "props": {
+                                              "title": "",
+                                              "gridColumns": 12,
+                                              "helpTextLocation": "Inline"
+                                            },
+                                            "children": [
+                                              {
+                                                "type": "Card",
+                                                "id": "0389e0f1-a6e1-4525-b406-5c5c9da3ad1b",
+                                                "dateSelectEnabled": false,
+                                                "props": {
+                                                  "title": "",
+                                                  "helpTextLocation": "Inline"
+                                                },
+                                                "children": [],
+                                                "mapping": [],
+                                                "selectedProperties": [],
+                                                "inputs": [],
+                                                "queries": [],
+                                                "conditions": [],
+                                                "widgetProperties": {},
+                                                "header": "",
+                                                "footer": "",
+                                                "helpText": "",
+                                                "popupDisplayStrategy": "None"
+                                              }
+                                            ],
+                                            "mapping": [],
+                                            "selectedProperties": [],
+                                            "inputs": [],
+                                            "queries": [],
+                                            "conditions": [],
+                                            "widgetProperties": {},
+                                            "header": "",
+                                            "footer": "",
+                                            "helpText": "",
+                                            "popupDisplayStrategy": "None"
+                                          }
+                                        ],
+                                        "mapping": [],
+                                        "selectedProperties": [],
+                                        "inputs": [],
+                                        "queries": [],
+                                        "conditions": [],
+                                        "widgetProperties": {},
+                                        "header": "",
+                                        "footer": "",
+                                        "helpText": "",
+                                        "popupDisplayStrategy": "None"
+                                      }
+                                    ],
+                                    "mapping": [],
+                                    "selectedProperties": [],
+                                    "inputs": [],
+                                    "queries": [],
+                                    "conditions": [],
+                                    "widgetProperties": {},
+                                    "header": "",
+                                    "footer": "",
+                                    "helpText": "",
+                                    "popupDisplayStrategy": "None"
+                                  }
+                                ],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "3e91b3c8-3e9b-48ee-9224-2eeef2895cd5",
+                                    "idForPopups": "3e91b3c8-3e9b-48ee-9224-2eeef2895cd5",
+                                    "groupId": "a5ff08eb-257c-4a34-b746-a9fcf8663d68",
+                                    "majorVersion": 2,
+                                    "minorVersion": 3,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryRegion",
+                                        "externalSourceName": "queryRegion",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "querySubscription",
+                                        "externalSourceName": "querySubscription",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "This includes: \n* Standard Public IPs allocated via VipManager as of nrp 187.\n* Basic Dynamic Ips- allocated via VipManager through tenant pipeline \n* Basic Static Ips- reserved with PutPublicIpAddressOperation via SviManager\n",
+                                "footer": "",
+                                "helpText": "Please note there are several edge cases for each type of public ip",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "724358bb-9d2f-42a0-b414-6c75842ff3e1",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Offline Task (vipmanager) vs Sync (svimanager) Release",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "b897c8df-15b3-46c2-acd3-12da83ce9aaf",
+                                    "idForPopups": "b897c8df-15b3-46c2-acd3-12da83ce9aaf",
+                                    "groupId": "cb3319ea-abc7-47ed-aec5-738c2d31ee4c",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "querySubscription",
+                                        "externalSourceName": "querySubscription",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryRegion",
+                                        "externalSourceName": "queryRegion",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "If VIP was initially allocated through VipManager, will be released offline. Else SviManager",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "8e9030ea-b0f3-47da-ad96-13b80b6dc033",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Vip Allocation vs Reservation Performance",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "b91706d1-cfdb-4a8a-9ac8-dd55f1827add",
+                                    "idForPopups": "b91706d1-cfdb-4a8a-9ac8-dd55f1827add",
+                                    "groupId": "3c17d0d2-e56a-486b-867c-1502df4c9211",
+                                    "majorVersion": 2,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryRegion",
+                                        "externalSourceName": "queryRegion",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "querySubscription",
+                                        "externalSourceName": "querySubscription",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "Allocated VIPs are released async, and Reserved VIPS are sync",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "7c901f77-d60e-4555-af0d-0db36dae9d42",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "VIP Transfer Count by Operation",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "14efb331-c306-4937-b778-9d2abb281680",
+                                    "idForPopups": "14efb331-c306-4937-b778-9d2abb281680",
+                                    "groupId": "8e634de6-0a85-4ef8-adfc-4b26ac8375b3",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "querySubscription",
+                                        "externalSourceName": "querySubscription",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryRegion",
+                                        "externalSourceName": "queryRegion",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "VIP Transfer API updates an Allocation to a Reservation. Some resources have a dependency on SVI (ie) ELB or Cx converting a public ip from Basic Dynamic to Basic Static. ",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "TimeSeries",
+                                "id": "6d5d33f4-3788-4b8d-8225-e647cbd403ec",
+                                "dateSelectEnabled": true,
+                                "props": {
+                                  "title": "VIP Allocate/Release Trends",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "Region",
+                                    "externalSourceName": "queryRegion",
+                                    "required": false,
+                                    "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                  }
+                                ],
+                                "selectedProperties": [],
+                                "inputs": [
+                                  {
+                                    "name": "Region",
+                                    "description": "",
+                                    "type": "string",
+                                    "optional": false,
+                                    "useTestValueAsDefault": false,
+                                    "typeSpecificOptions": {
+                                      "enumTypeData": "[]"
+                                    },
+                                    "displayConditions": []
+                                  }
+                                ],
+                                "queries": [
+                                  {
+                                    "id": "1b79c24c-6412-4c18-b1f8-1dd1a682ff1c",
+                                    "idForPopups": "1b79c24c-6412-4c18-b1f8-1dd1a682ff1c",
+                                    "groupId": "9fe02add-34a8-422f-9bb5-3d567c7065b6",
+                                    "majorVersion": 1,
+                                    "minorVersion": 1,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "component_time_selector",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "componentFrom",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "component_time_selector",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "componentTo",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "node_input",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryRegion",
+                                        "externalSourceName": "Region",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {
+                                  "componentDateType": "lastx",
+                                  "componentDateLastDuration": "30",
+                                  "componentDateLastType": "days"
+                                },
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "None"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "None"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  },
+                  {
+                    "type": "Tab",
+                    "id": "7c8ed23b-f544-4ab8-8ecd-e3b28cdabfd4",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "VIP Prefix",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "dfee3590-1efd-45c0-ae82-80c3b3632784",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "bdd20f0d-8aba-4d87-8019-55969b1d41c9",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Table",
+                                "id": "4aefa06b-c9e1-47c8-b83b-808a0d045197",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "All Regions with VIP Prefix Allocation ",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "6fb3ecb5-20cc-4ce1-9e25-eae202fbeea1",
+                                    "idForPopups": "6fb3ecb5-20cc-4ce1-9e25-eae202fbeea1",
+                                    "groupId": "49c7ddcb-86de-4adf-bf33-2cf88ab35d44",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "8853c584-685c-4647-9df1-df47d51b166b",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Put/Delete PIP Prefix Qos Errors",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "ab2fa896-8b4c-406d-88f8-e877a526efbb",
+                                    "idForPopups": "ab2fa896-8b4c-406d-88f8-e877a526efbb",
+                                    "groupId": "9800f323-d0a5-4012-8b00-8b070df5098d",
+                                    "majorVersion": 1,
+                                    "minorVersion": 3,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryRegion",
+                                        "externalSourceName": "queryRegion",
+                                        "required": false,
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "None"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "None"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {
+          "componentDateType": "none"
+        },
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 23,
+  "basedOnVersionId": "16cb6fc6-42f5-4ebe-a0d2-ae40e4c6cc54",
+  "groupId": "370e0cac-f4b3-4305-b66d-81ebd1104532",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "querySubscription",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "default": "*",
+      "optional": true,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "queryRegion",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "default": "*",
+      "optional": true,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [
+    {
+      "name": "globalFrom",
+      "description": "",
+      "type": "datetime",
+      "default": "ago(1d)",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalFrom",
+      "description": "",
+      "type": "datetime",
+      "default": "ag",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalFrom",
+      "description": "",
+      "type": "datetime",
+      "default": "ago",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalFrom",
+      "description": "",
+      "type": "datetime",
+      "default": "ago(",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalFrom",
+      "description": "",
+      "type": "datetime",
+      "default": "ago(1",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalFrom",
+      "description": "",
+      "type": "datetime",
+      "default": "ago(1d",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalFrom",
+      "description": "",
+      "type": "datetime",
+      "default": "ago(1d)",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalTo",
+      "description": "",
+      "type": "datetime",
+      "default": "now()",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalTo",
+      "description": "",
+      "type": "datetime",
+      "default": "no",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalTo",
+      "description": "",
+      "type": "datetime",
+      "default": "now",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalTo",
+      "description": "",
+      "type": "datetime",
+      "default": "now(",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "globalTo",
+      "description": "",
+      "type": "datetime",
+      "default": "now()",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "references": [
+    {
+      "serviceId": "NRP",
+      "groupId": "183bd3a5-0685-4278-a1ce-b28282b4523d",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "dc5cccd9-6991-407e-b3f8-744a2a465c71",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "a5ff08eb-257c-4a34-b746-a9fcf8663d68",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "cb3319ea-abc7-47ed-aec5-738c2d31ee4c",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "3c17d0d2-e56a-486b-867c-1502df4c9211",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "8e634de6-0a85-4ef8-adfc-4b26ac8375b3",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "9fe02add-34a8-422f-9bb5-3d567c7065b6",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "49c7ddcb-86de-4adf-bf33-2cf88ab35d44",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "9800f323-d0a5-4012-8b00-8b070df5098d",
+      "entityType": "Query"
+    }
+  ],
+  "serviceId": "NRP",
+  "deleted": false,
+  "name": "NRP VIPs",
+  "_ts": 1749048358,
+  "databaseSavedTimestamp": "2025-06-04T14:45:58+00:00",
+  "_etag": "\"b700dae7-0000-0100-0000-68405c260000\"",
+  "createdAt": "2025-06-04T14:45:58.7670464+00:00",
+  "createdBy": "jbouzarouata@microsoft.com",
+  "createdByUserType": "User",
+  "modifiedBy": "jbouzarouata@microsoft.com",
+  "modifiedByUserType": "User",
+  "savedAt": "2025-06-04T14:45:58.7670464+00:00",
+  "tags": []
+}

@@ -1,0 +1,1137 @@
+{
+  "service": "Aztec",
+  "page": "ServiceHealingInvestigations",
+  "pageId": "61a1ac96-9e58-4ed4-8148-584e59cf31f8",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "dc727848-a320-4195-a889-e537e6f406f1",
+          "name": "Container Metedata Query from mycroft",
+          "groupId": "7f444ad6-9e68-41e0-826e-b69cfa7124e3",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "mycroft.westcentralus.kusto.windows.net",
+          "database": "Mycroft",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Source Container Metadata",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "_sourceContainerIdToHeal",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "CreationTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "FcName",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "VirtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "TenantName",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilitySetName",
+              "type": "string"
+            },
+            {
+              "name": "RoleType",
+              "type": "string"
+            },
+            {
+              "name": "ContainerLifeCycleOwner",
+              "type": "string"
+            },
+            {
+              "name": "ContainerType",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstanceFamilyIds",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "IsContainerAzPEEnabled",
+              "type": "bool"
+            },
+            {
+              "name": "IsManagementRoleEnabled",
+              "type": "bool"
+            },
+            {
+              "name": "Priority",
+              "type": "long"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "PolicyName",
+              "type": "string"
+            },
+            {
+              "name": "IsEphemeralVM",
+              "type": "bool"
+            },
+            {
+              "name": "IsLMDestinationContainer",
+              "type": "bool"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "_sourceContainerIdToHeal",
+              "externalSourceName": "_sourceContainerIdToHeal",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let containerMetadata = cluster('azcore.centralus.kusto.windows.net').database('AzureCP').MycroftContainerSnapshot\r\n| where ContainerId == _sourceContainerIdToHeal\r\n| where PreciseTimeStamp between ((queryFrom-1d) .. (queryTo+1d))\r\n| summarize arg_min(PreciseTimeStamp, *) by ContainerId\r\n| extend p = bag_pack(\"ContainerId\", ContainerId,\r\n    \"FcName\", ClusterName,\r\n    \"AzCluster\", Cluster,\r\n    \"NodeId\", NodeId,\r\n    \"VMid\", VirtualMachineUniqueId,\r\n    \"TenantName\", TenantName,\r\n    \"RoleInstanceName\", RoleInstanceName,\r\n    \"AvSetName\", AvailabilitySetName,\r\n    \"RoleType\", RoleType,\r\n    \"CreationTIme\", CreationTime,\r\n    \"ContainerLifeCycleOwner\", ContainerLifeCycleOwner,\r\n    \"ContainerType\", ContainerType,\r\n    \"RoleInstaneFamilyId\", RoleInstanceFamilyIds,\r\n    \"RegionName\", Region,\r\n    \"IsContainerAzPEEnabled\", IsContainerAzPEEnabled,\r\n    \"IsManageMentRole\", IsManagementRoleEnabled,\r\n    \"Priority\", Priority)\r\n;\r\ncontainerMetadata\r\n| project CreationTime, ContainerId, Cluster, FcName = ClusterName, NodeId, VirtualMachineUniqueId,\r\n    TenantName, RoleInstanceName, AvailabilitySetName, RoleType, ContainerLifeCycleOwner, ContainerType,\r\n    RoleInstanceFamilyIds, Region, IsContainerAzPEEnabled, IsManagementRoleEnabled, Priority, SubscriptionId,\r\n        PolicyName, IsEphemeralVM, IsLMDestinationContainer",
+          "panelPath": []
+        },
+        {
+          "id": "b8ae3a5a-85ae-45f9-8773-9ac84cf71bf3",
+          "name": "Mycroft container health summary",
+          "groupId": "83ff52ec-a547-4a0e-8b3f-ea1993dbae08",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "AzureCP",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Container Health Summary",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "ContainerState",
+              "type": "string"
+            },
+            {
+              "name": "IsFaulted",
+              "type": "bool"
+            },
+            {
+              "name": "IsInGoalState",
+              "type": "bool"
+            },
+            {
+              "name": "IsRunning",
+              "type": "bool"
+            },
+            {
+              "name": "ExpectedVMHealthState",
+              "type": "string"
+            },
+            {
+              "name": "LastStartedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "FirstStartedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "LifecycleState",
+              "type": "string"
+            },
+            {
+              "name": "ActualOperationalState",
+              "type": "string"
+            },
+            {
+              "name": "LifecycleStateChangeTime",
+              "type": "datetime"
+            },
+            {
+              "name": "OsState",
+              "type": "string"
+            },
+            {
+              "name": "IsolationState",
+              "type": "string"
+            },
+            {
+              "name": "IsGoalUnachievable",
+              "type": "bool"
+            },
+            {
+              "name": "IsTombstoned",
+              "type": "bool"
+            },
+            {
+              "name": "ProvisioningState",
+              "type": "string"
+            },
+            {
+              "name": "ActualVMHealthState",
+              "type": "string"
+            },
+            {
+              "name": "FaultInfo",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "_sourceContainerIdToHeal",
+              "required": false
+            }
+          ],
+          "kustoQuery": "MycroftContainerHealthSnapshot\r\n| where PreciseTimeStamp between ((queryFrom-1h) .. (queryTo+1h))\r\n| where ContainerId == queryContainerId\r\n| summarize arg_min(PreciseTimeStamp, *)\r\n| project PreciseTimeStamp, ContainerState, IsFaulted, IsInGoalState, IsRunning, ExpectedVMHealthState, LastStartedTime, FirstStartedTime,\r\n    LifecycleState, ActualOperationalState, LifecycleStateChangeTime, OsState, IsolationState,\r\n    IsGoalUnachievable, IsTombstoned, ProvisioningState, ActualVMHealthState, FaultInfo",
+          "panelPath": []
+        },
+        {
+          "id": "31ebd43b-75a1-4d00-bc8a-7226b9feca52",
+          "name": "Mycroft Node Health Summary",
+          "groupId": "cd1017d2-44d6-47af-9ed0-6a685a8c2936",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "AzureCP",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Node Health Summary",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "ClusterName",
+              "type": "string"
+            },
+            {
+              "name": "FaultScope",
+              "type": "int"
+            },
+            {
+              "name": "FaultTime",
+              "type": "datetime"
+            },
+            {
+              "name": "FaultCode",
+              "type": "int"
+            },
+            {
+              "name": "FaultReason",
+              "type": "string"
+            },
+            {
+              "name": "ContainerCount",
+              "type": "long"
+            },
+            {
+              "name": "AliveContainerCount",
+              "type": "long"
+            },
+            {
+              "name": "AlivePreemptibleContainerCount",
+              "type": "long"
+            },
+            {
+              "name": "NodeBugCheckIsolationStatus",
+              "type": "string"
+            },
+            {
+              "name": "IsTombstoned",
+              "type": "bool"
+            },
+            {
+              "name": "AvailabilityState",
+              "type": "string"
+            },
+            {
+              "name": "IsIsolated",
+              "type": "bool"
+            },
+            {
+              "name": "IsOffline",
+              "type": "bool"
+            },
+            {
+              "name": "NsdState",
+              "type": "string"
+            },
+            {
+              "name": "NodeServiceAggregatedHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "NsdStateChangeTime",
+              "type": "datetime"
+            },
+            {
+              "name": "NodeServiceWasChannelHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "NodeServiceWillBeChannelHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "NodeServiceProgressHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "IsMaintenanceOs",
+              "type": "bool"
+            },
+            {
+              "name": "nFaultInfo",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "_sourceContainerIdToHeal",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let nId = (MycroftContainerHealthSnapshot\r\n| where PreciseTimeStamp between ((queryFrom-1h) .. (queryTo+1h))\r\n| where ContainerId == queryContainerId\r\n| distinct NodeId);\r\nMycroftNodeHealthSnapshot\r\n| where NodeId in (nId)\r\n| extend nFaultInfo = parse_json(FaultInfo)\r\n| extend FaultScope = toint(nFaultInfo['FaultScope']), FaultTime = todatetime(nFaultInfo['Time']),\r\n    FaultCode = toint(nFaultInfo['FaultCode']), FaultReason = tostring(nFaultInfo['Reason'])\r\n// | where AvailabilityState == 'Faulted' and NsdState == 'HumanInvestigate' and FaultScope == 3\r\n| where PreciseTimeStamp between ((queryFrom-1h) .. (queryTo+1h))\r\n| summarize arg_min(PreciseTimeStamp, *) by NsdState, AvailabilityState\r\n| project PreciseTimeStamp, Cluster, ClusterName, FaultScope, FaultTime, FaultCode, FaultReason, ContainerCount, AliveContainerCount, AlivePreemptibleContainerCount,\r\n    NodeBugCheckIsolationStatus, IsTombstoned,\r\n    AvailabilityState, IsIsolated, IsOffline, NsdState, NodeServiceAggregatedHealthStatus,\r\n    NsdStateChangeTime, NodeServiceWasChannelHealthStatus, NodeServiceWillBeChannelHealthStatus, NodeServiceProgressHealthStatus,\r\n    IsMaintenanceOs, nFaultInfo",
+          "panelPath": []
+        },
+        {
+          "id": "308f7860-b2b8-41b0-9c19-ad7e5e821626",
+          "name": "Tenant Summary Query",
+          "groupId": "a12d7dfd-a8c8-449e-b9ff-7c886c834080",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Tenant Snapshot Summary",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "AzSMTenantDataUrl",
+              "type": "string"
+            },
+            {
+              "name": "AzSMTMSwaggerUrl",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "AzSM_Tenant_View",
+              "type": "string"
+            },
+            {
+              "name": "spannedClusters",
+              "type": "dynamic"
+            },
+            {
+              "name": "isSpanned",
+              "type": "string"
+            },
+            {
+              "name": "isAzPEEnabled",
+              "type": "string"
+            },
+            {
+              "name": "numRoleInstances",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "hasManagementRole",
+              "type": "string"
+            },
+            {
+              "name": "state",
+              "type": "string"
+            },
+            {
+              "name": "lastUpdateDomainChangeTime",
+              "type": "string"
+            },
+            {
+              "name": "isProtected",
+              "type": "string"
+            },
+            {
+              "name": "tenantOwners",
+              "type": "string"
+            },
+            {
+              "name": "dateCreated",
+              "type": "string"
+            },
+            {
+              "name": "serviceInstanceTags",
+              "type": "string"
+            },
+            {
+              "name": "serviceTreeId",
+              "type": "string"
+            },
+            {
+              "name": "tipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "isFcServiceHealingDisabled",
+              "type": "string"
+            },
+            {
+              "name": "FcServiceHealingDisabledReason",
+              "type": "string"
+            },
+            {
+              "name": "tenantUpgradeRolloutWaitReason",
+              "type": "string"
+            },
+            {
+              "name": "serviceInstancesDetails",
+              "type": "string"
+            },
+            {
+              "name": "productionFeatures",
+              "type": "string"
+            },
+            {
+              "name": "isPreprovisionedTenant",
+              "type": "string"
+            },
+            {
+              "name": "secretCount",
+              "type": "string"
+            },
+            {
+              "name": "ownershipMigrationDetails",
+              "type": "string"
+            },
+            {
+              "name": "isSpannable",
+              "type": "string"
+            },
+            {
+              "name": "isCreatedViaReserveActivate",
+              "type": "string"
+            },
+            {
+              "name": "mrPrivilegeType",
+              "type": "string"
+            },
+            {
+              "name": "isCrossTenantApprovalEnabled",
+              "type": "string"
+            },
+            {
+              "name": "isSqlMITenant",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "_sourceContainerIdToHeal",
+              "required": false
+            }
+          ],
+          "kustoQuery": "\r\nalias database mycroftDb = cluster('azcore.centralus.kusto.windows.net').database('AzureCP');\r\n//alias database azureCmDb = cluster('hawkeyekustocluster.centralus.kusto.windows.net').database('AzureCM');\r\nalias database azureCmDb = cluster('azurecm.kusto.windows.net').database('AzureCM');\r\nlet tenantDetails = toscalar(database('mycroftDb').MycroftContainerHealthSnapshot\r\n| where PreciseTimeStamp between ((queryFrom-1h) .. (queryTo+1h))\r\n| where ContainerId == queryContainerId\r\n| extend p = bag_pack('FcClusterName', ClusterName, 'TenantNameToCheck', TenantName)\r\n| summarize make_bag(p));\r\nlet spannedClustersData = toscalar(database('azureCmDb').LogTenantSnapshot\r\n| where PreciseTimeStamp between ((queryFrom-1h) .. (queryTo+1h))\r\n| where tenantName == tenantDetails['TenantNameToCheck'] // \r\n| summarize arg_max(PreciseTimeStamp, *) by Tenant\r\n| summarize make_list(Tenant))\r\n;\r\ndatabase('azureCmDb').LogTenantSnapshot\r\n| where PreciseTimeStamp between ((queryFrom-1h) .. (queryTo+1h))\r\n| where tenantName == tenantDetails['TenantNameToCheck'] and Tenant == tenantDetails['FcClusterName']\r\n| summarize arg_max(PreciseTimeStamp, *)\r\n| extend spannedClusters = spannedClustersData\r\n| join kind=inner(\r\ndatabase('azureCmDb').LogTenantOverridableSettingsSnapshot\r\n| where PreciseTimeStamp between ((queryFrom-1d) .. (queryTo+1h))\r\n| where tenantName == tenantDetails['TenantNameToCheck'] and Tenant == tenantDetails['FcClusterName']\r\n| where name == 'AzSMTenantSliceLocation'\r\n| summarize arg_max(PreciseTimeStamp, *)\r\n| project PreciseTimeStamp, tenantName, name, AzSMSliceLocation= value\r\n) on tenantName\r\n| extend\r\n    AzSMTenantDataUrl = strcat(\r\n        \"https://\",\r\n        AzSMSliceLocation,\r\n        \"/TM/api/v1/Tenants/\",\r\n        tenantName,\r\n        \"/TenantDataV2\"), // https://asiaeast-prod-c.azcp.fc.core.windows.net/debug/Manual/AzLifecycle-Slice2-P1/TM/api/v1/Tenants/ccbe44c0-5538-4fca-87d9-0e9e4530331a/TenantDataV2\r\n    AzSMTMSwaggerUrl = strcat(\r\n        \"https://\",\r\n        AzSMSliceLocation,\r\n        \"/TM/Swagger/ui/index\"), // https://uscentraleuap-prod-b.azcp.fc.core.windows.net/debug/Manual/AzSM-Slice0/TM/Swagger/ui/index\r\n    AzSM_Tenant_View = strcat(\r\n        \"https://\",\r\n        AzSMSliceLocation,\r\n        \"/TM/api/v1/Tenants/\",\r\n        tenantName)\r\n| project PreciseTimeStamp, AvailabilityZone, Tenant, AzSMTenantDataUrl, AzSMTMSwaggerUrl, tenantName, AzSM_Tenant_View, spannedClusters, isSpanned,\r\n    isAzPEEnabled, numRoleInstances, subscriptionId,\r\n    hasManagementRole, state, lastUpdateDomainChangeTime, isProtected, tenantOwners,\r\n    dateCreated, serviceInstanceTags, serviceTreeId,\r\n    tipNodeSessionId, tenantId, isFcServiceHealingDisabled = isServiceHealingDisabled, FcServiceHealingDisabledReason = serviceHealingDisabledReason,\r\n        tenantUpgradeRolloutWaitReason, serviceInstancesDetails, productionFeatures, isPreprovisionedTenant,\r\n        secretCount, ownershipMigrationDetails, isSpannable, isCreatedViaReserveActivate,\r\n        mrPrivilegeType, isCrossTenantApprovalEnabled, isSqlMITenant",
+          "panelPath": []
+        },
+        {
+          "id": "aba4fd53-91bf-46b7-ab56-ee5b43b45309",
+          "name": "FC Service Healing Trigger QUery",
+          "groupId": "f542fedb-72b7-4d64-b9ba-d7bbd1ee8d07",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "FC Service Healing Summary",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "_sourceContainerIdToHeal",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "TenantName",
+              "type": "string"
+            },
+            {
+              "name": "TriggerId",
+              "type": "string"
+            },
+            {
+              "name": "TriggerType",
+              "type": "string"
+            },
+            {
+              "name": "TriggerObjectId",
+              "type": "string"
+            },
+            {
+              "name": "FaultCode",
+              "type": "long"
+            },
+            {
+              "name": "FaultReason",
+              "type": "string"
+            },
+            {
+              "name": "AffectedUpdateDomain",
+              "type": "long"
+            },
+            {
+              "name": "RoleInstanceName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "_sourceContainerIdToHeal",
+              "externalSourceName": "_sourceContainerIdToHeal",
+              "required": false
+            }
+          ],
+          "kustoQuery": "ServiceHealingTriggerEtwTable\r\n| where TriggerObjectId == _sourceContainerIdToHeal\r\n| where PreciseTimeStamp between ((queryFrom-1d) .. (queryTo+1d))\r\n| summarize arg_max(PreciseTimeStamp, *)\r\n| project PreciseTimeStamp, TenantName, TriggerId, TriggerType, TriggerObjectId,\r\n    FaultCode, FaultReason, AffectedUpdateDomain, RoleInstanceName",
+          "panelPath": []
+        }
+      ]
+    },
+    "AzSM Service Healing Step Result Events table": {
+      "panelPath": [
+        "AzSM Service Healing Step Result Events table"
+      ],
+      "queries": [
+        {
+          "id": "62e87899-4a04-4e46-9ba9-971cb22e0069",
+          "name": "AzSM Service Healing Summary Query",
+          "groupId": "a8592b11-4f51-4a4d-9978-cd1a4d8865b5",
+          "majorVersion": 3,
+          "minorVersion": 4,
+          "cluster": "accp.centralus",
+          "database": "AZSM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "AzSM Service Healing Step Result Events table",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "_sourceContainerIdToHeal",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "StepType",
+              "type": "string"
+            },
+            {
+              "name": "result",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "TriggerRoleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "SourceCid",
+              "type": "string"
+            },
+            {
+              "name": "TargetCid",
+              "type": "string"
+            },
+            {
+              "name": "JobId",
+              "type": "string"
+            },
+            {
+              "name": "DurationMin",
+              "type": "real"
+            },
+            {
+              "name": "SteptMetadata",
+              "type": "dynamic"
+            },
+            {
+              "name": "StepContext",
+              "type": "string"
+            },
+            {
+              "name": "triggerId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "_sourceContainerIdToHeal",
+              "externalSourceName": "_sourceContainerIdToHeal",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let convert_to_mins = (milliSecondsVal:int) {round(todouble(milliSecondsVal / 60000.0), 2)};\r\nlet _serviceHealingTriggerId = toscalar(AzSMServiceHealingTriggerEvents\r\n| where * has _sourceContainerIdToHeal\r\n| extend RowType = \"TriggerEvent\"\r\n| extend migrationRequestDetails = parse_json(migrationRequestDetails)\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| summarize arg_max(PreciseTimeStamp, *)\r\n| union (\r\nAzSMServiceHealingResultEvents\r\n| where * has _sourceContainerIdToHeal\r\n| extend RowType = \"TriggerEvent\"\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n)\r\n| summarize arg_min(PreciseTimeStamp, *)\r\n| distinct triggerId);\r\nAzSMServiceHealingTriggerEvents\r\n| where triggerId == _serviceHealingTriggerId\r\n| extend RowType = \"TriggerEvent\"\r\n| extend migrationRequestDetails = parse_json(migrationRequestDetails)\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| union\r\n(AzSMServiceHealingResultEvents\r\n| where triggerId == _serviceHealingTriggerId\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| extend RowType = \"FinalEvent\"\r\n)\r\n| union\r\n(AzSMServiceHealingStepResultEvents\r\n| where triggerId == _serviceHealingTriggerId\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| extend RowType = \"StepResultEvent\"\r\n| parse stateMachineId with 'AzSM.StateMachines.TenantContainersMigration.ContainersMigrationStateMachine:' StepResultTenantName ':' StepResultSourceContainerId\r\n)\r\n| take 1000\r\n| order by PreciseTimeStamp asc\r\n| extend SourceCid = strcat(triggerObjectId, StepResultSourceContainerId, sourceContainerId),\r\n    TargetCid = iif(isempty( targetContainerId), '00000000-0000-0000-0000-000000000000', targetContainerId),\r\n    StepContext = case(\r\n        isempty( stepContext) and isnotempty( migrationRequestDetails), migrationRequestDetails,\r\n        stepContext),\r\n    StepType = case(\r\n        RowType == \"TriggerEvent\", \"TriggerEvent\",\r\n        RowType == \"FinalEvent\", \"FinalResultEvent\",\r\n        containerMigrationStepType),\r\n    roleInstanceNames = case (\r\n    isempty(roleInstanceNames), prev(roleInstanceNames),\r\n    roleInstanceNames),\r\n   SteptMetadata =  case (\r\n        RowType == \"FinalEvent\", bag_pack(\r\n            'isContainerMigrationAttemptedOnContainerMismatch', isContainerMigrationAttemptedOnContainerMismatch,\r\n            'isContainerMigrationCrossFc', isContainerMigrationCrossFc,\r\n            'isContainerMigrationMiddleOfTenantUpgrade', isContainerMigrationMiddleOfTenantUpgrade,\r\n            'isContainerMigrationUpdated', isContainerMigrationUpdated,\r\n            'isMultipleRoleInstancesTenant', isMultipleRoleInstancesTenant),\r\n        RowType == \"TriggerEvent\", bag_pack(\r\n        \"triggerType\", triggerType,\r\n        \"sourceFabricName\", fabricName,\r\n        \"faultCode\", faultCode,\r\n        \"faultReason\", faultReason,\r\n        \"isResumeopartion\", isResumeOperation),\r\n        dynamic({}))\r\n| project PreciseTimeStamp, Cluster, StepType, result, tenantName, TriggerRoleInstanceName = roleInstanceNames,\r\n    SourceCid, TargetCid, JobId, DurationMin = convert_to_mins(totalDurationInMilliSeconds), SteptMetadata, StepContext, triggerId//, RowType",
+          "panelPath": [
+            "AzSM Service Healing Step Result Events table"
+          ]
+        }
+      ]
+    },
+    "AzSM Service Healing Summary": {
+      "panelPath": [
+        "AzSM Service Healing Summary"
+      ],
+      "queries": [
+        {
+          "id": "ddad9d19-bdf8-4f81-abaf-2fa4f2e2597b",
+          "name": "AzSM Service Healing Trigger and Result details",
+          "groupId": "05bb154a-748e-49e5-8a28-b551ade78985",
+          "majorVersion": 3,
+          "minorVersion": 2,
+          "cluster": "accp.centralus",
+          "database": "AZSM",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "AzSM Service Healing Summary",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "_sourceContainerIdToHeal",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "SoureceFabricName",
+              "type": "string"
+            },
+            {
+              "name": "SourceRiName",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "TriggerRoleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "AzSMSourceContainerId",
+              "type": "string"
+            },
+            {
+              "name": "FinalResult",
+              "type": "string"
+            },
+            {
+              "name": "DurationMin",
+              "type": "real"
+            },
+            {
+              "name": "isResumeOperation",
+              "type": "bool"
+            },
+            {
+              "name": "JobId",
+              "type": "string"
+            },
+            {
+              "name": "TriggerMetaData",
+              "type": "dynamic"
+            },
+            {
+              "name": "migrationRequestDetails",
+              "type": "dynamic"
+            },
+            {
+              "name": "ResultMetadata",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "_sourceContainerIdToHeal",
+              "externalSourceName": "_sourceContainerIdToHeal",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let convert_to_mins = (milliSecondsVal:int) {round(todouble(milliSecondsVal / 60000.0), 2)};\r\nlet _serviceHealingTriggerId = toscalar(AzSMServiceHealingTriggerEvents\r\n| where * has _sourceContainerIdToHeal\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| summarize arg_max(PreciseTimeStamp, *)\r\n| union (\r\nAzSMServiceHealingResultEvents\r\n| where * has _sourceContainerIdToHeal\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n)\r\n| summarize arg_min(PreciseTimeStamp, *)\r\n| distinct triggerId)\r\n;\r\nAzSMServiceHealingTriggerEvents\r\n| where triggerId == _serviceHealingTriggerId\r\n| extend migrationRequestDetails = parse_json(migrationRequestDetails)\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| join kind=inner (\r\nAzSMServiceHealingResultEvents\r\n| where triggerId == _serviceHealingTriggerId\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n) on triggerId\r\n| extend migrationRequestDetails = parse_json(migrationRequestDetails)\r\n| project PreciseTimeStamp, Cluster, SoureceFabricName = fabricName, SourceRiName = roleInstanceNames, tenantName, TriggerRoleInstanceName = roleInstanceNames,\r\n    AzSMSourceContainerId = sourceContainerId, FinalResult=result,DurationMin = convert_to_mins(totalDurationInMilliSeconds),\r\n    isResumeOperation,\r\n    JobId,\r\n    TriggerMetaData = bag_pack(\r\n        \"triggerId\", triggerId,\r\n        \"triggerType\", triggerType,\r\n        \"sourceFabricName\", fabricName,\r\n        \"faultCode\", faultCode,\r\n        \"faultReason\", faultReason,\r\n        \"isResumeopartion\", isResumeOperation),\r\n    migrationRequestDetails,\r\n    ResultMetadata = bag_pack(\r\n            'isContainerMigrationAttemptedOnContainerMismatch', isContainerMigrationAttemptedOnContainerMismatch,\r\n            'isContainerMigrationCrossFc', isContainerMigrationCrossFc,\r\n            'isContainerMigrationMiddleOfTenantUpgrade', isContainerMigrationMiddleOfTenantUpgrade,\r\n            'isContainerMigrationUpdated', isContainerMigrationUpdated,\r\n            'isMultipleRoleInstancesTenant', isMultipleRoleInstancesTenant)",
+          "panelPath": [
+            "AzSM Service Healing Summary"
+          ]
+        }
+      ]
+    },
+    "Tenant Service Healing Events Table": {
+      "panelPath": [
+        "Tenant Service Healing Events Table"
+      ],
+      "queries": [
+        {
+          "id": "1cc2c338-4503-408f-b900-3b7ba9430805",
+          "name": "Tenant Events Service Healing Trigger Events",
+          "groupId": "8f2a4334-1aee-4d69-a414-9ace9d35d5cc",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Tenant Service Healing Events Table",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "ContainerIdForSH",
+              "type": "string"
+            },
+            {
+              "name": "MessageType",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "_sourceContainerIdToHeal",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let tenantDetails = toscalar(cluster('mycroft.westcentralus.kusto.windows.net').database('Mycroft').MycroftContainerHealthSnapshot\r\n| where PreciseTimeStamp between ((queryFrom-1h) .. (queryTo+1h))\r\n| where ContainerId == queryContainerId\r\n| extend p = bag_pack(\"TenantNameToCheck\", TenantName, \"FcCluster\", ClusterName, \"AzCluster\", Cluster)\r\n| summarize make_bag(p));\r\nTMMgmtTenantEventsEtwTable\r\n| where TenantName == tenantDetails[\"TenantNameToCheck\"] \r\n| where PreciseTimeStamp between (queryFrom..queryTo) \r\n| extend MessageType = case(\r\n    Message has \"Pushing faulted container \", \"PushMessage\",\r\n    Message has \"Marking IsContainerMigrationPickedUpByAzSM to \", \"MarkingPickedByAzSMSHMessage\",\r\n    Message has \"Successfully pushed tenant migration request(s) ContainerId: \", \"SuccessfullyPushedMessage\",\r\n    Message has \" is already picked by AzSM for ServiceHealing\", \"PickedByAzSMShMessage\",\r\n    \"Unknown\")\r\n| extend ContainerIdForSH = case (\r\n    MessageType == \"PushMessage\", extract(\"Pushing faulted container ([\\\\w\\\\-]+) for Fc tenant: \", 1, Message),\r\n    MessageType == \"MarkingPickedByAzSMSHMessage\", extract(\r\n        \"Marking IsContainerMigrationPickedUpByAzSM to true for containerId:([\\\\w\\\\-]+), \", 1, Message),\r\n    MessageType == \"SuccessfullyPushedMessage\", extract(\r\n        strcat(\"Successfully pushed tenant migration request\\\\(s\\\\) ContainerId: ([\\\\w\\\\-]+)\"), 1, Message),\r\n    MessageType == \"PickedByAzSMShMessage\", extract(\r\n        strcat(\"container ([\\\\w\\\\-]+) is already picked by AzSM for ServiceHealing\"), 1, Message),\r\n    tostring(hash(Message)))\r\n| where MessageType == \"SuccessfullyPushedMessage\"\r\n| summarize arg_max(PreciseTimeStamp, *) by strcat(ContainerIdForSH, MessageType)\r\n| project PreciseTimeStamp, Tenant, ContainerIdForSH, MessageType, Message",
+          "panelPath": [
+            "Tenant Service Healing Events Table"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:29.567Z",
+    "totalPanels": 4,
+    "totalUniqueQueries": 8,
+    "totalWidgetRefs": 10
+  }
+}

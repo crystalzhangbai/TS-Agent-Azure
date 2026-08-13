@@ -1,0 +1,336 @@
+[
+  {
+    "id": "a383c92c-db89-415a-bf75-b337bc2594f2",
+    "name": "VMA",
+    "groupId": "159ffb85-2b5c-4882-a82d-8b438f6ce158",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "vmainsight",
+    "database": "vmadb",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let queryIncludeCustomerInitiated = true;\nVMA\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where VmUniqueId == queryVmOrContainerId or ContainerId == queryVmOrContainerId\n| where isempty(queryTenantName) or TenantName == queryTenantName\n| where queryIncludeCustomerInitiated or RCAEngineCategory != 'CustomerInitiated'\n| order by PreciseTimeStamp asc\n| extend CustomerInitiated = tobool(strcmp(RCAEngineCategory, 'CustomerInitiated') == 0)\n| project StartTime, EndTime, DurationInSec = datetime_diff('second', EndTime, StartTime), CustomerInitiated,\nAvailabilityState, NodeIp, RCA, RCAEngineCategory, RCACSSCategory, RCALevel1, RCALevel2, RCALevel3, NodeId,\nDetail, DowntimeReasonHint, scaleSetName = Usage_VMScaleSetName, resourceGroupName = Usage_ResourceGroupName,\nRoleInstanceName = substring(RoleInstanceName, 1, strlen(RoleInstanceName)), ContainerId, vmId = VmUniqueId\n| summarize StartTime = arg_max(StartTime, *) by bin(StartTime, 1m)\n| extend Tooltip = strcat(\n    \"ContainerId: \", ContainerId, \n    \"<br/>VMId: \", vmId, \n    \"<br/>NodeId: \", NodeId, \n    \"<br/>RoleInstanceName: \" , RoleInstanceName, \n    \"<br/>Customer Initiated: \", CustomerInitiated,\n    \"<br/>RCA: \", RCA,\n    \"<br/>RCAEngineCategory: \", RCAEngineCategory,\n    \"<br/>RCACSSCategory: \", RCACSSCategory,\n    \"<br/>RCALevel1: \", RCALevel1,\n    \"<br/>RCALevel2: \", RCALevel2,\n    \"<br/>RCALevel3: \", RCALevel3\n    )\n| project StartTime, Content = RCALevel3, Resource = RCALevel3, Tooltip",
+    "params": [
+      {
+        "name": "queryVmOrContainerId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTenantName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "global_startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "global_endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Resource",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Fabric"
+  },
+  {
+    "id": "028b3eb0-e433-4291-af92-9bbf0b7a6c9b",
+    "name": "Retrieve Resource \"Containers\"",
+    "groupId": "112f2fb8-b66b-45b7-9606-b20554b1a81f",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "azurecm",
+    "database": "azurecm",
+    "type": "ResourceGet",
+    "kustoQuery": "LogContainerSnapshot\n| where PreciseTimeStamp >= global_startTime and PreciseTimeStamp <= global_endTime\n| where nodeId == local_nodeId and containerId == local_containerId\n| take 1",
+    "params": [
+      {
+        "name": "local_containerId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_nodeId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "containerId",
+        "type": "string"
+      },
+      {
+        "name": "containerType",
+        "type": "string"
+      },
+      {
+        "name": "nodeId",
+        "type": "string"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "updateDomain",
+        "type": "string"
+      },
+      {
+        "name": "availabilitySetName",
+        "type": "string"
+      },
+      {
+        "name": "billingType",
+        "type": "string"
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceFamilyId",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "roleType",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "creationTime",
+        "type": "string"
+      },
+      {
+        "name": "CloudName",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "DataCenterName",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "SourceNodeId",
+        "type": "string"
+      },
+      {
+        "name": "containerOsBaseImage",
+        "type": "string"
+      },
+      {
+        "name": "latchedOsFamily",
+        "type": "string"
+      },
+      {
+        "name": "latchedOsRelease",
+        "type": "string"
+      },
+      {
+        "name": "osReleaseUpgradeType",
+        "type": "string"
+      },
+      {
+        "name": "priority",
+        "type": "string"
+      },
+      {
+        "name": "hasDataPlaneSla",
+        "type": "string"
+      },
+      {
+        "name": "isEphemeralVM",
+        "type": "string"
+      },
+      {
+        "name": "osIncarnationId",
+        "type": "string"
+      },
+      {
+        "name": "tipNodeSessionId",
+        "type": "string"
+      },
+      {
+        "name": "provisioningIncarnationId",
+        "type": "string"
+      },
+      {
+        "name": "additionalContainerProperties",
+        "type": "string"
+      },
+      {
+        "name": "dataDisksIncarnationId",
+        "type": "string"
+      },
+      {
+        "name": "requiresSingularRootUpdateSet",
+        "type": "string"
+      },
+      {
+        "name": "volume1Media",
+        "type": "string"
+      },
+      {
+        "name": "IsProcessorSpeculationControlEnabled",
+        "type": "string"
+      },
+      {
+        "name": "requestedT1NetworkSpineId",
+        "type": "string"
+      },
+      {
+        "name": "requestedT2NetworkSpineId",
+        "type": "string"
+      },
+      {
+        "name": "isReusedContainer",
+        "type": "string"
+      },
+      {
+        "name": "preprovisionedOSImageName",
+        "type": "string"
+      },
+      {
+        "name": "currentOSImageName",
+        "type": "string"
+      },
+      {
+        "name": "guestAgentPackage",
+        "type": "string"
+      },
+      {
+        "name": "RegionFriendlyName",
+        "type": "string"
+      },
+      {
+        "name": "tenantOwners",
+        "type": "string"
+      },
+      {
+        "name": "features",
+        "type": "string"
+      },
+      {
+        "name": "isOversubscribable",
+        "type": "string"
+      },
+      {
+        "name": "actualCoreUsage",
+        "type": "string"
+      },
+      {
+        "name": "isWorkloadUserFacing",
+        "type": "string"
+      },
+      {
+        "name": "dedicatedHostId",
+        "type": "string"
+      },
+      {
+        "name": "dedicatedHostGroupId",
+        "type": "string"
+      },
+      {
+        "name": "dedicatedHostContainerPlacementType",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Fabric"
+  }
+]

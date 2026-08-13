@@ -1,0 +1,926 @@
+{
+  "service": "CRP",
+  "page": "Resource Move",
+  "pageId": "86595fd0-5759-4604-b559-6485066e165a",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "d2e90b68-df39-4da4-9598-05229d081eea",
+          "name": "Retrieve Resource \"Resource Move\"",
+          "groupId": "9a24854b-b100-4960-a27b-4134e6e8e8ad",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "correlationId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_correlationId",
+              "externalSourceName": "correlationId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "print correlationId = local_correlationId",
+          "panelPath": []
+        },
+        {
+          "id": "b6259839-5134-42c9-ab26-d9866cdb1487",
+          "name": "Move ARM Event",
+          "groupId": "33a6b881-18c6-4fed-82d4-503ce7fcf34a",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "armprod",
+          "database": "ARMProd",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Operation Info",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "correlationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "resourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "long"
+            },
+            {
+              "name": "status",
+              "type": "string"
+            },
+            {
+              "name": "subStatus",
+              "type": "string"
+            },
+            {
+              "name": "httpRequest",
+              "type": "string"
+            },
+            {
+              "name": "properties",
+              "type": "string"
+            },
+            {
+              "name": "resourceUri",
+              "type": "string"
+            },
+            {
+              "name": "armServiceRequestId",
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "type": "string"
+            },
+            {
+              "name": "claims",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "ReleaseVersion",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationid",
+              "externalSourceName": "correlationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('armprod.kusto.windows.net').database('ARMProd').EventServiceEntries\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where correlationId contains correlationid\r\n| where operationName !contains \"Microsoft.Authorization\"\r\n| where operationName !contains \"restorePoint\"\r\n| where operationName contains 'move'\r\n| project PreciseTimeStamp, ActivityId , correlationId, operationName, operationId, \r\n  resourceProvider, level, status, subStatus, httpRequest, properties, resourceUri, \r\n  armServiceRequestId, authorization, claims, RoleInstance, SourceNamespace, ReleaseVersion\r\n| top 1 by PreciseTimeStamp asc",
+          "panelPath": []
+        }
+      ]
+    },
+    "ARM Event > ARM Event": {
+      "panelPath": [
+        "ARM Event",
+        "ARM Event"
+      ],
+      "queries": [
+        {
+          "id": "f6a0aec1-6e2f-4343-9408-61a0b45d599a",
+          "name": "ARM Event",
+          "groupId": "03e53fe1-4e0a-4409-8851-d549b99c2975",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "armprod",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ARM Event",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "correlationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "resourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            },
+            {
+              "name": "status",
+              "type": "string"
+            },
+            {
+              "name": "subStatus",
+              "type": "string"
+            },
+            {
+              "name": "httpRequest",
+              "type": "string"
+            },
+            {
+              "name": "properties",
+              "type": "string"
+            },
+            {
+              "name": "resourceUri",
+              "type": "string"
+            },
+            {
+              "name": "armServiceRequestId",
+              "type": "string"
+            },
+            {
+              "name": "authorization",
+              "type": "string"
+            },
+            {
+              "name": "claims",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "ReleaseVersion",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationid",
+              "externalSourceName": "correlationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('armprod.kusto.windows.net').database('ARMProd').EventServiceEntries\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where correlationId contains correlationid\r\n| where operationName !contains \"Microsoft.Authorization\"\r\n| where operationName !contains \"restorePoint\"\r\n| project PreciseTimeStamp, ActivityId , correlationId, operationName, operationId, \r\n  resourceProvider, level, status, subStatus, httpRequest, properties, resourceUri, \r\n  armServiceRequestId, authorization, claims, RoleInstance, SourceNamespace, ReleaseVersion\r\n| extend level = case (level == 1, \"critical\",\r\n  level == 2, \"error\", \r\n  level == 3, \"warning\", \r\n  \"info\")",
+          "panelPath": [
+            "ARM Event",
+            "ARM Event"
+          ]
+        }
+      ]
+    },
+    "ARM Event > Latest Error Details": {
+      "panelPath": [
+        "ARM Event",
+        "Latest Error Details"
+      ],
+      "queries": [
+        {
+          "id": "f858915f-affd-4ca6-a8e4-ac3d31cf70b0",
+          "name": "Error Details",
+          "groupId": "d426db76-101b-4c1d-b414-1af151ed14d0",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "armprod",
+          "database": "ARMProd",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Latest Error Details",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "correlationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "properties_statusCode",
+              "type": "dynamic"
+            },
+            {
+              "name": "properties_statusMessage",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationid",
+              "externalSourceName": "correlationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('armprod.kusto.windows.net').database('ARMProd').EventServiceEntries\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where correlationId == correlationid\r\n| where operationName !contains \"Microsoft.Authorization\"\r\n| where operationName !contains \"restorePoint\"\r\n| where operationName contains 'move'\r\n| where status == \"Failed\"\r\n| top 1 by PreciseTimeStamp desc\r\n| project PreciseTimeStamp, ActivityId , correlationId, operationName, operationId, \r\n  resourceProvider, level, status, subStatus, httpRequest, properties, resourceUri, \r\n  armServiceRequestId, authorization, claims, RoleInstance, SourceNamespace, ReleaseVersion\r\n| project PreciseTimeStamp, correlationId, parse_json(properties).statusCode, parse_json(properties).statusMessage",
+          "panelPath": [
+            "ARM Event",
+            "Latest Error Details"
+          ]
+        }
+      ]
+    },
+    "ARM HTTP Incoming > ARM HTTP Incoming": {
+      "panelPath": [
+        "ARM HTTP Incoming",
+        "ARM HTTP Incoming"
+      ],
+      "queries": [
+        {
+          "id": "ad6ace06-0a8f-41ef-965f-8af6610f7252",
+          "name": "ARM HTTP Incoming",
+          "groupId": "adffee02-1fe2-4a8e-992d-c8653f31b56c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprod",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ARM HTTP Incoming",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "correlationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "httpMethod",
+              "type": "string"
+            },
+            {
+              "name": "hostName",
+              "type": "string"
+            },
+            {
+              "name": "targetUri",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "errorMessage",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "contentLength",
+              "type": "long"
+            },
+            {
+              "name": "referer",
+              "type": "string"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "clientIpAddress",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "failureCause",
+              "type": "string"
+            },
+            {
+              "name": "clientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "authorizationAction",
+              "type": "string"
+            },
+            {
+              "name": "authorizationSource",
+              "type": "string"
+            },
+            {
+              "name": "principalOid",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationid",
+              "externalSourceName": "correlationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('armprod.kusto.windows.net').database('ARMProd').HttpIncomingRequests\r\n| where PreciseTimeStamp between ( starttime .. endtime)\r\n| where correlationId == correlationid\r\n| project PreciseTimeStamp, RoleInstance, Level, ActivityId, TaskName, subscriptionId, correlationId, operationName, \r\n  httpMethod, hostName, targetUri, httpStatusCode, errorCode, errorMessage, durationInMilliseconds, \r\n  contentLength, referer, userAgent, clientIpAddress, SourceNamespace, failureCause, clientApplicationId, clientRequestId,\r\n  authorizationAction, authorizationSource, principalOid",
+          "panelPath": [
+            "ARM HTTP Incoming",
+            "ARM HTTP Incoming"
+          ]
+        }
+      ]
+    },
+    "ARM HTTP Outgoing > ARM HTTP Outgoing": {
+      "panelPath": [
+        "ARM HTTP Outgoing",
+        "ARM HTTP Outgoing"
+      ],
+      "queries": [
+        {
+          "id": "263d1a58-03d9-4a6d-99e9-b19657f59638",
+          "name": "ARM HTTP Outgoing",
+          "groupId": "433126e4-7afa-4fb7-823b-f5a37922bf15",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprod",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ARM HTTP Outgoing",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "correlationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "httpMethod",
+              "type": "string"
+            },
+            {
+              "name": "hostName",
+              "type": "string"
+            },
+            {
+              "name": "targetUri",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "exceptionMessage",
+              "type": "string"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "errorMessage",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "contentLength",
+              "type": "long"
+            },
+            {
+              "name": "referer",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "principalOid",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationid",
+              "externalSourceName": "correlationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('armprod.kusto.windows.net').database('ARMProd').HttpOutgoingRequests\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where correlationId == correlationid\r\n// | where TaskName <> \"HttpOutgoingRequestStart\"\r\n| project PreciseTimeStamp, RoleInstance, Level, ActivityId, TaskName, subscriptionId, correlationId, operationName, \r\n  httpMethod, hostName, targetUri, httpStatusCode, exceptionMessage, errorCode, errorMessage, durationInMilliseconds, \r\n  contentLength, referer, SourceNamespace, clientRequestId, principalOid",
+          "panelPath": [
+            "ARM HTTP Outgoing",
+            "ARM HTTP Outgoing"
+          ]
+        }
+      ]
+    },
+    "ARM Traces > ARM Traces": {
+      "panelPath": [
+        "ARM Traces",
+        "ARM Traces"
+      ],
+      "queries": [
+        {
+          "id": "3a0464fb-2726-423c-8dd0-373f0599ebeb",
+          "name": "ARM Trace",
+          "groupId": "a19bf70a-298f-4254-acb6-167ac716fd37",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprod",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ARM Traces",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "correlationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "exception",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationid",
+              "externalSourceName": "correlationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('armprod.kusto.windows.net').database('ARMProd').Traces\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where correlationId == correlationid\r\n| project PreciseTimeStamp, Level, RoleInstance, ActivityId, subscriptionId, correlationId, operationName, message, exception, tenantId\r\n| project PreciseTimeStamp, Level, operationName, message, exception",
+          "panelPath": [
+            "ARM Traces",
+            "ARM Traces"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:18:23.450Z",
+    "totalPanels": 6,
+    "totalUniqueQueries": 7,
+    "totalWidgetRefs": 7
+  }
+}

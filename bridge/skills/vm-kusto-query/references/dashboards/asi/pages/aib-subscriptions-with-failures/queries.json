@@ -1,0 +1,71 @@
+[
+  {
+    "id": "7f02fdc9-67ec-407d-b2b6-b1fcd9562e70",
+    "name": "Subscriptions With Failures",
+    "groupId": "8c953247-577f-42b9-81f9-bf13c95b2e22",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncQoSEvents\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where not(IsAIBSubscription(subscriptionID))\r\n| where resultType == 2\r\n| where iff(searchOperation != \"\", operationName == searchOperation, false)\r\n| summarize Failures=count() by subscriptionID, operationName\r\n| order by Failures desc ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "searchOperation",
+        "description": "",
+        "type": "string",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "subscriptionID",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "Failures",
+        "type": "long"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  }
+]

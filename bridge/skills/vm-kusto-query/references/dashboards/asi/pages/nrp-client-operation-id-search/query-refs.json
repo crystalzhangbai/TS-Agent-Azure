@@ -1,0 +1,310 @@
+[
+  {
+    "groupId": "4577b17a-bf67-4cc4-af88-a3bac1af83df",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "d759afd1-71de-472d-9760-fb61d9e4465e",
+    "inputMappings": [
+      {
+        "source": "page",
+        "groupId": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_PreciseTimeStamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "page",
+        "groupId": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_ClientOperationId",
+        "externalSourceName": "ClientOperationId",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"ClientOperationId Search\"",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "local_PreciseTimeStamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_ClientOperationId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "ProviderGuid",
+        "type": "string"
+      },
+      {
+        "name": "EventId",
+        "type": "long"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "ActivityId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ResourceType",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "HttpMethod",
+        "type": "string"
+      },
+      {
+        "name": "InternalCorrelationId",
+        "type": "string"
+      },
+      {
+        "name": "ComputeSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ClientOperationId",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "ParentOperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "ApiVersion",
+        "type": "string"
+      },
+      {
+        "name": "Environment",
+        "type": "string"
+      },
+      {
+        "name": "AzureRoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "PartitionId",
+        "type": "string"
+      },
+      {
+        "name": "ReplicaId",
+        "type": "long"
+      },
+      {
+        "name": "SourceAssemblyFileVersion",
+        "type": "string"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Sequence",
+        "type": "long"
+      },
+      {
+        "name": "Continuation",
+        "type": "bool"
+      },
+      {
+        "name": "OrigTS",
+        "type": "datetime"
+      },
+      {
+        "name": "TraceSource",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "CultureName",
+        "type": "string"
+      },
+      {
+        "name": "OpcodeName",
+        "type": "string"
+      },
+      {
+        "name": "KeywordName",
+        "type": "string"
+      },
+      {
+        "name": "TaskName",
+        "type": "string"
+      },
+      {
+        "name": "EventMessage",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "25c061c9-fe44-4acb-867e-c5ea6dbf2d47",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "CoBeTimeline",
+    "widgetTitle": "",
+    "queryId": "460d5b2f-b7cf-48cb-863d-d896e2cfe7da",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "4577b17a-bf67-4cc4-af88-a3bac1af83df",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "4577b17a-bf67-4cc4-af88-a3bac1af83df",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "internalDestinationName": "clientRequestId",
+        "externalSourceName": "ClientOperationId",
+        "required": false
+      }
+    ],
+    "name": "ClientOperationId",
+    "cluster": "armprod.kusto.windows.net",
+    "database": "armprod",
+    "type": "CoBeTimeline",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "clientRequestId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "ParentId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

@@ -1,0 +1,148 @@
+{
+  "service": "Aztec",
+  "page": "AzSM Service",
+  "pageId": "7b06257c-2953-47a8-8273-f3cd27a65d68",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Service Settings": {
+      "panelPath": [
+        "Service Settings"
+      ],
+      "queries": [
+        {
+          "id": "92b529b4-5402-42a9-9318-4d84f5112992",
+          "name": "AzSM Service Settings",
+          "groupId": "acb01c6c-fe33-4ae3-8b2f-ee1b1a39b9df",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "accp.centralus",
+          "database": "AZSM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Service Settings",
+          "params": [
+            {
+              "name": "queryCluster",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryServiceName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "configSection",
+              "type": "string"
+            },
+            {
+              "name": "settingName",
+              "type": "string"
+            },
+            {
+              "name": "settingValue",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCluster",
+              "externalSourceName": "cluster",
+              "required": false
+            },
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryServiceName",
+              "externalSourceName": "serviceName",
+              "required": false
+            }
+          ],
+          "kustoQuery": "AzSMSettingsSnapshot\n| where PreciseTimeStamp > ago(6h)\n| where Cluster == queryCluster and serviceName == queryServiceName\n| summarize arg_max(PreciseTimeStamp, *) by configSection, settingName\n| project configSection, settingName, settingValue\n| order by configSection asc, settingName asc",
+          "panelPath": [
+            "Service Settings"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:29.998Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

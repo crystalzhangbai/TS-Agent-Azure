@@ -1,0 +1,307 @@
+{
+  "service": "NodeService",
+  "page": "Cumulus Tip Node Session",
+  "pageId": "38870807-345e-4bde-bbf1-fbf855216992",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "7e97eed3-fd98-48c0-a061-a9743c4d9cf3",
+          "name": "Retrieve Resource \"Cumulus Tip Node Session\"",
+          "groupId": "c1ccd91e-0798-4a0a-bbdf-ed75bf65b6e7",
+          "majorVersion": 3,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "AutopilotDeployment",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_tipNodeSessionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "_startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "_endTime",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_tipNodeSessionId",
+              "externalSourceName": "tipNodeSessionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('azcore.centralus.kusto.windows.net').database('AzureCP').MycroftNodeSnapshot\r\n| where TipNodeSessionId == local_tipNodeSessionId\r\n| summarize _startTime=min(PreciseTimeStamp), _endTime=max(PreciseTimeStamp) by NodeId",
+          "panelPath": []
+        },
+        {
+          "id": "f07d7c9b-8a7a-4818-96dd-e210d53c69d1",
+          "name": "Generate Node View Links",
+          "groupId": "3ee7532e-9e73-448a-acfe-110b7d3d304d",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "",
+          "database": "",
+          "type": "Single",
+          "widgetType": "Markdown",
+          "widgetTitle": "Other relevant ASI links",
+          "params": [
+            {
+              "name": "row",
+              "type": "array",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_AllData",
+              "groupId": "c1ccd91e-0798-4a0a-bbdf-ed75bf65b6e7",
+              "majorVersion": 3,
+              "minorVersion": 1,
+              "internalDestinationName": "row",
+              "externalSourceName": "(All Data)",
+              "required": false,
+              "rowSelectionCriteria": "allRows"
+            }
+          ],
+          "kustoQuery": "return data.row.map((row) => {\r\n    return {\r\n        Content: \"https://asi.azure.ms/services/NodeService/pages/NodeService_NodeView?NodeId=\" + row.NodeId + \"&TimeOfFault=\" + row[\"_endTime\"]\r\n    }\r\n});\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "f16afc53-815c-45e8-aadb-cacb2d54eb2e",
+          "name": "ServiceManagerSysLog",
+          "groupId": "08656476-c5c0-41a6-85fe-cf25b00f8584",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "AutopilotDeployment",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "_tipNodeSessionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "LogType",
+              "type": "string"
+            },
+            {
+              "name": "LogTitle",
+              "type": "string"
+            },
+            {
+              "name": "LogMessage",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "_tipNodeSessionId",
+              "externalSourceName": "tipNodeSessionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "\r\nlet _times = materialize(cluster('tipnodeservice.kusto.windows.net').database('TipNodeService').RequestHandlerEvent\r\n| where tipNodeSessionId == _tipNodeSessionId\r\n| summarize min(PreciseTimeStamp), max(PreciseTimeStamp));\r\nlet _startTime = materialize(_times | project min_PreciseTimeStamp);\r\nlet _endTime = materialize(_times | project max_PreciseTimeStamp);\r\nlet changeId = cluster('tipnodeservice.kusto.windows.net').database('TipNodeService').RequestHandlerEvent\r\n| where PreciseTimeStamp > toscalar(_startTime) and PreciseTimeStamp < toscalar(_endTime)\r\n| where tipNodeSessionId == _tipNodeSessionId\r\n| where message has_cs \"[AutoPilotAppImageHandler]\"\r\n//| where requestId == \"5e2d6f0c-4559-4773-89d3-f9908e8e1b0f\"\r\n| where PreciseTimeStamp > toscalar(_startTime) and PreciseTimeStamp < toscalar(_endTime)\r\n| distinct requestId;\r\nlet logs = cluster('tipnodeservice.kusto.windows.net').database('TipNodeService').RequestHandlerEvent\r\n| where requestId in (changeId)\r\n| where PreciseTimeStamp > toscalar(_startTime) and PreciseTimeStamp < toscalar(_endTime)\r\n| project PreciseTimeStamp, requestId, message;\r\nlet serviceName = logs\r\n| where message has_cs \"Finished Building Image\"\r\n| parse message with * \"Services: \" parsedServiceName\r\n| project serviceName = tostring(parsedServiceName);\r\nlet _azureNodeId = logs\r\n| where message has_cs \"Machine: \"\r\n| take 1\r\n| parse message with * \"Machine: \" ParsedNodeId \", PEName\" *\r\n| project NodeId=tostring(ParsedNodeId);\r\nlet logWherePersistenceToObjectStorePresent = logs\r\n| where message has_cs \"SetAppOverridesForMachine succeeded\";\r\ncluster('azdeployer.kusto.windows.net').database('AzDeployerKusto').ServiceManagerSysLog\r\n| where PreciseTimeStamp > toscalar(_startTime) and PreciseTimeStamp < toscalar(_endTime)\r\n| where NodeId_Azure in (_azureNodeId)\r\n| project PreciseTimeStamp, NodeId, LogType, LogTitle, LogMessage;",
+          "panelPath": []
+        }
+      ]
+    },
+    "GARSLog": {
+      "panelPath": [
+        "GARSLog"
+      ],
+      "queries": [
+        {
+          "id": "e929868d-6d71-44f1-a39a-43f129558cd4",
+          "name": "GARSLog",
+          "groupId": "f7120805-4893-453b-ac52-f43bedd92f7b",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "AutopilotDeployment",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "GARSLog",
+          "params": [
+            {
+              "name": "_tipNodeSessionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "LogType",
+              "type": "string"
+            },
+            {
+              "name": "LogTitle",
+              "type": "string"
+            },
+            {
+              "name": "LogMessage",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "_tipNodeSessionId",
+              "externalSourceName": "tipNodeSessionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let _times = materialize(cluster('tipnodeservice.kusto.windows.net').database('TipNodeService').RequestHandlerEvent\r\n| where tipNodeSessionId == _tipNodeSessionId\r\n| summarize min(PreciseTimeStamp), max(PreciseTimeStamp));\r\nlet _startTime = materialize(_times | project min_PreciseTimeStamp);\r\nlet _endTime = materialize(_times | project max_PreciseTimeStamp);\r\nlet changeId = cluster('tipnodeservice.kusto.windows.net').database('TipNodeService').RequestHandlerEvent\r\n| where PreciseTimeStamp > toscalar(_startTime) and PreciseTimeStamp < toscalar(_endTime)\r\n| where tipNodeSessionId == _tipNodeSessionId\r\n| where message has_cs \"[AutoPilotAppImageHandler]\"\r\n//| where requestId == \"5e2d6f0c-4559-4773-89d3-f9908e8e1b0f\"\r\n| where PreciseTimeStamp > toscalar(_startTime) and PreciseTimeStamp < toscalar(_endTime)\r\n| distinct requestId;\r\nlet logs = cluster('tipnodeservice.kusto.windows.net').database('TipNodeService').RequestHandlerEvent\r\n| where requestId in (changeId)\r\n| where PreciseTimeStamp > toscalar(_startTime) and PreciseTimeStamp < toscalar(_endTime)\r\n| project PreciseTimeStamp, requestId, message;\r\nlet serviceName = logs\r\n| where message has_cs \"Finished Building Image\"\r\n| parse message with * \"Services: \" parsedServiceName\r\n| project serviceName = tostring(parsedServiceName);\r\nlet _azureNodeId = logs\r\n| where message has_cs \"Machine: \"\r\n| take 1\r\n| parse message with * \"Machine: \" ParsedNodeId \", PEName\" *\r\n| project NodeId=tostring(ParsedNodeId);\r\nlet logWherePersistenceToObjectStorePresent = logs\r\n| where message has_cs \"SetAppOverridesForMachine succeeded\";\r\ncluster('azdeployer.kusto.windows.net').database('AzDeployerKusto').GARSLog\r\n| where PreciseTimeStamp > toscalar(_startTime) and PreciseTimeStamp < toscalar(_endTime)\r\n| where NodeId_Azure in (_azureNodeId)\r\n| project PreciseTimeStamp, LogType, LogTitle, LogMessage;",
+          "panelPath": [
+            "GARSLog"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:12:40.047Z",
+    "totalPanels": 2,
+    "totalUniqueQueries": 4,
+    "totalWidgetRefs": 4
+  }
+}

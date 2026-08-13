@@ -1,0 +1,20 @@
+{
+  "skill_name": "vm-kusto-query",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "客户 VM 在 2026-04-02 大约凌晨重启了一次，帮我用 Kusto 查根因：是平台触发的 service healing / live migration / host update，还是客户自己重启的？给我证据。",
+      "expected_output": "Should run preflight (resolve cluster/db, schema-guard), execute fully-qualified KQL (cluster('...').database('...').Table) against the right infra clusters (e.g. AzureCM/VMInsight) over the window, and return an evidence-backed RCA classifying the restart cause."
+    },
+    {
+      "id": 2,
+      "prompt": "Trace the full lifecycle of this managed disk over the last 7 days — attach/detach, any node faults or slow IO from the storage side.",
+      "expected_output": "Should query Disks RP / XStore-side tables with fully-qualified KQL, correlate disk lifecycle events with any node fault / slow-IO signals, and present a timeline. Should follow the completeness/error-recovery discipline."
+    },
+    {
+      "id": 3,
+      "prompt": "客户报 VM 到一个 Private Endpoint 的连通性时好时坏，帮我用 EagleAI 看一下网络拓扑和路径，定位是哪一跳的问题。",
+      "expected_output": "Should route the networking path to eagleai (EagleEye topology / NetworkARG), retrieve the VM-to-PE topology and per-hop path, and identify the suspect hop — using the networking catalog rather than guessing table names."
+    }
+  ]
+}

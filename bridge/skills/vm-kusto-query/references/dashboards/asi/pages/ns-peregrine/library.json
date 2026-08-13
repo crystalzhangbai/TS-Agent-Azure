@@ -1,0 +1,871 @@
+{
+  "service": "NodeService",
+  "page": "NodeService_Peregrine",
+  "pageId": "61dcd820-d7e9-4f83-8f7e-47f2f2971723",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "03d119ed-6bde-4f4e-a2e7-e61de049bd7d",
+          "name": "WillBePublishesToMadariFromAzCiM",
+          "groupId": "b64ae817-c46d-49dc-bb05-987e64ef2c46",
+          "majorVersion": 1,
+          "minorVersion": 8,
+          "cluster": "https://azcim-centralus.centralus.kusto.windows.net",
+          "database": "AZCIM",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Table",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            },
+            {
+              "name": "WillBe",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "containerId",
+              "externalSourceName": "containerId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "AzCiMContainerWillBe\r\n| where PhysicalContainerId == containerId\r\n| where PreciseTimeStamp > queryFrom and PreciseTimeStamp < queryTo\r\n| sort by PreciseTimeStamp asc\r\n| parse WillBe with '{\"revision\":' Revision ',' * '\"state\":\"' State '\",' *\r\n| project PreciseTimeStamp, Revision, State, WillBe\r\n| serialize \r\n| where prev(State) != State\r\n| project Table=\"WillBePublishesToMadari\",\r\n          StartTime=PreciseTimeStamp, \r\n          Content=case(isempty(Revision), \"Deleted\",\r\n                       State),\r\n          Tooltip=case(isempty(Revision), \"Deleted\",\r\n                       strcat(\"Revision=\", Revision)),\r\n          WillBe",
+          "panelPath": []
+        },
+        {
+          "id": "7ab27149-7c44-47ba-acbc-ec44baa498ae",
+          "name": "WillBeReceiptsFromMadari",
+          "groupId": "29bab2ab-2b9e-428e-bf14-38a613f7d9cb",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Table",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "containerId",
+              "externalSourceName": "containerId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "NodeServiceMadariEventsEtwTable\r\n| where RelativePath == strcat(\"/containers/\", containerId)\r\n| where PreciseTimeStamp > queryFrom and PreciseTimeStamp < queryTo\r\n| where Operation == \"MadariNotificationCallback\"\r\n| project Table=\"WillBeReceiptsFromMadari\",\r\n          StartTime=PreciseTimeStamp,\r\n          Content=tostring(MadariVersion),\r\n          Tooltip=strcat(Message, \" MadariVersion=\", MadariVersion)",
+          "panelPath": []
+        },
+        {
+          "id": "10616843-f163-46e3-a63c-8f28957017d3",
+          "name": "ContainerWorkflowBlocked",
+          "groupId": "8f1a3280-b4c1-4501-8908-062c25577eaf",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "containerId",
+              "externalSourceName": "containerId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "NodeServiceEventEtwTable\r\n| where Message contains containerId\r\n| where PreciseTimeStamp > queryFrom and PreciseTimeStamp < queryTo\r\n| where Message contains \"Overpacking\" or Message contains \"Container workflow blocked\"\r\n| sort by PreciseTimeStamp asc\r\n| parse Message with * \"overpackedCaseReason=\" OverpackedCaseReason\r\n| parse Message with * \"Container workflow blocked: \" WorkflowBlockedReason \".\" *\r\n| parse Message with * \"EscalateTo: \" EscalateTo \".\" *\r\n| project Table=\"OverpackingTable\",\r\n          StartTime=PreciseTimeStamp,\r\n          Content=case(OverpackedCaseReason != \"\", OverpackedCaseReason,\r\n                       WorkflowBlockedReason)\r\n| summarize min(StartTime), max(StartTime), count() by Content\r\n| project StartTime=min_StartTime,\r\n          EndTime=max_StartTime,\r\n          Content,\r\n          Tooltip=tostring(count_),\r\n          GroupBy=Content",
+          "panelPath": []
+        }
+      ]
+    },
+    "AgentNfcHttpDownloadFileEtwTable": {
+      "panelPath": [
+        "AgentNfcHttpDownloadFileEtwTable"
+      ],
+      "queries": [
+        {
+          "id": "46ce398d-25a1-4129-a121-adf22930abd9",
+          "name": "AgentNfcHttpDownloadFileEtwTable",
+          "groupId": "2cca0f9b-ed10-4f6d-a36c-6d1c9bd26ca8",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Url",
+              "type": "string"
+            },
+            {
+              "name": "StatusCode",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "containerId",
+              "externalSourceName": "containerId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let nodeId = NodeServiceEventEtwTable\r\n| where ScopeIdentifier == containerId\r\n| take 1\r\n| project NodeId;\r\nAgentNfcHttpDownloadFileEtwTable\r\n| where PreciseTimeStamp between(queryFrom..queryTo)\r\n| where NodeId in (nodeId)\r\n| where Url contains \"|/\"\r\n| project PreciseTimeStamp, Url, StatusCode",
+          "panelPath": [
+            "AgentNfcHttpDownloadFileEtwTable"
+          ]
+        }
+      ]
+    },
+    "AzCiMadariOperationEvent": {
+      "panelPath": [
+        "AzCiMadariOperationEvent"
+      ],
+      "queries": [
+        {
+          "id": "58537a6c-1d4f-4022-a5a5-861deae2d3ae",
+          "name": "AzCiMMadariOperationEvent",
+          "groupId": "d520fbc3-54a7-4474-a299-b5b5c8f6b904",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Result",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "containerId",
+              "externalSourceName": "containerId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "AzCiMMadariOperationEvent\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where * contains containerId\r\n| project PreciseTimeStamp, Result",
+          "panelPath": [
+            "AzCiMadariOperationEvent"
+          ]
+        }
+      ]
+    },
+    "AzCiMContainerWas": {
+      "panelPath": [
+        "AzCiMContainerWas"
+      ],
+      "queries": [
+        {
+          "id": "92f81094-a59a-4012-bca8-79a60063d0ec",
+          "name": "AzCiMContainerWas",
+          "groupId": "7a6fd985-3e71-41ba-a1b7-fd9fca6c1b6f",
+          "majorVersion": 2,
+          "minorVersion": 3,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "AzureCP",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Was",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "containerId",
+              "externalSourceName": "containerId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "faultTime",
+              "externalSourceName": "faultTime",
+              "required": false
+            }
+          ],
+          "kustoQuery": "AzCiMContainerWas\r\n| where PhysicalContainerId ==  containerId\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| project PreciseTimeStamp, Was\r\n",
+          "panelPath": [
+            "AzCiMContainerWas"
+          ]
+        }
+      ]
+    },
+    "AzCiMContainerWillBe": {
+      "panelPath": [
+        "AzCiMContainerWillBe"
+      ],
+      "queries": [
+        {
+          "id": "f158f14f-25cc-41e9-8e12-33eab39db0d3",
+          "name": "AzCiMContainerWillBe",
+          "groupId": "9e746dae-a486-4e45-8e75-92021ba026c5",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "WillBe",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "containerId",
+              "externalSourceName": "containerId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "faultTime",
+              "externalSourceName": "faultTime",
+              "required": false
+            }
+          ],
+          "kustoQuery": "AzCiMContainerWillBe\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where PhysicalContainerId == containerId\r\n| project PreciseTimeStamp, WillBe\r\n",
+          "panelPath": [
+            "AzCiMContainerWillBe"
+          ]
+        }
+      ]
+    },
+    "NodeServiceEvents": {
+      "panelPath": [
+        "NodeServiceEvents"
+      ],
+      "queries": [
+        {
+          "id": "4cf4b221-c8c1-49e4-a395-b28900782d75",
+          "name": "NodeServiceEventsEtwTable",
+          "groupId": "e4f7d5c2-f9c8-4152-95a1-bb94c848c319",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "containerId",
+              "externalSourceName": "containerId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "faultTime",
+              "externalSourceName": "faultTime",
+              "required": false
+            }
+          ],
+          "kustoQuery": "NodeServiceEventEtwTable\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where ScopeIdentifier == containerId\r\n| project PreciseTimeStamp, Message",
+          "panelPath": [
+            "NodeServiceEvents"
+          ]
+        }
+      ]
+    },
+    "NodeServiceMadariEvents": {
+      "panelPath": [
+        "NodeServiceMadariEvents"
+      ],
+      "queries": [
+        {
+          "id": "f7973b19-3ba9-4416-93cf-cd58e3e1038f",
+          "name": "NodeServiceMadariEventsEtwTable",
+          "groupId": "3012def8-ee5d-4231-9758-817bfecd9c3e",
+          "majorVersion": 3,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            },
+            {
+              "name": "Operation",
+              "type": "string"
+            },
+            {
+              "name": "RelativePath",
+              "type": "string"
+            },
+            {
+              "name": "ContextSelector",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "containerId",
+              "externalSourceName": "containerId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "relativePath",
+              "externalSourceName": "relativePath",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "faultTime",
+              "externalSourceName": "faultTime",
+              "required": false
+            }
+          ],
+          "kustoQuery": "NodeServiceMadariEventsEtwTable\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where RelativePath contains containerId\r\n| project PreciseTimeStamp, Message, Operation, RelativePath, ContextSelector",
+          "panelPath": [
+            "NodeServiceMadariEvents"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:12:40.042Z",
+    "totalPanels": 7,
+    "totalUniqueQueries": 9,
+    "totalWidgetRefs": 9
+  }
+}

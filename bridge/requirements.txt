@@ -1,0 +1,44 @@
+# Teams Bot (channel layer)
+botbuilder-core>=4.16.0
+botbuilder-integration-aiohttp>=4.16.0
+aiohttp>=3.9.0
+
+# Brain (LLM orchestration)
+# agent-framework-openai 新版本要求 openai>=2.25.0，放开到 2.x 以避免解析冲突
+openai>=2.25.0,<3
+
+# Microsoft Agent Framework (MAF) 大脑 (brain_maf.py)
+# —— 按 CPU 架构区分（PEP 508 environment markers，pip 安装时按当前解释器自动选行）——
+# Windows ARM64（platform.machine() == "ARM64"）：只装代码实际 import 的子包，
+#   避免 agent-framework 伞包拉入 durabletask / qdrant-client 等硬依赖 grpcio 的组件
+#   （Windows ARM64 在 PyPI 上没有任何 grpcio 预编译 wheel，会回退本地编译并失败）。
+agent-framework-core ; platform_machine == "ARM64"
+# 其它架构（x86-64=AMD64 / macOS arm64 / Linux aarch64，均有 grpcio wheel）：用完整伞包最新版。
+agent-framework ; platform_machine != "ARM64"
+# foundry 子包两种架构都要（agent_framework.foundry.FoundryChatClient）。
+agent-framework-foundry
+
+# 可插拔 skill 加载器 (skill_loader.py 解析 SKILL.md frontmatter)
+pyyaml
+
+# kusto-query skill: 查 Azure 底层遥测集群
+azure-kusto-data
+msal>=1.29.0
+
+
+# cryptography —— 按 CPU 架构区分：
+# Windows ARM64：官方 win_arm64 预编译 wheel 从 46.0.0 起才提供，锁到 46.0.3 直接用 wheel，
+#   避免回退到 Rust + OpenSSL 本地编译（就是之前 openssl-sys 报错的根因）。
+cryptography==46.0.3 ; platform_machine == "ARM64"
+# 其它架构（AMD64/arm64/aarch64）：各版本都有预编译 wheel，不锁版本取最新即可。
+cryptography ; platform_machine != "ARM64"
+
+# Azure identity + management (reuse existing metric/graph query capability)
+azure-identity>=1.16.0
+azure-mgmt-monitor>=6.0.2
+azure-mgmt-compute>=30.0.0
+azure-mgmt-resourcegraph>=8.0.0
+# 23.x 仍在顶层导出 SubscriptionClient；26.x 拆分后不再导出
+azure-mgmt-resource==23.1.0
+
+python-dotenv>=1.0.0

@@ -1,0 +1,1 @@
+Write-Host "Reminder: start a new session for each topic."

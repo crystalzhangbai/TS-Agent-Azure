@@ -1,0 +1,1016 @@
+{
+  "service": "Storage Tools",
+  "page": "Storage Tenant",
+  "pageId": "3e1ae672-1256-4c1a-835c-a2dd627943bc",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "00720a3c-8213-4f7c-acbc-c1993a8829d9",
+          "name": "Retrieve Resource \"Storage Tenant\"",
+          "groupId": "fea0c3ab-609f-42f2-8465-6123ba8bc97b",
+          "majorVersion": 1,
+          "minorVersion": 13,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "{{Tenant}}",
+          "params": [
+            {
+              "name": "local_Tenant",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "AltName",
+              "type": "string"
+            },
+            {
+              "name": "AuxEndpoints",
+              "type": "string"
+            },
+            {
+              "name": "BootstrapAccountSuffix",
+              "type": "string"
+            },
+            {
+              "name": "ClusterName",
+              "type": "string"
+            },
+            {
+              "name": "CreationTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "GeoDomain",
+              "type": "string"
+            },
+            {
+              "name": "GeoPairName",
+              "type": "string"
+            },
+            {
+              "name": "GeoRegion",
+              "type": "string"
+            },
+            {
+              "name": "GeoSetup",
+              "type": "string"
+            },
+            {
+              "name": "HardwareSetup",
+              "type": "string"
+            },
+            {
+              "name": "InBuildOut",
+              "type": "bool"
+            },
+            {
+              "name": "InDecom",
+              "type": "bool"
+            },
+            {
+              "name": "LastUpdateTime",
+              "type": "datetime"
+            },
+            {
+              "name": "NetworkAttachment",
+              "type": "string"
+            },
+            {
+              "name": "Notes",
+              "type": "string"
+            },
+            {
+              "name": "StandbyXlsName",
+              "type": "string"
+            },
+            {
+              "name": "StandbyXlsNames",
+              "type": "string"
+            },
+            {
+              "name": "Tags",
+              "type": "string"
+            },
+            {
+              "name": "Type",
+              "type": "string"
+            },
+            {
+              "name": "XdsEndpoint",
+              "type": "string"
+            },
+            {
+              "name": "XlsName",
+              "type": "string"
+            },
+            {
+              "name": "Plan_SKU_Name",
+              "type": "string"
+            },
+            {
+              "name": "NumOfRacks",
+              "type": "int"
+            },
+            {
+              "name": "NumOfTS",
+              "type": "int"
+            },
+            {
+              "name": "NumOfFE",
+              "type": "int"
+            },
+            {
+              "name": "NumOfScavEn",
+              "type": "int"
+            },
+            {
+              "name": "NumOfEn",
+              "type": "int"
+            },
+            {
+              "name": "StorageHDDCount",
+              "type": "int"
+            },
+            {
+              "name": "StorageSSDCount",
+              "type": "int"
+            },
+            {
+              "name": "StorageHDDSizeBytes",
+              "type": "long"
+            },
+            {
+              "name": "StorageSSDSizeBytes",
+              "type": "long"
+            },
+            {
+              "name": "DataCenter",
+              "type": "string"
+            },
+            {
+              "name": "_RowNumber",
+              "type": "long"
+            },
+            {
+              "name": "Lens_IngestionTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Lens_Originator",
+              "type": "string"
+            },
+            {
+              "name": "Lens_OriginatorData",
+              "type": "string"
+            },
+            {
+              "name": "Lens_SessionId",
+              "type": "string"
+            },
+            {
+              "name": "Lens_BatchId",
+              "type": "string"
+            },
+            {
+              "name": "MetricValue",
+              "type": "int"
+            },
+            {
+              "name": "Lens_JobId",
+              "type": "string"
+            },
+            {
+              "name": "Manufacturer",
+              "type": "string"
+            },
+            {
+              "name": "Model",
+              "type": "string"
+            },
+            {
+              "name": "Version",
+              "type": "string"
+            },
+            {
+              "name": "CPUSpeed",
+              "type": "long"
+            },
+            {
+              "name": "NumOfCPUs",
+              "type": "int"
+            },
+            {
+              "name": "CPUManufacturer",
+              "type": "string"
+            },
+            {
+              "name": "Memory",
+              "type": "long"
+            },
+            {
+              "name": "Intent",
+              "type": "string"
+            },
+            {
+              "name": "NumberOfRacks",
+              "type": "string"
+            },
+            {
+              "name": "TSCount",
+              "type": "string"
+            },
+            {
+              "name": "EnCount",
+              "type": "string"
+            },
+            {
+              "name": "ScavEnCount",
+              "type": "string"
+            },
+            {
+              "name": "FECount",
+              "type": "string"
+            },
+            {
+              "name": "StorageTotalDiskSizeBytes",
+              "type": "long"
+            },
+            {
+              "name": "InDecomMigration",
+              "type": "bool"
+            },
+            {
+              "name": "IsReadyForCustomer",
+              "type": "bool"
+            },
+            {
+              "name": "ZrsSetup",
+              "type": "string"
+            },
+            {
+              "name": "VirtualTenantName",
+              "type": "string"
+            },
+            {
+              "name": "NumOfNodes",
+              "type": "int"
+            },
+            {
+              "name": "NumOfDataHandlerNodes",
+              "type": "int"
+            },
+            {
+              "name": "NumOfLogicalRacks",
+              "type": "int"
+            },
+            {
+              "name": "NumOfTapeDrives",
+              "type": "int"
+            },
+            {
+              "name": "NumOfTapes",
+              "type": "int"
+            },
+            {
+              "name": "TapeSizeBytes",
+              "type": "long"
+            },
+            {
+              "name": "NumOfRacksZRSV",
+              "type": "string"
+            },
+            {
+              "name": "NumOfTSZRSV",
+              "type": "string"
+            },
+            {
+              "name": "NumOfEnZRSV",
+              "type": "string"
+            },
+            {
+              "name": "StorageHDDSizeBytesZRSV",
+              "type": "string"
+            },
+            {
+              "name": "StorageSSDSizeBytesZRSV",
+              "type": "string"
+            },
+            {
+              "name": "StorageHDDCountZRSV",
+              "type": "string"
+            },
+            {
+              "name": "StorageSSDCountZRSV",
+              "type": "string"
+            },
+            {
+              "name": "CPUSpeedZRSV",
+              "type": "string"
+            },
+            {
+              "name": "NumOfCPUsZRSV",
+              "type": "string"
+            },
+            {
+              "name": "MemoryZRSV",
+              "type": "string"
+            },
+            {
+              "name": "SKUZRSV",
+              "type": "string"
+            },
+            {
+              "name": "IsADL",
+              "type": "bool"
+            },
+            {
+              "name": "IsLimitless",
+              "type": "bool"
+            },
+            {
+              "name": "IsRDMA",
+              "type": "bool"
+            },
+            {
+              "name": "MDMAccountName",
+              "type": "string"
+            },
+            {
+              "name": "MDMShoeboxAccountName",
+              "type": "string"
+            },
+            {
+              "name": "IsDecomed",
+              "type": "bool"
+            },
+            {
+              "name": "NumOfBss",
+              "type": "int"
+            },
+            {
+              "name": "Category",
+              "type": "string"
+            },
+            {
+              "name": "T2Alias",
+              "type": "string"
+            },
+            {
+              "name": "ArchiveBlobTiering",
+              "type": "string"
+            },
+            {
+              "name": "Generation",
+              "type": "string"
+            },
+            {
+              "name": "Continent",
+              "type": "string"
+            },
+            {
+              "name": "StorageTotalDiskSizeBytesV",
+              "type": "string"
+            },
+            {
+              "name": "IsEdge",
+              "type": "bool"
+            },
+            {
+              "name": "RsrpName",
+              "type": "string"
+            },
+            {
+              "name": "ZoneId",
+              "type": "long"
+            },
+            {
+              "name": "TenantIndexInVirtualStamp",
+              "type": "long"
+            },
+            {
+              "name": "AddRackCapacity",
+              "type": "real"
+            },
+            {
+              "name": "ProductInCatalog",
+              "type": "string"
+            },
+            {
+              "name": "Site",
+              "type": "string"
+            },
+            {
+              "name": "AddRackAverageStorageHDDSizeBytes",
+              "type": "real"
+            },
+            {
+              "name": "AddRackAverageStorageSSDSizeBytes",
+              "type": "real"
+            },
+            {
+              "name": "AddRackHDDCount",
+              "type": "int"
+            },
+            {
+              "name": "AddRackNumOfCPUs",
+              "type": "int"
+            },
+            {
+              "name": "AddRackNumOfEn",
+              "type": "int"
+            },
+            {
+              "name": "AddRackNumOfRacks",
+              "type": "int"
+            },
+            {
+              "name": "AddRackNumOfTS",
+              "type": "int"
+            },
+            {
+              "name": "AddRackSSDCount",
+              "type": "int"
+            },
+            {
+              "name": "ServiceIntent",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringGcsStorageResourceTagValue",
+              "type": "string"
+            },
+            {
+              "name": "ConnectedBackendTenants",
+              "type": "string"
+            },
+            {
+              "name": "IsNewSkuValidation",
+              "type": "bool"
+            },
+            {
+              "name": "IsPF",
+              "type": "bool"
+            },
+            {
+              "name": "PFEnvironment",
+              "type": "string"
+            },
+            {
+              "name": "MdmClusterName",
+              "type": "string"
+            },
+            {
+              "name": "MdmCode",
+              "type": "string"
+            },
+            {
+              "name": "OEM",
+              "type": "string"
+            },
+            {
+              "name": "TenantLower",
+              "type": "string"
+            },
+            {
+              "name": "TenantLowerShort",
+              "type": "string"
+            },
+            {
+              "name": "EnvironmentStandardized",
+              "type": "string"
+            },
+            {
+              "name": "STG",
+              "type": "string"
+            },
+            {
+              "name": "XPTCH",
+              "type": "string"
+            },
+            {
+              "name": "XOS",
+              "type": "string"
+            },
+            {
+              "name": "XCFG",
+              "type": "string"
+            },
+            {
+              "name": "XCFGFST",
+              "type": "string"
+            },
+            {
+              "name": "GeoPairSTG",
+              "type": "string"
+            },
+            {
+              "name": "GeoPairXOS",
+              "type": "string"
+            },
+            {
+              "name": "GeoPairXPTCH",
+              "type": "string"
+            },
+            {
+              "name": "GeoPairXCFG",
+              "type": "string"
+            },
+            {
+              "name": "GeoPairXCFGFST",
+              "type": "string"
+            },
+            {
+              "name": "MainDiskModelCount",
+              "type": "long"
+            },
+            {
+              "name": "MainDiskModel",
+              "type": "string"
+            },
+            {
+              "name": "AzCoreCluster",
+              "type": "string"
+            },
+            {
+              "name": "NICDescriptionPrefix",
+              "type": "string"
+            },
+            {
+              "name": "NICMaxRecieveLinkSpeedGb",
+              "type": "real"
+            },
+            {
+              "name": "LimitlessGroup",
+              "type": "string"
+            },
+            {
+              "name": "MigrationGroup",
+              "type": "string"
+            },
+            {
+              "name": "SrpAvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "ArmRegion",
+              "type": "string"
+            },
+            {
+              "name": "TenantMsg",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_Tenant",
+              "externalSourceName": "Tenant",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "GetTenantCatalogLatest()\n| where Tenant == trim(@\"[\\s]+\", local_Tenant)\n| extend TenantMsg=\"\"\n// if Tenant not found, retuns empty line instead of ASI resource was found error and cat image\n| union (       \n    print TenantMsg=strcat(\"<span style='color:red'>Tenant <b>\",trim(@\"[\\s]+\", local_Tenant),\"</b> not found</span>\")\n)\n| sort by ClusterName nulls last\n| limit 1",
+          "panelPath": []
+        }
+      ]
+    },
+    "Account Limits Overwrite": {
+      "panelPath": [
+        "Account Limits Overwrite"
+      ],
+      "queries": [
+        {
+          "id": "2d6bf332-3ab5-4d40-939e-3f511a6f1406",
+          "name": "List Account Limits Overwrite by Tenant",
+          "groupId": "4f5b3945-33c1-42c5-ac86-fbb09d706df1",
+          "majorVersion": 4,
+          "minorVersion": 0,
+          "cluster": "https://xdeployment.westcentralus.kusto.windows.net",
+          "database": "Deployment",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Account Limits Overwrite",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "tenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Account",
+              "type": "string"
+            },
+            {
+              "name": "Index",
+              "type": "int"
+            },
+            {
+              "name": "EgressThresholdInGbps",
+              "type": "long"
+            },
+            {
+              "name": "IngressThresholdInGbps",
+              "type": "long"
+            },
+            {
+              "name": "IOUnitsThresholdInKiops",
+              "type": "long"
+            },
+            {
+              "name": "RequestThresholdInKtps",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "fea0c3ab-609f-42f2-8465-6123ba8bc97b",
+              "majorVersion": 1,
+              "minorVersion": 13,
+              "internalDestinationName": "tenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "GetAccountThrottlingThresholdsSnapshot()\n| where Tenant =~ tenant\n| project Tenant, Account, Index , EgressThresholdInGbps, IngressThresholdInGbps, IOUnitsThresholdInKiops, RequestThresholdInKtps",
+          "panelPath": [
+            "Account Limits Overwrite"
+          ]
+        }
+      ]
+    },
+    "Pages - Storage Tools": {
+      "panelPath": [
+        "Pages - Storage Tools"
+      ],
+      "queries": [
+        {
+          "id": "f13fec28-2acc-4ba7-af79-37be3cab900f",
+          "name": "Get Tenant Info by Account",
+          "groupId": "b760a659-e8eb-4ff6-ac4b-2614f64bc29c",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XStoreAccountPropertiesHourly()\r\n| where TimePeriod > ago(3d)\r\n| where Account startswith strcat(trim(@\"[\\s]+\", accountName),\";\")\r\n| order by TimePeriod desc \r\n| take 1\r\n| project Tenant, Subscription\r\n// if Account not found, retuns empty Tenant instead of ASI error\r\n| union (        \r\n    print Tenant=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1\r\n",
+          "panelPath": [
+            "Pages - Storage Tools"
+          ]
+        },
+        {
+          "id": "2bc22049-e59c-45fe-8074-40dfea9dac00",
+          "name": "TrimStorageName",
+          "groupId": "013910c6-a3a7-4a35-8c20-8591d0282342",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "local_StorageNameName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StorageName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_StorageNameName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let trimmed_StorageName = trim(@\"[\\s]+\", local_StorageNameName);\r\nprint StorageName = trimmed_StorageName ;",
+          "panelPath": [
+            "Pages - Storage Tools"
+          ]
+        }
+      ]
+    },
+    "STG OS Deployment History": {
+      "panelPath": [
+        "STG OS Deployment History"
+      ],
+      "queries": [
+        {
+          "id": "0e68f2b1-034e-4910-b11c-7c81be4ac01b",
+          "name": "Get Tenant STGOS Deployment History",
+          "groupId": "3fc92748-13c7-48fb-b068-841ed872da8c",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "STG OS Deployment History",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "tenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "StartDate",
+              "type": "datetime"
+            },
+            {
+              "name": "FinishDate",
+              "type": "datetime"
+            },
+            {
+              "name": "State",
+              "type": "string"
+            },
+            {
+              "name": "Component",
+              "type": "string"
+            },
+            {
+              "name": "ComponentVersion",
+              "type": "string"
+            },
+            {
+              "name": "StgCarryingOS",
+              "type": "long"
+            },
+            {
+              "name": "XOSVersion",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "componentFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "componentTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "fea0c3ab-609f-42f2-8465-6123ba8bc97b",
+              "majorVersion": 1,
+              "minorVersion": 13,
+              "internalDestinationName": "tenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "STGOSDeploymentHistory\n| where StartDate > queryFrom\n| where FinishDate < queryTo\n| where Tenant == tenant",
+          "panelPath": [
+            "STG OS Deployment History"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:54:44.281Z",
+    "totalPanels": 4,
+    "totalUniqueQueries": 5,
+    "totalWidgetRefs": 5
+  }
+}

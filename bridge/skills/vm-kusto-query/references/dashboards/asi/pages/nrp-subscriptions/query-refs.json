@@ -1,0 +1,5157 @@
+[
+  {
+    "groupId": "3cba87c8-d88a-4f0d-b7cf-8ec4fb011255",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "0187f907-e89e-45ff-9629-ee364576d7a4",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"Subscriptions\"",
+    "cluster": "argwus2nrpone.westus2",
+    "database": "AzureResourceGraph",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "dd2c6e81-999d-478f-aa9f-38048ea852d3",
+    "majorVersion": 3,
+    "minorVersion": 4,
+    "panelPath": [
+      "VNets",
+      "VNets",
+      "Subscription VNets"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription VNets",
+    "queryId": "2cd17219-7d7a-4db3-8df4-9b71a169e240",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "3cba87c8-d88a-4f0d-b7cf-8ec4fb011255",
+        "majorVersion": 1,
+        "minorVersion": 3,
+        "internalDestinationName": "querySubscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "constant_value_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryOptionalResourceGroup",
+        "externalSourceName": "empty_string",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Subscription VNets",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "addressPrefixes",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "dd2c6e81-999d-478f-aa9f-38048ea852d3",
+    "majorVersion": 3,
+    "minorVersion": 5,
+    "panelPath": [
+      "VNets",
+      "VNets",
+      "Subscription VNets"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription VNets",
+    "via": "selectedProperty",
+    "propertyName": "provisioningState",
+    "name": "Subscription VNets",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "addressPrefixes",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "dd2c6e81-999d-478f-aa9f-38048ea852d3",
+    "majorVersion": 3,
+    "minorVersion": 5,
+    "panelPath": [
+      "VNets",
+      "VNets",
+      "Subscription VNets"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription VNets",
+    "via": "selectedProperty",
+    "propertyName": "addressPrefixes",
+    "name": "Subscription VNets",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "addressPrefixes",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "dd2c6e81-999d-478f-aa9f-38048ea852d3",
+    "majorVersion": 3,
+    "minorVersion": 5,
+    "panelPath": [
+      "VNets",
+      "VNets",
+      "Subscription VNets"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription VNets",
+    "via": "selectedProperty",
+    "propertyName": "id",
+    "name": "Subscription VNets",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "addressPrefixes",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "293d05f4-39d9-4145-b6e7-04545c410981",
+    "majorVersion": 3,
+    "minorVersion": 2,
+    "panelPath": [
+      "Subnets",
+      "Subnets",
+      "Subscription Subnets"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription Subnets",
+    "queryId": "6215085a-5bd0-4aa8-a0cb-53854c6e616d",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "3cba87c8-d88a-4f0d-b7cf-8ec4fb011255",
+        "majorVersion": 1,
+        "minorVersion": 3,
+        "internalDestinationName": "querySubscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "constant_value_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryOptionalResourceGroupName",
+        "externalSourceName": "empty_string",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Subscription Subnets",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "virtualNetworkName",
+        "type": "string"
+      },
+      {
+        "name": "vnetResourceId",
+        "type": "string"
+      },
+      {
+        "name": "reconciliationState",
+        "type": "string"
+      },
+      {
+        "name": "lastModifiedTime",
+        "type": "datetime"
+      },
+      {
+        "name": "createdTime",
+        "type": "datetime"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "addressPrefixes",
+        "type": "string"
+      },
+      {
+        "name": "isSqlGTEnabledNow",
+        "type": "bool"
+      },
+      {
+        "name": "isStorageGTEnabledNow",
+        "type": "bool"
+      },
+      {
+        "name": "isSqlGTEnabledEver",
+        "type": "bool"
+      },
+      {
+        "name": "isStorageGTEnabledEver",
+        "type": "bool"
+      },
+      {
+        "name": "isAddressPrefixesSet",
+        "type": "bool"
+      },
+      {
+        "name": "networkSecurityGroupId",
+        "type": "string"
+      },
+      {
+        "name": "networkSecurityGroupName",
+        "type": "string"
+      },
+      {
+        "name": "routeTableId",
+        "type": "string"
+      },
+      {
+        "name": "routeTableName",
+        "type": "string"
+      },
+      {
+        "name": "privateEndpointNetworkPolicies",
+        "type": "string"
+      },
+      {
+        "name": "privateLinkServiceNetworkPolicies",
+        "type": "string"
+      },
+      {
+        "name": "subnetTrafficTag",
+        "type": "long"
+      },
+      {
+        "name": "ipAddressOwnerDict",
+        "type": "dynamic"
+      },
+      {
+        "name": "rtSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "rtResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "nsgSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "privateEndpointId",
+        "type": "string"
+      },
+      {
+        "name": "hasPrivateEndpoints",
+        "type": "bool"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "293d05f4-39d9-4145-b6e7-04545c410981",
+    "majorVersion": 3,
+    "minorVersion": 3,
+    "panelPath": [
+      "Subnets",
+      "Subnets",
+      "Subscription Subnets"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription Subnets",
+    "via": "selectedProperty",
+    "propertyName": "addressPrefixes",
+    "name": "Subscription Subnets",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "virtualNetworkName",
+        "type": "string"
+      },
+      {
+        "name": "vnetResourceId",
+        "type": "string"
+      },
+      {
+        "name": "reconciliationState",
+        "type": "string"
+      },
+      {
+        "name": "lastModifiedTime",
+        "type": "datetime"
+      },
+      {
+        "name": "createdTime",
+        "type": "datetime"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "addressPrefixes",
+        "type": "string"
+      },
+      {
+        "name": "isSqlGTEnabledNow",
+        "type": "bool"
+      },
+      {
+        "name": "isStorageGTEnabledNow",
+        "type": "bool"
+      },
+      {
+        "name": "isSqlGTEnabledEver",
+        "type": "bool"
+      },
+      {
+        "name": "isStorageGTEnabledEver",
+        "type": "bool"
+      },
+      {
+        "name": "isAddressPrefixesSet",
+        "type": "bool"
+      },
+      {
+        "name": "networkSecurityGroupId",
+        "type": "string"
+      },
+      {
+        "name": "networkSecurityGroupName",
+        "type": "string"
+      },
+      {
+        "name": "routeTableId",
+        "type": "string"
+      },
+      {
+        "name": "routeTableName",
+        "type": "string"
+      },
+      {
+        "name": "privateEndpointNetworkPolicies",
+        "type": "string"
+      },
+      {
+        "name": "privateLinkServiceNetworkPolicies",
+        "type": "string"
+      },
+      {
+        "name": "subnetTrafficTag",
+        "type": "long"
+      },
+      {
+        "name": "ipAddressOwnerDict",
+        "type": "dynamic"
+      },
+      {
+        "name": "rtSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "rtResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "nsgSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "privateEndpointId",
+        "type": "string"
+      },
+      {
+        "name": "hasPrivateEndpoints",
+        "type": "bool"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "293d05f4-39d9-4145-b6e7-04545c410981",
+    "majorVersion": 3,
+    "minorVersion": 3,
+    "panelPath": [
+      "Subnets",
+      "Subnets",
+      "Subscription Subnets"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription Subnets",
+    "via": "selectedProperty",
+    "propertyName": "provisioningState",
+    "name": "Subscription Subnets",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "virtualNetworkName",
+        "type": "string"
+      },
+      {
+        "name": "vnetResourceId",
+        "type": "string"
+      },
+      {
+        "name": "reconciliationState",
+        "type": "string"
+      },
+      {
+        "name": "lastModifiedTime",
+        "type": "datetime"
+      },
+      {
+        "name": "createdTime",
+        "type": "datetime"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "addressPrefixes",
+        "type": "string"
+      },
+      {
+        "name": "isSqlGTEnabledNow",
+        "type": "bool"
+      },
+      {
+        "name": "isStorageGTEnabledNow",
+        "type": "bool"
+      },
+      {
+        "name": "isSqlGTEnabledEver",
+        "type": "bool"
+      },
+      {
+        "name": "isStorageGTEnabledEver",
+        "type": "bool"
+      },
+      {
+        "name": "isAddressPrefixesSet",
+        "type": "bool"
+      },
+      {
+        "name": "networkSecurityGroupId",
+        "type": "string"
+      },
+      {
+        "name": "networkSecurityGroupName",
+        "type": "string"
+      },
+      {
+        "name": "routeTableId",
+        "type": "string"
+      },
+      {
+        "name": "routeTableName",
+        "type": "string"
+      },
+      {
+        "name": "privateEndpointNetworkPolicies",
+        "type": "string"
+      },
+      {
+        "name": "privateLinkServiceNetworkPolicies",
+        "type": "string"
+      },
+      {
+        "name": "subnetTrafficTag",
+        "type": "long"
+      },
+      {
+        "name": "ipAddressOwnerDict",
+        "type": "dynamic"
+      },
+      {
+        "name": "rtSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "rtResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "nsgSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "privateEndpointId",
+        "type": "string"
+      },
+      {
+        "name": "hasPrivateEndpoints",
+        "type": "bool"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "df58cb7f-a08b-4610-8ae9-5e4b4a1a5e86",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "NSGs",
+      "NSGs",
+      "Subscription NSGs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription NSGs",
+    "queryId": "2c25bbb1-ac36-462a-8155-f986f0ce1dc1",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "3cba87c8-d88a-4f0d-b7cf-8ec4fb011255",
+        "majorVersion": 1,
+        "minorVersion": 3,
+        "internalDestinationName": "querySubscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "constant_value_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryOptionalResourceGroupName",
+        "externalSourceName": "empty_string",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Subscription NSGs",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "ArmRegionName",
+        "type": "string"
+      },
+      {
+        "name": "NumberOfSecurityRules",
+        "type": "long"
+      },
+      {
+        "name": "nsgSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "nsgName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "df58cb7f-a08b-4610-8ae9-5e4b4a1a5e86",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "NSGs",
+      "NSGs",
+      "Subscription NSGs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription NSGs",
+    "via": "selectedProperty",
+    "propertyName": "ArmRegionName",
+    "name": "Subscription NSGs",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "ArmRegionName",
+        "type": "string"
+      },
+      {
+        "name": "NumberOfSecurityRules",
+        "type": "long"
+      },
+      {
+        "name": "nsgSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "nsgName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "df58cb7f-a08b-4610-8ae9-5e4b4a1a5e86",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "NSGs",
+      "NSGs",
+      "Subscription NSGs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription NSGs",
+    "via": "selectedProperty",
+    "propertyName": "NumberOfSecurityRules",
+    "name": "Subscription NSGs",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "ArmRegionName",
+        "type": "string"
+      },
+      {
+        "name": "NumberOfSecurityRules",
+        "type": "long"
+      },
+      {
+        "name": "nsgSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "nsgName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "df58cb7f-a08b-4610-8ae9-5e4b4a1a5e86",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "NSGs",
+      "NSGs",
+      "Subscription NSGs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription NSGs",
+    "via": "selectedProperty",
+    "propertyName": "provisioningState",
+    "name": "Subscription NSGs",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "ArmRegionName",
+        "type": "string"
+      },
+      {
+        "name": "NumberOfSecurityRules",
+        "type": "long"
+      },
+      {
+        "name": "nsgSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "nsgName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2e263133-a25d-41e2-a507-6b973a8aa040",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Route Tables"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "50fdd922-8403-4038-a557-f456c6e3ff39",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false
+      },
+      {
+        "source": "constant_value_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryOptionalResourceGroupName",
+        "externalSourceName": "empty_string",
+        "required": false
+      }
+    ],
+    "name": "Sub or RG Route Tables",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "rtSub",
+        "type": "string"
+      },
+      {
+        "name": "rtRg",
+        "type": "string"
+      },
+      {
+        "name": "rtName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "subnets",
+        "type": "long"
+      },
+      {
+        "name": "routes",
+        "type": "long"
+      },
+      {
+        "name": "disableBgpRoutePropagation",
+        "type": "bool"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2e263133-a25d-41e2-a507-6b973a8aa040",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Route Tables"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "routes",
+    "name": "Sub or RG Route Tables",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "rtSub",
+        "type": "string"
+      },
+      {
+        "name": "rtRg",
+        "type": "string"
+      },
+      {
+        "name": "rtName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "subnets",
+        "type": "long"
+      },
+      {
+        "name": "routes",
+        "type": "long"
+      },
+      {
+        "name": "disableBgpRoutePropagation",
+        "type": "bool"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2e263133-a25d-41e2-a507-6b973a8aa040",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Route Tables"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "location",
+    "name": "Sub or RG Route Tables",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "rtSub",
+        "type": "string"
+      },
+      {
+        "name": "rtRg",
+        "type": "string"
+      },
+      {
+        "name": "rtName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "subnets",
+        "type": "long"
+      },
+      {
+        "name": "routes",
+        "type": "long"
+      },
+      {
+        "name": "disableBgpRoutePropagation",
+        "type": "bool"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2e263133-a25d-41e2-a507-6b973a8aa040",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Route Tables"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "provisioningState",
+    "name": "Sub or RG Route Tables",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "rtSub",
+        "type": "string"
+      },
+      {
+        "name": "rtRg",
+        "type": "string"
+      },
+      {
+        "name": "rtName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "subnets",
+        "type": "long"
+      },
+      {
+        "name": "routes",
+        "type": "long"
+      },
+      {
+        "name": "disableBgpRoutePropagation",
+        "type": "bool"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1292fc9d-7db0-4d5f-bde5-3475d5cce0c0",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Firewalls",
+      "Firewalls",
+      "Subscription Firewalls"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription Firewalls",
+    "queryId": "e41cee01-e487-4130-b88d-b02149e03427",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false
+      },
+      {
+        "source": "constant_value_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryOptionalResourceGroupName",
+        "externalSourceName": "empty_string",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Subscription Firewalls",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "fwSub",
+        "type": "string"
+      },
+      {
+        "name": "fwRg",
+        "type": "string"
+      },
+      {
+        "name": "fwName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "skuName",
+        "type": "string"
+      },
+      {
+        "name": "skuTier",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "firewallPolicy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1292fc9d-7db0-4d5f-bde5-3475d5cce0c0",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Firewalls",
+      "Firewalls",
+      "Subscription Firewalls"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription Firewalls",
+    "via": "selectedProperty",
+    "propertyName": "skuName",
+    "name": "Subscription Firewalls",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "fwSub",
+        "type": "string"
+      },
+      {
+        "name": "fwRg",
+        "type": "string"
+      },
+      {
+        "name": "fwName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "skuName",
+        "type": "string"
+      },
+      {
+        "name": "skuTier",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "firewallPolicy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1292fc9d-7db0-4d5f-bde5-3475d5cce0c0",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Firewalls",
+      "Firewalls",
+      "Subscription Firewalls"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription Firewalls",
+    "via": "selectedProperty",
+    "propertyName": "skuTier",
+    "name": "Subscription Firewalls",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "fwSub",
+        "type": "string"
+      },
+      {
+        "name": "fwRg",
+        "type": "string"
+      },
+      {
+        "name": "fwName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "skuName",
+        "type": "string"
+      },
+      {
+        "name": "skuTier",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "firewallPolicy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1292fc9d-7db0-4d5f-bde5-3475d5cce0c0",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Firewalls",
+      "Firewalls",
+      "Subscription Firewalls"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription Firewalls",
+    "via": "selectedProperty",
+    "propertyName": "provisioningState",
+    "name": "Subscription Firewalls",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "fwSub",
+        "type": "string"
+      },
+      {
+        "name": "fwRg",
+        "type": "string"
+      },
+      {
+        "name": "fwName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "skuName",
+        "type": "string"
+      },
+      {
+        "name": "skuTier",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "firewallPolicy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1292fc9d-7db0-4d5f-bde5-3475d5cce0c0",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Firewalls",
+      "Firewalls",
+      "Subscription Firewalls"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription Firewalls",
+    "via": "selectedProperty",
+    "propertyName": "privateIPAddress",
+    "name": "Subscription Firewalls",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "fwSub",
+        "type": "string"
+      },
+      {
+        "name": "fwRg",
+        "type": "string"
+      },
+      {
+        "name": "fwName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "skuName",
+        "type": "string"
+      },
+      {
+        "name": "skuTier",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "firewallPolicy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1292fc9d-7db0-4d5f-bde5-3475d5cce0c0",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Firewalls",
+      "Firewalls",
+      "Subscription Firewalls"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription Firewalls",
+    "via": "selectedProperty",
+    "propertyName": "publicIPAddress",
+    "name": "Subscription Firewalls",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "fwSub",
+        "type": "string"
+      },
+      {
+        "name": "fwRg",
+        "type": "string"
+      },
+      {
+        "name": "fwName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "skuName",
+        "type": "string"
+      },
+      {
+        "name": "skuTier",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "firewallPolicy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7242b729-88ba-4f42-9ecb-f0234953b32a",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Public IPs",
+      "Public IPs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Public IPs",
+    "queryId": "7d2c4b77-f4e6-41d7-a4f4-562356ddebc6",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false
+      },
+      {
+        "source": "constant_value_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryOptionalResourceGroup",
+        "externalSourceName": "empty_string",
+        "required": false
+      }
+    ],
+    "name": "NRP Public IPs by Sub and RG",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "ipAddress",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddressVersion",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7242b729-88ba-4f42-9ecb-f0234953b32a",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Public IPs",
+      "Public IPs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Public IPs",
+    "via": "selectedProperty",
+    "propertyName": "ipAddress",
+    "name": "NRP Public IPs by Sub and RG",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "ipAddress",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddressVersion",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7242b729-88ba-4f42-9ecb-f0234953b32a",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Public IPs",
+      "Public IPs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Public IPs",
+    "via": "selectedProperty",
+    "propertyName": "publicIPAllocationMethod",
+    "name": "NRP Public IPs by Sub and RG",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "ipAddress",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddressVersion",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7242b729-88ba-4f42-9ecb-f0234953b32a",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Public IPs",
+      "Public IPs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Public IPs",
+    "via": "selectedProperty",
+    "propertyName": "publicIPAddressVersion",
+    "name": "NRP Public IPs by Sub and RG",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "ipAddress",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddressVersion",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7242b729-88ba-4f42-9ecb-f0234953b32a",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Public IPs",
+      "Public IPs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Public IPs",
+    "via": "selectedProperty",
+    "propertyName": "idleTimeoutInMinutes",
+    "name": "NRP Public IPs by Sub and RG",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "ipAddress",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddressVersion",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7242b729-88ba-4f42-9ecb-f0234953b32a",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Public IPs",
+      "Public IPs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Public IPs",
+    "via": "selectedProperty",
+    "propertyName": "provisioningState",
+    "name": "NRP Public IPs by Sub and RG",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "ipAddress",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddressVersion",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "4ab290fb-9d17-4f48-b455-1d5cc63e911a",
+    "majorVersion": 3,
+    "minorVersion": 3,
+    "panelPath": [
+      "NICs",
+      "Subscription NICs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription NICs",
+    "queryId": "dcf9ddc6-6922-4c01-a0a1-3be262b4b99d",
+    "inputMappings": [
+      {
+        "source": "constant_value_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryOptionalResourceGroupName",
+        "externalSourceName": "null",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false
+      }
+    ],
+    "name": "Get Subscription NICs",
+    "cluster": "argwus2nrpone.westus2",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "vmId",
+        "type": "string"
+      },
+      {
+        "name": "vmName",
+        "type": "string"
+      },
+      {
+        "name": "vmResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "nsgId",
+        "type": "string"
+      },
+      {
+        "name": "nsgName",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "mac",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "4ab290fb-9d17-4f48-b455-1d5cc63e911a",
+    "majorVersion": 3,
+    "minorVersion": 3,
+    "panelPath": [
+      "NICs",
+      "Subscription NICs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription NICs",
+    "via": "selectedProperty",
+    "propertyName": "provisioningState",
+    "name": "Get Subscription NICs",
+    "cluster": "argwus2nrpone.westus2",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "vmId",
+        "type": "string"
+      },
+      {
+        "name": "vmName",
+        "type": "string"
+      },
+      {
+        "name": "vmResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "nsgId",
+        "type": "string"
+      },
+      {
+        "name": "nsgName",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "mac",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "4ab290fb-9d17-4f48-b455-1d5cc63e911a",
+    "majorVersion": 3,
+    "minorVersion": 3,
+    "panelPath": [
+      "NICs",
+      "Subscription NICs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Subscription NICs",
+    "via": "selectedProperty",
+    "propertyName": "mac",
+    "name": "Get Subscription NICs",
+    "cluster": "argwus2nrpone.westus2",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "vmId",
+        "type": "string"
+      },
+      {
+        "name": "vmName",
+        "type": "string"
+      },
+      {
+        "name": "vmResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "nsgId",
+        "type": "string"
+      },
+      {
+        "name": "nsgName",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "mac",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d55023ab-ae2a-407b-be15-e4326b451adb",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Load Balancers",
+      "Load Balancers"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Load Balancers",
+    "queryId": "6179cae4-196b-4e7f-b707-cf25854cbbc6",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "ArbitraryString",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryOptionalResourceGroupName",
+        "externalSourceName": "Arbitrary String",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false
+      }
+    ],
+    "name": "NRP Sub and RG Load Balancers",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "lbSub",
+        "type": "string"
+      },
+      {
+        "name": "lbRg",
+        "type": "string"
+      },
+      {
+        "name": "lbName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatRules",
+        "type": "long"
+      },
+      {
+        "name": "outboundRules",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatPools",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d55023ab-ae2a-407b-be15-e4326b451adb",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Load Balancers",
+      "Load Balancers"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Load Balancers",
+    "via": "selectedProperty",
+    "propertyName": "frontendIPConfigurations",
+    "name": "NRP Sub and RG Load Balancers",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "lbSub",
+        "type": "string"
+      },
+      {
+        "name": "lbRg",
+        "type": "string"
+      },
+      {
+        "name": "lbName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatRules",
+        "type": "long"
+      },
+      {
+        "name": "outboundRules",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatPools",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d55023ab-ae2a-407b-be15-e4326b451adb",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Load Balancers",
+      "Load Balancers"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Load Balancers",
+    "via": "selectedProperty",
+    "propertyName": "inboundNatPools",
+    "name": "NRP Sub and RG Load Balancers",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "lbSub",
+        "type": "string"
+      },
+      {
+        "name": "lbRg",
+        "type": "string"
+      },
+      {
+        "name": "lbName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatRules",
+        "type": "long"
+      },
+      {
+        "name": "outboundRules",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatPools",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d55023ab-ae2a-407b-be15-e4326b451adb",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Load Balancers",
+      "Load Balancers"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Load Balancers",
+    "via": "selectedProperty",
+    "propertyName": "inboundNatRules",
+    "name": "NRP Sub and RG Load Balancers",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "lbSub",
+        "type": "string"
+      },
+      {
+        "name": "lbRg",
+        "type": "string"
+      },
+      {
+        "name": "lbName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatRules",
+        "type": "long"
+      },
+      {
+        "name": "outboundRules",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatPools",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d55023ab-ae2a-407b-be15-e4326b451adb",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Load Balancers",
+      "Load Balancers"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Load Balancers",
+    "via": "selectedProperty",
+    "propertyName": "outboundRules",
+    "name": "NRP Sub and RG Load Balancers",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "lbSub",
+        "type": "string"
+      },
+      {
+        "name": "lbRg",
+        "type": "string"
+      },
+      {
+        "name": "lbName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatRules",
+        "type": "long"
+      },
+      {
+        "name": "outboundRules",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatPools",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d55023ab-ae2a-407b-be15-e4326b451adb",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Load Balancers",
+      "Load Balancers"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Load Balancers",
+    "via": "selectedProperty",
+    "propertyName": "provisioningState",
+    "name": "NRP Sub and RG Load Balancers",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "lbSub",
+        "type": "string"
+      },
+      {
+        "name": "lbRg",
+        "type": "string"
+      },
+      {
+        "name": "lbName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatRules",
+        "type": "long"
+      },
+      {
+        "name": "outboundRules",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatPools",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "eb4a7e5e-d29e-47eb-b172-16fdc7b28c52",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Private Endpoints",
+      "Private Endpoints"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Private Endpoints",
+    "queryId": "541b0b06-2d4f-49ab-a56c-5e91f69f4326",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "constant_value_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryOptionalResourceGroupName",
+        "externalSourceName": "empty_string",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false
+      }
+    ],
+    "name": "NRP Sub and RG Private Endpoints",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "peSub",
+        "type": "string"
+      },
+      {
+        "name": "peRg",
+        "type": "string"
+      },
+      {
+        "name": "peName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "customNetworkInterfaceName",
+        "type": "string"
+      },
+      {
+        "name": "subnet",
+        "type": "string"
+      },
+      {
+        "name": "subSub",
+        "type": "string"
+      },
+      {
+        "name": "subRg",
+        "type": "string"
+      },
+      {
+        "name": "subVnet",
+        "type": "string"
+      },
+      {
+        "name": "subName",
+        "type": "string"
+      },
+      {
+        "name": "ipConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "networkInterfaces",
+        "type": "long"
+      },
+      {
+        "name": "privateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "plsConnectionState",
+        "type": "string"
+      },
+      {
+        "name": "manualPrivateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "customDnsConfigs",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "eb4a7e5e-d29e-47eb-b172-16fdc7b28c52",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Private Endpoints",
+      "Private Endpoints"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Private Endpoints",
+    "via": "selectedProperty",
+    "propertyName": "ipConfigurations",
+    "name": "NRP Sub and RG Private Endpoints",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "peSub",
+        "type": "string"
+      },
+      {
+        "name": "peRg",
+        "type": "string"
+      },
+      {
+        "name": "peName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "customNetworkInterfaceName",
+        "type": "string"
+      },
+      {
+        "name": "subnet",
+        "type": "string"
+      },
+      {
+        "name": "subSub",
+        "type": "string"
+      },
+      {
+        "name": "subRg",
+        "type": "string"
+      },
+      {
+        "name": "subVnet",
+        "type": "string"
+      },
+      {
+        "name": "subName",
+        "type": "string"
+      },
+      {
+        "name": "ipConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "networkInterfaces",
+        "type": "long"
+      },
+      {
+        "name": "privateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "plsConnectionState",
+        "type": "string"
+      },
+      {
+        "name": "manualPrivateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "customDnsConfigs",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "eb4a7e5e-d29e-47eb-b172-16fdc7b28c52",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Private Endpoints",
+      "Private Endpoints"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Private Endpoints",
+    "via": "selectedProperty",
+    "propertyName": "networkInterfaces",
+    "name": "NRP Sub and RG Private Endpoints",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "peSub",
+        "type": "string"
+      },
+      {
+        "name": "peRg",
+        "type": "string"
+      },
+      {
+        "name": "peName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "customNetworkInterfaceName",
+        "type": "string"
+      },
+      {
+        "name": "subnet",
+        "type": "string"
+      },
+      {
+        "name": "subSub",
+        "type": "string"
+      },
+      {
+        "name": "subRg",
+        "type": "string"
+      },
+      {
+        "name": "subVnet",
+        "type": "string"
+      },
+      {
+        "name": "subName",
+        "type": "string"
+      },
+      {
+        "name": "ipConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "networkInterfaces",
+        "type": "long"
+      },
+      {
+        "name": "privateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "plsConnectionState",
+        "type": "string"
+      },
+      {
+        "name": "manualPrivateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "customDnsConfigs",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "eb4a7e5e-d29e-47eb-b172-16fdc7b28c52",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Private Endpoints",
+      "Private Endpoints"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Private Endpoints",
+    "via": "selectedProperty",
+    "propertyName": "privateLinkServiceConnections",
+    "name": "NRP Sub and RG Private Endpoints",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "peSub",
+        "type": "string"
+      },
+      {
+        "name": "peRg",
+        "type": "string"
+      },
+      {
+        "name": "peName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "customNetworkInterfaceName",
+        "type": "string"
+      },
+      {
+        "name": "subnet",
+        "type": "string"
+      },
+      {
+        "name": "subSub",
+        "type": "string"
+      },
+      {
+        "name": "subRg",
+        "type": "string"
+      },
+      {
+        "name": "subVnet",
+        "type": "string"
+      },
+      {
+        "name": "subName",
+        "type": "string"
+      },
+      {
+        "name": "ipConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "networkInterfaces",
+        "type": "long"
+      },
+      {
+        "name": "privateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "plsConnectionState",
+        "type": "string"
+      },
+      {
+        "name": "manualPrivateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "customDnsConfigs",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "eb4a7e5e-d29e-47eb-b172-16fdc7b28c52",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Private Endpoints",
+      "Private Endpoints"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Private Endpoints",
+    "via": "selectedProperty",
+    "propertyName": "plsConnectionState",
+    "name": "NRP Sub and RG Private Endpoints",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "peSub",
+        "type": "string"
+      },
+      {
+        "name": "peRg",
+        "type": "string"
+      },
+      {
+        "name": "peName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "customNetworkInterfaceName",
+        "type": "string"
+      },
+      {
+        "name": "subnet",
+        "type": "string"
+      },
+      {
+        "name": "subSub",
+        "type": "string"
+      },
+      {
+        "name": "subRg",
+        "type": "string"
+      },
+      {
+        "name": "subVnet",
+        "type": "string"
+      },
+      {
+        "name": "subName",
+        "type": "string"
+      },
+      {
+        "name": "ipConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "networkInterfaces",
+        "type": "long"
+      },
+      {
+        "name": "privateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "plsConnectionState",
+        "type": "string"
+      },
+      {
+        "name": "manualPrivateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "customDnsConfigs",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "eb4a7e5e-d29e-47eb-b172-16fdc7b28c52",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Private Endpoints",
+      "Private Endpoints"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Private Endpoints",
+    "via": "selectedProperty",
+    "propertyName": "manualPrivateLinkServiceConnections",
+    "name": "NRP Sub and RG Private Endpoints",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "peSub",
+        "type": "string"
+      },
+      {
+        "name": "peRg",
+        "type": "string"
+      },
+      {
+        "name": "peName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "customNetworkInterfaceName",
+        "type": "string"
+      },
+      {
+        "name": "subnet",
+        "type": "string"
+      },
+      {
+        "name": "subSub",
+        "type": "string"
+      },
+      {
+        "name": "subRg",
+        "type": "string"
+      },
+      {
+        "name": "subVnet",
+        "type": "string"
+      },
+      {
+        "name": "subName",
+        "type": "string"
+      },
+      {
+        "name": "ipConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "networkInterfaces",
+        "type": "long"
+      },
+      {
+        "name": "privateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "plsConnectionState",
+        "type": "string"
+      },
+      {
+        "name": "manualPrivateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "customDnsConfigs",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "eb4a7e5e-d29e-47eb-b172-16fdc7b28c52",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Private Endpoints",
+      "Private Endpoints"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Private Endpoints",
+    "via": "selectedProperty",
+    "propertyName": "customDnsConfigs",
+    "name": "NRP Sub and RG Private Endpoints",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "peSub",
+        "type": "string"
+      },
+      {
+        "name": "peRg",
+        "type": "string"
+      },
+      {
+        "name": "peName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "customNetworkInterfaceName",
+        "type": "string"
+      },
+      {
+        "name": "subnet",
+        "type": "string"
+      },
+      {
+        "name": "subSub",
+        "type": "string"
+      },
+      {
+        "name": "subRg",
+        "type": "string"
+      },
+      {
+        "name": "subVnet",
+        "type": "string"
+      },
+      {
+        "name": "subName",
+        "type": "string"
+      },
+      {
+        "name": "ipConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "networkInterfaces",
+        "type": "long"
+      },
+      {
+        "name": "privateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "plsConnectionState",
+        "type": "string"
+      },
+      {
+        "name": "manualPrivateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "customDnsConfigs",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "eb4a7e5e-d29e-47eb-b172-16fdc7b28c52",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Private Endpoints",
+      "Private Endpoints"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Private Endpoints",
+    "via": "selectedProperty",
+    "propertyName": "provisioningState",
+    "name": "NRP Sub and RG Private Endpoints",
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "peSub",
+        "type": "string"
+      },
+      {
+        "name": "peRg",
+        "type": "string"
+      },
+      {
+        "name": "peName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "customNetworkInterfaceName",
+        "type": "string"
+      },
+      {
+        "name": "subnet",
+        "type": "string"
+      },
+      {
+        "name": "subSub",
+        "type": "string"
+      },
+      {
+        "name": "subRg",
+        "type": "string"
+      },
+      {
+        "name": "subVnet",
+        "type": "string"
+      },
+      {
+        "name": "subName",
+        "type": "string"
+      },
+      {
+        "name": "ipConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "networkInterfaces",
+        "type": "long"
+      },
+      {
+        "name": "privateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "plsConnectionState",
+        "type": "string"
+      },
+      {
+        "name": "manualPrivateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "customDnsConfigs",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  }
+]

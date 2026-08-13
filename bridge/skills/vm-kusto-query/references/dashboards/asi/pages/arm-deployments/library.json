@@ -1,0 +1,963 @@
+{
+  "service": "ARM",
+  "page": "Deployments",
+  "pageId": "eb068cfb-5a12-4cee-8941-9d471367ad5e",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "afa9c32b-97e0-43ed-a3b2-07988c0e37a4",
+          "name": "Retrieve Resource \"Deployments\"",
+          "groupId": "eeb71e3c-726e-4e38-ad23-cb7b13b9e53b",
+          "majorVersion": 4,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_deploymentName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_resourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "deploymentName",
+              "type": "string"
+            },
+            {
+              "name": "executionStatus",
+              "type": "string"
+            },
+            {
+              "name": "Deployment",
+              "type": "string"
+            },
+            {
+              "name": "RoleLocation",
+              "type": "string"
+            },
+            {
+              "name": "ReleaseVersion",
+              "type": "string"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "principalOid",
+              "type": "string"
+            },
+            {
+              "name": "principalPuid",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "clientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupLocation",
+              "type": "string"
+            },
+            {
+              "name": "frontdoorLocation",
+              "type": "string"
+            },
+            {
+              "name": "deploymentSequenceId",
+              "type": "string"
+            },
+            {
+              "name": "templateHash",
+              "type": "string"
+            },
+            {
+              "name": "parametersHash",
+              "type": "string"
+            },
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "real"
+            },
+            {
+              "name": "executionStatus1",
+              "type": "string"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "onErrorDeploymentName",
+              "type": "string"
+            },
+            {
+              "name": "deploymentMode",
+              "type": "string"
+            },
+            {
+              "name": "templateLinkId",
+              "type": "string"
+            },
+            {
+              "name": "templateLinkUri",
+              "type": "string"
+            },
+            {
+              "name": "resourceCount",
+              "type": "long"
+            },
+            {
+              "name": "resourceProviderCount",
+              "type": "long"
+            },
+            {
+              "name": "resourceTypeCount",
+              "type": "long"
+            },
+            {
+              "name": "locationCount",
+              "type": "long"
+            },
+            {
+              "name": "dependencyCount",
+              "type": "long"
+            },
+            {
+              "name": "succeededResourceCount",
+              "type": "long"
+            },
+            {
+              "name": "failedResourceCount",
+              "type": "long"
+            },
+            {
+              "name": "timedOutResourceCount",
+              "type": "long"
+            },
+            {
+              "name": "skippedResourceCount",
+              "type": "long"
+            },
+            {
+              "name": "debugSetting",
+              "type": "string"
+            },
+            {
+              "name": "generatorName",
+              "type": "string"
+            },
+            {
+              "name": "generatorVersion",
+              "type": "string"
+            },
+            {
+              "name": "generatorTemplateHash",
+              "type": "string"
+            },
+            {
+              "name": "additionalProperties",
+              "type": "string"
+            },
+            {
+              "name": "deploymentResourceId",
+              "type": "string"
+            },
+            {
+              "name": "fuzzyStartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "fuzzyEndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ClusterName",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "ProviderNamespace",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "type": "string"
+            },
+            {
+              "name": "env_name",
+              "type": "string"
+            },
+            {
+              "name": "env_time",
+              "type": "datetime"
+            },
+            {
+              "name": "env_ver",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "severityNumber",
+              "type": "long"
+            },
+            {
+              "name": "severityText",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_correlationId",
+              "externalSourceName": "correlationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_deploymentName",
+              "externalSourceName": "deploymentName",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endTime",
+              "externalSourceName": "endTime",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_resourceGroupName",
+              "externalSourceName": "resourceGroupName",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startTime",
+              "externalSourceName": "startTime",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let fromTime = iif(isnotempty(local_startTime), datetime_add(\"hour\", -2, local_startTime), globalFrom);\nlet toTime = iif(isnotempty(local_endTime), datetime_add(\"hour\", 2, local_endTime), globalTo);\nmacro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Deployments').Deployments\n    | where PreciseTimeStamp between(fromTime..toTime)\n    | where isempty(local_correlationId) or correlationId =~ local_correlationId\n    | where subscriptionId == local_subscriptionId and resourceGroupName == local_resourceGroupName and local_deploymentName == deploymentName\n    | summarize \n        executionStatus = coalesce(take_anyif(executionStatus, executionStatus == 'Failed'), 'Succeeded'), \n        arg_max(PreciseTimeStamp, *) by subscriptionId, deploymentName\n    | extend startTime = todatetime(startTime), endTime = todatetime(endTime)\n    | extend fuzzyStartTime = datetime_add(\"hour\", -2, startTime), fuzzyEndTime = datetime_add(\"hour\", 2, endTime)\n    | project-away TIMESTAMP, PreciseTimeStamp, Role, RoleInstance, Level, ProviderGuid, ProviderName, EventId, Pid, Tid, \n        SourceNamespace, SourceMoniker, SourceVersion, ['__AuthType__'], ['__AuthIdentity__']\n)\n| order by startTime desc\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "Deployment Job Status": {
+      "panelPath": [
+        "Deployment Job Status"
+      ],
+      "queries": [
+        {
+          "id": "4b196c2d-8fc0-4136-a903-d5fc622efdc3",
+          "name": "Job Status",
+          "groupId": "f0bf99b7-64d7-49c7-8a85-ae64a7b45854",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Deployment Job Status",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryCorrelationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "qFilter",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Deployment",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "jobType",
+              "type": "string"
+            },
+            {
+              "name": "jobPartition",
+              "type": "string"
+            },
+            {
+              "name": "jobId",
+              "type": "string"
+            },
+            {
+              "name": "resourceId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "jobStatus",
+              "type": "string"
+            },
+            {
+              "name": "duration",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "resourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "resourceType",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "jobCompletionStatus",
+              "type": "string"
+            },
+            {
+              "name": "jobFailureCause",
+              "type": "string"
+            },
+            {
+              "name": "jobFailureDetails",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            },
+            {
+              "name": "formatted_ts",
+              "type": "string"
+            },
+            {
+              "name": "short_activity",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eeb71e3c-726e-4e38-ad23-cb7b13b9e53b",
+              "majorVersion": 4,
+              "minorVersion": 1,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "fuzzyStartTime",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eeb71e3c-726e-4e38-ad23-cb7b13b9e53b",
+              "majorVersion": 4,
+              "minorVersion": 1,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "fuzzyEndTime",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eeb71e3c-726e-4e38-ad23-cb7b13b9e53b",
+              "majorVersion": 4,
+              "minorVersion": 1,
+              "internalDestinationName": "queryCorrelationId",
+              "externalSourceName": "correlationId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "0ee23170-706b-441b-83bc-75993d74b623",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "qFilter",
+              "externalSourceName": "Value",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Jobs').JobStatus\n    | where TIMESTAMP between (queryFrom..queryTo)\n    | where correlationId == queryCorrelationId and isnotempty(queryCorrelationId)\n    | where jobType contains \"Deployment\" // we need 'contains' here\n    | extend duration = tostring(split(jobDurationMs * 1ms, '.')[0])\n    | project PreciseTimeStamp, Deployment, ActivityId, jobType, jobPartition, jobId, resourceId, operationName, jobStatus, duration, message, \n        resourceProvider, resourceType, resourceName, jobCompletionStatus, jobFailureCause, jobFailureDetails\n    | extend level = case(\n        jobStatus =~ 'Failed', 'error', \n        ''\n    )\n    | where not(qFilter == 'errors') or isnotempty(level)\n    | extend formatted_ts = format_datetime(PreciseTimeStamp, 'yyyy-MM-dd [HH:mm:ss]')\n    | extend short_activity = substring(ActivityId, 0, 13)\n)\n| order by PreciseTimeStamp asc\n",
+          "panelPath": [
+            "Deployment Job Status"
+          ]
+        },
+        {
+          "id": "93ef1ca8-08ce-4c0e-b8d7-802dd8ddb039",
+          "name": "All or Errors",
+          "groupId": "0ee23170-706b-441b-83bc-75993d74b623",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "",
+          "database": "",
+          "type": "Filter",
+          "widgetType": "Table",
+          "widgetTitle": "Deployment Job Status",
+          "params": [],
+          "schema": [
+            {
+              "name": "Value",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "[\r\n    {Value: \"all\", Description: \"All (default)\"},\r\n    {Value: \"errors\", Description:\"Errors only\"}\r\n]\r\n",
+          "panelPath": [
+            "Deployment Job Status"
+          ]
+        }
+      ]
+    },
+    "Operations > Deployment Operations": {
+      "panelPath": [
+        "Operations",
+        "Deployment Operations"
+      ],
+      "queries": [
+        {
+          "id": "f0332c04-e18a-42ef-9e84-1de1570e71a5",
+          "name": "Deployment Operations",
+          "groupId": "97ac2d72-8014-467f-8278-ebf51c9d630a",
+          "majorVersion": 6,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Deployment Operations",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryDeploymentName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryCorrelationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFuzzyStartTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFuzzyEndTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qFilter",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Deployment",
+              "type": "string"
+            },
+            {
+              "name": "RoleLocation",
+              "type": "string"
+            },
+            {
+              "name": "ReleaseVersion",
+              "type": "string"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "principalOid",
+              "type": "string"
+            },
+            {
+              "name": "principalPuid",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupLocation",
+              "type": "string"
+            },
+            {
+              "name": "deploymentName",
+              "type": "string"
+            },
+            {
+              "name": "deploymentSequenceId",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "real"
+            },
+            {
+              "name": "executionStatus",
+              "type": "string"
+            },
+            {
+              "name": "statusCode",
+              "type": "string"
+            },
+            {
+              "name": "statusMessage",
+              "type": "dynamic"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "clientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "providerNamespace",
+              "type": "string"
+            },
+            {
+              "name": "resourceOperation",
+              "type": "string"
+            },
+            {
+              "name": "resourceType",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "resourceLocation",
+              "type": "string"
+            },
+            {
+              "name": "resourceExtendedLocation",
+              "type": "string"
+            },
+            {
+              "name": "totalExecutionCount",
+              "type": "long"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "resourceId",
+              "type": "string"
+            },
+            {
+              "name": "resourceReferenceType",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            },
+            {
+              "name": "duration",
+              "type": "string"
+            },
+            {
+              "name": "formatted_start",
+              "type": "string"
+            },
+            {
+              "name": "formatted_end",
+              "type": "string"
+            },
+            {
+              "name": "short_activity",
+              "type": "string"
+            },
+            {
+              "name": "error_code",
+              "type": "string"
+            },
+            {
+              "name": "error_message",
+              "type": "string"
+            },
+            {
+              "name": "ClusterName",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "ProviderNamespace",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "type": "string"
+            },
+            {
+              "name": "env_name",
+              "type": "string"
+            },
+            {
+              "name": "env_time",
+              "type": "datetime"
+            },
+            {
+              "name": "env_ver",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "severityNumber",
+              "type": "long"
+            },
+            {
+              "name": "severityText",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryDeploymentName",
+              "externalSourceName": "deploymentName",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCorrelationId",
+              "externalSourceName": "correlationId",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFuzzyStartTime",
+              "externalSourceName": "fuzzyStartTime",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFuzzyEndTime",
+              "externalSourceName": "fuzzyEndTime",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "0ee23170-706b-441b-83bc-75993d74b623",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "qFilter",
+              "externalSourceName": "Value",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Deployments').DeploymentOperations\n    | where PreciseTimeStamp between ((queryFuzzyStartTime - 12h) .. (queryFuzzyEndTime + 12h))\n    | where correlationId == queryCorrelationId and (isempty(queryDeploymentName) or deploymentName == queryDeploymentName)\n    | where subscriptionId == querySubscriptionId \n    | extend startTime = todatetime(startTime), endTime = todatetime(endTime)\n    | extend level = iif(executionStatus != \"Succeeded\", \"Error\", \"\")\n    | where not(qFilter == 'errors') or isnotempty(level)\n    | extend duration = tostring(split(durationInMilliseconds * 1ms, '.')[0])\n    | project-away TIMESTAMP, PreciseTimeStamp, Role, RoleInstance, Level, ProviderGuid, ProviderName, EventId, Pid, Tid, \n        correlationId, SourceNamespace, SourceMoniker, SourceVersion, ['__AuthType__'], ['__AuthIdentity__']\n    | order by startTime asc\n    | extend formatted_start = format_datetime(startTime, 'yyyy-MM-dd [HH:mm:ss]')\n    | extend formatted_end = format_datetime(endTime, 'yyyy-MM-dd [HH:mm:ss]')\n    | extend short_activity = substring(ActivityId, 0, 13)\n    | extend statusMessage = parse_json(statusMessage)\n    | extend error_code = tostring(statusMessage.error.code)\n    | extend error_message = tostring(statusMessage.error.message)\n)\n",
+          "panelPath": [
+            "Operations",
+            "Deployment Operations"
+          ]
+        },
+        {
+          "id": "93ef1ca8-08ce-4c0e-b8d7-802dd8ddb039",
+          "name": "All or Errors",
+          "groupId": "0ee23170-706b-441b-83bc-75993d74b623",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "",
+          "database": "",
+          "type": "Filter",
+          "widgetType": "Table",
+          "widgetTitle": "Deployment Operations",
+          "params": [],
+          "schema": [
+            {
+              "name": "Value",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "[\r\n    {Value: \"all\", Description: \"All (default)\"},\r\n    {Value: \"errors\", Description:\"Errors only\"}\r\n]\r\n",
+          "panelPath": [
+            "Operations",
+            "Deployment Operations"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:23:52.577Z",
+    "totalPanels": 3,
+    "totalUniqueQueries": 4,
+    "totalWidgetRefs": 5
+  }
+}

@@ -1,0 +1,500 @@
+{
+  "service": "CRP",
+  "page": "Resource Groups",
+  "pageId": "35bcb1ac-c63b-44e0-bbb1-bcf05d83dd84",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "e4c2e73a-a24e-4b11-86b4-50765babab58",
+          "name": "Retrieve Resource \"Resource Groups\"",
+          "groupId": "ad747841-99ca-445b-9d43-7738c7958ed1",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_resourceGroupName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_resourceGroupName",
+              "externalSourceName": "resourceGroupName",
+              "required": false
+            }
+          ],
+          "kustoQuery": "union VMApiQosEvent, VmssVMApiQosEvent\n| where subscriptionId == local_subscriptionId and resourceGroupName =~ local_resourceGroupName\n| take 1\n| project subscriptionId, resourceGroupName",
+          "panelPath": []
+        }
+      ]
+    },
+    "VMs > VMs": {
+      "panelPath": [
+        "VMs",
+        "VMs"
+      ],
+      "queries": [
+        {
+          "id": "c9e2a7f6-c2b6-4197-9012-127c72ae7b79",
+          "name": "Resource Group VMs",
+          "groupId": "00e04656-c26b-4b4c-b894-90e8f8d5b829",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VMs",
+          "params": [
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_resourceGroup",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "vMId",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "FirstSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "resultType",
+              "type": "long"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "wFAppName",
+              "type": "string"
+            },
+            {
+              "name": "partitionId",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "isManaged",
+              "type": "string"
+            },
+            {
+              "name": "vMSize",
+              "type": "string"
+            },
+            {
+              "name": "oSType",
+              "type": "string"
+            },
+            {
+              "name": "oSDiskStorageAccountType",
+              "type": "string"
+            },
+            {
+              "name": "userVMImage",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySet",
+              "type": "string"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            },
+            {
+              "name": "allocationAction",
+              "type": "string"
+            },
+            {
+              "name": "oSProvisionDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "physicalAvailablityZone",
+              "type": "string"
+            },
+            {
+              "name": "preprovisionedVMReuse",
+              "type": "string"
+            },
+            {
+              "name": "proximityPlacementGroup",
+              "type": "string"
+            },
+            {
+              "name": "networkSpineIds",
+              "type": "string"
+            },
+            {
+              "name": "galleryImage",
+              "type": "string"
+            },
+            {
+              "name": "extraVMProperties",
+              "type": "string"
+            },
+            {
+              "name": "platformImage",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySetKind",
+              "type": "string"
+            },
+            {
+              "name": "LastSeen",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "ad747841-99ca-445b-9d43-7738c7958ed1",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "ad747841-99ca-445b-9d43-7738c7958ed1",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "local_resourceGroup",
+              "externalSourceName": "resourceGroupName",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "VMApiQosEvent\n| where subscriptionId == local_subscriptionId and resourceGroupName =~ local_resourceGroup\n| summarize FirstSeen = arg_min(PreciseTimeStamp, *), LastSeen = max(PreciseTimeStamp) by resourceName, vMId, MonitoringApplication",
+          "panelPath": [
+            "VMs",
+            "VMs"
+          ]
+        }
+      ]
+    },
+    "VMSS > Scale Sets": {
+      "panelPath": [
+        "VMSS",
+        "Scale Sets"
+      ],
+      "queries": [
+        {
+          "id": "88cda40d-25be-4b51-b1c6-61fc635bf0b9",
+          "name": "Resource Group Scale Sets",
+          "groupId": "6979f991-43b2-4a16-b406-6695091b3862",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "azcrpbifollower",
+          "database": "bi_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Scale Sets",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroup",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Key",
+              "type": "string"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "VMScaleSetId",
+              "type": "string"
+            },
+            {
+              "name": "VMScaleSetName",
+              "type": "string"
+            },
+            {
+              "name": "VMScaleSetTimeCreated",
+              "type": "datetime"
+            },
+            {
+              "name": "VMScaleSetToBeDeleted",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "ad747841-99ca-445b-9d43-7738c7958ed1",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "ad747841-99ca-445b-9d43-7738c7958ed1",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroup",
+              "externalSourceName": "resourceGroupName",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "VMScaleSet\n| where PreciseTimeStamp between(queryFrom..queryTo)\n| where SubscriptionId =~ querySubscriptionId\n| where isempty(queryResourceGroup) or ResourceGroupName =~ queryResourceGroup\n| summarize arg_max(PreciseTimeStamp, SubscriptionId, ResourceGroupName, VMScaleSetId, VMScaleSetName, VMScaleSetTimeCreated, VMScaleSetToBeDeleted, Region) by Key\n| order by VMScaleSetName asc",
+          "panelPath": [
+            "VMSS",
+            "Scale Sets"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:18:20.626Z",
+    "totalPanels": 3,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

@@ -1,0 +1,512 @@
+[
+  {
+    "groupId": "30e475b7-239b-4210-8a22-4a2d4d070ae7",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "1a3095d6-9e25-4d3b-8c40-cae3d8d97fd7",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_serviceBuild",
+        "externalSourceName": "serviceBuild",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Retrieve Resource \"serviceBuild\"",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "globalFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "globalTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_serviceBuild",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "ab28fdc5-1450-44db-884b-a3809da327ab",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "30e475b7-239b-4210-8a22-4a2d4d070ae7",
+        "majorVersion": 1,
+        "minorVersion": 2,
+        "internalDestinationName": "Build",
+        "externalSourceName": "serviceBuild",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Service Build Saturation",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "params": [
+      {
+        "name": "Build",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "long"
+      },
+      {
+        "name": "firstSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "lastSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tooltip",
+        "type": "long"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "30e475b7-239b-4210-8a22-4a2d4d070ae7",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "serviceBuild",
+    "name": "Retrieve Resource \"serviceBuild\"",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "globalFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "globalTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_serviceBuild",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "RPTenant",
+    "name": "Service Build Saturation",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "params": [
+      {
+        "name": "Build",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "long"
+      },
+      {
+        "name": "firstSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "lastSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tooltip",
+        "type": "long"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "firstSeen",
+    "name": "Service Build Saturation",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "params": [
+      {
+        "name": "Build",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "long"
+      },
+      {
+        "name": "firstSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "lastSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tooltip",
+        "type": "long"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "lastSeen",
+    "name": "Service Build Saturation",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "params": [
+      {
+        "name": "Build",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "long"
+      },
+      {
+        "name": "firstSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "lastSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tooltip",
+        "type": "long"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "count",
+    "name": "Service Build Saturation",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "params": [
+      {
+        "name": "Build",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "long"
+      },
+      {
+        "name": "firstSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "lastSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tooltip",
+        "type": "long"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "5cdb941c-a698-4ccf-b424-6f7e53d8a93e",
+    "majorVersion": 4,
+    "minorVersion": 0,
+    "panelPath": [
+      "Daily Builds - {{ binTime }}"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Daily Builds - {{ binTime }}",
+    "queryId": "d208c9c2-7acb-4fd7-bc54-d3b1ae392aaa",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "node_input",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "binTime",
+        "externalSourceName": "binTime",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "build",
+        "externalSourceName": "serviceBuild",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Daily Build Success Rate",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "binTime",
+        "type": "timespan",
+        "optional": false
+      },
+      {
+        "name": "build",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "successRate",
+        "type": "real"
+      },
+      {
+        "name": "clientFailures",
+        "type": "long"
+      },
+      {
+        "name": "serverFailures",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  }
+]

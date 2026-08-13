@@ -1,0 +1,1946 @@
+[
+  {
+    "id": "2f95e279-0c69-4e40-b264-1c4a6915edd9",
+    "name": "Slow Extensions v2",
+    "groupId": "9fcaed86-b60e-447d-b407-60fa0afe8d24",
+    "majorVersion": 1,
+    "minorVersion": 9,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let subid = tolower(split(ResURI,\"/\")[2]);\r\nlet rgName = split(ResURI,\"/\")[4];\r\nlet resName = split(ResURI,\"/\")[8];\r\nlet vmssInstanceName = split(ResURI,\"/\")[10];\r\nlet LONG_DURATION = 600000;\r\nlet opids = materialize(ApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where operationName !contains \"GET\"\r\n| where subscriptionId =~ subid\r\n| where resourceGroupName =~ tostring(rgName)\r\n| where resourceName has tostring(resName) or (isnotempty(vmssInstanceName) and resourceName has tostring(vmssInstanceName))\r\n| where e2EDurationInMilliseconds > LONG_DURATION\r\n| where operationName !in (\"AsyncOperationCompletionOperation\", \"VirtualMachines.RetrieveBootDiagnosticsData.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\", \"Deployments.Preflight.POST\", \"DiskRPCallback.AllocateDisks.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\",\"CustomerSupport.RetrieveSasUri.POST\", \"VMScaleSetCleanupInternalOperation\",\"NrpCallback.DeleteTenant.POST\", \"VirtualMachines.RetrieveVMConsoleSerialLogs.POST\", \"NrpCallback.FinalizeTenantResourceAllocation.POST\", \"NrpCallback.RevertTenantResourceAllocation.POST\", \"NrpCallback.DeallocateAllTenantNetworkResources.POST\", \"NrpCallback.AllocateTenantNetworkResources.POST\", \"NrpCallback.CommitTenantResourceAllocation.POST\",\"RestorePoints.RestorePointOperation.PUT\", \"Subscriptions.Register.PUT\", \"AsyncOperationCallbackOperation\", \"RestorePoints.RestorePointOperation.DELETE\", \"RestorePoints.RetrieveSasUris.POST\", \"FabricCallback.OnRoleInstanceStateChange.POST\", \"RestorePoints.RestorePointOperation.DELETE\")\r\n| extend startTime = datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| distinct  operationId);//opids\r\nlet longGoalSeekOpids = materialize(ComponentQoSEvent\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where fabricTenantName != \"\"\r\n| where activityId in (opids)\r\n| where operationName == \"PollForVMExtensionsProvisioningResult\" and durationInMs > LONG_DURATION\r\n| summarize by activityId);\r\n//longGoalSeekOpids\r\n macro-expand isfuzzy=true entity_group [cluster('azcore.centralus.kusto.windows.net').database('Crp')] as X (\r\nunion X.ContextActivity, X.VmssVMGoalSeekingActivity\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where activityId in (longGoalSeekOpids)\r\n//Is there a way to avoid contains? maybe if we use \"has\" instead? Need to test.\r\n| where message contains  \"Handler status is 'NotReady'\" \r\n        or message contains \"has reported status 'Transitioning'\" \r\n        or message contains '\"status\": \"transitioning\"' \r\n        or message contains \"has reported status 'NotReady'\" \r\n        or message contains \"reported to be in state 'Installing'. Waiting for the handler to finish installation.\" \r\n| summarize  arg_min(PreciseTimeStamp, activityId), arg_max(PreciseTimeStamp, activityId) by message\r\n| extend FirstTimeStamp = PreciseTimeStamp\r\n| extend LastTimeStamp = PreciseTimeStamp1\r\n| extend FirstActivityId = activityId\r\n| extend LastActivityId = activityId1\r\n| extend duration = LastTimeStamp - FirstTimeStamp)\r\n| project duration, FirstTimeStamp, FirstActivityId, LastTimeStamp, LastActivityId, message",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-03-26T09:17:13.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-03-26T12:17:13.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "ResURI",
+        "description": "",
+        "type": "string",
+        "default": "/subscriptions/4070c54f-0b52-40f3-a62e-73d8a4b6b8ad/resourceGroups/HBL-AZURE-CI-SHARED-COMMONSERVICES-UAT-BYOS-RG/providers/Microsoft.Compute/virtualMachines/rhelbyosvm87",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "duration",
+        "type": "timespan"
+      },
+      {
+        "name": "FirstTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "FirstActivityId",
+        "type": "string"
+      },
+      {
+        "name": "LastTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "LastActivityId",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "7b1bfa5d-6b58-4bfe-af30-f8d8773c05e4",
+    "name": "Container Unknown Duration",
+    "groupId": "339ca6ea-e9dc-4fbe-ae52-fbec6966d9ee",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "azcore.centralus",
+    "database": "AzureCP",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let containers = materialize(cluster('azcore.centralus').database('AzureCP').MycroftContainerSnapshot\r\n| where PreciseTimeStamp between((queryFrom)..(queryTo))\r\n| where SubscriptionId =~ subId\r\n| where RoleInstanceName == strcat(\"_\", resName) | distinct ContainerId);\r\nlet containerDetails = materialize(cluster('azcore.centralus').database('AzureCP').MycroftContainerSnapshot\r\n| where PreciseTimeStamp between((queryFrom)..(queryTo))\r\n| where ContainerId in~ (containers) \r\n| join \r\n( \r\n  macro-expand isfuzzy=true entity_group [cluster('azcore.centralus.kusto.windows.net')] as X ( \r\n X.database('AzureCP').MycroftContainerHealthSnapshot\r\n| where PreciseTimeStamp between((queryFrom)..(queryTo))\r\n  | where ContainerId in~ (containers)\r\n  | where ContainerState == \"ContainerStateUnknown\"\r\n  | summarize StartTime = arg_min( PreciseTimeStamp, ContainerId), EndTime= arg_max(PreciseTimeStamp, ContainerId) by ContainerId)\r\n) on $left.ContainerId == $right.ContainerId\r\n);\r\ncontainerDetails \r\n| project ContainerId, NodeId, CreationTime, VirtualMachineUniqueId, UnknownDuration = EndTime - StartTime | where UnknownDuration > 1m",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-05-27T02:44:16.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-05-31T02:44:16.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "CreationTime",
+        "type": "datetime"
+      },
+      {
+        "name": "VirtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "UnknownDuration",
+        "type": "timespan"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "92507d9c-f687-4429-883d-f3245d92f4d7",
+    "name": "Retrieve Resource \"Resource URI\"",
+    "groupId": "d0b0bc24-6bdd-4b6b-9397-7ff39c20bc0b",
+    "majorVersion": 4,
+    "minorVersion": 8,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": " macro-expand isfuzzy=false entity_group [cluster('azcore.centralus.kusto.windows.net')] as X (\r\n    X.database('Crp').ApiQosEvent\r\n| where PreciseTimeStamp between (globalFrom .. globalTo)\r\n| where subscriptionId =~ local_subscriptionId\r\n| where resourceGroupName =~ local_resourceGroupName\r\n| where resourceName =~ local_resourceName)\r\n| top 1 by PreciseTimeStamp desc \r\n| extend ResourceURI = local_ResourceURI\r\n| project subscriptionId, resourceGroupName, resourceName, region , ResourceURI",
+    "params": [
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_resourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_resourceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_ResourceURI",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "ResourceURI",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "194bd3bf-74e6-478f-b4c8-7299f84348b6",
+    "name": "Failures / Slow operations",
+    "groupId": "e9a02805-4105-431c-91c7-c475acfdb7e0",
+    "majorVersion": 2,
+    "minorVersion": 10,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "ApiQosEvent\r\n| where PreciseTimeStamp between(queryFrom..queryTo)\r\n| where operationName !contains \"GET\"\r\n| where subscriptionId =~ subId\r\n| where resourceGroupName =~ rgName\r\n| where resourceName contains resName\r\n| where resultCode != \"\" or e2EDurationInMilliseconds > 600000\r\n|where operationName !in (\"AsyncOperationCompletionOperation\", \"VirtualMachines.RetrieveBootDiagnosticsData.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\", \"Deployments.Preflight.POST\", \"DiskRPCallback.AllocateDisks.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\",\"CustomerSupport.RetrieveSasUri.POST\", \"VMScaleSetCleanupInternalOperation\",\"NrpCallback.DeleteTenant.POST\", \"VirtualMachines.RetrieveVMConsoleSerialLogs.POST\", \"NrpCallback.FinalizeTenantResourceAllocation.POST\", \"NrpCallback.RevertTenantResourceAllocation.POST\", \"NrpCallback.DeallocateAllTenantNetworkResources.POST\", \"NrpCallback.AllocateTenantNetworkResources.POST\", \"NrpCallback.CommitTenantResourceAllocation.POST\",\"RestorePoints.RestorePointOperation.PUT\", \"Subscriptions.Register.PUT\", \"AsyncOperationCallbackOperation\", \"RestorePoints.RestorePointOperation.DELETE\", \"RestorePoints.RetrieveSasUris.POST\", \"FabricCallback.OnRoleInstanceStateChange.POST\", \"RestorePoints.RestorePointOperation.DELETE\")\r\n| extend StartTime = datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n//| extend EndTime = PreciseTimeStamp\r\n| extend Content = strcat(operationName, iff(resultCode != \"\", strcat(\" - \", resultCode), \"\"), iff (e2EDurationInMilliseconds >= long(600000), strcat(\" - Duration: \", e2EDurationInMilliseconds, \" Ms\"), \"\"))\r\n| project  StartTime, Content, PreciseTimeStamp, operationName, httpStatusCode, resultCode, errorDetails,  clientPrincipalName, clientApplicationId, userAgent, correlationId, operationId\r\n\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-01T06:52:48.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-10T06:52:48.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "rgName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "httpStatusCode",
+        "type": "long"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      },
+      {
+        "name": "clientPrincipalName",
+        "type": "string"
+      },
+      {
+        "name": "clientApplicationId",
+        "type": "string"
+      },
+      {
+        "name": "userAgent",
+        "type": "string"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "operationId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "1e8a607b-8db1-4271-9670-17c5375923a8",
+    "name": "NIOE",
+    "groupId": "3fe005c8-ea76-4db7-bda6-ff60933324fb",
+    "majorVersion": 7,
+    "minorVersion": 8,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = queryFrom;\r\nlet endTime = queryTo;\r\n//Do not edit below this line\r\nlet FRIC_RELEASE_TIME_LIMIT = 15m; \r\nlet CONTAINER_DESTROY_TIME_LIMIT = 15m;\r\nlet CrpOp = materialize(\r\n    macro-expand isfuzzy=true entity_group [cluster('azcore.centralus.kusto.windows.net')] as X(\r\n        X.database('Crp').ApiQosEvent\r\n            | where PreciseTimeStamp between(startTime..endTime)\r\n                and subscriptionId == subid\r\n                and resourceGroupName =~ rgName\r\n                and (resourceName =~resName or split( resourceName,\"/\")[0]=~ resName)\r\n                and resultCode == 'NetworkingInternalOperationError'\r\n            |extend extractCode = iif(errorDetails has 'Code: ', extract('Code: (.*)', 1, tostring(errorDetails)), '')\r\n            | extend NRPerrortype = case (\r\n                        extractCode in (\"RnmServiceDeletionCleanupTimeout\",\"RnmServiceInstanceCleanupTimeout\"), 'FricReleaseIssue', //FRIC release issues\r\n                            'NotComputeToBlame')\r\n            )\r\n        | project PreciseTimeStamp, NRPerrortype , errorDetails //, operationName, resultCode, requestEntity - will need it only when testing the query\r\n        | top 1 by PreciseTimeStamp asc\r\n);\r\nlet FricReleaseIssue =materialize( \r\n    CrpOp  \r\n        | where NRPerrortype != 'NotComputeToBlame'\r\n        | extend \r\n            extractedTenantName = iif(errorDetails has 'serviceId: ', extract('serviceId: (.*?),', 1, tostring(errorDetails)),''),\r\n            extractedDeletedTime = iif(errorDetails has 'DeletedDateTime: ', extract('DeletedDateTime: (.*?) IsCleanupPendingInTM',1, tostring(errorDetails)),''),\r\n            extractedFabricId = tolower(iif(errorDetails has 'FabricId: ', extract('FabricId: (.*?) PendingDeleteInFabric',1, tostring(errorDetails)),'')),\r\n            extractedRoleInstanceName = iff(isempty(toupper(extract(\"Name: (.*?) \", 1, tostring(errorDetails)))),strcat(\"_\",toupper(resName)),toupper(extract(\"Name: (.*?) \", 1,tostring(errorDetails)))),\r\n            isCleanupPendingInTM = iff(errorDetails has \"IsCleanupPendingInTM: True\" , true, false),\r\n            isPendingDeleteInFa = iff(errorDetails has \"PendingDeleteInFabric: True\", true, false),\r\n            extractedNetworkServiceInstanceId = iif(errorDetails has \"NetworkServiceInstanceId: \", extract('NetworkServiceInstanceId: ([a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})', 1, tostring(errorDetails)),'') \r\n            //We have the scenario where the vip is stuck associated with a ghost tenant so this helps to confirm\r\n        | extend extractedVipReleasePending = iff(errorDetails contains \"VipReleasePendingInRnmBeforeNsmQuery\",true,false)\r\n        // We just want to focus on the scenario where RNM/NSM blames Compute\r\n        | where isCleanupPendingInTM or isPendingDeleteInFa\r\n);\r\nlet NotComputetoBlame = CrpOp| extend result=iff(NRPerrortype == \"NotComputeToBlame\",true,false)|project result, errorDetails;\r\nlet nsId = toscalar(FricReleaseIssue | project extractedNetworkServiceInstanceId);\r\nlet StartRNMcheck = todatetime(toscalar(FricReleaseIssue | project extractedDeletedTime));\r\nlet tenantNameFromCrP=(FricReleaseIssue | project extractedTenantName);\r\nlet CheckRnmContainerState = (\r\n//Check Rnm Release notification state\r\n    FricReleaseIssue\r\n    | join kind = leftouter (\r\n        macro-expand isfuzzy=false entity_group [cluster('azcore.centralus.kusto.windows.net')] as X(\r\n            X.database(\"AzureCP\").RnmOperationEvents\r\n            | where PreciseTimeStamp between(todatetime(StartRNMcheck) ..now())\r\n                and tenantName in (tenantNameFromCrP) and isnotempty(tenantName)\r\n            | project RnmPreciseTimeStamp=PreciseTimeStamp, Cluster, EventMessage, tenantName\r\n            | extend EventMessage = array_slice(extract_all(\"(.*?)\\\\r\\\\n\", EventMessage), 1, -1),\r\n                errorexists = iif(EventMessage contains 'Exception',strcat('Yes.','\\n', 'Exception: ',extract(\"Exception:\\\\s(.*)\", 1, tostring(EventMessage))),'No')\r\n            | mv-expand EventMessage\r\n            | extend\r\n                NetworkServiceId = iff(isempty(nsId),'', extract('NetworkServiceInstanceId: ([a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})', 1, tostring(EventMessage))),\r\n                RoleInstanceName = toupper(extract(\"RoleInstanceName: (.*?),\", 1, tostring(EventMessage))),\r\n                State = extract(\"State: (.*?),\", 1, tostring(EventMessage)),\r\n                Fabric = extract(\"FabricId: (.*?),\", 1, tostring(EventMessage))\r\n            | project-away EventMessage\r\n        )\r\n    | summarize arg_min(RnmPreciseTimeStamp, *) by RoleInstanceName,NetworkServiceId,State,Fabric\r\n    ) on $left.extractedRoleInstanceName == $right.RoleInstanceName and  $left.extractedNetworkServiceInstanceId == $right.NetworkServiceId and $left.extractedFabricId==$right.Fabric\r\n        | extend TimeToRelease = iff(State == 'Released'and NetworkServiceId =~ nsId and errorexists=='No' , RnmPreciseTimeStamp-StartRNMcheck, todynamic(\"\")) \r\n        | extend RnmState = case(\r\n                                State == 'Released' and TimeToRelease < FRIC_RELEASE_TIME_LIMIT and errorexists=='No' , \"ReleasedTimely\",\r\n                                State == 'Released' and TimeToRelease >= FRIC_RELEASE_TIME_LIMIT and errorexists=='No', \"ReleasedNotTimely\",\r\n                                isempty(State) and todatetime(StartRNMcheck) < ago(30d),\"DataRolledOut\",\r\n                                \"NotReleased\"\r\n                                )\r\n        | top 1 by RnmPreciseTimeStamp desc \r\n); \r\n//To understand if the Container still exists or not - this helps to understand on scenarios where the data has rolledout\r\nlet ContainerData=cluster('Azurecm').database('azurecm').LogContainerSnapshot\r\n            | where PreciseTimeStamp between(StartRNMcheck-1h..now())\r\n                and tenantName  in (tenantNameFromCrP)\r\n                and roleInstanceName   in~ (FricReleaseIssue | project extractedRoleInstanceName)\r\n                and isnotempty(tenantName) \r\n                and todatetime(creationTime) < todatetime(StartRNMcheck)\r\n            | project containerId;        \r\nlet ContainerState = CheckRnmContainerState\r\n| join kind = leftouter(  \r\n        cluster('Azurecm').database('azurecm').LogContainerHealthSnapshot\r\n                | where PreciseTimeStamp between(StartRNMcheck..now())\r\n                    and tenantName  in (tenantNameFromCrP)\r\n                    and isnotempty(tenantName) \r\n       | summarize ToBeDestroyedOnNodeTime=minif(PreciseTimeStamp, containerLifecycleState  =~ \"ToBeDestroyedOnNode\"), DestroyedTime=minif(PreciseTimeStamp, containerLifecycleState =~ \"Destroyed\" or (containerLifecycleState =~ \"Suspended\" and containerState =~ \"ContainerStateDestroyed\")) by containerId, RoleInstanceName=toupper(roleInstanceName), tenantName\r\n   // | extend RoleInstanceName = toupper(roleInstanceName)\r\n    ) on $left.extractedRoleInstanceName == $right.RoleInstanceName      \r\n   | where containerId in (toscalar(ContainerData))\r\n    | extend TimeToDestroyContainer = iif(isempty(ToBeDestroyedOnNodeTime) and isnotempty(DestroyedTime),timespan(null),DestroyedTime-ToBeDestroyedOnNodeTime )\r\n   | extend ContainerDestroyState = case (        \r\n                                             totimespan(TimeToDestroyContainer) < CONTAINER_DESTROY_TIME_LIMIT, \"DestroyedTimely\",\r\n                                             totimespan(TimeToDestroyContainer) >= CONTAINER_DESTROY_TIME_LIMIT, \"DestroyedNotTimely\",\r\n                                             ((toscalar(ContainerData|count)) < 1 and isnotempty(DestroyedTime)) ,\"Destroyed\",\r\n                                             \"NotDestroyed\"\r\n)\r\n    ;\r\n //  To get the vip and the exact tenantName to whom the vip is associated with\r\nlet vipReleasePendingIssue = ContainerState\r\n    | extend vip = iif(errorDetails has 'FabricId: ', extract('IPAddress: (.*?) RevertPendingInFabric',1, tostring(errorDetails)), '')\r\n    | join kind=leftouter(\r\n        macro-expand isfuzzy=false entity_group [cluster('azcore.centralus.kusto.windows.net')] as X (\r\n            X.database('Fc').LogTenantSnapshot\r\n                | where PreciseTimeStamp  > ago(3h)\r\n                |  project-rename vipTenantName=tenantName\r\n                | distinct Tenant=tolower(Tenant), vips, vipTenantName)\r\n                | extend extractedVipReleasePending=true//regardless of the fact that they are the same or not, we always want this variable as true on this request\r\n    ) on $left.extractedFabricId==$right.Tenant and $left.vip==$right.vips and extractedVipReleasePending\r\n       | top 1 by PreciseTimeStamp asc;\r\nlet TenantStateinFabric = toscalar( \r\n        macro-expand isfuzzy=false entity_group [cluster('azcore.centralus.kusto.windows.net')] as X (\r\n            union X.database('Fc').LogTenantSnapshot ,X.database('AzureCP').AzSMTenantSnapshotV2\r\n            | where PreciseTimeStamp > ago(3h)\r\n            | where tenantName in (tenantNameFromCrP)  and isnotempty(tenantName) \r\n            | count\r\n            | extend TenantStatus=case(\r\n                                Count >0 ,'TenantStillExists',\r\n                                toscalar(CrpOp | project NRPerrortype)!='FricReleaseIssue',''\r\n                                ,'TenantisDestroyed')\r\n            )\r\n        | project TenantStatus\r\n);////Make recommendations based on the current state.\r\nlet resultSet = (\r\n      union vipReleasePendingIssue, NotComputetoBlame//);resultSet     \r\n       | where (isnotempty(NRPerrortype) and isempty(result)) or (isempty(NRPerrortype) and result)\r\n        | extend\r\n             Recommendation = case(\r\n                result, strcat(\"This Networking Internal Error is not associated with a FRIC release issue. Please review the error detail to further troubleshoot and work with Azure Networking Pod over a collaboration.\" , '\\n' ,\"Error Detail:  \", '\\n' ,  errorDetails ),\r\n                extractedVipReleasePending, strcat(\"It looks like vip: \", vips, \" is still in use by another TenantName: \", vipTenantName, \". Please open IcM with 'Support/EEE Compute Manager' to assist with the vip release.\"),\r\n                RnmState == \"ReleasedTimely\", strcat(\"The Rnm release notification was sent timely. A retry might resolve the issue, but if operations are still failing please engage 'Cloudnet/EEE Cloudnet'.\"),\r\n                RnmState == \"ReleasedNotTimely\" and ContainerDestroyState == \"DestroyedTimely\", strcat(\"The initial error was likely caused by delay in Rnm release for \", extractedRoleInstanceName, \". The Rnm release notification was sent at \", RnmPreciseTimeStamp, \". Retrying the operation will likely resolve the issue. If issue still persists, please review data collection steps of 'Engaging EEE ComputeManager' in http://aka.ms/CCSupNetworkingInternalError to troubleshoot.\"),  \r\n                RnmState == \"ReleasedNotTimely\" and ContainerDestroyState == \"DestroyedNotTimely\", strcat(\"The initial error was likely caused by delay in container destroy for \", extractedRoleInstanceName, \". The container \", containerId, \" is now destroyed and the Rnm release notification is sent. Retrying the operation will likely resolve the issue. If issue still presist, please follow please review data collection steps of 'Engaging EEE ComputeManager' to troubleshoot.\"),  \r\n                RnmState == \"ReleasedNotTimely\" and ContainerDestroyState == \"Destroyed\", strcat (\"There might have been a delay on the container destroy for \", extractedRoleInstanceName, \". The container \", containerId, \" no longer reference the roleinstance so the ContainerId state needs to be reviewed. Please engage 'Support/EEE ComputeManager' after confirming the current status of the containerId and discussing with a TA.\"),\r\n                RnmState ==  \"NotReleased\" and ContainerDestroyState in (\"DestroyedNotTimely\", \"DestroyedTimely\",\"Destroyed\") and TenantStateinFabric == 'TenantStillExists' , strcat(\"The container \", containerId, \" for \", extractedRoleInstanceName, \" was destroyed at \", DestroyedTime, \", but the release notification is not yet sent. As the tenantName still exists, please open IcM with 'Support/EEE Compute Manager' after double checking the current status and discussing with a TA.\"),\r\n                RnmState ==  \"NotReleased\" and ContainerDestroyState in (\"DestroyedNotTimely\", \"DestroyedTimely\",\"Destroyed\") and TenantStateinFabric == 'TenantisDestroyed' , strcat(\"The container \", containerId, \" for \", extractedRoleInstanceName, \" was destroyed at \", DestroyedTime, \" and the TenantName no longer exists. However the release notification was not yet sent. For mitigation, please open IcM with 'Support/EEE ComputeManager' after double checking the current status and discussing with a TA. Please make sure to confirm if customer wants a RCA as we still have data to perform investigation.\"),\r\n                RnmState ==  \"NotReleased\" and ContainerDestroyState == \"NotDestroyed\" and TenantStateinFabric != 'TenantisDestroyed', strcat(\"The container \",  containerId, \" is not yet destroyed. Please follow step 5 in http://aka.ms/CCSupNetworkingInternalError to identify if there may be Service Healing or other node issues. If it has been less than an hour since the initial failure, please wait for some time and retry. If it has been more than an hour and no Service Healthing or node issues are identified, please open IcM with 'Support/EEE RDOS' after double checking the current status and discussing with a TA. The container was set to be destroyed since: \", ToBeDestroyedOnNodeTime),\r\n                RnmState == \"NotReleased\" and ContainerDestroyState == \"NotDestroyed\" and TenantStateinFabric == 'TenantisDestroyed' , strcat(\"The container \", containerId, \" for \", extractedRoleInstanceName, \" is in a orphan state (Tenant has been destroyed however container still appears in the node). Please engage 'Support/EEE ComputeManager' after double checking the current status and discussing with a TA.\"),\r\n                RnmState == \"DataRolledOut\" and  ContainerDestroyState in (\"DestroyedNotTimely\", \"DestroyedTimely\",\"Destroyed\")  and TenantStateinFabric == 'TenantisDestroyed' , strcat (\"The tenant has been destroyed however the logs have rolled over to provide a RCA, please open IcM with 'Support/EEE ComputeManager' after double checking the current status and discussing with a TA.\"),\r\n               RnmState == \"DataRolledOut\" and TenantStateinFabric == 'TenantStillExists' , strcat (\"The tenant looks to still exist however the logs have rolled over to provide a RCA, please open IcM with 'Support/EEE Compute Manager' after double checking the current status and discussing with a TA.\"),\r\n               \"We are unable to auto detect the status. It's possible that this query didn't capture the start of the issue, please adjust the start and end time to cover larger timespan to ensure accurate result. If adjusting the timespan still doesn't give you results, please manual investigation steps in the TSG to troubleshoot further.\")\r\n);\r\nresultSet\r\n| project  Recommendation, extractedRoleInstanceName, extractedTenantName,extractedNetworkServiceInstanceId, extractedFabricId, DeletedDateTime=StartRNMcheck, WasFRICsentButExceptionOccured=errorexists ,RnmState, TimeToRelease, containerId, ContainerDestroyState, TimeToDestroyContainer, DestroyedTime, TenantStateinFabric",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-07-29T14:00:13.546Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-07-29T16:00:13.546Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subid",
+        "description": "",
+        "type": "string",
+        "default": "8a381f9c-300a-4505-9f8d-c5b9eb0c2c73",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "rgName",
+        "description": "",
+        "type": "string",
+        "default": "nrpE2ETestRg-13c825d9-e1ac-4299-b940-1d68c696e958-06-10-2022",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "default": "vmss1",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Recommendation",
+        "type": "string"
+      },
+      {
+        "name": "extractedRoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "extractedTenantName",
+        "type": "string"
+      },
+      {
+        "name": "extractedNetworkServiceInstanceId",
+        "type": "string"
+      },
+      {
+        "name": "extractedFabricId",
+        "type": "string"
+      },
+      {
+        "name": "DeletedDateTime",
+        "type": "datetime"
+      },
+      {
+        "name": "WasFRICsentButExceptionOccured",
+        "type": "string"
+      },
+      {
+        "name": "RnmState",
+        "type": "string"
+      },
+      {
+        "name": "TimeToRelease",
+        "type": "timespan"
+      },
+      {
+        "name": "containerId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerDestroyState",
+        "type": "string"
+      },
+      {
+        "name": "TimeToDestroyContainer",
+        "type": "timespan"
+      },
+      {
+        "name": "DestroyedTime",
+        "type": "datetime"
+      },
+      {
+        "name": "TenantStateinFabric",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "f64ca2f0-43f2-4325-82d9-45cb35cf3d88",
+    "name": "Active Azsm/Fabric Tenants",
+    "groupId": "80f0ae7b-b8cf-4f52-985c-791bd56449b4",
+    "majorVersion": 7,
+    "minorVersion": 3,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let unix_epoch_start = datetime(1/1/1970);\r\nlet opids = materialize(ApiQosEvent\r\n| where PreciseTimeStamp between((queryFrom)..queryTo)\r\n| where operationName !contains \"GET\"\r\n| where subscriptionId =~ subId\r\n| where resourceGroupName =~ rgName\r\n| where resourceName == resName\r\n|where operationName !in (\"AsyncOperationCompletionOperation\", \"VirtualMachines.RetrieveBootDiagnosticsData.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\", \"Deployments.Preflight.POST\", \"DiskRPCallback.AllocateDisks.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\",\"CustomerSupport.RetrieveSasUri.POST\", \"VMScaleSetCleanupInternalOperation\",\"NrpCallback.DeleteTenant.POST\", \"VirtualMachines.RetrieveVMConsoleSerialLogs.POST\", \"NrpCallback.FinalizeTenantResourceAllocation.POST\", \"NrpCallback.RevertTenantResourceAllocation.POST\", \"NrpCallback.DeallocateAllTenantNetworkResources.POST\", \"NrpCallback.AllocateTenantNetworkResources.POST\", \"NrpCallback.CommitTenantResourceAllocation.POST\",\"RestorePoints.RestorePointOperation.PUT\", \"Subscriptions.Register.PUT\", \"AsyncOperationCallbackOperation\", \"RestorePoints.RestorePointOperation.DELETE\", \"RestorePoints.RetrieveSasUris.POST\", \"FabricCallback.OnRoleInstanceStateChange.POST\", \"RestorePoints.RestorePointOperation.DELETE\")\r\n| distinct  operationId);\r\nlet tenantNames = materialize (ComponentQoSEvent\r\n| where PreciseTimeStamp between((queryFrom)..queryTo)\r\n| where fabricTenantName != \"\"\r\n| where activityId in (opids)\r\n//|summarize min(PreciseTimeStamp),max(PreciseTimeStamp) by fabricCluster, fabricTenantName\r\n| distinct fabricTenantName);\r\n//| extend Content = fabricTenantName\r\n//| extend StartTime = min_PreciseTimeStamp , EndTime = max_PreciseTimeStamp\r\n//| distinct fabricTenantName);\r\ncluster('azcore.centralus').database('Fc').LogTenantSnapshot //More accurate and we can get the actual fabric cluster and other details. \r\n| where PreciseTimeStamp between((queryFrom)..queryTo)\r\n| where tenantName in~ (tenantNames)\r\n//| summarize StartTime = arg_min(PreciseTimeStamp, tenantName), EndTime = arg_max(PreciseTimeStamp, tenantName)by  Cluster =  Tenant, tenantName, isSpannable, isSpanned\r\n| summarize StartTime = arg_min(PreciseTimeStamp, tenantName)by  Cluster =  Tenant, tenantName, isSpannable, isSpanned\r\n| extend startTimeTicks = datetime_diff(\"second\", queryFrom, unix_epoch_start ) * 1000\r\n| extend endTimeTicks = datetime_diff(\"second\", queryTo, unix_epoch_start) * 1000\r\n| extend FailoverDashBoardUrl = strcat(\"https://portal.microsoftgeneva.com/s/FEEEA?overrides=[{\\\"query\\\":\\\"//*[id='Tenant']\\\",\\\"key\\\":\\\"value\\\",\\\"replacement\\\":\\\"\" , Cluster, \"\\\"}]&globalStartTime=\", startTimeTicks, \"&globalEndTime=\" , endTimeTicks, \"&pinGlobalTimeRange=true\")\r\n| project StartTime, Content = tenantName, Cluster, isSpannable, isSpanned, FailoverDashBoardUrl",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-12T05:50:44.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-14T05:50:44.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "rgName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "isSpannable",
+        "type": "string"
+      },
+      {
+        "name": "isSpanned",
+        "type": "string"
+      },
+      {
+        "name": "FailoverDashBoardUrl",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "63b4e329-fd81-4582-85c0-941a64b80b1c",
+    "name": "Get Failovers",
+    "groupId": "207254f2-d110-4785-8cfb-1e2005bf8271",
+    "majorVersion": 3,
+    "minorVersion": 12,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "//Portion of the query is from the EEE RDOS Fabric Failover query - Thanks Kenichiro and Adam!\r\nlet unix_epoch_start = datetime(1/1/1970);\r\nlet opids = materialize(ApiQosEvent\r\n| where PreciseTimeStamp between((queryFrom)..(queryTo))\r\n| where operationName !contains \"GET\"\r\n| where subscriptionId =~ subId\r\n| where resourceGroupName =~ rgName\r\n| where resourceName == resName\r\n|where operationName !in (\"AsyncOperationCompletionOperation\", \"VirtualMachines.RetrieveBootDiagnosticsData.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\", \"Deployments.Preflight.POST\", \"DiskRPCallback.AllocateDisks.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\",\"CustomerSupport.RetrieveSasUri.POST\", \"VMScaleSetCleanupInternalOperation\",\"NrpCallback.DeleteTenant.POST\", \"VirtualMachines.RetrieveVMConsoleSerialLogs.POST\", \"NrpCallback.FinalizeTenantResourceAllocation.POST\", \"NrpCallback.RevertTenantResourceAllocation.POST\", \"NrpCallback.DeallocateAllTenantNetworkResources.POST\", \"NrpCallback.AllocateTenantNetworkResources.POST\", \"NrpCallback.CommitTenantResourceAllocation.POST\",\"RestorePoints.RestorePointOperation.PUT\", \"Subscriptions.Register.PUT\", \"AsyncOperationCallbackOperation\", \"RestorePoints.RestorePointOperation.DELETE\", \"RestorePoints.RetrieveSasUris.POST\", \"FabricCallback.OnRoleInstanceStateChange.POST\", \"RestorePoints.RestorePointOperation.DELETE\")\r\n| extend startTime = datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| distinct  operationId);\r\n//opids\r\nlet tenants = materialize(ComponentQoSEvent\r\n| where PreciseTimeStamp between((queryFrom)..(queryTo))\r\n| where fabricTenantName != \"\"\r\n| where activityId in (opids)\r\n|distinct fabricTenantName); \r\n//tenants\r\nlet clusters = materialize(cluster('azcore.centralus').database('Fc').TMMgmtTenantEventsEtwTable\r\n| where PreciseTimeStamp between((queryFrom)..(queryTo))\r\n| where TenantName in~ (tenants) \r\n| distinct Tenant);\r\ncluster('azcore.centralus').database('AzureCP').MycroftClusterSnapshot\r\n| where PreciseTimeStamp between((queryFrom)..(queryTo))\r\n| where ClusterName in~  (clusters)\r\n| order by ClusterName, PreciseTimeStamp asc \r\n| extend  StartTime = PreciseTimeStamp//, tenantName, roleInstanceName, Tenant\r\n| extend flag = case (prev(RoleInstanceName) <> RoleInstanceName or prev(ClusterName) != ClusterName, \"changed\", \"\")\r\n| where flag <> \"\"\r\n| extend EndTime = case (isnotempty(next(StartTime)) and next(Tenant) == Tenant, next(StartTime) , queryTo)\r\n| extend startTimeTicks = datetime_diff(\"second\", queryFrom, unix_epoch_start ) * 1000\r\n| extend endTimeTicks = datetime_diff(\"second\", queryTo, unix_epoch_start) * 1000\r\n| extend dashBoardUrl = strcat(\"https://portal.microsoftgeneva.com/s/95693FBB?overrides=[{\\\"query\\\":\\\"//*[id='Tenant']\\\",\\\"key\\\":\\\"value\\\",\\\"replacement\\\":\\\"\" , Tenant, \"\\\"}]&globalStartTime=\", startTimeTicks, \"&globalEndTime=\" , endTimeTicks, \"&pinGlobalTimeRange=true\")\r\n| extend RCAInvestigation = strcat(\"https://dataexplorer.azure.com/dashboards/e8223032-9f30-427b-8f17-07c287223be1?p-_startTime=\", StartTime,\"&p-_endTime=\", EndTime, \"&p-_azsmClusterName=all&p-clusterName=v-\", Tenant,\"&p-tenantNameStr=all&p-_containerId=all&p-_roleInstanceName=all&p-hostNodeId=all&p-_resourceGroupName=all&p-_SubscriptionId=all#f467fefa-0fdb-4d57-86e0-647570db312c\") \r\n| project StartTime, EndTime, GroupBy = Tenant, Content = RoleInstanceName, dashBoardUrl, RCAInvestigation",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-12T05:50:44.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-14T05:50:44.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "rgName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "dashBoardUrl",
+        "type": "string"
+      },
+      {
+        "name": "RCAInvestigation",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "3c94ce00-2d9c-49fc-ad4d-e9951465c5a5",
+    "name": "Failover Issue Detector Query",
+    "groupId": "94c49a03-5133-43f2-8eb9-2eac4e2bbffc",
+    "majorVersion": 1,
+    "minorVersion": 7,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "IssueDetector",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let opids = materialize(ApiQosEvent\r\n| where PreciseTimeStamp between((queryFrom)..queryTo)\r\n| where operationName !contains \"GET\"\r\n| where subscriptionId =~ subId\r\n| where resourceGroupName =~ rgName\r\n| where resourceName == resName\r\n|where operationName !in (\"AsyncOperationCompletionOperation\", \"VirtualMachines.RetrieveBootDiagnosticsData.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\", \"Deployments.Preflight.POST\", \"DiskRPCallback.AllocateDisks.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\",\"CustomerSupport.RetrieveSasUri.POST\", \"VMScaleSetCleanupInternalOperation\",\"NrpCallback.DeleteTenant.POST\", \"VirtualMachines.RetrieveVMConsoleSerialLogs.POST\", \"NrpCallback.FinalizeTenantResourceAllocation.POST\", \"NrpCallback.RevertTenantResourceAllocation.POST\", \"NrpCallback.DeallocateAllTenantNetworkResources.POST\", \"NrpCallback.AllocateTenantNetworkResources.POST\", \"NrpCallback.CommitTenantResourceAllocation.POST\",\"RestorePoints.RestorePointOperation.PUT\", \"Subscriptions.Register.PUT\", \"AsyncOperationCallbackOperation\", \"RestorePoints.RestorePointOperation.DELETE\", \"RestorePoints.RetrieveSasUris.POST\", \"FabricCallback.OnRoleInstanceStateChange.POST\", \"RestorePoints.RestorePointOperation.DELETE\")\r\n| distinct  operationId);\r\nlet tenantNames = materialize (ComponentQoSEvent\r\n| where PreciseTimeStamp between((queryFrom)..queryTo)\r\n| where fabricTenantName != \"\"\r\n| where activityId in (opids)\r\n//|summarize min(PreciseTimeStamp),max(PreciseTimeStamp) by fabricCluster, fabricTenantName\r\n| distinct fabricTenantName);\r\nlet clusters = materialize(cluster('azcore.centralus').database('Fc').TMMgmtTenantEventsEtwTable\r\n| where PreciseTimeStamp between((queryFrom -1d)..(queryTo +1d))\r\n| where TenantName in~ (tenantNames) \r\n| distinct Tenant);\r\ncluster('azcore.centralus').database('Fc').LogFabricatorStartUpDetails\r\n| where PreciseTimeStamp between((queryFrom)..(queryTo))\r\n| where Tenant in~  (clusters)\r\n| sort by PreciseTimeStamp asc \r\n| where phase =~ \"ManagementCtr.Step 0\" | take 1 //or PreciseTimeStamp == firstPreciseTimeStamp | take 1\r\n| extend Description = \"Fabricators for the clusters the VM(s) were on have failed over,  head on over to the Fabric failover tab below for details or refer this TSG: https://aka.ms/CSSFabricFailoverOps\"\r\n| extend Severity = 'warning'",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-26T05:17:18.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-28T05:17:18.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "rgName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CloudName",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "RegionFriendlyName",
+        "type": "string"
+      },
+      {
+        "name": "DataCenterName",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "SourceNodeId",
+        "type": "string"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "incarnationId",
+        "type": "string"
+      },
+      {
+        "name": "phase",
+        "type": "string"
+      },
+      {
+        "name": "durationInMillis",
+        "type": "string"
+      },
+      {
+        "name": "schemaVersion",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "AzCoreCluster",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      },
+      {
+        "name": "Severity",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "b4b23b7c-e27f-4724-acee-058c65de8fdb",
+    "name": "NeworkingInternalOperationError Detector ",
+    "groupId": "f7c6a8ed-c350-403c-b43a-dc60514396fc",
+    "majorVersion": 1,
+    "minorVersion": 5,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "IssueDetector",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "ApiQosEvent\r\n    | where PreciseTimeStamp between(queryFrom..queryTo)\r\n    | where operationName !contains \"GET\"\r\n    and subscriptionId == subId\r\n    and resourceGroupName =~ rgName\r\n    and resourceName contains resName\r\n    and resultCode == 'NetworkingInternalOperationError' | take 1\r\n    | extend Description = \"Operations have failed with NetworkingInternalOperationError, review the NetworkingInternalOperationError tab below for more details. TSG: https://aka.ms/CCSupNetworkingInternalError\"\r\n    | extend Severity = \"error\"",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-03-01T22:52:33.046Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-03-07T22:52:33.046Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "rgName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "MonitoringApplication",
+        "type": "string"
+      },
+      {
+        "name": "Node",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "operationId",
+        "type": "string"
+      },
+      {
+        "name": "clientRequestId",
+        "type": "string"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "durationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "e2EDurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "httpStatusCode",
+        "type": "long"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "resultType",
+        "type": "long"
+      },
+      {
+        "name": "exceptionType",
+        "type": "string"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      },
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "wFAppName",
+        "type": "string"
+      },
+      {
+        "name": "partitionId",
+        "type": "string"
+      },
+      {
+        "name": "replicaId",
+        "type": "long"
+      },
+      {
+        "name": "userAgent",
+        "type": "string"
+      },
+      {
+        "name": "clientApplicationId",
+        "type": "string"
+      },
+      {
+        "name": "clientPrincipalName",
+        "type": "string"
+      },
+      {
+        "name": "clientRoles",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "requestEntity",
+        "type": "string"
+      },
+      {
+        "name": "goalSeekingActivityId",
+        "type": "string"
+      },
+      {
+        "name": "labels",
+        "type": "string"
+      },
+      {
+        "name": "internalCorrelationId",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "datastoreType",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "AzCoreCluster",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      },
+      {
+        "name": "Severity",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "b745f636-371f-4613-948e-eca170916b55",
+    "name": "Slow Extensions",
+    "groupId": "dfeb9dd9-e985-426d-b99c-b0f8454f4a3b",
+    "majorVersion": 1,
+    "minorVersion": 5,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "IssueDetector",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let opids = materialize(ApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where subscriptionId =~ subId and operationName !contains \"GET\"\r\n| where resourceGroupName =~ resourceGroupName\r\n| where resourceName has resName\r\n| where operationName !in (\"AsyncOperationCompletionOperation\", \"VirtualMachines.RetrieveBootDiagnosticsData.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\", \"Deployments.Preflight.POST\", \"DiskRPCallback.AllocateDisks.POST\", \"VirtualMachines.RetrieveVMConsoleScreenshot.POST\",\"CustomerSupport.RetrieveSasUri.POST\", \"VMScaleSetCleanupInternalOperation\",\"NrpCallback.DeleteTenant.POST\", \"VirtualMachines.RetrieveVMConsoleSerialLogs.POST\", \"NrpCallback.FinalizeTenantResourceAllocation.POST\", \"NrpCallback.RevertTenantResourceAllocation.POST\", \"NrpCallback.DeallocateAllTenantNetworkResources.POST\", \"NrpCallback.AllocateTenantNetworkResources.POST\", \"NrpCallback.CommitTenantResourceAllocation.POST\",\"RestorePoints.RestorePointOperation.PUT\", \"Subscriptions.Register.PUT\", \"AsyncOperationCallbackOperation\", \"RestorePoints.RestorePointOperation.DELETE\", \"RestorePoints.RetrieveSasUris.POST\", \"FabricCallback.OnRoleInstanceStateChange.POST\", \"RestorePoints.RestorePointOperation.DELETE\")\r\n| where e2EDurationInMilliseconds > 600000\r\n| extend startTime = datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| distinct  operationId);//opids\r\nlet longGoalSeekOpids = materialize(ComponentQoSEvent\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where fabricTenantName != \"\"\r\n| where activityId in (opids)\r\n| where operationName == \"PollForVMExtensionsProvisioningResult\" and durationInMs > 600000\r\n| summarize by activityId);\r\n//longGoalSeekOpids\r\nunion ContextActivity, VmssVMGoalSeekingActivity \r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where activityId in (longGoalSeekOpids)\r\n| where message contains  \"Handler status is 'NotReady'\" or message contains \"has reported status 'Transitioning'\" or message contains '\"status\": \"transitioning\"' or message contains \"has reported status 'NotReady'\"\r\n| summarize  arg_min(PreciseTimeStamp, activityId), arg_max(PreciseTimeStamp, activityId) by message\r\n| extend FirstTimeStamp = PreciseTimeStamp\r\n| extend LastTimeStamp = PreciseTimeStamp1\r\n| extend FirstActivityId = activityId\r\n| extend LastActivityId = activityId1\r\n| extend duration = LastTimeStamp - FirstTimeStamp\r\n| take 1 \r\n| extend Description = \"Extensions have been in transioning or NotReady state for more than 10 minutes, review the Slow Extensions tab under CRP Troubleshooting below for more detail. TSG: https://supportability.visualstudio.com/AzureIaaSVM/_wiki/wikis/AzureIaaSVM/884230/90-minute-extension-timeout_AGEX\"\r\n| extend Severity = \"warning\" ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-03T22:52:33.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-11T22:52:33.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "rgName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "activityId",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp1",
+        "type": "datetime"
+      },
+      {
+        "name": "activityId1",
+        "type": "string"
+      },
+      {
+        "name": "FirstTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "LastTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "FirstActivityId",
+        "type": "string"
+      },
+      {
+        "name": "LastActivityId",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "timespan"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      },
+      {
+        "name": "Severity",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "11c017d2-a889-455d-8bb5-f132f8b3aed9",
+    "name": "VMStartTimedOut Detector",
+    "groupId": "b1578826-5922-4871-88b0-50764590f8f5",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "IssueDetector",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "ApiQosEvent\r\n    | where PreciseTimeStamp between(queryFrom..queryTo)\r\n    | where operationName !contains \"GET\"\r\n    and subscriptionId == subId\r\n    and resourceGroupName =~ rgName\r\n    and resourceName =~ resName\r\n    and resultCode == 'VMStartTimedOut' | take 1\r\n    | extend Description = \"Operations have failed with VMStartTimedOut, review the VMStartTimedOut tab below for more details. TSG: http://aka.ms/VMStartTimedOut \"\r\n    | extend Severity = \"error\"",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-03-13T23:55:47.062Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-03-14T23:55:47.062Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "rgName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "MonitoringApplication",
+        "type": "string"
+      },
+      {
+        "name": "Node",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "operationId",
+        "type": "string"
+      },
+      {
+        "name": "clientRequestId",
+        "type": "string"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "durationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "e2EDurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "httpStatusCode",
+        "type": "long"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "resultType",
+        "type": "long"
+      },
+      {
+        "name": "exceptionType",
+        "type": "string"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      },
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "wFAppName",
+        "type": "string"
+      },
+      {
+        "name": "partitionId",
+        "type": "string"
+      },
+      {
+        "name": "replicaId",
+        "type": "long"
+      },
+      {
+        "name": "userAgent",
+        "type": "string"
+      },
+      {
+        "name": "clientApplicationId",
+        "type": "string"
+      },
+      {
+        "name": "clientPrincipalName",
+        "type": "string"
+      },
+      {
+        "name": "clientRoles",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "requestEntity",
+        "type": "string"
+      },
+      {
+        "name": "goalSeekingActivityId",
+        "type": "string"
+      },
+      {
+        "name": "labels",
+        "type": "string"
+      },
+      {
+        "name": "internalCorrelationId",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "datastoreType",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "AzCoreCluster",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      },
+      {
+        "name": "Severity",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "07e0694b-cd94-4d7f-8ebd-d68add762def",
+    "name": "PreemptedOperations V2",
+    "groupId": "69b2b0fd-d85a-43c2-a43f-59f822fa0344",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let local_subscriptionId = split(ResURI,\"/\")[2];\r\nlet local_resourceGroupName = split(ResURI,\"/\")[4];\r\nlet local_resourceName = split(ResURI,\"/\")[8];\r\nlet local_vmssInstanceName = split(ResURI,\"/\")[10];\r\nlet opids = materialize(ApiQosEvent\r\n| where PreciseTimeStamp between(queryFrom..2h)\r\n| where tolower(subscriptionId) == tolower(local_subscriptionId) and operationName !contains \"GET\"\r\n| where tolower(resourceGroupName) == tolower(local_resourceGroupName)\r\n| where tolower(resourceName) startswith tolower(local_resourceName) or (isnotempty(tolower(local_vmssInstanceName)) and tolower(resourceName) startswith tolower(local_vmssInstanceName)));\r\nlet ctxact = materialize(ContextActivity\r\n| where PreciseTimeStamp between(queryFrom..2h) and activityId in (opids | project operationId)\r\n| where message has \"is requesting preemption\"  or message has \"Not preempting current execution as it was preempted too many times.\" and message !has \"`1\" or message has \"Execution preempted for\" or message has \"Switching activity-id to\"\r\n| project PreciseTimeStamp, activityId, message);\r\nopids | join kind=inner ctxact on $left.operationId == $right.activityId\r\n| parse message with * 'Activity ' ActivityIdWhichRequestedPreemption ' ' * 'Current preemption count is ' CurrentPreemptionCount '.'\r\n| parse message with * 'Switching activity-id to ' SwitchedToActivityId\r\n| distinct  StartTime=(PreciseTimeStamp-e2EDurationInMilliseconds * 1ms), EndTime=PreciseTimeStamp, resultCode, operationName, resourceGroupName, resourceName, correlationId, activityId, ActivityIdWhichRequestedPreemption, CurrentPreemptionCount,SwitchedToActivityId,  requestEntity, message\r\n| order by StartTime asc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-19T04:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "ResURI",
+        "description": "",
+        "type": "string",
+        "default": "/subscriptions/26bfa9a2-dadf-4c37-82ea-953894e868ce/resourceGroups/BT-PROD-NLD-RG/providers/Microsoft.Compute/virtualMachineScaleSets/btp-nld-mediabeta-vmss/virtualMachines/btp-nld-mediabeta-vmss_260",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "activityId",
+        "type": "string"
+      },
+      {
+        "name": "ActivityIdWhichRequestedPreemption",
+        "type": "string"
+      },
+      {
+        "name": "CurrentPreemptionCount",
+        "type": "string"
+      },
+      {
+        "name": "SwitchedToActivityId",
+        "type": "string"
+      },
+      {
+        "name": "requestEntity",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "8b84031a-19bb-40b9-b22d-ceead7648261",
+    "name": "Operations - StartTime",
+    "groupId": "661879ce-af7e-4d69-a209-d025cc45a586",
+    "majorVersion": 2,
+    "minorVersion": 4,
+    "cluster": "azcrp",
+    "database": "crp_allprod",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let local_subscriptionId = tolower(split(ResURI,\"/\")[2]);\r\nlet local_resourceGroupName = split(ResURI,\"/\")[4];\r\nlet local_resourceName = split(ResURI,\"/\")[8];\r\nlet local_vmssInstanceName = split(ResURI,\"/\")[10];\r\nlet opids = materialize(ApiQosEvent\r\n| where PreciseTimeStamp between(queryFrom..2h)\r\n| where operationName !contains \"GET\"\r\n| where subscriptionId == local_subscriptionId //and operationName == \"VMScaleSetVMs.Start.POST\"\r\n| where tolower(resourceGroupName) == tolower(local_resourceGroupName)\r\n| where tolower(resourceName) startswith tolower(local_resourceName) or (isnotempty(tolower(local_vmssInstanceName)) and tolower(resourceName) startswith tolower(local_vmssInstanceName)));\r\nlet ctxact = materialize(ContextActivity\r\n| where PreciseTimeStamp between(queryFrom..2h) and activityId in (opids | project operationId)\r\n| where message has \"is requesting preemption\"  or message has \"Not preempting current execution as it was preempted too many times.\" and message !has \"`1\" or message has \"Execution preempted for\"  or message has \"Switching activity-id to\"\r\n| project PreciseTimeStamp, activityId, message);\r\nopids | join kind=inner ctxact on $left.operationId == $right.activityId\r\n| parse message with * 'Activity ' ActivityIdWhichRequestedPreemption ' ' * 'Current preemption count is ' CurrentPreemptionCount '.'\r\n| parse message with * 'Switching activity-id to ' SwitchedToActivityId\r\n| summarize by StartTime=(PreciseTimeStamp-e2EDurationInMilliseconds * 1ms), EndTime=PreciseTimeStamp, Content=strcat(operationName,\"/ActId:\",activityId), activityId, operationName,ActivityIdWhichRequestedPreemption,SwitchedToActivityId\r\n| where isnotempty(ActivityIdWhichRequestedPreemption) or isnotempty(SwitchedToActivityId)\r\n| order by StartTime asc\r\n| project StartTime, Content, operationName, activityId, ActivityIdWhichRequestedPreemption, SwitchedToActivityId",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-19T04:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "ResURI",
+        "description": "",
+        "type": "string",
+        "default": "/subscriptions/26bfa9a2-dadf-4c37-82ea-953894e868ce/resourceGroups/BT-PROD-NLD-RG/providers/Microsoft.Compute/virtualMachineScaleSets/btp-nld-mediabeta-vmss/virtualMachines/btp-nld-mediabeta-vmss_260",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "activityId",
+        "type": "string"
+      },
+      {
+        "name": "ActivityIdWhichRequestedPreemption",
+        "type": "string"
+      },
+      {
+        "name": "SwitchedToActivityId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "ddae17e0-4d7c-4985-9666-511194cd53cf",
+    "name": "Operations - Lifecycle until preemption",
+    "groupId": "440eea5e-00f1-4bc1-a918-4fe4a0b568fc",
+    "majorVersion": 1,
+    "minorVersion": 9,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let local_subscriptionId = tolower(split(ResURI,\"/\")[2]);\r\nlet local_resourceGroupName = split(ResURI,\"/\")[4];\r\nlet local_resourceName = split(ResURI,\"/\")[8];\r\nlet local_vmssInstanceName = split(ResURI,\"/\")[10];\r\nlet opids = materialize(ApiQosEvent\r\n| where PreciseTimeStamp between(queryFrom..2h)\r\n| where operationName !contains \"GET\"\r\n| where subscriptionId == local_subscriptionId //and operationName == \"VMScaleSetVMs.Start.POST\"\r\n| where tolower(resourceGroupName) == tolower(local_resourceGroupName)\r\n| where tolower(resourceName) startswith tolower(local_resourceName) or (isnotempty(tolower(local_vmssInstanceName)) and tolower(resourceName) startswith tolower(local_vmssInstanceName)));\r\nlet ctxact = materialize(ContextActivity\r\n| where PreciseTimeStamp between(queryFrom..2h) and activityId in (opids | project operationId)\r\n| where message has \"is requesting preemption\"  or message has \"Not preempting current execution as it was preempted too many times.\" and message !has \"`1\" or message has \"Execution preempted for\" or message has \"Switching activity-id to\"\r\n| project PreciseTimeStamp, activityId, message);\r\nopids | join kind=inner ctxact on $left.operationId == $right.activityId\r\n| parse message with * 'Activity ' ActivityIdWhichRequestedPreemption ' ' * 'Current preemption count is ' CurrentPreemptionCount '.'\r\n| parse message with * 'Switching activity-id to ' SwitchedToActivityId\r\n| summarize by StartTime=(PreciseTimeStamp-e2EDurationInMilliseconds * 1ms), EndTime=PreciseTimeStamp, Content=strcat(operationName,\"/ActId:\",activityId), activityId, operationName,ActivityIdWhichRequestedPreemption,SwitchedToActivityId\r\n| where isnotempty(ActivityIdWhichRequestedPreemption) or isnotempty(SwitchedToActivityId)\r\n| order by StartTime asc\r\n| project StartTime, EndTime, Content, operationName, activityId, ActivityIdWhichRequestedPreemption,SwitchedToActivityId",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-19T04:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "ResURI",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "/subscriptions/26bfa9a2-dadf-4c37-82ea-953894e868ce/resourceGroups/BT-PROD-NLD-RG/providers/Microsoft.Compute/virtualMachineScaleSets/btp-nld-mediabeta-vmss/virtualMachines/btp-nld-mediabeta-vmss_260",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "activityId",
+        "type": "string"
+      },
+      {
+        "name": "ActivityIdWhichRequestedPreemption",
+        "type": "string"
+      },
+      {
+        "name": "SwitchedToActivityId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "48e365d4-2848-451b-9769-88850f8626c5",
+    "name": "RnmOperationEvents",
+    "groupId": "04bc7a71-6e77-4238-9ecf-3860cd640469",
+    "majorVersion": 5,
+    "minorVersion": 0,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = queryFrom;\r\nlet endTime = queryTo;\r\n//Do not edit below this line\r\nlet FRIC_RELEASE_TIME_LIMIT = 15m; \r\nlet CONTAINER_DESTROY_TIME_LIMIT = 15m;\r\nlet CrpOp = materialize(\r\n    macro-expand isfuzzy=true entity_group [cluster('azcore.centralus.kusto.windows.net')] as X(\r\n        X.database('Crp').ApiQosEvent\r\n            | where PreciseTimeStamp between(startTime..endTime)\r\n                and subscriptionId == subid\r\n                and resourceGroupName =~ rgName\r\n                and resourceName =~ resName\r\n                and resultCode == 'NetworkingInternalOperationError'\r\n            |extend extractCode = iif(errorDetails has 'Code: ', extract('Code: (.*)', 1, tostring(errorDetails)), '')\r\n            | extend NRPerrortype = case (\r\n                        extractCode in (\"RnmServiceDeletionCleanupTimeout\",\"RnmServiceInstanceCleanupTimeout\"), 'FricReleaseIssue', //FRIC release issues\r\n                            'NotComputeToBlame')\r\n            )\r\n        | project PreciseTimeStamp, NRPerrortype , errorDetails //, operationName, resultCode, requestEntity - will need it only when testing the query\r\n        | top 1 by PreciseTimeStamp asc\r\n);\r\nlet FricReleaseIssue =materialize( \r\n    CrpOp  \r\n        | where NRPerrortype != 'NotComputeToBlame'\r\n        | extend \r\n            extractedTenantName = iif(errorDetails has 'serviceId: ', extract('serviceId: (.*?),', 1, tostring(errorDetails)),''),\r\n            extractedDeletedTime = iif(errorDetails has 'DeletedDateTime: ', extract('DeletedDateTime: (.*?) IsCleanupPendingInTM',1, tostring(errorDetails)),''),\r\n            extractedFabricId = tolower(iif(errorDetails has 'FabricId: ', extract('FabricId: (.*?) PendingDeleteInFabric',1, tostring(errorDetails)),'')),\r\n            extractedRoleInstanceName = iff(isempty(toupper(extract(\"Name: (.*?) \", 1, tostring(errorDetails)))),strcat(\"_\",toupper(resName)),toupper(extract(\"Name: (.*?) \", 1,tostring(errorDetails)))),\r\n            isCleanupPendingInTM = iff(errorDetails has \"IsCleanupPendingInTM: True\" , true, false),\r\n            isPendingDeleteInFa = iff(errorDetails has \"PendingDeleteInFabric: True\", true, false),\r\n            extractedNetworkServiceInstanceId = iif(errorDetails has \"NetworkServiceInstanceId: \", extract('NetworkServiceInstanceId: ([a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})', 1, tostring(errorDetails)),'') \r\n            //We have the scenario where the vip is stuck associated with a ghost tenant so this helps to confirm\r\n        | extend extractedVipReleasePending = iff(errorDetails contains \"VipReleasePendingInRnmBeforeNsmQuery\",true,false)\r\n        | extend extractedVipReleasePendingNsm = iff( errorDetails contains 'VipReleasePendingInNsmPlus',true,false)\r\n        // We just want to focus on the scenario where RNM/NSM blames Compute\r\n        | where isCleanupPendingInTM or isPendingDeleteInFa\r\n);\r\nlet nsId = toscalar(FricReleaseIssue | project extractedNetworkServiceInstanceId);\r\nlet StartRNMcheck = todatetime(toscalar(FricReleaseIssue | project extractedDeletedTime));\r\nlet tenantNameFromCrP=(FricReleaseIssue | project extractedTenantName);\r\n//Check Rnm Release notification state\r\nFricReleaseIssue\r\n    | join kind = leftouter (\r\n        macro-expand isfuzzy=false entity_group [cluster('azcore.centralus.kusto.windows.net')] as X(\r\n            X.database(\"AzureCP\").RnmOperationEvents\r\n            | where PreciseTimeStamp between(todatetime(StartRNMcheck) ..now())\r\n                and tenantName in (tenantNameFromCrP) and isnotempty(tenantName)\r\n            | project RnmPreciseTimeStamp=PreciseTimeStamp, Cluster, EventMessage, tenantName\r\n            | extend EventMessage = array_slice(extract_all(\"(.*?)\\\\r\\\\n\", EventMessage), 1, -1),\r\n                errorexists = iif(EventMessage contains 'Exception',strcat('Yes.','\\n', 'Exception: ',extract(\"Exception:\\\\s(.*)\", 1, tostring(EventMessage))),'No')\r\n            | mv-expand EventMessage\r\n            | extend\r\n                NetworkServiceId = iff(isempty(nsId),'', extract('NetworkServiceInstanceId: ([a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})', 1, tostring(EventMessage))),\r\n                RoleInstanceName = toupper(extract(\"RoleInstanceName: (.*?),\", 1, tostring(EventMessage))),\r\n                State = extract(\"State: (.*?),\", 1, tostring(EventMessage)),\r\n                Fabric = extract(\"FabricId: (.*?),\", 1, tostring(EventMessage))\r\n        )\r\n    | summarize arg_min(RnmPreciseTimeStamp, *) by RoleInstanceName,NetworkServiceId,State, Fabric\r\n    ) on $left.extractedRoleInstanceName == $right.RoleInstanceName and  $left.extractedNetworkServiceInstanceId == $right.NetworkServiceId and $left.extractedFabricId==$right.Fabric\r\n    | project RnmPreciseTimeStamp, extractedDeletedTime, extractedFabricId, extractedNetworkServiceInstanceId, extractedTenantName, State, EventMessage",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-02T13:52:51.567Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-03T13:52:51.568Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subid",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "rgName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "RnmPreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "extractedDeletedTime",
+        "type": "string"
+      },
+      {
+        "name": "extractedFabricId",
+        "type": "string"
+      },
+      {
+        "name": "extractedNetworkServiceInstanceId",
+        "type": "string"
+      },
+      {
+        "name": "extractedTenantName",
+        "type": "string"
+      },
+      {
+        "name": "State",
+        "type": "string"
+      },
+      {
+        "name": "EventMessage",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  },
+  {
+    "id": "ba29ed53-5fa9-4f9d-ae73-84fd0c79e9b4",
+    "name": "statemachinevents",
+    "groupId": "ad9c19a0-d209-437c-a0a8-83690878dadb",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azcore.centralus",
+    "database": "Crp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = queryFrom;\r\nlet endTime = queryTo;\r\n//Do not edit below this line\r\nlet FRIC_RELEASE_TIME_LIMIT = 15m; \r\nlet CONTAINER_DESTROY_TIME_LIMIT = 15m;\r\nlet CrpOp = materialize(\r\n    macro-expand isfuzzy=true entity_group [cluster('azcore.centralus.kusto.windows.net')] as X(\r\n        X.database('Crp').ApiQosEvent\r\n            | where PreciseTimeStamp between(startTime..endTime)\r\n                and subscriptionId == subid\r\n                and resourceGroupName =~ rgName\r\n                and resourceName =~ resName\r\n                and resultCode == 'NetworkingInternalOperationError'\r\n            |extend extractCode = iif(errorDetails has 'Code: ', extract('Code: (.*)', 1, tostring(errorDetails)), '')\r\n            | extend NRPerrortype = case (\r\n                        extractCode in (\"RnmServiceDeletionCleanupTimeout\",\"RnmServiceInstanceCleanupTimeout\"), 'FricReleaseIssue', //FRIC release issues\r\n                            'NotComputeToBlame')\r\n            )\r\n        | project PreciseTimeStamp, NRPerrortype , errorDetails //, operationName, resultCode, requestEntity - will need it only when testing the query\r\n        | top 1 by PreciseTimeStamp asc\r\n);\r\nlet FricReleaseIssue =materialize( \r\n    CrpOp  \r\n        | where NRPerrortype != 'NotComputeToBlame'\r\n        | extend \r\n            extractedTenantName = iif(errorDetails has 'serviceId: ', extract('serviceId: (.*?),', 1, tostring(errorDetails)),''),\r\n            extractedDeletedTime = iif(errorDetails has 'DeletedDateTime: ', extract('DeletedDateTime: (.*?) IsCleanupPendingInTM',1, tostring(errorDetails)),''),\r\n            extractedFabricId = tolower(iif(errorDetails has 'FabricId: ', extract('FabricId: (.*?) PendingDeleteInFabric',1, tostring(errorDetails)),'')),\r\n            extractedRoleInstanceName = iff(isempty(toupper(extract(\"Name: (.*?) \", 1, tostring(errorDetails)))),strcat(\"_\",toupper(resName)),toupper(extract(\"Name: (.*?) \", 1,tostring(errorDetails)))),\r\n            isCleanupPendingInTM = iff(errorDetails has \"IsCleanupPendingInTM: True\" , true, false),\r\n            isPendingDeleteInFa = iff(errorDetails has \"PendingDeleteInFabric: True\", true, false),\r\n            extractedNetworkServiceInstanceId = iif(errorDetails has \"NetworkServiceInstanceId: \", extract('NetworkServiceInstanceId: ([a-fA-F0-9]{8}[-]?([a-fA-F0-9]{4}[-]?){3}[a-fA-F0-9]{12})', 1, tostring(errorDetails)),'') \r\n            //We have the scenario where the vip is stuck associated with a ghost tenant so this helps to confirm\r\n        | extend extractedVipReleasePending = iff(errorDetails contains \"VipReleasePendingInRnmBeforeNsmQuery\",true,false)\r\n        | extend extractedVipReleasePendingNsm = iff( errorDetails contains 'VipReleasePendingInNsmPlus',true,false)\r\n        // We just want to focus on the scenario where RNM/NSM blames Compute\r\n        | where isCleanupPendingInTM or isPendingDeleteInFa\r\n);\r\nlet nsId = toscalar(FricReleaseIssue | project extractedNetworkServiceInstanceId);\r\nlet StartRNMcheck = todatetime(toscalar(FricReleaseIssue | project extractedDeletedTime));\r\nlet tenantNameFromCrP=(FricReleaseIssue | project extractedTenantName);\r\n//Check Rnm Release notification state\r\nFricReleaseIssue\r\n    | join kind = leftouter (\r\n        macro-expand isfuzzy=false entity_group [cluster('azcore.centralus.kusto.windows.net')] as X(\r\n            X.database(\"AzureCP\").AzSMTenantStatemachineEvents\r\n            | where PreciseTimeStamp between(todatetime(StartRNMcheck) ..now())\r\n                and tenantName in (tenantNameFromCrP) and isnotempty(tenantName)\r\n                | project PreciseTimeStamp, tenantName , stateMachineId , stateMachineState , message \r\n                | where * contains \"rnm\"\r\n        )\r\n    ) on $left.extractedTenantName==$right.tenantName\r\n    | project PreciseTimeStamp, tenantName, stateMachineId, stateMachineState, message",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subid",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "rgName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      },
+      {
+        "name": "stateMachineId",
+        "type": "string"
+      },
+      {
+        "name": "stateMachineState",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM VMSS CRUD Hub"
+  }
+]

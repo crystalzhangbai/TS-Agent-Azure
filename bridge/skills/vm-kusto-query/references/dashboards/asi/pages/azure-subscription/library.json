@@ -1,0 +1,2646 @@
+{
+  "service": "Azure Host",
+  "page": "Azure Subscription",
+  "pageId": "82c5e580-d09d-4f6f-91ab-11576b811132",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "d6a81014-bce2-4fbe-833f-9be1c2eda34c",
+          "name": "Retrieve Resource \"Azure Subscription\"",
+          "groupId": "e387734b-ec73-4920-9236-403ba2fd0722",
+          "majorVersion": 4,
+          "minorVersion": 4,
+          "cluster": "datastudiostreaming",
+          "database": "Shared",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_SubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "SubscriptionGuid",
+              "type": "guid"
+            },
+            {
+              "name": "SubscriptionCreatedDate",
+              "type": "datetime"
+            },
+            {
+              "name": "CurrentSubscriptionStatus",
+              "type": "string"
+            },
+            {
+              "name": "FriendlySubscriptionName",
+              "type": "string"
+            },
+            {
+              "name": "AI_ChannelType",
+              "type": "string"
+            },
+            {
+              "name": "OfferId",
+              "type": "string"
+            },
+            {
+              "name": "OfferName",
+              "type": "string"
+            },
+            {
+              "name": "OfferType",
+              "type": "string"
+            },
+            {
+              "name": "CloudType",
+              "type": "string"
+            },
+            {
+              "name": "DeactivationReasonName",
+              "type": "string"
+            },
+            {
+              "name": "DeprovisionedDate",
+              "type": "string"
+            },
+            {
+              "name": "TenantCountryCode",
+              "type": "string"
+            },
+            {
+              "name": "ServiceUseCountryCode",
+              "type": "string"
+            },
+            {
+              "name": "BillToCountryCode",
+              "type": "string"
+            },
+            {
+              "name": "DataSourceId",
+              "type": "int"
+            },
+            {
+              "name": "BusinessGroupName",
+              "type": "string"
+            },
+            {
+              "name": "WorkloadType",
+              "type": "string"
+            },
+            {
+              "name": "TPID",
+              "type": "int"
+            },
+            {
+              "name": "TPName",
+              "type": "string"
+            },
+            {
+              "name": "TPNameTranslated",
+              "type": "string"
+            },
+            {
+              "name": "SegmentName",
+              "type": "string"
+            },
+            {
+              "name": "IndustryName",
+              "type": "string"
+            },
+            {
+              "name": "VerticalName",
+              "type": "string"
+            },
+            {
+              "name": "S500",
+              "type": "string"
+            },
+            {
+              "name": "RegionName",
+              "type": "string"
+            },
+            {
+              "name": "SubsidiaryName",
+              "type": "string"
+            },
+            {
+              "name": "IsFederalTPID",
+              "type": "long"
+            },
+            {
+              "name": "BillingType",
+              "type": "string"
+            },
+            {
+              "name": "CloudCustomerGuid",
+              "type": "guid"
+            },
+            {
+              "name": "CloudCustomerName",
+              "type": "string"
+            },
+            {
+              "name": "MSCustomerGuid",
+              "type": "guid"
+            },
+            {
+              "name": "MSCustomerName",
+              "type": "string"
+            },
+            {
+              "name": "TenantId",
+              "type": "string"
+            },
+            {
+              "name": "TenantName",
+              "type": "string"
+            },
+            {
+              "name": "EnrollmentNumber",
+              "type": "string"
+            },
+            {
+              "name": "AreaName",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionGuid_String",
+              "type": "string"
+            },
+            {
+              "name": "TPID_String",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionStartDate",
+              "type": "datetime"
+            },
+            {
+              "name": "StrategicType",
+              "type": "string"
+            },
+            {
+              "name": "EOU",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "Source",
+              "type": "long"
+            },
+            {
+              "name": "SubscriptionName",
+              "type": "string"
+            },
+            {
+              "name": "EndDate",
+              "type": "datetime"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Sub_Status",
+              "type": "string"
+            },
+            {
+              "name": "SubServiceAdmin",
+              "type": "string"
+            },
+            {
+              "name": "PCCode",
+              "type": "string"
+            },
+            {
+              "name": "CostCategory",
+              "type": "string"
+            },
+            {
+              "name": "PFAM",
+              "type": "string"
+            },
+            {
+              "name": "ProfitCenterProgramId",
+              "type": "string"
+            },
+            {
+              "name": "InsertedOn",
+              "type": "datetime"
+            },
+            {
+              "name": "AIRSLastModifiedOn",
+              "type": "datetime"
+            },
+            {
+              "name": "AIRSLastModifiedByAlias",
+              "type": "string"
+            },
+            {
+              "name": "PCCodeLastModifiedOn",
+              "type": "datetime"
+            },
+            {
+              "name": "RegistrationId",
+              "type": "string"
+            },
+            {
+              "name": "ApproverAlias",
+              "type": "string"
+            },
+            {
+              "name": "FinanceManagerAlias",
+              "type": "string"
+            },
+            {
+              "name": "AccountId",
+              "type": "long"
+            },
+            {
+              "name": "CAID",
+              "type": "string"
+            },
+            {
+              "name": "AccountAdmin",
+              "type": "string"
+            },
+            {
+              "name": "RegistrationRequesterAlias",
+              "type": "string"
+            },
+            {
+              "name": "RegistrationRequesterName",
+              "type": "string"
+            },
+            {
+              "name": "RegistrationCompanyName",
+              "type": "string"
+            },
+            {
+              "name": "RegistrationNumber",
+              "type": "int"
+            },
+            {
+              "name": "RegistrationAccountTypeId",
+              "type": "int"
+            },
+            {
+              "name": "RegistrationAccountScenarioId",
+              "type": "int"
+            },
+            {
+              "name": "RegistrationPCCode",
+              "type": "string"
+            },
+            {
+              "name": "RegistrationCostCategory",
+              "type": "string"
+            },
+            {
+              "name": "RegistrationPaidSupportPCCode",
+              "type": "string"
+            },
+            {
+              "name": "RegistrationPaidSupportProfitCenterProgramId",
+              "type": "int"
+            },
+            {
+              "name": "RegistrationPaidSupportCostCategory",
+              "type": "string"
+            },
+            {
+              "name": "PCCodeSource",
+              "type": "string"
+            },
+            {
+              "name": "InAIRS",
+              "type": "bool"
+            },
+            {
+              "name": "SubscriptionState",
+              "type": "string"
+            },
+            {
+              "name": "CommerceEnqueuedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "AIRSOffer",
+              "type": "bool"
+            },
+            {
+              "name": "Active",
+              "type": "bool"
+            },
+            {
+              "name": "SECFunctionalAreaCode",
+              "type": "string"
+            },
+            {
+              "name": "Internal",
+              "type": "bool"
+            },
+            {
+              "name": "RegistrationName",
+              "type": "string"
+            },
+            {
+              "name": "CustomerName",
+              "type": "string"
+            },
+            {
+              "name": "EstimatedEndDate",
+              "type": "datetime"
+            },
+            {
+              "name": "EstimatedMonthlyUsage",
+              "type": "int"
+            },
+            {
+              "name": "ServiceLevel",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "IsHostedOnBehalfOf",
+              "type": "bool"
+            },
+            {
+              "name": "AzureCloud",
+              "type": "string"
+            },
+            {
+              "name": "Notes",
+              "type": "string"
+            },
+            {
+              "name": "EvictionImpact",
+              "type": "string"
+            },
+            {
+              "name": "HOBOIsInternal",
+              "type": "bool"
+            },
+            {
+              "name": "HOBOServiceId",
+              "type": "string"
+            },
+            {
+              "name": "HOBOServiceName",
+              "type": "string"
+            },
+            {
+              "name": "HOBOServiceLevel",
+              "type": "string"
+            },
+            {
+              "name": "InServiceTree",
+              "type": "bool"
+            },
+            {
+              "name": "STId",
+              "type": "string"
+            },
+            {
+              "name": "STName",
+              "type": "string"
+            },
+            {
+              "name": "STLevel",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionIdSource",
+              "type": "string"
+            },
+            {
+              "name": "STIdPath",
+              "type": "string"
+            },
+            {
+              "name": "STOrgPath",
+              "type": "string"
+            },
+            {
+              "name": "STPath",
+              "type": "string"
+            },
+            {
+              "name": "PaidBySTId",
+              "type": "string"
+            },
+            {
+              "name": "PaidBySTName",
+              "type": "string"
+            },
+            {
+              "name": "PaidBySTLevel",
+              "type": "string"
+            },
+            {
+              "name": "PaidByFinanceHierarchyMappedNode",
+              "type": "string"
+            },
+            {
+              "name": "PaidByFinanceHierarchyMappedNodeLevel",
+              "type": "string"
+            },
+            {
+              "name": "PaidByParent",
+              "type": "bool"
+            },
+            {
+              "name": "AzureSpendSTId",
+              "type": "string"
+            },
+            {
+              "name": "AzureSpendSTLevel",
+              "type": "string"
+            },
+            {
+              "name": "AzureSpendSTName",
+              "type": "string"
+            },
+            {
+              "name": "AzureSpendSTPath",
+              "type": "string"
+            },
+            {
+              "name": "PaidBySTOrgPath",
+              "type": "string"
+            },
+            {
+              "name": "ServiceType",
+              "type": "string"
+            },
+            {
+              "name": "ServiceLifecycleStage",
+              "type": "string"
+            },
+            {
+              "name": "Cloud",
+              "type": "string"
+            },
+            {
+              "name": "STCloud",
+              "type": "string"
+            },
+            {
+              "name": "CostClassification",
+              "type": "string"
+            },
+            {
+              "name": "PCDesc",
+              "type": "string"
+            },
+            {
+              "name": "PCActive",
+              "type": "bool"
+            },
+            {
+              "name": "Status_Standardized",
+              "type": "string"
+            },
+            {
+              "name": "AzureSpendSTIdPath",
+              "type": "string"
+            },
+            {
+              "name": "PaidBySTOrgIdPath",
+              "type": "string"
+            },
+            {
+              "name": "PaidByUnty",
+              "type": "bool"
+            },
+            {
+              "name": "PaidByGPOrgId",
+              "type": "string"
+            },
+            {
+              "name": "HOBOProbableType",
+              "type": "string"
+            },
+            {
+              "name": "GoodHOBO",
+              "type": "bool"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            },
+            {
+              "name": "ApprovedOn",
+              "type": "string"
+            },
+            {
+              "name": "IsInDisableReview",
+              "type": "bool"
+            },
+            {
+              "name": "DisableReviewState",
+              "type": "string"
+            },
+            {
+              "name": "LastUpdated",
+              "type": "datetime"
+            },
+            {
+              "name": "Active_OldState",
+              "type": "bool"
+            },
+            {
+              "name": "InternalProbable",
+              "type": "bool"
+            },
+            {
+              "name": "MaxBillingTS",
+              "type": "datetime"
+            },
+            {
+              "name": "MinBillingTS",
+              "type": "datetime"
+            },
+            {
+              "name": "HasPCCode",
+              "type": "bool"
+            },
+            {
+              "name": "LastBilledPCCode",
+              "type": "string"
+            },
+            {
+              "name": "Billed",
+              "type": "bool"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_SubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let subscriptionSnapshotDataStudio = cluster('datastudiostreaming').database('Shared').DataStudio_AzureSubscription_Snapshot\r\n| where SubscriptionId in~ (local_SubscriptionId)\r\n| take 1;\r\nlet subscriptionSnapshotcustomerDomData = cluster('customerdomrptwus3prod.westus3.kusto.windows.net').database('CustomerDomData').CustomerModel\r\n| where SubscriptionGuid_String in~ (local_SubscriptionId)\r\n| take 1;\r\nunion subscriptionSnapshotcustomerDomData, subscriptionSnapshotDataStudio\r\n| take 1",
+          "panelPath": []
+        }
+      ]
+    },
+    "Active Disks for the Subscription": {
+      "panelPath": [
+        "Active Disks for the Subscription"
+      ],
+      "queries": [
+        {
+          "id": "5ac527cb-9ce5-4815-bfd2-c0a13dc94e73",
+          "name": "Azure Host Subscription Disks",
+          "groupId": "43383fb0-dcef-4d8a-91b0-31a7cb35a093",
+          "majorVersion": 3,
+          "minorVersion": 3,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Active Disks for the Subscription",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "_storageAccountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "StorageAccount",
+              "type": "string"
+            },
+            {
+              "name": "BlobPath",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "DiskAccessTier",
+              "type": "string"
+            },
+            {
+              "name": "StorageTenant",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "node_input",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "_storageAccountName",
+              "externalSourceName": "StorageAccountFilter",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOSurfaceCounterTable\r\n| where PreciseTimeStamp between ((startTime - 2h) .. (endTime + 2h)) and ArmId contains subId and (Type == 0 or Type == 4)\r\n| parse BlobPath with BlobPath \"?\" *\r\n| parse BlobPath with * \"/\" StorageAccount \"/\" *\r\n| where StorageAccount contains _storageAccountName\r\n| parse SurfaceName with ContainerId \"_\" *\r\n| distinct Region, StorageAccount, BlobPath, ContainerId, NodeId\r\n| join kind=leftouter(\r\n    OsConfigTable\r\n    | where PreciseTimeStamp between ((startTime - 6h) .. endTime) and Component == \"blobprop\"\r\n    | extend BlobProperties = parse_json(ConfigValue)\r\n    | extend \r\n             DiskAccessTier = tostring(BlobProperties.blobproperties['x-ms-access-tier']),\r\n             EnhancedConnectionVersion = BlobProperties.blobproperties[\"x-ms-enhancedconnectionversion\"],\r\n             StorageTenant = tostring(BlobProperties.storagecluster)\r\n    | extend BlobProperties = BlobProperties.blobproperties\r\n    | summarize hint.strategy=shuffle arg_max(PreciseTimeStamp, *) by ConfigName\r\n    | project BlobPath = ConfigName, DiskAccessTier, StorageTenant\r\n) on BlobPath\r\n| project-away BlobPath1",
+          "panelPath": [
+            "Active Disks for the Subscription"
+          ]
+        }
+      ]
+    },
+    "AIR-BP with RCA > Disk AIR-BP": {
+      "panelPath": [
+        "AIR-BP with RCA",
+        "Disk AIR-BP"
+      ],
+      "queries": [
+        {
+          "id": "ce2381a3-0a79-4bbf-b1c0-7413047bb31d",
+          "name": "Azure Host Subscription Disk AIR-BP",
+          "groupId": "8deb2abe-bfc1-47ed-8baf-0f9f20dd9a5e",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "Vmainsight",
+          "database": "Air",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Disk AIR-BP",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "EventTime",
+              "type": "datetime"
+            },
+            {
+              "name": "RoleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "RCAType",
+              "type": "string"
+            },
+            {
+              "name": "RCALevel1",
+              "type": "string"
+            },
+            {
+              "name": "RCALevel2",
+              "type": "string"
+            },
+            {
+              "name": "RCALevel3",
+              "type": "string"
+            },
+            {
+              "name": "StorageCluster",
+              "type": "string"
+            },
+            {
+              "name": "BlobPath",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AirDiskIOBlipEvents\r\n| where EventTime  between (queryFrom .. queryTo) and SubscriptionId == subId\r\n| where TotalIOsGt1s > 0\r\n| project EventTime, RoleInstanceName, ContainerId, RCAType, RCALevel1, RCALevel2, RCALevel3, StorageCluster, BlobPath",
+          "panelPath": [
+            "AIR-BP with RCA",
+            "Disk AIR-BP"
+          ]
+        }
+      ]
+    },
+    "Charts > Cache Policy - Active Disks": {
+      "panelPath": [
+        "Charts",
+        "Cache Policy - Active Disks"
+      ],
+      "queries": [
+        {
+          "id": "2ec89307-19a9-468c-a5a5-85d961102cb5",
+          "name": "Azure Host Subscription Active Disks",
+          "groupId": "1a89b9f8-386f-4819-9a43-643b036db072",
+          "majorVersion": 5,
+          "minorVersion": 2,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "CategoryChart",
+          "widgetType": "CategoryChart",
+          "widgetTitle": "Cache Policy - Active Disks",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Name",
+              "type": "string"
+            },
+            {
+              "name": "TotalDisks",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOHealthSignalEvent\r\n| where PreciseTimeStamp between (startTime .. endTime) and ArmId contains subId\r\n| extend CachePolicy = case(Type == 4, \"WriteAccelerator\", CachePolicy == 0, \"None\", CachePolicy == 1, \"ReadOnly\", CachePolicy == 2, \"ReadWrite\", \"Others\")\r\n| summarize TotalDisks = dcount(BlobPath) by Name = CachePolicy\r\n| sort by TotalDisks desc\r\n",
+          "panelPath": [
+            "Charts",
+            "Cache Policy - Active Disks"
+          ]
+        }
+      ]
+    },
+    "Charts > Disk IOPS - Active Regions": {
+      "panelPath": [
+        "Charts",
+        "Disk IOPS - Active Regions"
+      ],
+      "queries": [
+        {
+          "id": "a1b73a03-d557-44af-986a-c91125517549",
+          "name": "Azure Host Subscriptions Surface Stats Region",
+          "groupId": "e771192a-6b51-4b08-b06d-eae20c5d4433",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Disk IOPS - Active Regions",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "IOPS",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOSurfaceCounterTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and ArmId contains subId and IsNewDisk == 0\r\n| union (\r\n    OsUltraSSDCounterTable\r\n    | where PreciseTimeStamp between (startTime .. endTime) and ArmId contains subId and IsNewDisk == 0\r\n)\r\n| summarize IOPS = sum(IOPS) by bin(PreciseTimeStamp, 5m), Region",
+          "panelPath": [
+            "Charts",
+            "Disk IOPS - Active Regions"
+          ]
+        }
+      ]
+    },
+    "Charts > Stats by ResourceGroup": {
+      "panelPath": [
+        "Charts",
+        "Stats by ResourceGroup"
+      ],
+      "queries": [
+        {
+          "id": "faaee806-3eef-4800-aa93-7d5b50de9321",
+          "name": "Azure Host Analyzer Subscription Disk Stats by ResourceGroup",
+          "groupId": "f2d58d88-d479-4de4-9da1-0a2d0603dc6c",
+          "majorVersion": 2,
+          "minorVersion": 3,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Stats by ResourceGroup",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "ResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "AvgIOPS",
+              "type": "real"
+            },
+            {
+              "name": "P50_IOPS",
+              "type": "real"
+            },
+            {
+              "name": "P95_IOPS",
+              "type": "real"
+            },
+            {
+              "name": "P99_IOPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxIOPS",
+              "type": "real"
+            },
+            {
+              "name": "ActiveDisks",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOSurfaceCounterTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and ArmId contains subscriptionId\r\n        and Type in (0, 4) and IsNewDisk == 0 and OsDiagDurationInSec == 300\r\n| union (\r\n    OsUltraSSDCounterTable\r\n    | where PreciseTimeStamp between (queryFrom .. queryTo) and ArmId contains subscriptionId and IsNewDisk == 0\r\n)\r\n| parse ArmId with * \"/resourceGroups/\" ResourceGroup \"/\" * \"/disks/\" DiskName\r\n| summarize avg(IOPS), percentiles(IOPS, 50, 95, 99, 100), ActiveDisks = dcount(ArmId) by ResourceGroup\r\n| project ResourceGroup, AvgIOPS = round(avg_IOPS), P50_IOPS = round(percentile_IOPS_50), P95_IOPS = round(percentile_IOPS_95), P99_IOPS = round(percentile_IOPS_99), MaxIOPS = round(percentile_IOPS_100), ActiveDisks\r\n| sort by ActiveDisks desc ",
+          "panelPath": [
+            "Charts",
+            "Stats by ResourceGroup"
+          ]
+        }
+      ]
+    },
+    "Charts > Total IOPS/MBPS": {
+      "panelPath": [
+        "Charts",
+        "Total IOPS/MBPS"
+      ],
+      "queries": [
+        {
+          "id": "bc0d7b8c-3b13-405f-94da-8d6309866d6a",
+          "name": "Azure Host Subscription Surface IO Stats",
+          "groupId": "2e4ddcf1-f8b9-4fca-83c9-8d4804766f31",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Total IOPS/MBPS",
+          "params": [
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "IOPS",
+              "type": "real"
+            },
+            {
+              "name": "UltraPv2IOPS",
+              "type": "real"
+            },
+            {
+              "name": "UltraPv2MBPS",
+              "type": "real"
+            },
+            {
+              "name": "CachedIOPS",
+              "type": "long"
+            },
+            {
+              "name": "MBPS",
+              "type": "real"
+            },
+            {
+              "name": "ActiveDisks",
+              "type": "long"
+            },
+            {
+              "name": "ActiveVMs",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOSurfaceCounterTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and ArmId contains subId and IsNewDisk == 0\r\n| parse SurfaceName with ContainerId \"_\" *\r\n| union (\r\n    OsUltraSSDCounterTable\r\n    | where PreciseTimeStamp between (startTime .. endTime) and ArmId contains subId and IsNewDisk == 0\r\n    | project PreciseTimeStamp, UDIOPS = IOPS, UDMBPS = MBPS, ContainerId, BlobPath\r\n)\r\n| extend CachedIOPS = (DeltaCacheReads + DeltaCacheWrites) / OsDiagDurationInSec\r\n| summarize IOPS = sum(IOPS), UltraPv2IOPS = sum(UDIOPS), UltraPv2MBPS = sum(UDMBPS), CachedIOPS = sum(CachedIOPS), MBPS = sum(MBPS), ActiveDisks = dcount(BlobPath), ActiveVMs = dcount(ContainerId) by bin(PreciseTimeStamp, 5m)",
+          "panelPath": [
+            "Charts",
+            "Total IOPS/MBPS"
+          ]
+        }
+      ]
+    },
+    "Disk Limits Stats > Disk Limits Stats": {
+      "panelPath": [
+        "Disk Limits Stats",
+        "Disk Limits Stats"
+      ],
+      "queries": [
+        {
+          "id": "379bf38d-2533-4a85-91a2-33c36bef8926",
+          "name": "Azure Host Subscription Disk Limits Stats",
+          "groupId": "7a7bc7bf-baf4-4969-8a9c-26f4d892b50d",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Disk Limits Stats",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "MDMCounterName",
+              "type": "string"
+            },
+            {
+              "name": "TotalDisks",
+              "type": "long"
+            },
+            {
+              "name": "Disks_doingMax",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "DiskShoeboxCounterTable\r\n| where subscriptionId == subId and PreciseTimeStamp between (startTime .. endTime) \r\n        and MDMCounterName contains \"percentage\"\r\n| summarize TotalDisks = dcount(DiskArmId), Disks_doingMax = dcountif(DiskArmId, P100 >= 95 or P100 >= 95) by MDMCounterName\r\n| sort by Disks_doingMax desc",
+          "panelPath": [
+            "Disk Limits Stats",
+            "Disk Limits Stats"
+          ]
+        }
+      ]
+    },
+    "DiskTier Stats > TotalDisks by Tier": {
+      "panelPath": [
+        "DiskTier Stats",
+        "TotalDisks by Tier"
+      ],
+      "queries": [
+        {
+          "id": "c5ca3171-5e0d-47eb-91b9-6a989683fec4",
+          "name": "Azure Host Subscription Disk Stats by Tier",
+          "groupId": "d1b1c6a6-cc30-40e3-ad5b-33caa3247f79",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "CategoryChart",
+          "widgetType": "CategoryChart",
+          "widgetTitle": "TotalDisks by Tier",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "DiskTier",
+              "type": "string"
+            },
+            {
+              "name": "TotalDisks",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XdiskSvcEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and message contains subscriptionId\r\n        and eventType == 411\r\n| extend ConfigValue = parse_json(message)\r\n| extend DiskTier = tostring(ConfigValue[\"x-ms-access-tier\"]),\r\n         IOPS = ConfigValue[\"x-ms-blob-iops-limit\"],\r\n         MBPS = ConfigValue[\"x-ms-blob-throughput-limit\"]\r\n| union (\r\n    OsUltraSSDConfigTable\r\n    | where PreciseTimeStamp between (queryFrom .. queryTo) and ArmId contains subscriptionId\r\n    | extend ConfigName = BlobPath\r\n    | extend DiskTier = case(DiskSkuType == 0 or isempty(DiskSkuType), \"UltraDisk\", DiskSkuType == 1, \"PremiumV2\", \"UltraDisk\")\r\n)\r\n| summarize TotalDisks = dcount(ConfigName) by DiskTier\r\n| sort by TotalDisks desc",
+          "panelPath": [
+            "DiskTier Stats",
+            "TotalDisks by Tier"
+          ]
+        }
+      ]
+    },
+    "Info > Subscription Details": {
+      "panelPath": [
+        "Info",
+        "Subscription Details"
+      ],
+      "queries": [
+        {
+          "id": "48e0d2ac-c0c3-4e60-bcde-d41fea78c0d1",
+          "name": "SubscriptionDetails",
+          "groupId": "6749b7e2-28b0-45d6-95b4-18fff8a0d79c",
+          "majorVersion": 2,
+          "minorVersion": 4,
+          "cluster": "datastudiostreaming",
+          "database": "Shared",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Subscription Details",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionName",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionState",
+              "type": "string"
+            },
+            {
+              "name": "CustomerName",
+              "type": "string"
+            },
+            {
+              "name": "CloudCustomerName",
+              "type": "string"
+            },
+            {
+              "name": "TPName",
+              "type": "string"
+            },
+            {
+              "name": "OfferName",
+              "type": "string"
+            },
+            {
+              "name": "OfferType",
+              "type": "string"
+            },
+            {
+              "name": "OfferId",
+              "type": "string"
+            },
+            {
+              "name": "PCCode",
+              "type": "string"
+            },
+            {
+              "name": "CostCategory",
+              "type": "string"
+            },
+            {
+              "name": "AzureSpendSTPath",
+              "type": "string"
+            },
+            {
+              "name": "AccountAdmin",
+              "type": "string"
+            },
+            {
+              "name": "ServiceTreeName",
+              "type": "string"
+            },
+            {
+              "name": "ServiceTreeId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let subscriptionSnapshotDataStudio = cluster('datastudiostreaming').database('Shared').DataStudio_AzureSubscription_Snapshot\r\n| where SubscriptionId in~ (subId)\r\n| distinct SubscriptionId, SubscriptionName, SubscriptionState, CustomerName, PCCode, CostCategory, AzureSpendSTPath, AccountAdmin, ServiceTreeName = STName, ServiceTreeId = STId;\r\nlet subscriptionSnapshotCustomerDomData = cluster('customerdomrptwus3prod.westus3').database('CustomerDomData').CustomerModel\r\n| where SubscriptionGuid_String in~ (subId)\r\n| distinct SubscriptionId = SubscriptionGuid_String, SubscriptionName = FriendlySubscriptionName, SubscriptionState = CurrentSubscriptionStatus, CloudCustomerName, TPName = TPNameTranslated, OfferName, OfferType, OfferId;\r\nunion subscriptionSnapshotDataStudio, subscriptionSnapshotCustomerDomData\r\n| summarize take_anyif(SubscriptionName, isnotempty(SubscriptionName)), \r\n            take_anyif(SubscriptionState, isnotempty(SubscriptionState)), \r\n            take_anyif(CustomerName, isnotempty(CustomerName)), \r\n            take_anyif(CloudCustomerName, isnotempty(CloudCustomerName)), \r\n            take_anyif(TPName, isnotempty(TPName)), \r\n            take_anyif(OfferName, isnotempty(OfferName)), \r\n            take_anyif(OfferType, isnotempty(OfferType)), \r\n            take_anyif(OfferId, isnotempty(OfferId)), \r\n            take_anyif(PCCode, isnotempty(PCCode)), \r\n            take_anyif(CostCategory, isnotempty(CostCategory)), \r\n            take_anyif(AzureSpendSTPath, isnotempty(AzureSpendSTPath)), \r\n            take_anyif(AccountAdmin, isnotempty(AccountAdmin)), \r\n            take_anyif(ServiceTreeName, isnotempty(ServiceTreeName)), \r\n            take_anyif(ServiceTreeId, isnotempty(ServiceTreeId))\r\n            by SubscriptionId",
+          "panelPath": [
+            "Info",
+            "Subscription Details"
+          ]
+        }
+      ]
+    },
+    "List of VMs > List of VMs that were running during the selected time": {
+      "panelPath": [
+        "List of VMs",
+        "List of VMs that were running during the selected time"
+      ],
+      "queries": [
+        {
+          "id": "5a3eeb17-56be-4028-9f8b-42e009c6a234",
+          "name": "Azure Host Subscription VMs",
+          "groupId": "eeca4340-c4bb-4cbc-84d8-356df858c19a",
+          "majorVersion": 3,
+          "minorVersion": 7,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fc",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "List of VMs that were running during the selected time",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "creationTime",
+              "type": "datetime"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "containerType",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "tipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "createdBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let containerList = LogContainerSnapshot\r\n| where PreciseTimeStamp between (startTime..endTime) and subscriptionId == subId\r\n| distinct creationTime = todatetime(creationTime), roleInstanceName, containerType, containerId, nodeId, tipNodeSessionId, virtualMachineUniqueId, Tenant, Region;\r\ncontainerList | join kind = leftouter (\r\n    LogTipNodeSessionSnapShot\r\n    | where tipNodeSessionId in ((containerList | distinct tipNodeSessionId))\r\n    | project PreciseTimeStamp, createdBy, tipNodeSessionId, nodeList\r\n    | summarize arg_max(PreciseTimeStamp, *) by tipNodeSessionId\r\n    | project tipNodeSessionId, createdBy\r\n) on tipNodeSessionId\r\n| project-away tipNodeSessionId1\r\n| sort by creationTime desc ",
+          "panelPath": [
+            "List of VMs",
+            "List of VMs that were running during the selected time"
+          ]
+        }
+      ]
+    },
+    "Stats > Total VMs": {
+      "panelPath": [
+        "Stats",
+        "Total VMs"
+      ],
+      "queries": [
+        {
+          "id": "6bd2fb57-c7aa-4b37-8e64-0a9a9c1a3add",
+          "name": "Azure Host Subscription VMs Timeline",
+          "groupId": "9092b24a-5ca6-49c8-a4e0-490aedb5347c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Total VMs",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "TotalVMs",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and subscriptionId == subId \r\n| summarize TotalVMs = dcount(containerId) by bin(PreciseTimeStamp, 2h)",
+          "panelPath": [
+            "Stats",
+            "Total VMs"
+          ]
+        }
+      ]
+    },
+    "Stats > VM Sizes": {
+      "panelPath": [
+        "Stats",
+        "VM Sizes"
+      ],
+      "queries": [
+        {
+          "id": "1aa2d3fe-5a4e-4b23-aab4-1ddbf543e665",
+          "name": "Azure Host Subscriptions VMs by Type",
+          "groupId": "fd854971-fcdd-4fa3-97af-ec0dbf9a2a04",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "CategoryChart",
+          "widgetType": "CategoryChart",
+          "widgetTitle": "VM Sizes",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "VMSize",
+              "type": "string"
+            },
+            {
+              "name": "TotalVMs",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and subscriptionId == subId\r\n| summarize TotalVMs = dcount(containerId) by VMSize = containerType\r\n| sort by TotalVMs desc ",
+          "panelPath": [
+            "Stats",
+            "VM Sizes"
+          ]
+        }
+      ]
+    },
+    "StorageAccounts > StorageAccount Summary": {
+      "panelPath": [
+        "StorageAccounts",
+        "StorageAccount Summary"
+      ],
+      "queries": [
+        {
+          "id": "6b0487f4-ea6e-4215-9c3b-7ffbf63ac831",
+          "name": "Azure Host Subscription StorageAccounts",
+          "groupId": "b57aadab-7054-4d9b-ab65-aa39043aba37",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "StorageAccount Summary",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StorageAccount",
+              "type": "string"
+            },
+            {
+              "name": "StorageTenant",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "ActiveDisks",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOSurfaceCounterTable\r\n| where PreciseTimeStamp between ((startTime - 2h) .. (endTime + 2h)) and ArmId contains subId\r\n| parse BlobPath with * \"/\" StorageAccount \"/\" *\r\n| summarize ActiveDisks = dcount(BlobPath) by StorageAccount, StorageTenant, Region",
+          "panelPath": [
+            "StorageAccounts",
+            "StorageAccount Summary"
+          ]
+        }
+      ]
+    },
+    "Summary by Histogram > Summary": {
+      "panelPath": [
+        "Summary by Histogram",
+        "Summary"
+      ],
+      "queries": [
+        {
+          "id": "99f0bbde-ae6e-4d68-a7da-f67c3a4a336e",
+          "name": "Azure Host Subscription AIR-BP by Histogram",
+          "groupId": "fe9f24f8-e24b-400c-acaa-0e064bbb668b",
+          "majorVersion": 3,
+          "minorVersion": 1,
+          "cluster": "rdosdata",
+          "database": "rdosdatapath",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Summary",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "HistogramDesc",
+              "type": "string"
+            },
+            {
+              "name": "TotalIOsGt1s",
+              "type": "long"
+            },
+            {
+              "name": "TotalIOsGt2s",
+              "type": "long"
+            },
+            {
+              "name": "TotalIOsGt5s",
+              "type": "long"
+            },
+            {
+              "name": "TotalIOsGt10s",
+              "type": "long"
+            },
+            {
+              "name": "TotalIOsGt15s",
+              "type": "long"
+            },
+            {
+              "name": "TotalIOsGt30s",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('storageclient.eastus.kusto.windows.net').database('Fa').OsXIOSurfaceLatencyHistogramTableV2\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n        and IsNewDisk == 0 \r\n        and Type in (0, 4) \r\n        and ArmId contains subId\r\n        and HistogramTypeEnum in (1, 3, 4)\r\n| summarize TotalIOsGt1s = sum(Bin_224) + sum(Bin_225) + sum(Bin_226) + sum(Bin_227) + sum(Bin_228) + sum(Bin_229) + sum(Bin_230) + sum(Bin_231) + sum(Bin_232) + sum(Bin_233) + sum(Bin_234) + sum(Bin_235) + sum(Bin_236) + sum(Bin_237) + sum(Bin_238) + sum(Bin_239) + sum(Bin_240) + sum(Bin_241) + sum(Bin_242) + sum(Bin_243) + sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256),\r\n                TotalIOsGt2s = sum(Bin_225) + sum(Bin_226) + sum(Bin_227) + sum(Bin_228) + sum(Bin_229) + sum(Bin_230) + sum(Bin_231) + sum(Bin_232) + sum(Bin_233) + sum(Bin_234) + sum(Bin_235) + sum(Bin_236) + sum(Bin_237) + sum(Bin_238) + sum(Bin_239) + sum(Bin_240) + sum(Bin_241) + sum(Bin_242) + sum(Bin_243) + sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256),\r\n                TotalIOsGt5s = sum(Bin_228) + sum(Bin_229) + sum(Bin_230) + sum(Bin_231) + sum(Bin_232) + sum(Bin_233) + sum(Bin_234) + sum(Bin_235) + sum(Bin_236) + sum(Bin_237) + sum(Bin_238) + sum(Bin_239) + sum(Bin_240) + sum(Bin_241) + sum(Bin_242) + sum(Bin_243) + sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256), \r\n                TotalIOsGt10s = sum(Bin_233) + sum(Bin_234) + sum(Bin_235) + sum(Bin_236) + sum(Bin_237) + sum(Bin_238) + sum(Bin_239) + sum(Bin_240) + sum(Bin_241) + sum(Bin_242) + sum(Bin_243) + sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256),\r\n                TotalIOsGt15s = sum(Bin_238) + sum(Bin_239) + sum(Bin_240) + sum(Bin_241) + sum(Bin_242) + sum(Bin_243) + sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256),\r\n                TotalIOsGt30s = sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256)\r\nby HistogramDesc = GetHistogramDesc(HistogramTypeEnum)",
+          "panelPath": [
+            "Summary by Histogram",
+            "Summary"
+          ]
+        }
+      ]
+    },
+    "Timeline Chart > AIR-BP (Reads, Writes, Flush)": {
+      "panelPath": [
+        "Timeline Chart",
+        "AIR-BP (Reads, Writes, Flush)"
+      ],
+      "queries": [
+        {
+          "id": "075d55bf-2c15-489f-8fb7-d39df9e372bd",
+          "name": "Azure Host Subscription Disk AIR-BP Timeline",
+          "groupId": "935d664f-ac04-41e0-8e27-c765d6f93e0d",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "AIR-BP (Reads, Writes, Flush)",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "TotalIOsGt1s",
+              "type": "long"
+            },
+            {
+              "name": "TotalIOsGt2s",
+              "type": "long"
+            },
+            {
+              "name": "TotalIOsGt5s",
+              "type": "long"
+            },
+            {
+              "name": "TotalIOsGt10s",
+              "type": "long"
+            },
+            {
+              "name": "TotalIOsGt15s",
+              "type": "long"
+            },
+            {
+              "name": "TotalIOsGt30s",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOSurfaceLatencyHistogramTableV2\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n        and IsNewDisk == 0 \r\n        and Type in (0, 4) \r\n        and ArmId contains subId\r\n        and HistogramTypeEnum in (1, 3, 4)\r\n| summarize TotalIOsGt1s = sum(Bin_224) + sum(Bin_225) + sum(Bin_226) + sum(Bin_227) + sum(Bin_228) + sum(Bin_229) + sum(Bin_230) + sum(Bin_231) + sum(Bin_232) + sum(Bin_233) + sum(Bin_234) + sum(Bin_235) + sum(Bin_236) + sum(Bin_237) + sum(Bin_238) + sum(Bin_239) + sum(Bin_240) + sum(Bin_241) + sum(Bin_242) + sum(Bin_243) + sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256),\r\n                TotalIOsGt2s = sum(Bin_225) + sum(Bin_226) + sum(Bin_227) + sum(Bin_228) + sum(Bin_229) + sum(Bin_230) + sum(Bin_231) + sum(Bin_232) + sum(Bin_233) + sum(Bin_234) + sum(Bin_235) + sum(Bin_236) + sum(Bin_237) + sum(Bin_238) + sum(Bin_239) + sum(Bin_240) + sum(Bin_241) + sum(Bin_242) + sum(Bin_243) + sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256),\r\n                TotalIOsGt5s = sum(Bin_228) + sum(Bin_229) + sum(Bin_230) + sum(Bin_231) + sum(Bin_232) + sum(Bin_233) + sum(Bin_234) + sum(Bin_235) + sum(Bin_236) + sum(Bin_237) + sum(Bin_238) + sum(Bin_239) + sum(Bin_240) + sum(Bin_241) + sum(Bin_242) + sum(Bin_243) + sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256), \r\n                TotalIOsGt10s = sum(Bin_233) + sum(Bin_234) + sum(Bin_235) + sum(Bin_236) + sum(Bin_237) + sum(Bin_238) + sum(Bin_239) + sum(Bin_240) + sum(Bin_241) + sum(Bin_242) + sum(Bin_243) + sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256),\r\n                TotalIOsGt15s = sum(Bin_238) + sum(Bin_239) + sum(Bin_240) + sum(Bin_241) + sum(Bin_242) + sum(Bin_243) + sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256),\r\n                TotalIOsGt30s = sum(Bin_244) + sum(Bin_245) + sum(Bin_246) + sum(Bin_247) + sum(Bin_248) + sum(Bin_249) + sum(Bin_250) + sum(Bin_251) + sum(Bin_252) + sum(Bin_253) + sum(Bin_254) + sum(Bin_255) + sum(Bin_256)\r\nby bin(PreciseTimeStamp, 5m)",
+          "panelPath": [
+            "Timeline Chart",
+            "AIR-BP (Reads, Writes, Flush)"
+          ]
+        }
+      ]
+    },
+    "Usage Stats > IOPS Stats by DiskName": {
+      "panelPath": [
+        "Usage Stats",
+        "IOPS Stats by DiskName"
+      ],
+      "queries": [
+        {
+          "id": "27b72e61-7aeb-4c73-a6f7-a25739761ff7",
+          "name": "Azure Host Analyzer Subscription Disk Stats",
+          "groupId": "6c4ee316-2bc3-4d6e-92b3-fd4891b41fb9",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "IOPS Stats by DiskName",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "ResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "DiskType",
+              "type": "string"
+            },
+            {
+              "name": "DiskName",
+              "type": "string"
+            },
+            {
+              "name": "Avg",
+              "type": "real"
+            },
+            {
+              "name": "P50",
+              "type": "real"
+            },
+            {
+              "name": "P95",
+              "type": "real"
+            },
+            {
+              "name": "P99",
+              "type": "real"
+            },
+            {
+              "name": "Max",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOSurfaceCounterTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and ArmId contains subscriptionId\r\n        and Type in (0, 4) and IsNewDisk == 0 and OsDiagDurationInSec == 300\r\n| union (\r\n        OsUltraSSDCounterTable \r\n        | where PreciseTimeStamp between (queryFrom .. queryTo) and ArmId contains subscriptionId\r\n                and IsNewDisk == 0\r\n)\r\n| extend DiskType = case(DiskSkuType == 0, \"UltraDisk\", DiskSkuType == 1, \"PremiumV2\", IsXIOdisk == 1, \"Premium SSD\", BlobPath contains \"md-ssd-\", \"Standard SSD\", \"Standard HDD\")\r\n| parse ArmId with * \"/resourceGroups/\" ResourceGroup \"/\" * \"/disks/\" DiskName\r\n| summarize avg(IOPS), percentiles(IOPS, 50, 95, 99, 100) by ResourceGroup, DiskName, DiskType\r\n| sort by avg_IOPS desc\r\n| project ResourceGroup, DiskType, DiskName, Avg = round(avg_IOPS), P50 = round(percentile_IOPS_50), P95 = round(percentile_IOPS_95), P99 = round(percentile_IOPS_99), Max = round(percentile_IOPS_100)",
+          "panelPath": [
+            "Usage Stats",
+            "IOPS Stats by DiskName"
+          ]
+        }
+      ]
+    },
+    "Usage Stats > MBPS Stats by DiskName": {
+      "panelPath": [
+        "Usage Stats",
+        "MBPS Stats by DiskName"
+      ],
+      "queries": [
+        {
+          "id": "ecb99608-2972-4bbe-b39e-5ded55f6f469",
+          "name": "Azure Host Subscription Disk MBPS Stats",
+          "groupId": "14112f75-1969-4767-8779-2ecfeb9d433d",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "MBPS Stats by DiskName",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "ResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "DiskName",
+              "type": "string"
+            },
+            {
+              "name": "Avg",
+              "type": "real"
+            },
+            {
+              "name": "P50",
+              "type": "real"
+            },
+            {
+              "name": "P95",
+              "type": "real"
+            },
+            {
+              "name": "P99",
+              "type": "real"
+            },
+            {
+              "name": "Max",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOSurfaceCounterTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and ArmId contains subId\r\n        and Type in (0, 4) and IsNewDisk == 0 and OsDiagDurationInSec == 300\r\n| union (\r\n        OsUltraSSDCounterTable \r\n        | where PreciseTimeStamp between (startTime .. endTime) and ArmId contains subId\r\n                and IsNewDisk == 0\r\n)\r\n| extend DiskType = case(DiskSkuType == 0, \"UltraDisk\", DiskSkuType == 1, \"PremiumV2\", IsXIOdisk == 1, \"Premium SSD\", BlobPath contains \"md-ssd-\", \"Standard SSD\", \"Standard HDD\")\r\n| parse ArmId with * \"/resourceGroups/\" ResourceGroup \"/\" * \"/disks/\" DiskName\r\n| summarize avg(MBPS), percentiles(MBPS, 50, 95, 99, 100) by ResourceGroup, DiskName\r\n| sort by avg_MBPS desc\r\n| project ResourceGroup, DiskName, Avg = round(avg_MBPS), P50 = round(percentile_MBPS_50), P95 = round(percentile_MBPS_95), P99 = round(percentile_MBPS_99), Max = round(percentile_MBPS_100)",
+          "panelPath": [
+            "Usage Stats",
+            "MBPS Stats by DiskName"
+          ]
+        }
+      ]
+    },
+    "VM Stats > VM Shoebox Counters Stats": {
+      "panelPath": [
+        "VM Stats",
+        "VM Shoebox Counters Stats"
+      ],
+      "queries": [
+        {
+          "id": "287534a7-a6b4-4495-bddc-36bfc3d090f9",
+          "name": "Azure Host Subscription VM Shoebox Counter Stats",
+          "groupId": "d9625986-047f-4822-a102-b0642be732e1",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VM Shoebox Counters Stats",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "MDMCounterName",
+              "type": "string"
+            },
+            {
+              "name": "TotalVMs",
+              "type": "long"
+            },
+            {
+              "name": "VMs_doingMax",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VmShoeboxCounterTable\r\n| where subscriptionId == subId and PreciseTimeStamp between (startTime .. endTime) \r\n        and MDMCounterName startswith \"VM \"\r\n| summarize TotalVMs = dcount(VmId), VMs_doingMax = dcountif(VmId, MaxValueInaMinute >= 95 or MaxValueInaMinute >= 95) by MDMCounterName\r\n| sort by VMs_doingMax desc",
+          "panelPath": [
+            "VM Stats",
+            "VM Shoebox Counters Stats"
+          ]
+        }
+      ]
+    },
+    "VM Stats > VMs that are doing more than 95% (in the time period selected)": {
+      "panelPath": [
+        "VM Stats",
+        "VMs that are doing more than 95% (in the time period selected)"
+      ],
+      "queries": [
+        {
+          "id": "80ef58ff-4a5c-4e5b-8a9a-dfb7d76322df",
+          "name": "Azure Host Subscription VM Shoebox Top VMs doing Max",
+          "groupId": "e434ef83-7776-4366-9465-c42aacc49fa5",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VMs that are doing more than 95% (in the time period selected)",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "MDMCounterName",
+              "type": "string"
+            },
+            {
+              "name": "ArmId",
+              "type": "string"
+            },
+            {
+              "name": "VmId",
+              "type": "string"
+            },
+            {
+              "name": "VMUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "Count_of_30Min_Windows_Max",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VmShoeboxCounterTable\r\n| where subscriptionId == subId and PreciseTimeStamp between (startTime .. endTime) \r\n        and MDMCounterName startswith \"VM \"\r\n        and (MaxValueInaMinute >= 95)\r\n| summarize Count_of_30Min_Windows_Max = countif(MaxValueInaMinute >= 95) by MDMCounterName, ArmId, VmId, VMUniqueId\r\n| sort by Count_of_30Min_Windows_Max desc\r\n//| join kind=inner (\r\n//    cluster('AzureCM').database('AzureCM').LogContainerSnapshot\r\n//    | where PreciseTimeStamp between (startTime .. endTime) and subscriptionId == subId\r\n//    | distinct virtualMachineUniqueId, containerType\r\n//) on $left.VMUniqueId == $right.virtualMachineUniqueId\r\n//| sort by Count_of_30Min_Windows_Max desc\r\n//| project-away virtualMachineUniqueId, VMUniqueId",
+          "panelPath": [
+            "VM Stats",
+            "VMs that are doing more than 95% (in the time period selected)"
+          ]
+        }
+      ]
+    },
+    "VMs Availability (AIR-R)": {
+      "panelPath": [
+        "VMs Availability (AIR-R)"
+      ],
+      "queries": [
+        {
+          "id": "53a85fb0-4629-4c86-b0ce-5bbd23571de7",
+          "name": "Azure Host Subscription AIR-R",
+          "groupId": "7bad4a64-1d2a-4703-8f5a-7edd4558982b",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "vmainsight",
+          "database": "vmadb",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VMs Availability (AIR-R)",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "RoleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "RCA",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VMA_NRT\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and Subscription == subId\r\n        and RCA !contains \"CustomerInitiated\"\r\n| distinct StartTime, EndTime, RoleInstanceName, ContainerId, NodeId, RCA",
+          "panelPath": [
+            "VMs Availability (AIR-R)"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T09:57:55.127Z",
+    "totalPanels": 21,
+    "totalUniqueQueries": 21,
+    "totalWidgetRefs": 21
+  }
+}

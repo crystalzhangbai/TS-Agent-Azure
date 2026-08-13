@@ -1,0 +1,338 @@
+[
+  {
+    "groupId": "96dbbe51-0310-4d2b-a53b-86fd82f9f612",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Unhealthy Reason",
+      "Node Timeline"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "Node Timeline",
+    "queryId": "1e4707da-befb-4912-a6be-1c95ca0ca9d2",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "st",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "et",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nId",
+        "externalSourceName": "NodeId",
+        "required": false
+      }
+    ],
+    "name": "Node Snapshot timeline",
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "ToolTip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "fefe5b27-9174-4593-92ae-7462e756aa92",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Unhealthy Reason",
+      "Anvil Request Timeline"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "Anvil Request Timeline",
+    "queryId": "a0983b29-55a0-4152-80c1-b2fc0c726f96",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "st",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "et",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nId",
+        "externalSourceName": "NodeId",
+        "required": false
+      }
+    ],
+    "name": "Anvil Request Timeline",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "ToolTip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "00d7b105-1f3f-4122-adda-bb2739194b08",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Unhealthy Reason",
+      "Node snapshot"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Node snapshot",
+    "queryId": "b29f8ab5-9c52-4898-a833-b61c740f5f76",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "st",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "et",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nId",
+        "externalSourceName": "NodeId",
+        "required": false
+      }
+    ],
+    "name": "LogNodeSnapshot Query",
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "nodeState",
+        "type": "string"
+      },
+      {
+        "name": "nodeAvailabilityState",
+        "type": "string"
+      },
+      {
+        "name": "aliveContainerCount",
+        "type": "long"
+      },
+      {
+        "name": "containerCount",
+        "type": "string"
+      },
+      {
+        "name": "isNodeBugCheckIsolated",
+        "type": "string"
+      },
+      {
+        "name": "isIsolated",
+        "type": "string"
+      },
+      {
+        "name": "isOffline",
+        "type": "string"
+      },
+      {
+        "name": "isMaintenanceOs",
+        "type": "string"
+      },
+      {
+        "name": "faultInfo",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "72489ddf-3e50-4ff3-b5e7-b71dff9f3521",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Unhealthy Reason",
+      "Anvil Resource Events"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Anvil Resource Events",
+    "queryId": "996d793c-3e31-471e-bbe5-012b4ca5fb77",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "st",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "et",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nId",
+        "externalSourceName": "NodeId",
+        "required": false
+      }
+    ],
+    "name": "Anvil Resource Events",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

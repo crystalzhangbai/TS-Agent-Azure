@@ -1,0 +1,168 @@
+[
+  {
+    "id": "340b59eb-69a2-40f8-9fa8-d269cd010bbe",
+    "name": "ResourceIdforRSV",
+    "groupId": "f5c51840-254b-48c1-b09f-75f554a06cbe",
+    "majorVersion": 3,
+    "minorVersion": 2,
+    "cluster": "mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "RegionalRPResourceAll\r\n| where ResourceName =~ RSVName\r\n| where SubscriptionId == RSVSubscriptionId\r\n| where TIMESTAMP > StartTime and TIMESTAMP < EndTime\r\n| where iff(isempty( RSVDeploymentName), true, DeploymentName== RSVDeploymentName)\r\n| distinct tostring(ResourceId)",
+    "params": [
+      {
+        "name": "RSVSubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "RSVName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "RSVDeploymentName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "StartTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "EndTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ResourceId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "bb716d2f-1566-46e4-876e-2e045a76e560",
+    "name": "PEForResourceId",
+    "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+    "majorVersion": 6,
+    "minorVersion": 0,
+    "cluster": "mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "RegionalRPResourceAll\r\n| where ResourceName contains RSVName\r\n| where TIMESTAMP > StartTime and TIMESTAMP < EndTime\r\n| project TIMESTAMP, PrivateEndpointConnectionsBlobUri, tostring(ResourceId)\r\n| where isempty(PrivateEndpointConnectionsBlobUri) == false and PrivateEndpointConnectionsBlobUri != \"null\" and PrivateEndpointConnectionsBlobUri != \"[]\"\r\n| parse PrivateEndpointConnectionsBlobUri with *'/privateEndpoints/'PEName'\"'*\r\n| parse PrivateEndpointConnectionsBlobUri with *'groupIds\":'GroupIds\",\"*\r\n| project TIMESTAMP, PEName, GroupIds, PrivateEndpointConnectionsBlobUri, tostring(ResourceId)\r\n| summarize arg_min(TIMESTAMP, PEName, GroupIds) by PEName, GroupIds, tostring(ResourceId)\r\n| project TIMESTAMP, PEName , GroupIds, tostring(ResourceId)",
+    "params": [
+      {
+        "name": "RSVSubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "RSVDeploymentName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "RSVName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "StartTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "EndTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PEName",
+        "type": "string"
+      },
+      {
+        "name": "GroupIds",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  }
+]

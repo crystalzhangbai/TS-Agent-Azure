@@ -1,0 +1,330 @@
+[
+  {
+    "id": "0536b916-ab2c-431b-a0f0-4853755ceaf4",
+    "name": "Frontend QoS",
+    "groupId": "20710d8f-5852-46e0-98bf-c59200abee58",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "CoBeTimeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = datetime_add('hour', -12, timeStamp);\nlet endTime = datetime_add('hour', 12, timeStamp);\nNRPFrontendOperation(clientReqId, startTime, endTime);",
+    "params": [
+      {
+        "name": "clientReqId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "timeStamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "ParentId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "1990eb93-a4b9-4fda-a227-1f58a4ec2a15",
+    "name": "Retrieve Resource \"Frontend QoS\"",
+    "groupId": "d69f780d-6588-408e-982d-5bbbe9ca7e3c",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "armprod.kusto.windows.net",
+    "database": "ARMProd",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = datetime_add('hour', -12, local_PreciseTimeStamp);\nlet endTime = datetime_add('hour', 12, local_PreciseTimeStamp);\nprint(\"\")\n| project PreciseTimeStamp = local_PreciseTimeStamp, clientRequestId = local_clientRequestId\n| join kind = fullouter\n(\nHttpOutgoingRequests\n| where PreciseTimeStamp between(startTime..endTime)\n| where clientRequestId == local_clientRequestId\n| where httpStatusCode != -1\n| extend table = \"HttpOutgoingRequests\"\n| union\nHttpIncomingRequests\n| where PreciseTimeStamp between(startTime..endTime)\n| where clientRequestId == local_clientRequestId\n| where httpStatusCode != -1\n| extend table = \"HttpIncomingRequests\"\n| take 1\n) on clientRequestId\n| extend PreciseTimeStamp = coalesce(PreciseTimeStamp, PreciseTimeStamp1), clientRequestId = coalesce(clientRequestId, clientRequestId1)\n| project-away PreciseTimeStamp1, clientRequestId1\n| take 1",
+    "params": [
+      {
+        "name": "local_PreciseTimeStamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_clientRequestId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "clientRequestId",
+        "type": "string"
+      },
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "Deployment",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "ProviderGuid",
+        "type": "string"
+      },
+      {
+        "name": "ProviderName",
+        "type": "string"
+      },
+      {
+        "name": "EventId",
+        "type": "long"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "TaskName",
+        "type": "string"
+      },
+      {
+        "name": "ActivityId",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "principalOid",
+        "type": "string"
+      },
+      {
+        "name": "principalPuid",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "httpMethod",
+        "type": "string"
+      },
+      {
+        "name": "hostName",
+        "type": "string"
+      },
+      {
+        "name": "targetUri",
+        "type": "string"
+      },
+      {
+        "name": "clientSessionId",
+        "type": "string"
+      },
+      {
+        "name": "clientApplicationId",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "contentLength",
+        "type": "long"
+      },
+      {
+        "name": "serviceRequestId",
+        "type": "string"
+      },
+      {
+        "name": "durationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "httpStatusCode",
+        "type": "long"
+      },
+      {
+        "name": "exceptionMessage",
+        "type": "string"
+      },
+      {
+        "name": "errorCode",
+        "type": "string"
+      },
+      {
+        "name": "errorMessage",
+        "type": "string"
+      },
+      {
+        "name": "RowKey",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "referer",
+        "type": "string"
+      },
+      {
+        "name": "failureCause",
+        "type": "string"
+      },
+      {
+        "name": "contentType",
+        "type": "string"
+      },
+      {
+        "name": "contentEncoding",
+        "type": "string"
+      },
+      {
+        "name": "armServiceRequestId",
+        "type": "string"
+      },
+      {
+        "name": "organizationId",
+        "type": "string"
+      },
+      {
+        "name": "activityVector",
+        "type": "string"
+      },
+      {
+        "name": "locale",
+        "type": "string"
+      },
+      {
+        "name": "realPuid",
+        "type": "string"
+      },
+      {
+        "name": "altSecId",
+        "type": "string"
+      },
+      {
+        "name": "additionalProperties",
+        "type": "string"
+      },
+      {
+        "name": "targetResourceProvider",
+        "type": "string"
+      },
+      {
+        "name": "targetResourceType",
+        "type": "string"
+      },
+      {
+        "name": "table",
+        "type": "string"
+      },
+      {
+        "name": "authorizationSource",
+        "type": "string"
+      },
+      {
+        "name": "authorizationAction",
+        "type": "string"
+      },
+      {
+        "name": "userAgent",
+        "type": "string"
+      },
+      {
+        "name": "clientIpAddress",
+        "type": "string"
+      },
+      {
+        "name": "commandName",
+        "type": "string"
+      },
+      {
+        "name": "parameterSetName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

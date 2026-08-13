@@ -1,0 +1,46 @@
+[
+  {
+    "id": "48910be8-7479-4a78-baa7-4c32bb438273",
+    "name": "HighCostGet30Min",
+    "groupId": "1fc161d0-4e4b-48e7-815e-7b160dbc1a0f",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "TimeSeries",
+    "kustoQuery": "ApiQosEvent\n| where PreciseTimeStamp between (global_startTime..global_endTime)\n| where subscriptionId =~ 'subscription_id'\n| where region =~ 'crp_region'\n| where operationName in (\"VirtualMachines.GetVMs.GET\",\n                          \"Subscriptions.GetVMs.GET\",\n                          \"Subscriptions.GetAvailabilitySets.GET\",\n                          \"ProximityPlacementGroups.ResourceOperation.GET\",\n                          \"SpotEvictionRates.bulkQuery.POST\",\n                          \"SpotPriceHistory.bulkQuery.POST\")\n| summarize count = count() by bin(PreciseTimeStamp, 30m), region",
+    "params": [
+      {
+        "name": "subscription_id",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "crp_region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "long"
+      }
+    ],
+    "serviceId": "EEE Compute Manager"
+  }
+]

@@ -1,0 +1,1295 @@
+[
+  {
+    "groupId": "7f129a3d-5443-4d58-ab3b-6ec1aac24952",
+    "majorVersion": 1,
+    "minorVersion": 5,
+    "panelPath": [
+      "Put EncryptedVnet Request",
+      "Put EncryptedVnet Request Traffic"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put EncryptedVnet Request Traffic",
+    "queryId": "7bd2f514-fafe-45fb-94bc-9dc3ae4a854d",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "put vnet traffic",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "e8bbab21-875b-4c09-a207-ecdc987cc485",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Put EncryptedVnet Request",
+      "Put Vnet Encryption Call Outside Supported Regions"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Put Vnet Encryption Call Outside Supported Regions",
+    "queryId": "abccb578-9088-4b2e-8e2f-bb50927fa692",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "callOutsideSupportedRegions",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "SourceAssemblyFileVersion",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9c25f47a-523b-47f8-99f9-18de550533cc",
+    "majorVersion": 1,
+    "minorVersion": 7,
+    "panelPath": [
+      "Put EncryptedVnet Request",
+      "Put EncryptedVnet SuccessOrError"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Put EncryptedVnet SuccessOrError",
+    "queryId": "bd45f19a-04ec-4396-8dbe-3d3bb4b8d473",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "IfPutVnetWithEncryptionSucceeded",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "efb4c35d-9c1a-4bc2-be70-2e163e898c53",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Put EncryptedVnet Request",
+      "If Put Encrypted Vnet Request Comes from ARM Template Deployment"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "If Put Encrypted Vnet Request Comes from ARM Template Deployment",
+    "queryId": "bf309a4f-a43d-4ab8-9382-2a28bb15512f",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "ifFromARM",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ifRequestFromARMTemplate",
+        "type": "bool"
+      },
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "4b548353-caa2-4735-9c68-726460a8be9a",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [
+      "Get Tenant Cluster Request",
+      "Avg Time Taken To Read VNet"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Avg Time Taken To Read VNet",
+    "queryId": "a3e37826-5a1b-4ab6-8e48-5ab4a8b8ae1f",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Avg Time Taken To Read VNet",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "avgReadTime",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "5d4d088d-498f-4754-8dda-8ca1b610059b",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "panelPath": [
+      "Get Tenant Cluster Request",
+      "Get Tenant Cluster Request"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Get Tenant Cluster Request",
+    "queryId": "43958a63-c278-42e9-baa5-022e82f38160",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "IfEncryptionRequiredInGetTenantCluster",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "ifEncryptionRequired",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "50113174-b603-4328-9667-8f30dcb8e1c0",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Get Tenant Cluster Request",
+      "Returned Clusters List when Encryption Capable Cluster is Required"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Returned Clusters List when Encryption Capable Cluster is Required",
+    "queryId": "54559549-0634-437e-beed-eecc218807f2",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "clustersList",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "Response",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7a839eea-4d28-4f8c-a745-cc327528fd96",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "panelPath": [
+      "Put Peering Request With Encryption",
+      "Peering Failure Due To Old Api Version"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Peering Failure Due To Old Api Version",
+    "queryId": "dd51649e-1429-41be-af58-d8de40b85240",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "PeeringFailureDueToOldApi",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "failedDueToOldApiVersion",
+        "type": "bool"
+      },
+      {
+        "name": "ApiVersion",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "ef7eb284-5850-468d-a0a0-dd3da7a14ecd",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "panelPath": [
+      "Merlin-AllocateVirtualMachines",
+      "Get Expected Nic Flag"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Get Expected Nic Flag",
+    "queryId": "12afb663-63e4-4ce3-8ea7-b9e9906ab537",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Get Expected Nic Flag",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "nicId",
+        "type": "string"
+      },
+      {
+        "name": "encryptionStatus",
+        "type": "string"
+      },
+      {
+        "name": "vmSizeCapability",
+        "type": "string"
+      },
+      {
+        "name": "nicFlag",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "54c1a653-38a7-447e-92f5-0a9029794922",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "RNM-AllocateTenantNetworkResources",
+      "(RNM Stack) Get Expected Nic Flag"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "(RNM Stack) Get Expected Nic Flag",
+    "queryId": "54d11fb4-a931-4341-8c1e-80ee836f6a64",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "RNM Get Expected Nic Flag",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "nicId",
+        "type": "string"
+      },
+      {
+        "name": "encryptionStatus",
+        "type": "string"
+      },
+      {
+        "name": "vmSizeCapability",
+        "type": "string"
+      },
+      {
+        "name": "nicFlag",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "dfff75aa-36ea-4d3a-8ecd-8ef1469b26cb",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "Runner Activities",
+      "NRP and Control Path Runner Succeed Rate"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "NRP and Control Path Runner Succeed Rate",
+    "queryId": "160cd6e0-bf15-4576-9cfd-437721815c33",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "RunnerSucceed",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "RunnerInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SuccessRate",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "c2bb1a41-bdc2-489b-83aa-ef1694483eb9",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Runner Activities",
+      "Runner Sub Failure in NRP logs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Runner Sub Failure in NRP logs",
+    "queryId": "308ee52d-7f59-40f6-a8cd-b15686463589",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "runner sub ",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "3a50ce65-7ad0-4793-a8c6-379bf988e7b6",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Runner Activities",
+      "Runner Sub Failure in CRP logs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Runner Sub Failure in CRP logs",
+    "queryId": "83775b2a-8734-4fa8-91d6-675746aaabd5",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "runnerErrorInCRP",
+    "cluster": "https://azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "operationId",
+        "type": "string"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "6ebc46dd-db86-4b89-9053-5b4ba43f1219",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Runner Activities",
+      "ARM Incoming Requests"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "ARM Incoming Requests",
+    "queryId": "a8ad236e-289a-4a4c-9578-7aa8c3466897",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "ARM Incoming Requests",
+    "cluster": "https://armprod.kusto.windows.net",
+    "database": "ARMProd",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "targetUri",
+        "type": "string"
+      },
+      {
+        "name": "durationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "httpStatusCode",
+        "type": "long"
+      },
+      {
+        "name": "targetResourceProvider",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "dfb29fd5-d3f0-4dae-afd5-b3dc33a4c593",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "panelPath": [
+      "Regional Setting Status",
+      "SupportVNetEncryptionFeature Setting"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "SupportVNetEncryptionFeature Setting",
+    "queryId": "528f605b-c8e8-428e-b82a-5bb135406008",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "SupportVNetEncryptionFeature",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "SettingName",
+        "type": "string"
+      },
+      {
+        "name": "SliceNum",
+        "type": "long"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "setting_value",
+        "type": "string"
+      },
+      {
+        "name": "last_run",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "74447321-1c60-44ad-9210-5be7b478d0e3",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "panelPath": [
+      "Regional Setting Status",
+      "ValidateEncryptionBasedOnVMSizeOnly Setting "
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "ValidateEncryptionBasedOnVMSizeOnly Setting ",
+    "queryId": "0e5590b0-c4bd-4ddf-a9a1-972fbabd4026",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "ValidateEncryptionBasedOnVMSizeOnly",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "SettingName",
+        "type": "string"
+      },
+      {
+        "name": "SliceNum",
+        "type": "long"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "setting_value",
+        "type": "string"
+      },
+      {
+        "name": "last_run",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "47063873-3945-4965-8c01-4a82c2762c3b",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "panelPath": [
+      "Regional Setting Status",
+      "SupportVNetEncryptionOnRNMStack  Setting"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "SupportVNetEncryptionOnRNMStack  Setting",
+    "queryId": "77ab5562-d654-464b-abcc-60ae5703e21f",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "SupportVNetEncryptionOnRNMStack ",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "SettingName",
+        "type": "string"
+      },
+      {
+        "name": "SliceNum",
+        "type": "long"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "setting_value",
+        "type": "string"
+      },
+      {
+        "name": "last_run",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  }
+]

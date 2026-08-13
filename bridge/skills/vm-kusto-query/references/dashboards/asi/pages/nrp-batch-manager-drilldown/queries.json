@@ -1,0 +1,72 @@
+[
+  {
+    "id": "ea5fd2aa-6c7b-436f-a948-ff1602237d7a",
+    "name": "Top 10 Lock Contention Sources",
+    "groupId": "f9afe555-4c72-4f5d-9810-921ef0310d1c",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where Region == region\r\n| where EventCode == \"ResourceLockingTransactionAquisitionFailure\"\r\n| parse Message with \"Failed to aquire resource lock on \" ResourceId \" in job with JobId \" FailingJobId \", JobName \" FailingJobName \", and operation id \" OperationIdOfLockFailure \", going to restart job on lock aquisition. Lock was last acquired by operation id \" OwningOperationId \". Inner Exception \" Exception \" and owningJobName \" owningJobName: string\r\n| extend owningJobName = extract(\"^(.*?)(\\\\s|$)\", 1, owningJobName)\r\n| extend resourceType = extract(@\"/providers/Microsoft\\.(Network|Compute)/([^/]+)/\", 2, ResourceId)\r\n| extend resourceType = iff(isnull(resourceType), \"subscriptions\", resourceType)\r\n| where resourceType != \"privateIpAllocatorHeads\"\r\n| summarize dcount(FailingJobId) by FailingJobName, owningJobName,resourceType\r\n| order by dcount_FailingJobId desc \r\n| take 10 ",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-12-31T20:49:46.769Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-07T20:49:46.769Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "FailingJobName",
+        "type": "string"
+      },
+      {
+        "name": "owningJobName",
+        "type": "string"
+      },
+      {
+        "name": "resourceType",
+        "type": "string"
+      },
+      {
+        "name": "dcount_FailingJobId",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

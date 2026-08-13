@@ -1,0 +1,167 @@
+[
+  {
+    "id": "a49c4081-2a96-42dd-89bf-4dc979c2dfa3",
+    "name": "Retrieve Resource \"VM Config\"",
+    "groupId": "d6dc9ee1-fb2b-4356-abf3-8423a6e219a6",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azcsupfollower.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('azcsupfollower.kusto.windows.net').database('AzureCM').LogContainerSnapshot\r\n| where PreciseTimeStamp between ((globalFrom - 1h) .. (globalTo + 1h)) and assert(isnotempty(local_containerId) or isnotempty(local_nodeId) or isnotempty(local_roleInstanceName), \"Either a container Id or node Id must be specified\")\r\n| where (isempty(local_containerId) or containerId == local_containerId) and (isempty(local_nodeId) or nodeId == local_nodeId) and (isempty(local_roleInstanceName) or roleInstanceName contains local_roleInstanceName) \r\n| summarize arg_max(PreciseTimeStamp, creationTime, roleInstanceName, subscriptionId, containerType, virtualMachineUniqueId, nodeId, Tenant, tenantName, availabilitySetName, billingType, roleType, additionalContainerProperties, RegionFriendlyName, AvailabilityZone) by containerId\r\n| join kind = leftouter \r\n(cluster('vmainsight.kusto.windows.net').database('vmadb').CADDAILY\r\n    | where PreciseTimeStamp >= ago(2d)) on $left.containerId == $right.ContainerId\r\n| distinct creationTime, roleInstanceName, subscriptionId, containerType, virtualMachineUniqueId, containerId, nodeId, Tenant, tenantName, availabilitySetName, billingType, roleType, additionalContainerProperties, RegionFriendlyName, FD, UD, Region, Usage_VMScaleSetId, AvailabilityZone, Hardware_Generation \r\n| join kind=inner(\r\n    cluster('azcsupfollower.kusto.windows.net').database('AzureCM').LogClusterSnapshot\r\n    | where PreciseTimeStamp between ((globalFrom - 1h) .. (globalTo + 1h))\r\n    | distinct shoeboxMdmAccountName, Tenant\r\n) on Tenant\r\n| project-away Tenant1 \r\n| extend globalFrom = globalFrom, globalTo = globalTo",
+    "params": [
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_containerId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_roleInstanceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "creationTime",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "containerType",
+        "type": "string"
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "containerId",
+        "type": "string"
+      },
+      {
+        "name": "nodeId",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      },
+      {
+        "name": "availabilitySetName",
+        "type": "string"
+      },
+      {
+        "name": "billingType",
+        "type": "string"
+      },
+      {
+        "name": "roleType",
+        "type": "string"
+      },
+      {
+        "name": "additionalContainerProperties",
+        "type": "string"
+      },
+      {
+        "name": "RegionFriendlyName",
+        "type": "string"
+      },
+      {
+        "name": "FD",
+        "type": "string"
+      },
+      {
+        "name": "UD",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Usage_VMScaleSetId",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "Hardware_Generation",
+        "type": "string"
+      },
+      {
+        "name": "shoeboxMdmAccountName",
+        "type": "string"
+      },
+      {
+        "name": "globalFrom",
+        "type": "datetime"
+      },
+      {
+        "name": "globalTo",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "VM Details"
+  }
+]

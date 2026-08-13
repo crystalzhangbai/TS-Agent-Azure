@@ -1,0 +1,334 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "ca6192a6-a877-4fb2-b787-e75917093119",
+  "description": "This dashboard is intended to help find the source of lock contention in NRP operations quickly. It also helps to find bottlenecks in operations by isolating long running jobs, making it easier to find and fix them. ",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "5628fa1d-2888-423f-98e5-8d390aee312c",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "63b05d85-a6f3-4108-98bd-4eef04d723da",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "048da7fd-20e1-45a3-b561-949ee23680e8",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Card",
+                "id": "5b9168b2-9d5a-4d0e-8aac-fa49b257dd23",
+                "dateSelectEnabled": true,
+                "props": {
+                  "title": "Top 10 Sources Of Lock Contention",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "FailingJobName",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "f9afe555-4c72-4f5d-9810-921ef0310d1c",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "(All Data)",
+                      "externalSourceName": "FailingJobName",
+                      "required": false,
+                      "rowSelectionCriteria": "allRows"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "FailingJobName",
+                    "uuid": "7b44b8a8-2322-446b-ac56-cba6a4d0b75a",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "dcount_FailingJobId",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "f9afe555-4c72-4f5d-9810-921ef0310d1c",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "dcount_FailingJobId",
+                      "required": false,
+                      "rowSelectionCriteria": "allRows"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "dcount_FailingJobId",
+                    "uuid": "09e3e3a8-62ae-4821-a7a2-f498873e7228",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "owningJobName",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "f9afe555-4c72-4f5d-9810-921ef0310d1c",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "owningJobName",
+                      "required": false,
+                      "rowSelectionCriteria": "allRows"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "owningJobName",
+                    "uuid": "a019f21f-c61b-4247-a4c5-f189d2230579",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "resourceType",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "f9afe555-4c72-4f5d-9810-921ef0310d1c",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "FailingJobName",
+                      "externalSourceName": "resourceType",
+                      "required": false,
+                      "rowSelectionCriteria": "allRows"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "resourceType",
+                    "uuid": "56217950-438f-49a6-8a7c-63012c3cff51",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "5e318cbc-990c-4a3b-8550-6e5603434be1",
+                    "idForPopups": "5e318cbc-990c-4a3b-8550-6e5603434be1",
+                    "groupId": "f9afe555-4c72-4f5d-9810-921ef0310d1c",
+                    "majorVersion": 1,
+                    "minorVersion": 2,
+                    "serviceId": "NRP",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "startTime",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "endTime",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "region",
+                        "externalSourceName": "Region",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {
+                  "componentDateType": "globaltime",
+                  "propertyLayout": "AboveBelow",
+                  "hideEmptyProperties": "true"
+                },
+                "header": "Top 10 Sources Of Lock Contention",
+                "footer": "",
+                "helpText": "This query gives the top 10 jobs by order of decreasing lock contention count and the resource types that are the source of contention. NB: We are currently excluding IP Allocator Head objects as a resource type that can be a source of lock contention. ",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [
+      {
+        "name": "input 1",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 40,
+  "basedOnVersionId": "008e895a-497f-438e-8e33-b28c3d64c72b",
+  "groupId": "fdd95f3c-eafe-4282-ac8b-8638339a4466",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "SubscriptionId",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "OperationId",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "CorrelationId",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "Region",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "NRP",
+      "groupId": "f9afe555-4c72-4f5d-9810-921ef0310d1c",
+      "entityType": "Query"
+    }
+  ],
+  "serviceId": "NRP",
+  "deleted": false,
+  "name": "Batch Manager & NRP Performance Drill Down",
+  "_ts": 1736285813,
+  "databaseSavedTimestamp": "2025-01-07T21:36:53+00:00",
+  "_etag": "\"440ebca2-0000-0800-0000-677d9e750000\"",
+  "createdAt": "2025-01-07T21:36:53.074071+00:00",
+  "createdBy": "ericodoom@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "ericodoom@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2025-01-07T21:36:53.074071+00:00",
+  "tags": []
+}

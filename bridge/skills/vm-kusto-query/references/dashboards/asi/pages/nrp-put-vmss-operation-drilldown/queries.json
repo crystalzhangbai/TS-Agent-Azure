@@ -1,0 +1,2345 @@
+[
+  {
+    "id": "47f180fe-4591-4e1b-b30d-0e02db3e2757",
+    "name": "PutVmssFailuresPerRegion",
+    "groupId": "32f3e03e-9378-4fcb-ae51-47c110471bd3",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = queryFrom;\r\nlet endTime = queryTo;\r\nlet location = region;\r\nQosEtwEvent\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where Region == location\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| where Success == false\r\n| where SliceNum(SourceAssemblyFileVersion) < 10\r\n| extend usererr = iff (UserError == true, 1, 0)\r\n| extend notusererr = iff (usererr  == false, 1, 0)\r\n| summarize count(), UserErrors = sum(usererr), ServerSideErrors = sum(notusererr) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-23T22:12:08.331Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-24T22:12:08.331Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "UserErrors",
+        "type": "long"
+      },
+      {
+        "name": "ServerSideErrors",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "1b22571a-2f7d-4b22-a852-bd6c272514ce",
+    "name": "ComputeOnlyUpdatesPerRegion",
+    "groupId": "f29fdace-1cbd-4b7e-ae22-71e145fbc993",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| extend coU = iff (EventCode == \"VmssOperationIsComputeOnlyUpdate\", 1, 0)\r\n| summarize computeOnlyOps= dcountif(OperationId, coU == 1) , putVmssOPCount= dcount(OperationId) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-10T22:12:08.331Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-12T22:12:08.331Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "computeOnlyOps",
+        "type": "long"
+      },
+      {
+        "name": "putVmssOPCount",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "4cb19534-4d9a-4585-aec9-6120b174c291",
+    "name": "CoUPerSubscription",
+    "groupId": "721e630d-fa1c-411e-847b-76b2b809ac13",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| extend coU = iff (EventCode == \"VmssOperationIsComputeOnlyUpdate\", 1, 0)\r\n| extend updateVmssWhenCou = iff (Message startswith \"Saving VMSS resource with updated properties.\", 1, 0)\r\n| summarize computeOnlyUpdates= dcountif(OperationId, coU == 1) , vmssUpdatedWhenComputeOnlyUpdates = sum(updateVmssWhenCou),  totalPutVmssOperations= dcount(OperationId) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-10T22:12:08.331Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-12T22:12:08.331Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "computeOnlyUpdates",
+        "type": "long"
+      },
+      {
+        "name": "vmssUpdatedWhenComputeOnlyUpdates",
+        "type": "long"
+      },
+      {
+        "name": "totalPutVmssOperations",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "cbd36f5c-0011-48a9-bf66-f2e07437adf0",
+    "name": "PutVmssFailuresPerSub",
+    "groupId": "a8bb0661-f97d-4da9-819b-fc310d78bab3",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| where Success == false\r\n| where SubscriptionId == subId\r\n| extend usererr = iff (UserError == true, 1, 0)\r\n| extend servererror = iff(UserError == false, 1, 0)\r\n| summarize IsUserError = sum(usererr), ServerError = sum(servererror) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-10T22:12:08.331Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-12T22:12:08.331Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "default": "1c835c29-68e9-40a7-8455-842925d04908",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "IsUserError",
+        "type": "long"
+      },
+      {
+        "name": "ServerError",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ef303ea3-7262-4fe9-bbff-662c978e59e0",
+    "name": "PutVmssSubLockPerSub",
+    "groupId": "da4dd96e-75a5-4bcc-ad47-9f49c22bd4e8",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let regex=\"Operation (.+) \\\\((.+)\\\\) released lock (.+) after (\\\\d+) ms\";\r\nFrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| where EventCode == \"LockReleased\"\r\n| extend LockName=extract(regex, 3, Message)\r\n| extend LockDuration=toint(extract(regex, 4, Message))\r\n| where LockName == subId\r\n| summarize SubLockDuration = sum(LockDuration) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-28T06:57:41.233Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-30T06:57:43.373Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "default": "73bb6951-3a33-477c-a157-93f6ebca7feb",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubLockDuration",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "32af5606-1903-4161-94c7-55b99d947c6f",
+    "name": "PutVmssLatencyPerSub",
+    "groupId": "a2fa70a3-5b40-41d6-b1cc-10654d89ae38",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| summarize percentiles(DurationInMilliseconds, 50, 75, 99) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-28T06:57:41.233Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-30T06:57:43.373Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "default": "73bb6951-3a33-477c-a157-93f6ebca7feb",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_99",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "7e72e54a-7976-47eb-8e12-cf79b2921c54",
+    "name": "PutVmssTransactionStatsPerSub",
+    "groupId": "7473c229-f375-47d5-a40f-582b0667ab2b",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "KvsTransactionEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| project PreciseTimeStamp, ReadCount, ReadSize, AddCount, AddSize, ReadDuration, CommitDuration, UpdateCount, UpdateSize, OperationId\r\n| summarize readSizeKb = sum(ReadSize)/1000, addSizeKb = sum(AddSize)/1000, updateSizeKb = sum(UpdateSize)/1000 by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-28T06:57:41.233Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-30T07:08:51.218Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "readSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "addSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "updateSizeKb",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "6e4faef5-c92b-45b4-bd9b-1f620db21463",
+    "name": "PutVmssResourceTypeReadStats",
+    "groupId": "18ad69aa-0956-4bac-8a68-3edce3a86dd3",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "KvsTransactionEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| project PreciseTimeStamp, ReadCount, ReadSize, AddCount, AddSize, TypeBasedReadCount, UpdateCount, UpdateSize, OperationId\r\n| where ReadCount > 0\r\n| extend IpConfigurationsReadCount = toint(extract(@\"ipConfigurations : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend SubnetReadCount = toint(extract(@\"subnets : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend VnetReadCount = toint(extract(@\"virtualNetworks : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend vmssReadCount = toint(extract(@\"virtualMachineScaleSets : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend nicReadCount = toint(extract(@\"networkInterfaces : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend tenantReadCount = toint(extract(@\"tenants : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend vmReadCount = toint(extract(@\"virtualMachines : (\\d+);\", 1, TypeBasedReadCount))\r\n| summarize AvgNicReadCount = round(todouble(sum(nicReadCount)) / dcount(OperationId),2), \r\n            //AvgIpConfigurationsReadCount = round(todouble(sum(IpConfigurationsReadCount)) / dcount(OperationId),2),\r\n            AvgVMReadCount = round(todouble(sum(vmReadCount)) / dcount(OperationId),2),\r\n            AvgTenantReadCount = round(todouble(sum(tenantReadCount)) / dcount(OperationId),2) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-28T06:57:41.233Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-30T07:08:51.218Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AvgNicReadCount",
+        "type": "real"
+      },
+      {
+        "name": "AvgVMReadCount",
+        "type": "real"
+      },
+      {
+        "name": "AvgTenantReadCount",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "25c777ae-31b3-4886-8f04-c7622329d9a2",
+    "name": "PutVmssFailureErrorCodes",
+    "groupId": "6e073814-cfaf-4452-85c9-35361d381613",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where Success == false\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| extend ErrorDetails = substring(ErrorDetails, 0, 200)\r\n| summarize count() by ErrorCode, ErrorDetails\r\n| order by count_ desc \r\n| take 5",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-29T17:20:14.098Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-31T17:20:14.098Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "4d58e347-79c6-4bb8-be2b-db112025aa8c",
+    "name": "PutVmssLockDurationCouVsNonCOU",
+    "groupId": "df4585c1-c3a5-4e34-ae6c-6077d2ae3f01",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let sub = subId;\r\nlet startTime = queryFrom;\r\nlet endTime = queryTo;\r\nlet regex=\"Operation (.+) \\\\((.+)\\\\) released lock (.+) after (\\\\d+) ms\";\r\nlet qosStats = QosEtwEvent\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where Region == region\r\n| where SubscriptionId == sub\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| extend hasBkTask = iif(BackgroundTaskQos, 1, 0)\r\n| extend Success = iif(Success, 1, 0)\r\n| summarize retryCnt=count()-sum(hasBkTask), hasBkTask=max(hasBkTask), PreciseTimeStamp=max(PreciseTimeStamp), Accepted=max(Success) by ClientOperationId;\r\nFrontendOperationEtwEvent\r\n| where Region == region\r\n| where SubscriptionId == sub\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| where EventCode == \"LockReleased\"\r\n| extend cou = ClientOperationId in (qosStats | where Accepted == 1 and hasBkTask == 0 | project ClientOperationId)\r\n| extend LockName=extract(regex, 3, Message)\r\n| extend LockDuration=toint(extract(regex, 4, Message))\r\n| where LockName == sub\r\n| summarize Duration=sum(LockDuration), couLockDuration=sumif(LockDuration, cou) by PreciseTimeStamp = bin(PreciseTimeStamp, 5m)\r\n//| extend couLockDurationPc=1.0*couLockDuration/Duration\r\n//| summarize avg(couLockDurationPc)\r\n| project PreciseTimeStamp, Duration, lockDurationNoBgTaskOps = couLockDuration\r\n| render timechart",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-24T18:41:50.443Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-31T18:41:50.443Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Duration",
+        "type": "long"
+      },
+      {
+        "name": "lockDurationNoBgTaskOps",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "c2ea1d27-6749-4a24-b7c7-9b39e0ba00e4",
+    "name": "TopPutVmssCouPerRegion",
+    "groupId": "56ed9a1f-c41b-4284-bdbd-1bf6489d84ab",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between(queryFrom..queryTo)\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| where Region == region\r\n| extend isCoU = iff (EventCode == \"VmssOperationIsComputeOnlyUpdate\", 1, 0)\r\n| extend Resource = strcat(ResourceGroup, \"+\", ResourceName)\r\n| extend slice = SliceNum(SourceAssemblyFileVersion)\r\n| project PreciseTimeStamp, OperationId, OperationName, Region, SubscriptionId, Resource, isCoU, slice\r\n| summarize totalPutVmssOps= dcount(OperationId), computeOnlyOps = dcountif(OperationId, isCoU ==1 ) by SubscriptionId, Region, Resource, slice\r\n| extend computeOnlyPc = round (1.0 * computeOnlyOps / totalPutVmssOps, 2) *100\r\n| order by computeOnlyOps desc\r\n| take 20",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-24T18:41:50.443Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-31T18:41:50.443Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Resource",
+        "type": "string"
+      },
+      {
+        "name": "slice",
+        "type": "long"
+      },
+      {
+        "name": "totalPutVmssOps",
+        "type": "long"
+      },
+      {
+        "name": "computeOnlyOps",
+        "type": "long"
+      },
+      {
+        "name": "computeOnlyPc",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "d071a376-8b5e-4fb6-956a-37c66db34277",
+    "name": "PutVmssFailurePerRegion",
+    "groupId": "d6e6c14c-a11b-4e3b-859f-8ee243deaef6",
+    "majorVersion": 1,
+    "minorVersion": 5,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where Region == region\r\n| where Success == false\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| where SliceNum( SourceAssemblyFileVersion) < 10\r\n| where ErrorCode != \"RedirectToNetworkSubscriptionRequired\"\r\n| extend ErrorDetails = substring(ErrorDetails, 0, 300)\r\n| summarize count() by ErrorCode, ErrorDetails\r\n| order by count_ desc \r\n| take 5",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-31T02:45:12.421Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-03T02:45:14.641Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "8d9b018c-4616-47b0-8a23-0d0070d16c94",
+    "name": "TopVmssResourcesPerSub",
+    "groupId": "28c8f91a-e8fa-4e57-b902-1453f440b02e",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| summarize CountOfOperations = count() by ResourceGroup, ResourceName\r\n| order by CountOfOperations desc \r\n| take 15",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-01T22:25:22.332Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-03T22:25:22.332Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      },
+      {
+        "name": "CountOfOperations",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "a25ba7bc-670d-4d38-a93b-4cf7e9f649f9",
+    "name": "PutVmssSubLockCouVsNonCouPerRes",
+    "groupId": "9e294da8-2314-4d73-817b-023f827500c5",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let sub = subId;\r\nlet startTime = queryFrom;\r\nlet endTime = queryTo;\r\nlet location = region;\r\nlet regex=\"Operation (.+) \\\\((.+)\\\\) released lock (.+) after (\\\\d+) ms\";\r\nlet qosStats = QosEtwEvent\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where Region == location\r\n| where SubscriptionId == sub\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| extend hasBkTask = iif(BackgroundTaskQos, 1, 0)\r\n| where ResourceGroup =~ resourceGroup and ResourceName =~ resourceName\r\n| extend Success = iif(Success, 1, 0)\r\n| summarize retryCnt=count()-sum(hasBkTask), hasBkTask=max(hasBkTask), PreciseTimeStamp=max(PreciseTimeStamp), Accepted=max(Success) by ClientOperationId;\r\nFrontendOperationEtwEvent\r\n| where Region == location\r\n| where SubscriptionId == sub\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| where ResourceGroup =~ resourceGroup and ResourceName =~ resourceName\r\n| where EventCode == \"LockReleased\"\r\n| extend cou = ClientOperationId in (qosStats | where Accepted == 1 and hasBkTask == 0 | project ClientOperationId)\r\n| extend LockName=extract(regex, 3, Message)\r\n| extend LockDuration=toint(extract(regex, 4, Message))\r\n| where LockName == sub\r\n| summarize Duration=sum(LockDuration), couLockDuration=sumif(LockDuration, cou) by PreciseTimeStamp = bin(PreciseTimeStamp, 5m)\r\n| project PreciseTimeStamp, Duration, couLockDuration\r\n| render timechart",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-01T22:25:22.332Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-03T22:25:22.332Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Duration",
+        "type": "long"
+      },
+      {
+        "name": "couLockDuration",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "78ce524a-f959-4800-9e2b-782723f39bc3",
+    "name": "PutVmssFailuresTopSubs",
+    "groupId": "1e0673cd-46d4-46ec-aa90-b311b32db7ea",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| where Success == false\r\n| where SliceNum( SourceAssemblyFileVersion) < 10\r\n| where ErrorCode != \"RedirectToNetworkSubscriptionRequired\"\r\n| extend ErrorDetails = substring(ErrorDetails,0, 350)\r\n| summarize count() by SubscriptionId, ErrorCode, ErrorDetails\r\n| order by count_ desc \r\n| take 10",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-03T23:16:08.123Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-04T23:16:08.123Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ce49604c-c993-4d04-8b17-900814ac2039",
+    "name": "PutVmssActionsPerSub",
+    "groupId": "2b2a1c10-7a92-4ad6-8232-d00a6192eba8",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = queryFrom;\r\nlet endTime = queryTo;\r\nlet location = region;\r\nlet subId = sub;\r\nlet q=WriteOperationResponseEtwEvent\r\n| where PreciseTimeStamp  between (startTime .. endTime)\r\n| where Region == location\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| where SubscriptionId == subId\r\n| where HttpStatusCode == \"OK\"\r\n| distinct  OperationId;\r\nFrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Region == location\r\n| where SubscriptionId == subId\r\n| where OperationId  in (q)\r\n| extend isCou = iff (EventCode == \"VmssOperationIsComputeOnlyUpdate\", 1, 0) \r\n| extend isNotCou = iff (EventCode == \"VmssOperationIsNotComputeOnlyUpdate\", 1, 0) \r\n| extend isElasticVmss = iff (Message startswith \"checkComputeOnlyUpdateWithoutSubLockEnabled:\" and Message contains \"isElasticVmss:True\", 1, 0)\r\n| extend isScaleUp = iff (Message contains \"VMSS is getting scaled up\", 1, 0)\r\n| extend isScaleDown = iff (Message contains \"VMSS is getting scaled down\", 1, 0)\r\n| extend instancesDiffer = iff (Message contains \"Complete PutVMScaleSet operation. Existing and goal VMSS instances differ.\", 1, 0)\r\n| extend tagsChanged = iff (Message startswith \"resourceTagsChanged: \" and Message contains \"resourceTagsChanged: True\", 1, 0)\r\n| extend tenantChanged = iff (Message startswith \"Instance \" and Message contains \"moved from tenant\",1 , 0)\r\n| extend isMigrationOperation = iff (Message  startswith \"isCompleteOperationRequired:\" and Message contains \"isMigrationOperation: True\", 1, 0)\r\n| extend lbUndergoingMigration = iff (Message startswith \"vmssNetworkingUpdateRequired\" and Message startswith \"vmssNetworkingUpdateRequired\" and Message contains \"loadBalancersUndergoingMigrationFromNicBasedToIpBased: true\", 1, 0)\r\n| extend failedPS = iff (Message contains \"existingResource.ProvisioningState: Failed\", 1, 0)\r\n| extend isMultiTenantChanged = iff (Message  startswith \"isCompleteOperationRequired:\" and Message contains \"isMultiTenantChanged: true\", 1, 0)\r\n| extend VMUpdateGroupChange = iff (Message  startswith \"shouldUpdateNetworkProfileOfVmss:\" and Message contains \"vmInstancesMovedAcrossUpdateGroups: True\", 1, 0)\r\n| extend EmptyUGMismatch = iff (Message contains \"Update groups mismatch. VMSS resource needs to be updated.\", 1, 0)\r\n| extend newUGAdded = iff (Message startswith \"New update group \", 1, 0)\r\n| extend newFPVmss = iff (Message contains \"Creating new VMSS with IsFastPathVmss flag set to True.\",1, 0)\r\n| extend UGProfileMismatch = iff (Message contains \"Network profile for update group \" and Message contains \"mismatch\", 1, 0)\r\n| extend networkProfileUpdate = iff (Message contains \"Network profile for instances \", 1, 0)\r\n| summarize PutVmssOps = dcount(OperationId), \r\n    ComputeOnlyUpdates= sum(isCou),\r\n    ScaleUpOps = sum(isScaleUp), \r\n    ScaleDownOps = sum(isScaleDown),\r\n    NetworkProfileUpdateOps = sum(networkProfileUpdate),\r\n    VmsMovedAcrossUpdateGroups = sum(VMUpdateGroupChange),\r\n    TagsChanged = sum(tagsChanged),\r\n    TenantsChanged = sum(tenantChanged),\r\n    EmptyUpdateGroupCountMismatch = sum(EmptyUGMismatch),\r\n    FailedProvisioningState = sum(failedPS)\r\n    by bin(PreciseTimeStamp, 5m)\r\n    | render timechart  ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-03T23:16:08.123Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-04T23:16:08.123Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "sub",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "PutVmssOps",
+        "type": "long"
+      },
+      {
+        "name": "ComputeOnlyUpdates",
+        "type": "long"
+      },
+      {
+        "name": "ScaleUpOps",
+        "type": "long"
+      },
+      {
+        "name": "ScaleDownOps",
+        "type": "long"
+      },
+      {
+        "name": "NetworkProfileUpdateOps",
+        "type": "long"
+      },
+      {
+        "name": "VmsMovedAcrossUpdateGroups",
+        "type": "long"
+      },
+      {
+        "name": "TagsChanged",
+        "type": "long"
+      },
+      {
+        "name": "TenantsChanged",
+        "type": "long"
+      },
+      {
+        "name": "EmptyUpdateGroupCountMismatch",
+        "type": "long"
+      },
+      {
+        "name": "FailedProvisioningState",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "e1f8179f-432f-4d49-aae6-fba96ed5daeb",
+    "name": "PutVmssSubLockPerRegion",
+    "groupId": "29183540-a0cf-4c0e-82e4-e1c707bf8f41",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let regex=\"Operation (.+) \\\\((.+)\\\\) released lock (.+) after (\\\\d+) ms\";\r\nFrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo )\r\n| where Region == region\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| where EventCode == \"LockReleased\"\r\n| extend LockName=extract(regex, 3, Message)\r\n| extend LockDuration=toint(extract(regex, 4, Message))\r\n| where LockName == SubscriptionId\r\n| summarize SubLockDuration = sum(LockDuration) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T03:12:36.286Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T05:12:36.286Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubLockDuration",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "39a21d22-cd63-4f54-b825-54a7d0859ab2",
+    "name": "PutVmssLatencyPerRegion",
+    "groupId": "29dbd6f3-b58e-4811-976f-63851acac2f8",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp  between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| summarize percentiles(DurationInMilliseconds, 50) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T03:12:36.286Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T05:12:36.286Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_50",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "10009af9-6c2d-47ed-a5d6-470e261f858a",
+    "name": "PutVmssTransactionStatsPerRegion",
+    "groupId": "e8b13859-4d39-4a46-a9a4-8fa48e9bc4f7",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "KvsTransactionEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| project PreciseTimeStamp, ReadCount, ReadSize, AddCount, AddSize, ReadDuration, CommitDuration, UpdateCount, UpdateSize, OperationId\r\n| summarize readSizeKb = sum(ReadSize)/1000, addSizeKb = sum(AddSize)/1000, updateSizeKb = sum(UpdateSize)/1000 by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T03:12:36.286Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T05:12:36.286Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "readSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "addSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "updateSizeKb",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "cf76e3d7-0322-4407-87d2-8e821b10ed0d",
+    "name": "PutVmssSubnetReadStats",
+    "groupId": "e375f265-d38a-49ca-97ad-09f15a6e2a7c",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "KvsTransactionEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| project PreciseTimeStamp, ReadCount, ReadSize, AddCount, AddSize, TypeBasedReadCount, UpdateCount, UpdateSize, OperationId\r\n| where ReadCount > 0\r\n| extend IpConfigurationsReadCount = toint(extract(@\"ipConfigurations : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend SubnetReadCount = toint(extract(@\"subnets : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend VnetReadCount = toint(extract(@\"virtualNetworks : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend vmssReadCount = toint(extract(@\"virtualMachineScaleSets : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend nicReadCount = toint(extract(@\"networkInterfaces : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend tenantReadCount = toint(extract(@\"tenants : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend vmReadCount = toint(extract(@\"virtualMachines : (\\d+);\", 1, TypeBasedReadCount))\r\n| summarize //AvgVnetReadCount = round(todouble(sum(VnetReadCount)) / dcount(OperationId),2),\r\n            //AvgNicReadCount = round(todouble(sum(nicReadCount)) / dcount(OperationId),2), \r\n            //AvgIpConfigurationsReadCount = round(todouble(sum(IpConfigurationsReadCount)) / dcount(OperationId),2),\r\n            AvgSubnetReadCount = round(todouble(sum(SubnetReadCount)) / dcount(OperationId),2)  by bin(PreciseTimeStamp, 5m)\r\n            //AvgVMReadCount = round(todouble(sum(vmReadCount)) / dcount(OperationId),2),\r\n            //AvgTenantReadCount = round(todouble(sum(tenantReadCount)) / dcount(OperationId),2) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T00:07:11.227Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T06:07:11.227Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AvgSubnetReadCount",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "03375cd5-ebb6-4959-a02f-4efcf7d8c5f6",
+    "name": "BatchManagerResourceLockingTransactionAquisitionFailurePerSub",
+    "groupId": "c8263e92-8207-450b-9e83-012058b21d08",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where EventCode == \"ResourceLockingTransactionAquisitionFailure\"\r\n| parse Message with \"Failed to aquire resource lock on \" ResourceId \" in job with JobId \" FailingJobId \", JobName \" FailingJobName \", and operation id \" OperationIdOfLockFailure \", going to restart job on lock aquisition. Lock was last acquired by operation id \" OwningOperationId \". Inner Exception \" Exception \" and owningJobName \" owningJobName: string\r\n| extend owningJobName = extract(\"^(.*?)(\\\\s|$)\", 1, owningJobName)\r\n| extend resourceType = extract(@\"/providers/Microsoft\\.(Network|Compute)/([^/]+)/\", 2, ResourceId)\r\n| extend resourceType = iff(isnull(resourceType), \"subscriptions\", resourceType)\r\n| project PreciseTimeStamp,SubscriptionId, OperationId, CorrelationRequestId, OperationName, Message, FailingJobId, resourceType, FailingJobName, owningJobName\r\n| summarize count() by bin(PreciseTimeStamp, 5m)\r\n| render timechart",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T00:17:20.300Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T06:17:20.300Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ced463aa-e24f-4978-9911-5d7fe8f2b946",
+    "name": "PutVmssIpConfigsPerSubRead",
+    "groupId": "b2a39fbb-5b3e-4618-b653-3b168d0549aa",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "KvsTransactionEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| project PreciseTimeStamp, ReadCount, ReadSize, AddCount, AddSize, TypeBasedReadCount, UpdateCount, UpdateSize, OperationId\r\n| where ReadCount > 0\r\n| extend IpConfigurationsReadCount = toint(extract(@\"ipConfigurations : (\\d+);\", 1, TypeBasedReadCount))\r\n| summarize AvgIpConfigurationsReadCount = round(todouble(sum(IpConfigurationsReadCount)) / dcount(OperationId),2) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-03T18:49:55.715Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-07T18:49:57.782Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AvgIpConfigurationsReadCount",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "10a079f4-3ad5-417f-8e3f-d35e1ee78388",
+    "name": "PutVmssSubLockPeregrineVmssScaleDown",
+    "groupId": "8a0e3c26-4dea-40b4-ad1d-e1b7582e574d",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let psd= FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom.. queryTo)\r\n| where Region == region\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| extend isPeregrineScaleDown = iff(Message startswith \"VMSS on Peregrine is getting scaled down\", 1,0)\r\n| where isPeregrineScaleDown  == 1\r\n| distinct OperationId;\r\nlet regex=\"Operation (.+) \\\\((.+)\\\\) released lock (.+) after (\\\\d+) ms\";\r\nFrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom.. queryTo)\r\n| where Region == region\r\n| where OperationId in (psd)\r\n| where EventCode == \"LockReleased\"\r\n| extend LockName=extract(regex, 3, Message)\r\n| extend LockDuration=toint(extract(regex, 4, Message))\r\n| where LockName == SubscriptionId\r\n| summarize sum(LockDuration) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "sum_LockDuration",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "4af5acbd-1ed5-43e0-9a85-58be63871fed",
+    "name": "PutVmssSubLockPeregrineScaleDownPerSub",
+    "groupId": "4145d20c-eee8-4122-8cc2-c594441df705",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let psd= FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom.. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| extend isPeregrineScaleDown = iff(Message startswith \"VMSS on Peregrine is getting scaled down\", 1,0)\r\n| where isPeregrineScaleDown  == 1\r\n| distinct OperationId;\r\nlet regex=\"Operation (.+) \\\\((.+)\\\\) released lock (.+) after (\\\\d+) ms\";\r\nFrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom.. queryTo)\r\n| where Region == region\r\n| where OperationId in (psd)\r\n| where EventCode == \"LockReleased\"\r\n| extend LockName=extract(regex, 3, Message)\r\n| extend LockDuration=toint(extract(regex, 4, Message))\r\n| where LockName == SubscriptionId\r\n| summarize sum(LockDuration) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "sum_LockDuration",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "81cfd84a-f38e-41d0-8263-c9c16c54529a",
+    "name": "PutVmssP90Latency",
+    "groupId": "1f836b3e-54e4-46c4-b6a5-13369220ad9a",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp  between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| summarize percentiles(DurationInMilliseconds, 90) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_90",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "1191c462-fb13-42a2-82cd-c478a78eeecd",
+    "name": "PutVmssFailuresPerVmss",
+    "groupId": "8655cfb9-d954-411e-a89a-f0a26b565e17",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| where Success == false\r\n| where SubscriptionId == subId\r\n| where ResourceGroup =~ resourceGroup and ResourceName =~ resourceName\r\n| extend usererr = iff (UserError == true, 1, 0)\r\n| extend servererror = iff(UserError == false, 1, 0)\r\n| summarize IsUserError = sum(usererr), ServerError = sum(servererror) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-31T02:45:12.421Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-03T02:45:14.641Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "IsUserError",
+        "type": "long"
+      },
+      {
+        "name": "ServerError",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "b25e336b-9272-45d9-98a1-12b16ba07aa2",
+    "name": "PutVmssSubLockPerResource",
+    "groupId": "3c9b21f6-932b-41b4-9fc3-831c8d74603c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let regex=\"Operation (.+) \\\\((.+)\\\\) released lock (.+) after (\\\\d+) ms\";\r\nFrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| where ResourceGroup =~ resourceGroup and ResourceName =~ resourceName\r\n| where EventCode == \"LockReleased\"\r\n| extend LockName=extract(regex, 3, Message)\r\n| extend LockDuration=toint(extract(regex, 4, Message))\r\n| where LockName == subId\r\n| summarize SubLockDuration = sum(LockDuration) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-01T22:25:22.332Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-03T22:25:22.332Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubLockDuration",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "fe77a402-e35e-4732-8834-a6e10500f124",
+    "name": "PutVmssSubLockCouVsNonCouPerRes",
+    "groupId": "d85b115a-d8b5-4aa8-b04c-f9f848a025ae",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let sub = subId;\r\nlet startTime = queryFrom;\r\nlet endTime = queryTo;\r\nlet location = region;\r\nlet regex=\"Operation (.+) \\\\((.+)\\\\) released lock (.+) after (\\\\d+) ms\";\r\nlet qosStats = QosEtwEvent\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where Region == location\r\n| where SubscriptionId == sub\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| extend hasBkTask = iif(BackgroundTaskQos, 1, 0)\r\n| where ResourceGroup =~ resourceGroup and ResourceName =~ resourceName\r\n| extend Success = iif(Success, 1, 0)\r\n| summarize retryCnt=count()-sum(hasBkTask), hasBkTask=max(hasBkTask), PreciseTimeStamp=max(PreciseTimeStamp), Accepted=max(Success) by ClientOperationId;\r\nFrontendOperationEtwEvent\r\n| where Region == location\r\n| where SubscriptionId == sub\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where OperationName in (\"PutVMScaleSetOperation\")\r\n| where ResourceGroup =~ resourceGroup and ResourceName =~ resourceName\r\n| where EventCode == \"LockReleased\"\r\n| extend cou = ClientOperationId in (qosStats | where Accepted == 1 and hasBkTask == 0 | project ClientOperationId)\r\n| extend LockName=extract(regex, 3, Message)\r\n| extend LockDuration=toint(extract(regex, 4, Message))\r\n| where LockName == sub\r\n| summarize Duration=sum(LockDuration), couLockDuration=sumif(LockDuration, cou) by PreciseTimeStamp = bin(PreciseTimeStamp, 5m)\r\n| project PreciseTimeStamp, Duration, couLockDuration\r\n| render timechart",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-01T22:25:22.332Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-03T22:25:22.332Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Duration",
+        "type": "long"
+      },
+      {
+        "name": "couLockDuration",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "69b1e8a3-7641-4419-86b3-ba1017f37830",
+    "name": "BatchManagerDequeueJobTimesPerSub",
+    "groupId": "48ab4fc4-a1f6-4906-a32f-e5f52b811fb5",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where EventCode == \"TransactionJobDequeued\"\r\n| parse Message with *\" duration in queue: \"durationMs\r\n| project PreciseTimeStamp,SubscriptionId, OperationId, CorrelationRequestId, OperationName, Message, durationMs\r\n| summarize percentiles(toint(durationMs), 50) by bin(PreciseTimeStamp, 5m)\r\n| render timechart",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T00:17:20.300Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-06T06:17:20.300Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "percentile_durationMs_50",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "6da26be4-883e-4497-b287-b60bf84043b2",
+    "name": "PutVmssActionsPerResource",
+    "groupId": "6a22ddde-8606-4d6c-be76-4d3ed6d096fe",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let q=WriteOperationResponseEtwEvent\r\n| where PreciseTimeStamp  between (queryFrom .. queryTo)\r\n| where Region == location\r\n| where OperationName == \"PutVMScaleSetOperation\"\r\n| where SubscriptionId == subId\r\n| where ResourceGroup =~ resourceGroup and ResourceName =~ resourceName\r\n| where HttpStatusCode == \"OK\"\r\n| distinct  OperationId;\r\nFrontendOperationEtwEvent\r\n| where PreciseTimeStamp  between (queryFrom .. queryTo)\r\n| where Region == location\r\n| where SubscriptionId == subId\r\n| where OperationId  in (q)\r\n| extend isCou = iff (EventCode == \"VmssOperationIsComputeOnlyUpdate\", 1, 0) \r\n| extend isNotCou = iff (EventCode == \"VmssOperationIsNotComputeOnlyUpdate\", 1, 0) \r\n| extend isElasticVmss = iff (Message startswith \"checkComputeOnlyUpdateWithoutSubLockEnabled:\" and Message contains \"isElasticVmss:True\", 1, 0)\r\n| extend isScaleUp = iff (Message contains \"VMSS is getting scaled up\", 1, 0)\r\n| extend isScaleDown = iff (Message contains \"VMSS is getting scaled down\", 1, 0)\r\n| extend instancesDiffer = iff (Message contains \"Complete PutVMScaleSet operation. Existing and goal VMSS instances differ.\", 1, 0)\r\n| extend tagsChanged = iff (Message startswith \"resourceTagsChanged: \" and Message contains \"resourceTagsChanged: True\", 1, 0)\r\n| extend tenantChanged = iff (Message startswith \"Instance \" and Message contains \"moved from tenant\",1 , 0)\r\n| extend isMigrationOperation = iff (Message  startswith \"isCompleteOperationRequired:\" and Message contains \"isMigrationOperation: True\", 1, 0)\r\n| extend lbUndergoingMigration = iff (Message startswith \"vmssNetworkingUpdateRequired\" and Message startswith \"vmssNetworkingUpdateRequired\" and Message contains \"loadBalancersUndergoingMigrationFromNicBasedToIpBased: true\", 1, 0)\r\n| extend failedPS = iff (Message contains \"existingResource.ProvisioningState: Failed\", 1, 0)\r\n| extend isMultiTenantChanged = iff (Message  startswith \"isCompleteOperationRequired:\" and Message contains \"isMultiTenantChanged: true\", 1, 0)\r\n| extend VMUpdateGroupChange = iff (Message  startswith \"isCompleteOperationRequired:\" and Message contains \"vmInstancesMoveAcrossUpdateGroupsRequiresCompleteOperation:True\", 1, 0)\r\n| extend EmptyUGMismatch = iff (Message contains \"Update groups mismatch. VMSS resource needs to be updated.\", 1, 0)\r\n| extend newUGAdded = iff (Message startswith \"New update group \", 1, 0)\r\n| extend newFPVmss = iff (Message contains \"Creating new VMSS with IsFastPathVmss flag set to True.\",1, 0)\r\n| extend UGProfileMismatch = iff (Message contains \"Network profile for update group \" and Message contains \"mismatch\", 1, 0)\r\n| extend networkProfileUpdate = iff (Message contains \"Network profile for instances \", 1, 0)\r\n| summarize PutVmssOps = dcount(OperationId), \r\n    ComputeOnlyUpdates= sum(isCou),\r\n    ScaleUpOps = sum(isScaleUp), \r\n    ScaleDownOps = sum(isScaleDown),\r\n    NetworkProfileUpdateOps = sum(networkProfileUpdate),\r\n    TagsChanged = sum(tagsChanged),\r\n    TenantsChanged = sum(tenantChanged),\r\n    EmptyUpdateGroupCountMismatch = sum(EmptyUGMismatch),\r\n    FailedProvisioningState = sum(failedPS)\r\n    by bin(PreciseTimeStamp, 5m)\r\n    | render timechart  ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-03T18:24:53.857Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-07T18:24:53.857Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "location",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "PutVmssOps",
+        "type": "long"
+      },
+      {
+        "name": "ComputeOnlyUpdates",
+        "type": "long"
+      },
+      {
+        "name": "ScaleUpOps",
+        "type": "long"
+      },
+      {
+        "name": "ScaleDownOps",
+        "type": "long"
+      },
+      {
+        "name": "NetworkProfileUpdateOps",
+        "type": "long"
+      },
+      {
+        "name": "TagsChanged",
+        "type": "long"
+      },
+      {
+        "name": "TenantsChanged",
+        "type": "long"
+      },
+      {
+        "name": "EmptyUpdateGroupCountMismatch",
+        "type": "long"
+      },
+      {
+        "name": "FailedProvisioningState",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

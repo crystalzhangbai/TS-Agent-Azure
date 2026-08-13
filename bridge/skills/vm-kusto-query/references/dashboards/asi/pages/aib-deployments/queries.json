@@ -1,0 +1,106 @@
+[
+  {
+    "id": "ca7bd0af-29fc-4fee-a561-d34a72d212d2",
+    "name": "AIB Deployments",
+    "groupId": "65ecc299-cae4-4608-b4a8-a0b8476cc10a",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "armprodgbl.eastus",
+    "database": "ARMProd",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\r\n(\r\n    X.database('Deployments').Deployments\r\n    | where PreciseTimeStamp between(queryFrom .. queryTo)\r\n    | where subscriptionId == subID\r\n    | summarize arg_max(PreciseTimeStamp, *) by subscriptionId, resourceGroupName, deploymentName, ActivityId\r\n    | extend startTime = todatetime(startTime), endTime = todatetime(endTime)\r\n    | project \r\n        deploymentName, \r\n        resourceGroupName, \r\n        resourceGroupLocation, \r\n        resourceCount, \r\n        executionStatus, \r\n        startTime, \r\n        endTime, \r\n        durationInMilliseconds, \r\n        TaskName, \r\n        level = iif(TaskName == \"DeploymentsFailed\", \"error\", \"info\"),\r\n        correlationId\r\n)\r\n| order by startTime desc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-03-04T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-03-06T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subID",
+        "description": "",
+        "type": "guid",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "de212587-b40e-43d8-9185-1ef5b2519da4",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "deploymentName",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupLocation",
+        "type": "string"
+      },
+      {
+        "name": "resourceCount",
+        "type": "long"
+      },
+      {
+        "name": "executionStatus",
+        "type": "string"
+      },
+      {
+        "name": "startTime",
+        "type": "datetime"
+      },
+      {
+        "name": "endTime",
+        "type": "datetime"
+      },
+      {
+        "name": "durationInMilliseconds",
+        "type": "real"
+      },
+      {
+        "name": "TaskName",
+        "type": "string"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  }
+]

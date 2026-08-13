@@ -1,0 +1,248 @@
+{
+  "service": "NRP",
+  "page": "Private Link Service",
+  "pageId": "c5aebe92-a21b-4304-8f24-fc7934e8b085",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "b9636f5b-962f-482e-a038-0af5a20073e2",
+          "name": "Retrieve Resource \"Private Link Service\"",
+          "groupId": "8c4bfd7f-968b-4639-80ae-dcbbeb9147dc",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "argwus2nrpone.westus2",
+          "database": "AzureResourceGraph",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_groupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_subId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_name",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_timestamp",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Name",
+              "type": "string"
+            },
+            {
+              "name": "GroupName",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "key",
+              "type": "string"
+            },
+            {
+              "name": "CreatedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ProvisioningState",
+              "type": "dynamic"
+            },
+            {
+              "name": "Fqdns",
+              "type": "dynamic"
+            },
+            {
+              "name": "Alias",
+              "type": "dynamic"
+            },
+            {
+              "name": "EnableProxyProtocol",
+              "type": "dynamic"
+            },
+            {
+              "name": "LoadBalancerFrontendIpConfigurations",
+              "type": "dynamic"
+            },
+            {
+              "name": "IpConfigurations",
+              "type": "dynamic"
+            },
+            {
+              "name": "PrivateEndpointConnections",
+              "type": "dynamic"
+            },
+            {
+              "name": "PrivateEndpointConnectionProxies",
+              "type": "dynamic"
+            },
+            {
+              "name": "NetworkInterfaces",
+              "type": "dynamic"
+            },
+            {
+              "name": "Json",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_groupName",
+              "externalSourceName": "groupName",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subId",
+              "externalSourceName": "subId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_name",
+              "externalSourceName": "name",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_timestamp",
+              "externalSourceName": "timestamp",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Resources\r\n| where isempty(local_timestamp) or timestamp between((local_timestamp-6h)..(local_timestamp+6h))\r\n| where \r\n    type == \"microsoft.network/privatelinkservices\" and\r\n    subscriptionId =~ local_subId and\r\n    resourceGroup =~ local_groupName and\r\n    name =~ local_name\r\n| top 1 by timestamp desc\r\n| extend \r\n    LoadBalancerFrontendIpConfigurations = properties.loadBalancerFrontendIpConfigurations,\r\n    IpConfigurations = properties.ipConfigurations,\r\n    PrivateEndpointConnections = properties.privateEndpointConnections,\r\n    PrivateEndpointConnectionProxies = properties.privateEndpointConnectionProxies,\r\n    NetworkInterfaces = properties.networkInterfaces,\r\n    Json = properties\r\n| project \r\n    PreciseTimeStamp = timestamp, \r\n    Name = name, \r\n    GroupName = resourceGroup, \r\n    SubscriptionId = subscriptionId, \r\n    key = id,\r\n    CreatedTime = timestamp, \r\n    ProvisioningState = properties.provisioningState, \r\n    Fqdns = properties.fqdns, \r\n    Alias = properties.alias, \r\n    EnableProxyProtocol = properties.enableProxyProtocol, \r\n    LoadBalancerFrontendIpConfigurations, \r\n    IpConfigurations, \r\n    PrivateEndpointConnections, \r\n    PrivateEndpointConnectionProxies, \r\n    NetworkInterfaces, \r\n    Json\r\n",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:53.900Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

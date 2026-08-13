@@ -1,0 +1,3243 @@
+{
+  "service": "Aztec",
+  "page": "Containers",
+  "pageId": "c32f171e-dca8-4673-833a-5432417475a0",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "0fbc6f60-8c21-44c2-85c6-beede2b058cd",
+          "name": "Retrieve Resource \"Containers\"",
+          "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_containerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_tenantName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_virtualMachineUniqueId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "containerType",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "updateDomain",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySetName",
+              "type": "string"
+            },
+            {
+              "name": "billingType",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceFamilyId",
+              "type": "string"
+            },
+            {
+              "name": "roleType",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "creationTime",
+              "type": "string"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "containerOsBaseImage",
+              "type": "string"
+            },
+            {
+              "name": "latchedOsFamily",
+              "type": "string"
+            },
+            {
+              "name": "latchedOsRelease",
+              "type": "string"
+            },
+            {
+              "name": "osReleaseUpgradeType",
+              "type": "string"
+            },
+            {
+              "name": "priority",
+              "type": "string"
+            },
+            {
+              "name": "hasDataPlaneSla",
+              "type": "string"
+            },
+            {
+              "name": "isEphemeralVM",
+              "type": "string"
+            },
+            {
+              "name": "osIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "tipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "provisioningIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "additionalContainerProperties",
+              "type": "string"
+            },
+            {
+              "name": "dataDisksIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "requiresSingularRootUpdateSet",
+              "type": "string"
+            },
+            {
+              "name": "volume1Media",
+              "type": "string"
+            },
+            {
+              "name": "IsProcessorSpeculationControlEnabled",
+              "type": "string"
+            },
+            {
+              "name": "requestedT1NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "requestedT2NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "isReusedContainer",
+              "type": "string"
+            },
+            {
+              "name": "preprovisionedOSImageName",
+              "type": "string"
+            },
+            {
+              "name": "currentOSImageName",
+              "type": "string"
+            },
+            {
+              "name": "guestAgentPackage",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "tenantOwners",
+              "type": "string"
+            },
+            {
+              "name": "features",
+              "type": "string"
+            },
+            {
+              "name": "isOversubscribable",
+              "type": "string"
+            },
+            {
+              "name": "actualCoreUsage",
+              "type": "string"
+            },
+            {
+              "name": "isWorkloadUserFacing",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostId",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostGroupId",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostContainerPlacementType",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "harvestProfile",
+              "type": "string"
+            },
+            {
+              "name": "diskConfiguration",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedNodeGroupName",
+              "type": "string"
+            },
+            {
+              "name": "preparationMode",
+              "type": "string"
+            },
+            {
+              "name": "__IsTrusted__",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_containerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_tenantName",
+              "externalSourceName": "tenantName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_virtualMachineUniqueId",
+              "externalSourceName": "virtualMachineUniqueId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\n| where PreciseTimeStamp  between (globalFrom .. globalTo)\n| where containerId == local_containerId\n| take 1\n| project-reorder containerId, Tenant, nodeId, tenantName, virtualMachineUniqueId, roleInstanceName",
+          "panelPath": []
+        },
+        {
+          "id": "70c07ad2-b0cd-4f23-b4cb-3a79ac949bd6",
+          "name": "Lookup AzCompute Shoebox Account",
+          "groupId": "4595906b-9df5-4e50-bb10-44ad8dffbe02",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Single",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryRegionName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "shoeboxMdmAccountName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryRegionName",
+              "externalSourceName": "RegionFriendlyName",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogClusterSnapshot\n| where RegionFriendlyName =~ queryRegionName\n| take 1\n| project shoeboxMdmAccountName",
+          "panelPath": []
+        },
+        {
+          "id": "8b13b163-bd61-4294-a077-1897cb044f8a",
+          "name": "Lookup AzNw Region Code",
+          "groupId": "b4168653-dc07-41a2-a36e-3311e321e9fe",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Single",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryRegionName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "NetworkRegionCode",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryRegionName",
+              "externalSourceName": "Region",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "// Now we get the region code from the networking cluster\ncluster(\"aznwnetmon\").database('aznwmds').RegionNamesMap\n| where RegionName == queryRegionName\n| take 1\n| project NetworkRegionCode = RegionCode",
+          "panelPath": []
+        },
+        {
+          "id": "09c1e688-4a0e-4d37-804e-ad2964c0c9f8",
+          "name": "VM Context",
+          "groupId": "dfa4e3f8-9a84-4e50-9ffb-bc05b991ed7c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "Vmainsight",
+          "database": "CAD",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Host Context",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Storage_Cluster",
+              "type": "string"
+            },
+            {
+              "name": "Hardware_Model",
+              "type": "string"
+            },
+            {
+              "name": "Hardware_Location",
+              "type": "string"
+            },
+            {
+              "name": "Hardware_Rack",
+              "type": "string"
+            },
+            {
+              "name": "NodeSS_NMAgentHostPlugin",
+              "type": "string"
+            },
+            {
+              "name": "NodeSS_SLBHostPluginService",
+              "type": "string"
+            },
+            {
+              "name": "NodeSS_SlbMonAgentHost",
+              "type": "string"
+            },
+            {
+              "name": "Network_TOR2",
+              "type": "string"
+            },
+            {
+              "name": "NodeSS_NodeDataCollectedOn",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "CADDAILY\r\n| where PreciseTimeStamp  between (queryFrom - 1d .. queryTo)\r\n| where ContainerId =~ queryContainerId\r\n| top 1 by PreciseTimeStamp desc\r\n| project\r\nPreciseTimeStamp,\r\nStorage_Cluster, \r\nHardware_Model,\r\nHardware_Location,\r\nHardware_Rack,\r\nNodeSS_NMAgentHostPlugin,\r\nNodeSS_SLBHostPluginService,\r\nNodeSS_SlbMonAgentHost,\r\nNetwork_TOR2,\r\nNodeSS_NodeDataCollectedOn",
+          "panelPath": []
+        },
+        {
+          "id": "f6908be1-34bc-42bc-9a0c-b0a0eb9a48a5",
+          "name": "Node TOR Info",
+          "groupId": "83dcbff0-1176-4ea9-97a7-af67f4f1fddf",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "Vmainsight",
+          "database": "AzureGraph",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "TOR",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "ClusterId",
+              "type": "string"
+            },
+            {
+              "name": "ToRRouter",
+              "type": "string"
+            },
+            {
+              "name": "State",
+              "type": "string"
+            },
+            {
+              "name": "IPAddress",
+              "type": "string"
+            },
+            {
+              "name": "NetworkSwitchPort",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "Compute_Node \r\n| where Id =~ queryNodeId\r\n| top 1 by TimeStamp desc\r\n| project NodeId = Id, ClusterId, tostring(ToRRouter), State, IPAddress, NetworkSwitchPort\r\n\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "a7511f02-5307-4147-a032-e91be2cb4ed6",
+          "name": "VM Impacting Events",
+          "groupId": "3338ff6d-0b5b-4ecf-9c6a-6ce1970e6b6d",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "vmainsight",
+          "database": "vmadb",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VmImpactingEventsV1\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where ContainerId == queryContainerId and RCAEngineCategory != \"CustomerInitiated\"\n| extend Content = strcat(RCAEngineCategory, \" - \", RCALevel1)\n| extend Tooltip = strcat(\"RCALevel2: \", RCALevel2, \"<br/>RCALevel3: \", RCALevel3, \"<br/>Detail: \", Detail)\n| project StartTime = PreciseTimeStamp, Content, Tooltip",
+          "panelPath": []
+        },
+        {
+          "id": "705eb637-66a7-4694-9e0f-1070cf260f37",
+          "name": "VMA",
+          "groupId": "e91e37bd-0f3f-4e64-aecf-4a37660059b3",
+          "majorVersion": 2,
+          "minorVersion": 5,
+          "cluster": "vmainsight",
+          "database": "vmadb",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTenantName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            },
+            {
+              "name": "FilterCategory",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "constant_value_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenantName",
+              "externalSourceName": "empty_string",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VMA\n| where PreciseTimeStamp between(queryFrom..queryTo)\n| where isempty(queryTenantName) or TenantName == queryTenantName\n| where isempty(queryContainerId) or ContainerId == queryContainerId\n| where CadPrimaryKey !contains 'composite'\n| extend ContainerLink = strcat(\n    \"<a href='https://azureserviceinsights.trafficmanager.net/view/services/Aztec/pages/Containers?containerId=\",\n    ContainerId,\n    \"' target='_blank' rel='noopener noreferrer'>\", \n    ContainerId, \n    \"</a>\"\n)\n| extend NodeLink = strcat(\n    \"<a href='https://azureserviceinsights.trafficmanager.net/view/services/Aztec/pages/Nodes?nodeId=\",\n    NodeId,\n    \"' target='_blank' rel='noopener noreferrer'>\", \n    NodeId, \n    \"</a>\"\n)\n| extend TenantContent = strcat(\n    RCALevel2,\n    \"<br/>Container: \", ContainerLink,\n    \"<br/>Node: \", NodeLink\n)\n| extend DefaultContent = RCALevel2\n| extend Content = iif(isempty(queryContainerId), TenantContent, DefaultContent)\n| extend Tooltip = strcat(\n    \"RoleInstanceName: \", RoleInstanceName,\n    \"<br/>RCAEngineCategory: \", RCAEngineCategory,\n    \"<br/>RCALevel1: \", RCALevel1,\n    \"<br/>RCALevel2: \", RCALevel2,\n    \"<br/>RCALevel3: \", RCALevel3,\n    \"<br/>RCA: \", RCA\n)\n| extend FilterCategory = RCAEngineCategory\n| project StartTime, Content, Tooltip, FilterCategory",
+          "panelPath": []
+        },
+        {
+          "id": "3056d148-be42-4849-a925-2c4b02abd06a",
+          "name": "Air Managed Events",
+          "groupId": "e0b550c3-39fb-4741-8cb9-f643f4cf43aa",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "vmainsight",
+          "database": "Air",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AirManagedEvents\n| where EventTime between(queryFrom..queryTo)\n//| where EventCategoryLevel3 == 'HostNetworkingUpdate'\n| where ObjectId == queryContainerId\n| extend Content = strcat(RCALevel1, \" / \", EventCategoryLevel3)\n| extend Tooltip = strcat(\n    \"EventCategoryLevel1: \", EventCategoryLevel1,\n    \"<br/>EventCategoryLevel2: \", EventCategoryLevel2,\n    \"<br/>EventCategoryLevel3: \", EventCategoryLevel3,\n    \"<br/>RCALevel1: \", RCALevel1,\n    \"<br/>RCALevel2: \", RCALevel2\n)\n| project StartTime = EventTime, Content, Tooltip",
+          "panelPath": []
+        },
+        {
+          "id": "948baee1-f5eb-4a0b-a972-cd0d21cc2f74",
+          "name": "Query DCMNMAgentProgrammingDurationEtwTable",
+          "groupId": "8947d925-b7a2-4491-ae28-1a9a9b7b82ed",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "azurecm",
+          "type": "MultiRow",
+          "widgetType": "DynamicTab",
+          "widgetTitle": "DCM NMAgent Programming Duration",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "DCMNMAgentProgrammingDurationEtwTable\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where interfaceId contains\"queryContainerId\"\r\n| project PreciseTimeStamp,message",
+          "panelPath": []
+        },
+        {
+          "id": "3c338399-b7fb-4259-adce-240939cee0dc",
+          "name": "Container DNS Queries",
+          "groupId": "360829af-6ecb-479c-b11e-263eb68519df",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "PrivateDnsRr",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "QueryResult",
+              "type": "string"
+            },
+            {
+              "name": "Protocol",
+              "type": "string"
+            },
+            {
+              "name": "QTYPE",
+              "type": "string"
+            },
+            {
+              "name": "QNAME",
+              "type": "string"
+            },
+            {
+              "name": "RCODE",
+              "type": "string"
+            },
+            {
+              "name": "ElapsedTimeMs",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "componentFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "componentTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "// These lists aren't exhaustive but include the most common types\r\nlet qtypeStrings = datatable (QTYPE:long, QTYPESTR:string) [1, \"A\", 2, \"NS\", 5, \"CNAME\", 6, \"SOA\", 12, \"PTR\", 16, \"TXT\", 28, \"AAAA\", 33, \"SRV\", 65, \"HTTPS\"];\r\nlet rcodeStrings = datatable (RCODE:long, RCODESTR:string) [0, \"NOERROR\", 1, \"FORMERROR\", 2, \"SERVFAIL\", 3, \"NXDOMAIN\", 4, \"NOTIMP\", 5, \"REFUSED\"];\r\nDnsResponseSuccessSampled\r\n| union DnsResponseFailureSampled\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where EDNSCorrelationTag == queryContainerId\r\n| lookup qtypeStrings on QTYPE\r\n| lookup rcodeStrings on RCODE\r\n| extend Protocol = iff(TCP==0, \"UDP\", \"TCP\")\r\n| extend QTYPE = iff(isnotempty(QTYPESTR), strcat(QTYPESTR, \" (\", QTYPE, \")\"), tostring(QTYPE))\r\n| extend RCODE = iff(isnotempty(RCODESTR), strcat(RCODESTR, \" (\", RCODE, \")\"), tostring(RCODE))\r\n| project PreciseTimeStamp, QueryResult = KeywordName, Protocol, QTYPE, QNAME, RCODE, ElapsedTimeMs = ElapsedTime\r\n| sort by PreciseTimeStamp desc",
+          "panelPath": []
+        }
+      ]
+    },
+    "Change Profiling Events > Change Profiling Events": {
+      "panelPath": [
+        "Change Profiling Events",
+        "Change Profiling Events"
+      ],
+      "queries": [
+        {
+          "id": "95008210-2ed5-4914-a21f-cbbcd8fa5fc5",
+          "name": "Change Profiling Events",
+          "groupId": "b4b3b0e5-6d14-48ba-8a95-571dd3107d2c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Change Profiling Events",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "ProviderGuid",
+              "type": "string"
+            },
+            {
+              "name": "ProviderName",
+              "type": "string"
+            },
+            {
+              "name": "EventId",
+              "type": "long"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "OpcodeName",
+              "type": "string"
+            },
+            {
+              "name": "KeywordName",
+              "type": "string"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "ChannelName",
+              "type": "string"
+            },
+            {
+              "name": "EventMessage",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "LevelName",
+              "type": "string"
+            },
+            {
+              "name": "EventVersion",
+              "type": "long"
+            },
+            {
+              "name": "Task",
+              "type": "long"
+            },
+            {
+              "name": "Opcode",
+              "type": "long"
+            },
+            {
+              "name": "RelatedActivityId",
+              "type": "string"
+            },
+            {
+              "name": "Channel",
+              "type": "long"
+            },
+            {
+              "name": "TenantName",
+              "type": "string"
+            },
+            {
+              "name": "TenantID",
+              "type": "string"
+            },
+            {
+              "name": "TenantGeneration",
+              "type": "long"
+            },
+            {
+              "name": "CurrentUD",
+              "type": "long"
+            },
+            {
+              "name": "RoleName",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstanceId",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstanceFamilyId",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstanceGeneration",
+              "type": "long"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "ChangeEventType",
+              "type": "string"
+            },
+            {
+              "name": "FromState",
+              "type": "string"
+            },
+            {
+              "name": "ToState",
+              "type": "string"
+            },
+            {
+              "name": "TimeSinceLastChange",
+              "type": "real"
+            },
+            {
+              "name": "UserField",
+              "type": "string"
+            },
+            {
+              "name": "RowKey",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "TMMgmtTenantChangeProfilingEventEtwTable\r\n| where PreciseTimeStamp between(global_startTime..global_endTime) and ContainerId == queryContainerId\r\n//| project PreciseTimeStamp, CurrentUD, ChangeEventType, FromState, ToState, RoleName, RoleInstanceName\r\n| order by PreciseTimeStamp desc",
+          "panelPath": [
+            "Change Profiling Events",
+            "Change Profiling Events"
+          ]
+        }
+      ]
+    },
+    "Container Isolation & Role Instance Cleanup > Container Isolation - TMMgmtContainerIsolationStatusEtwTable": {
+      "panelPath": [
+        "Container Isolation & Role Instance Cleanup",
+        "Container Isolation - TMMgmtContainerIsolationStatusEtwTable"
+      ],
+      "queries": [
+        {
+          "id": "beefdece-a176-4568-a98a-6632839e123d",
+          "name": "Query TMMgmtContainerIsolationStatusEtwTable",
+          "groupId": "a2eaa877-f7a4-4bfd-b147-98ff87f3f8b9",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus",
+          "database": "Fc",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Container Isolation - TMMgmtContainerIsolationStatusEtwTable",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Context1",
+              "type": "string"
+            },
+            {
+              "name": "Context2",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "TMMgmtContainerIsolationStatusEtwTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where ContainerId == queryContainerId\r\n| project PreciseTimeStamp, Context1, Context2, Message\r\n| order by PreciseTimeStamp asc\r\n",
+          "panelPath": [
+            "Container Isolation & Role Instance Cleanup",
+            "Container Isolation - TMMgmtContainerIsolationStatusEtwTable"
+          ]
+        }
+      ]
+    },
+    "Container Isolation & Role Instance Cleanup > Role Instance Cleanup Events": {
+      "panelPath": [
+        "Container Isolation & Role Instance Cleanup",
+        "Role Instance Cleanup Events"
+      ],
+      "queries": [
+        {
+          "id": "972b6685-6e46-422f-98b1-3681c355c192",
+          "name": "Container Role Instance Cleanup Events",
+          "groupId": "6d608d60-a46d-417f-873c-f317fd5b07c5",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus",
+          "database": "Fc",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Role Instance Cleanup Events",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "tenantletStateId",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "isContainerCleanupPending",
+              "type": "bool"
+            },
+            {
+              "name": "isLeaseReversalPending",
+              "type": "bool"
+            },
+            {
+              "name": "isNetworkReleasePending",
+              "type": "bool"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "AzCoreCluster",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogRoleInstanceCleanupEvent\n| where PreciseTimeStamp between(queryFrom .. queryTo)\n| where containerId == queryContainerId\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "Container Isolation & Role Instance Cleanup",
+            "Role Instance Cleanup Events"
+          ]
+        }
+      ]
+    },
+    "Container State": {
+      "panelPath": [
+        "Container State"
+      ],
+      "queries": [
+        {
+          "id": "e7b3e165-fef1-4215-b9a5-60ccb377fdb4",
+          "name": "AggregateState",
+          "groupId": "824bc28c-8423-40ab-b496-1077dbed3a08",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Filter",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [],
+          "schema": [
+            {
+              "name": "Value",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "datatable (Value:string, Description:string)\r\n[\r\n    \"StateTransition\", \"State Transition Only (default)\",\r\n    \"All\", \"All\"\r\n]\r\n",
+          "panelPath": [
+            "Container State"
+          ]
+        },
+        {
+          "id": "79c84ca6-cdc8-4cb0-ad7f-b9cd51469124",
+          "name": "Query LogContainerHealthSnapshot by ContainerId",
+          "groupId": "12bae085-6360-4b1c-a326-98b29826b13f",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcsupfollower",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFilter",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "containerState",
+              "type": "string"
+            },
+            {
+              "name": "actualOperationalState",
+              "type": "string"
+            },
+            {
+              "name": "containerLifecycleState",
+              "type": "string"
+            },
+            {
+              "name": "containerOsState",
+              "type": "string"
+            },
+            {
+              "name": "containerIsolationState",
+              "type": "string"
+            },
+            {
+              "name": "faultInfo",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "flag",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "824bc28c-8423-40ab-b496-1077dbed3a08",
+              "majorVersion": 1,
+              "minorVersion": 1,
+              "internalDestinationName": "queryFilter",
+              "externalSourceName": "Value",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogContainerHealthSnapshot\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where containerId == queryContainerId\r\n| project PreciseTimeStamp, Tenant, roleInstanceName,  tenantName, containerId, nodeId, \r\n  containerState, actualOperationalState, containerLifecycleState, containerOsState, containerIsolationState, faultInfo , virtualMachineUniqueId\r\n| order by PreciseTimeStamp asc\r\n| extend flag = case (\r\n  containerState <> prev(containerState) \r\n  or actualOperationalState <> prev(actualOperationalState) \r\n  or containerLifecycleState <> prev(containerLifecycleState) \r\n  or containerOsState <> prev(containerOsState)\r\n  or containerIsolationState <> prev(containerIsolationState)  \r\n  or faultInfo <> prev(faultInfo),\r\n  \"changed\", \"\")\r\n| where queryFilter == \"All\" or (queryFilter != \"All\" and flag <> \"\")  \r\n| extend level = case (containerOsState in (\"ContainerOsStateUnknown\", \"ContainerOsStateUnresponsive\", \"ContainerOsStateUnhealthy\"), \"critical\", \r\n    containerOsState in (\"ContainerOsStateHealthy\", \"ContainerOsStateProvisioningCompleted\"), \"info\", \r\n    containerOsState in (\"ContainerOsStateInternalShutdown\", \"ContainerOsStateProvisioningTimedOut\", \"ContainerOsStateProvisioningRecovery\", \"ContainerOsStateProvisioningFailed\"), \"error\", \r\n    \"warning\")\r\n    ",
+          "panelPath": [
+            "Container State"
+          ]
+        }
+      ]
+    },
+    "Container State > Role Instance State - LogRoleInstanceSnapshot": {
+      "panelPath": [
+        "Container State",
+        "Role Instance State - LogRoleInstanceSnapshot"
+      ],
+      "queries": [
+        {
+          "id": "632af094-257a-46d7-9900-20797b658d94",
+          "name": "Query LogRoleInstanceSnapshot",
+          "groupId": "c3da64b5-ffce-4195-8730-2bf451e69481",
+          "majorVersion": 1,
+          "minorVersion": 5,
+          "cluster": "azcore.centralus",
+          "database": "Fc",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Role Instance State - LogRoleInstanceSnapshot",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "roleState",
+              "type": "string"
+            },
+            {
+              "name": "updateDomain",
+              "type": "string"
+            },
+            {
+              "name": "provisioningState",
+              "type": "string"
+            },
+            {
+              "name": "isExpectedToRun",
+              "type": "string"
+            },
+            {
+              "name": "isNmProgrammingComplete",
+              "type": "bool"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "set best_effort=true;\r\nLogRoleInstanceSnapshot\r\n| where PreciseTimeStamp  between (queryFrom .. queryTo)\r\n| where containerId == queryContainerId\r\n| project PreciseTimeStamp, roleInstanceName, containerId, Tenant, roleState, updateDomain, provisioningState, isExpectedToRun, isNmProgrammingComplete \r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "Container State",
+            "Role Instance State - LogRoleInstanceSnapshot"
+          ]
+        }
+      ]
+    },
+    "Counters > CPU, Memory, Network & Disk": {
+      "panelPath": [
+        "Counters",
+        "CPU, Memory, Network & Disk"
+      ],
+      "queries": [
+        {
+          "id": "9f11fd34-ae99-4510-bca2-230b93ac8b0a",
+          "name": "Container Counters",
+          "groupId": "c9493c70-70de-4068-b223-3135350ddf85",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "CPU, Memory, Network & Disk",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryStart",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryEnd",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "AverageCPU",
+              "type": "int"
+            },
+            {
+              "name": "MaxCPU",
+              "type": "real"
+            },
+            {
+              "name": "AvgPhysicalMem",
+              "type": "int"
+            },
+            {
+              "name": "MaxPhysicalMem",
+              "type": "real"
+            },
+            {
+              "name": "MinMemPressure",
+              "type": "real"
+            },
+            {
+              "name": "AvgMemPressure",
+              "type": "int"
+            },
+            {
+              "name": "MaxMemPressure",
+              "type": "real"
+            },
+            {
+              "name": "AvgNetworkIn",
+              "type": "int"
+            },
+            {
+              "name": "MaxNetworkIn",
+              "type": "real"
+            },
+            {
+              "name": "AvgNetworkOut",
+              "type": "int"
+            },
+            {
+              "name": "MaxNetworkOut",
+              "type": "real"
+            },
+            {
+              "name": "MinDiskIORead",
+              "type": "real"
+            },
+            {
+              "name": "AvgDiskIORead",
+              "type": "int"
+            },
+            {
+              "name": "MaxDiskIORead",
+              "type": "real"
+            },
+            {
+              "name": "MinDiskIOWrite",
+              "type": "real"
+            },
+            {
+              "name": "AvgDiskIOWrite",
+              "type": "int"
+            },
+            {
+              "name": "MaxDiskIOWrite",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryStart",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryEnd",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let queryFrom = queryStart;\nlet queryTo = queryEnd;\nlet totalHours = datetime_diff('hour', queryTo, queryFrom);\nlet bucket = case(\ntotalHours < 48, 5m,\ntotalHours < 1000, 10m,\ntotalHours < 1500, 20m,\n30m\n);\nVmCounterFiveMinuteRoleInstanceCentralBondTable \n| where PreciseTimeStamp between(queryStart..queryEnd)\n| where VmId == queryContainerId\n| project PreciseTimeStamp, CounterName, SampleCount, AverageCounterValue, MinCounterValue, MaxCounterValue\n| extend Counter = case (\nCounterName == 'Percentage CPU', 'Percentage CPU',\nCounterName endswith 'Current Pressure', 'Current Memory Pressure',\nCounterName endswith 'Physical Memory', 'Physical Memory GB',\nCounterName == 'Network In', 'Network In MB/sec',\nCounterName == 'Network Out', 'Network Out MB/sec',\nCounterName == 'Disk Read Bytes/sec', 'Disk Read MB/sec',\nCounterName == 'Disk Write Bytes/sec', 'Disk Write MB/sec',\n'')\n| where isnotempty(Counter)\n| summarize \nAverageCPU = round(avgif(AverageCounterValue, Counter == 'Percentage CPU')), \nMaxCPU = round(maxif(MaxCounterValue, Counter == 'Percentage CPU')), \nAvgPhysicalMem = round(avgif(AverageCounterValue, Counter == 'Physical Memory GB') / 1024), \nMaxPhysicalMem = round(maxif(MaxCounterValue, Counter == 'Physical Memory GB') / 1024),\nMinMemPressure = round(minif(MinCounterValue, Counter == 'Current Memory Pressure')), \nAvgMemPressure = round(avgif(AverageCounterValue, Counter == 'Current Memory Pressure')), \nMaxMemPressure = round(maxif(MaxCounterValue, Counter == 'Current Memory Pressure')), \nAvgNetworkIn = round(avgif(AverageCounterValue, Counter == 'Network In MB/sec') / (1024 * 1024), 2),\nMaxNetworkIn = round(maxif(MaxCounterValue, Counter == 'Network In MB/sec') / (1024 * 1024), 2),\nAvgNetworkOut = round(avgif(AverageCounterValue, Counter == 'Network Out MB/sec') / (1024 * 1024), 2),\nMaxNetworkOut = round(maxif(MaxCounterValue, Counter == 'Network Out MB/sec') / (1024 * 1024), 2),\nMinDiskIORead = round(minif(MinCounterValue, Counter == 'Disk Read MB/sec') / (1024 * 1024), 2), \nAvgDiskIORead = round(avgif(AverageCounterValue, Counter == 'Disk Read MB/sec') / (1024 * 1024), 2), \nMaxDiskIORead = round(maxif(MaxCounterValue, Counter == 'Disk Read MB/sec') / (1024 * 1024), 2), \nMinDiskIOWrite = round(minif(MinCounterValue, Counter == 'Disk Write MB/sec') / (1024 * 1024), 2), \nAvgDiskIOWrite = round(avgif(AverageCounterValue, Counter == 'Disk Write MB/sec') / (1024 * 1024), 2), \nMaxDiskIOWrite = round(maxif(MaxCounterValue, Counter == 'Disk Write MB/sec') / (1024 * 1024), 2)\nby bin(PreciseTimeStamp, bucket)\n| extend AverageCPU = toint(iff(isnan(AverageCPU), 0.0, AverageCPU))\n| extend AvgPhysicalMem = toint(iff(isnan(AvgPhysicalMem), 0.0, AvgPhysicalMem))\n| extend AvgMemPressure = toint(iff(isnan(AvgMemPressure), 0.0, AvgMemPressure))\n| extend AvgNetworkIn = toint(iff(isnan(AvgNetworkIn), 0.0, AvgNetworkIn))\n| extend AvgNetworkOut = toint(iff(isnan(AvgNetworkOut), 0.0, AvgNetworkOut))\n| extend AvgDiskIORead = toint(iff(isnan(AvgDiskIORead), 0.0, AvgDiskIORead))\n| extend AvgDiskIOWrite = toint(iff(isnan(AvgDiskIOWrite), 0.0, AvgDiskIOWrite))\n| order by PreciseTimeStamp asc\n\n",
+          "panelPath": [
+            "Counters",
+            "CPU, Memory, Network & Disk"
+          ]
+        }
+      ]
+    },
+    "Eviction > LowPriorityVmPreemptionEvent ": {
+      "panelPath": [
+        "Eviction",
+        "LowPriorityVmPreemptionEvent "
+      ],
+      "queries": [
+        {
+          "id": "b2d55962-4a1a-4ee2-aaf9-79fd999d92b9",
+          "name": "Query LowPriorityVmPreemptionEvent",
+          "groupId": "a3d390c5-02fa-4917-a477-3065fadb65df",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus",
+          "database": "Fc",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "LowPriorityVmPreemptionEvent ",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryTenantName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryRoleInstanceName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "context",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenantName",
+              "externalSourceName": "tenantName",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryRoleInstanceName",
+              "externalSourceName": "roleInstanceName",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LowPriorityVmPreemptionEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where message contains queryContainerId or message contains queryTenantName or message contains queryRoleInstanceName\r\n| project PreciseTimeStamp, Tenant, message, context\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "Eviction",
+            "LowPriorityVmPreemptionEvent "
+          ]
+        }
+      ]
+    },
+    "Fault Handling Container Recovery Event": {
+      "panelPath": [
+        "Fault Handling Container Recovery Event"
+      ],
+      "queries": [
+        {
+          "id": "f84e945e-ec16-4750-be05-65bac03a971b",
+          "name": "Fault Handling Container Recovery Event",
+          "groupId": "cb74e85c-e719-48b6-8885-b440d166b281",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "FaultDetails",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "FaultHandlingContainerRecoveryEventEtwTable\r\n| where PreciseTimeStamp between(global_startTime..global_endTime) and ContainerId == queryContainerId\r\n| project PreciseTimeStamp,FaultDetails\r\n| order by PreciseTimeStamp desc",
+          "panelPath": [
+            "Fault Handling Container Recovery Event"
+          ]
+        }
+      ]
+    },
+    "Guest Agent Events > Guest Agent Extension Events": {
+      "panelPath": [
+        "Guest Agent Events",
+        "Guest Agent Extension Events"
+      ],
+      "queries": [
+        {
+          "id": "b0642a3a-ba39-4de0-a764-072185da4be2",
+          "name": "Container Guest Agent Extension Events",
+          "groupId": "690af48b-2bae-467c-9af9-c551474b11c3",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Guest Agent Extension Events",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "global_startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "global_endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "VMId",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "NodeIdentity",
+              "type": "string"
+            },
+            {
+              "name": "OSVersion",
+              "type": "string"
+            },
+            {
+              "name": "TenantName",
+              "type": "string"
+            },
+            {
+              "name": "Name",
+              "type": "string"
+            },
+            {
+              "name": "Version",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            },
+            {
+              "name": "Operation",
+              "type": "string"
+            },
+            {
+              "name": "OperationSuccess",
+              "type": "bool"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            },
+            {
+              "name": "Duration",
+              "type": "long"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "RoleName",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstanceName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "global_startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "global_endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "GuestAgentExtensionEvents\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where ContainerId == queryContainerId and Operation !in (\"HeartBeat\", \"Firewall\")\n| extend OperationSuccess = tobool(OperationSuccess)\n| extend level = iff(OperationSuccess == false, 'error', '')\n| project \n    PreciseTimeStamp, NodeId, VMId, ContainerId, NodeIdentity, OSVersion, TenantName, Name, Version, level,\n    Operation, OperationSuccess, Message, Duration, TaskName, ResourceGroupName, RoleName, RoleInstanceName\n| order by PreciseTimeStamp desc",
+          "panelPath": [
+            "Guest Agent Events",
+            "Guest Agent Extension Events"
+          ]
+        }
+      ]
+    },
+    "Guest Agent Generic Logs > Guest Agent Generic Logs": {
+      "panelPath": [
+        "Guest Agent Generic Logs",
+        "Guest Agent Generic Logs"
+      ],
+      "queries": [
+        {
+          "id": "14990f55-1c2e-4f1d-b5d5-7dedf6f75c1b",
+          "name": "Container Guest Agent Generic Logs",
+          "groupId": "ac1ca884-58bc-437e-89c2-0b00e5235df9",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Guest Agent Generic Logs",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "GAVersion",
+              "type": "string"
+            },
+            {
+              "name": "EventName",
+              "type": "string"
+            },
+            {
+              "name": "CapabilityUsed",
+              "type": "string"
+            },
+            {
+              "name": "Context1",
+              "type": "string"
+            },
+            {
+              "name": "Context2",
+              "type": "string"
+            },
+            {
+              "name": "Context3",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "GuestAgentGenericLogs\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where ContainerId == queryContainerId\n| project \n    PreciseTimeStamp, Level, GAVersion, EventName, CapabilityUsed, Context1, Context2, Context3\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "Guest Agent Generic Logs",
+            "Guest Agent Generic Logs"
+          ]
+        }
+      ]
+    },
+    "Networking > Networking Links": {
+      "panelPath": [
+        "Networking",
+        "Networking Links"
+      ],
+      "queries": [
+        {
+          "id": "7891ffe5-1e1a-4aa2-84c1-2f0626e8115a",
+          "name": "Get Container Info",
+          "groupId": "5c6d1374-47d5-4bff-a7e5-587632c92638",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Networking Links",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qContainer",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime"
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "vfpMdmAccount",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qContainer",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "// mapping region names to their vfp mdm accounts for dashboard links\r\n// https://msazure.visualstudio.com/One/_git/Networking-nfv?path=%2Fsrc%2Fgateway%2FGatewayTenant%2FGatewayTenantCore%2FExpressRoute%2FVfpMdmAccountNameReader.cs&_a=contents&version=GBdevelop2\r\nlet vfpMdmAccounts = datatable(Region: string, vfpMdmAccount: string) [\r\n    \"eastus2euap\", \"VfpMdmBN\",\r\n    \"centraluseuap\", \"VfpMdmDM\",\r\n    \"japanwest\", \"VfpMdmOS\",\r\n    \"southcentralus\", \"VfpMdmSN\",\r\n    \"australiaeast\", \"VfpMdmSY\",\r\n    \"eastus2\", \"VfpMdmBN\",\r\n    \"westcentralus\", \"VfpMdmCY\",\r\n    \"northcentralus\", \"VfpMdmCH\",\r\n    \"westeurope\", \"VfpMdmAM\",\r\n    \"eastus\", \"VfpMdmBL\",\r\n    \"qatarc\", \"VfpMdmqatarcentral\",\r\n    \"qatarcentral\", \"VfpMdmqatarcentral\",\r\n    \"uaecentral\", \"VfpMdmAUHDXB\",\r\n    \"southeastasia\", \"VfpMdmSG\",\r\n    \"westus\", \"VfpMdmBY\",\r\n    \"northeurope\", \"VfpMdmDB\",\r\n    \"australiasoutheast\", \"VfpMdmML\",\r\n    \"uksouth\", \"VfpMdmLN\",\r\n    \"brazilsouth\", \"VfpMdmCQ\",\r\n    \"polandcentral\", \"VfpMdmpolandcentral\",\r\n    \"eastasia\", \"VfpMdmHKN\",\r\n    \"westus2\", \"VfpMdmMWH\",\r\n    \"norwayeast\", \"VfpMdmOSL\",\r\n    \"westus3\", \"VfpMdmwestus3\",\r\n    \"centralus\", \"VfpMdmDM\",\r\n    \"switzerlandnorth\", \"VfpMdmZRH\",\r\n    \"koreacentral\", \"VfpMdmSE\",\r\n    \"japaneast\", \"VfpMdmKWTY\",\r\n    \"ukwest\", \"VfpMdmCW\",\r\n    \"francesouth\", \"VfpMdmMRS\",\r\n    \"germanywestcentral\", \"VfpMdmFRA\",\r\n    \"centralindia\", \"VfpMdmPN\",\r\n    \"uaenorth\", \"VfpMdmAUHDXB\",\r\n    \"southafricawest\", \"VfpMdmJNBCPT\",\r\n    \"germanynorth\", \"VfpMdmBER\",\r\n    \"westindia\", \"VfpMdmBM\",\r\n    \"southindia\", \"VfpMdmMA\",\r\n    \"francecentral\", \"VfpMdmPAR\",\r\n    \"jioindiawest\", \"VfpMdmjioindiawest\",\r\n    \"norwaywest\", \"VfpMdmSVG\",\r\n    \"australiacentral\", \"VfpMdmCBR\",\r\n    \"canadacentral\", \"VfpMdmYT\",\r\n    \"brazilsoutheast\", \"VfpMdmBrazilSoutheast\",\r\n    \"southafricanorth\", \"VfpMdmJNBCPT\",\r\n    \"koreasouth\", \"VfpMdmPS\",\r\n    \"swedensouth\", \"VfpMdmswedensouth\",\r\n    \"canadaeast\", \"VfpMdmYQ\",\r\n    \"jioindiacentral\", \"VfpMdmjioindiacentral\",\r\n    \"swedencentral\", \"VfpMdmswedencentral\",\r\n    \"switzerlandwest\", \"VfpMdmGVA\",\r\n    \"eastusslv\", \"VfpMdmeastusslv\",\r\n    \"eastusstg\", \"VfpMdmUSSTAGEE\",\r\n    \"uknorth\", \"VfpMdmMM\",\r\n    \"uksouth2\", \"VfpMdmLO\",\r\n    \"usgovvirginia\", \"VfpMdmFF\",\r\n    \"usgoviowa\", \"VfpMdmFF\",\r\n    \"usdodcentral\", \"VfpMdmFF\",\r\n    \"usdodeast\", \"VfpMdmFF\",\r\n    \"usgovtexas\", \"VfpMdmFF\",\r\n    \"usgovarizona\", \"VfpMdmFF\",\r\n    \"chinanorth\", \"VfpMdmMC\",\r\n    \"chinaeast\", \"VfpMdmMC\",\r\n    \"chinaeast2\", \"VfpMdmMC\",\r\n    \"chinanorth2\", \"VfpMdmMC\",\r\n    \"chinanorth3\", \"VfpMdmMC\",\r\n    \"chinaeast3\", \"VfpMdmMC\",\r\n    \"germanycentral\", \"VfpMdmBF\",\r\n    \"germanynortheast\", \"VfpMdmBF\",\r\n    \"usseceast\", \"VfpMdmUSSec\",\r\n    \"ussecwest\", \"VfpMdmUSSec\",\r\n    \"usnateast\", \"VfpMdmUSNat\",\r\n    \"usnatwest\", \"VfpMdmUSNat\"\r\n];\r\ncluster(\"AzureCM\").database(\"AzureCM\").LogContainerSnapshot\r\n| where PreciseTimeStamp  between (queryFrom .. queryTo)\r\n| where containerId == qContainer\r\n| take 1\r\n| project containerId, Tenant, nodeId, tenantName, virtualMachineUniqueId, roleInstanceName, RegionFriendlyName, queryFrom, queryTo\r\n| join kind=leftouter (vfpMdmAccounts) on $left.RegionFriendlyName == $right.Region",
+          "panelPath": [
+            "Networking",
+            "Networking Links"
+          ]
+        }
+      ]
+    },
+    "Networking > NM Agent Health (1 is Health)": {
+      "panelPath": [
+        "Networking",
+        "NM Agent Health (1 is Health)"
+      ],
+      "queries": [
+        {
+          "id": "d90ab2d0-ab1d-4a77-861c-9bae00ff8fea",
+          "name": "Container NMAgent",
+          "groupId": "1eacdd18-024a-4ef8-a045-a607dd6501ba",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "NM Agent Health (1 is Health)",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "EventSource",
+              "type": "string"
+            },
+            {
+              "name": "Timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Avg",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let metricNamespace = \"NMAgent\";\nlet metric = \"VM Availability\";\nlet dimensions = \"'Cluster', 'NodeId', 'ContainerId', 'EventSource'\";\nlet samplingType = \"NullableAverage\";\nlet eventSourceFilter = \"'NMAGENT_PORT_STATE','NMAGENT_PORT_PROGRAMMING','NMAGENT_DS_MAPPING','NMAGENT_MAPPING_SYNC'\";\nlet query = strcat(\"| where ContainerId == '\", queryContainerId,\"' | where EventSource in (\", eventSourceFilter,\") | top 40 by Avg(NullableAverage) desc\");\nlet request = strcat(\"metricNamespace('\", metricNamespace,\"').metric('\", metric,\"').dimensions(\", dimensions,\").samplingTypes('\", samplingType,\"') \", query);\nlet theSchema = datatable (EventSource:string, TimestampUtc:datetime, NullableAverage:double) [];\nlet metrics = evaluate geneva_metrics_request(\n \"VNetMDMNorthEurope\",\n request,\n queryFrom,\n queryTo\n);\nunion theSchema, metrics\n| project Timestamp = TimestampUtc, EventSource, NullableAverage\n| summarize Avg = avg(NullableAverage) by EventSource, bin(Timestamp, 10m)",
+          "panelPath": [
+            "Networking",
+            "NM Agent Health (1 is Health)"
+          ]
+        }
+      ]
+    },
+    "Reuse Rejection Reason > Reuse Rejection Reason": {
+      "panelPath": [
+        "Reuse Rejection Reason",
+        "Reuse Rejection Reason"
+      ],
+      "queries": [
+        {
+          "id": "b5f74fdf-bfac-47f2-8a3b-5fc96bb96d15",
+          "name": "Container Reuse Rejection Reason",
+          "groupId": "10aa6dbc-446c-4eaf-876d-20d0094b00a2",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Reuse Rejection Reason",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "rejectedContainerId",
+              "type": "string"
+            },
+            {
+              "name": "reason",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorContainerReuseRejectionReason\r\n| where PreciseTimeStamp between(global_startTime..global_endTime)\r\n| where rejectedContainerId == queryContainerId\r\n| project PreciseTimeStamp,rejectedContainerId,reason",
+          "panelPath": [
+            "Reuse Rejection Reason",
+            "Reuse Rejection Reason"
+          ]
+        }
+      ]
+    },
+    "Service Healing > Not Triggered Reasons": {
+      "panelPath": [
+        "Service Healing",
+        "Not Triggered Reasons"
+      ],
+      "queries": [
+        {
+          "id": "b34c3b15-80f3-4628-8836-3bd086c3a2e6",
+          "name": "Container Service Healing Not Triggered Reasons",
+          "groupId": "4e5cfd42-65a9-4ca7-bd47-2e2ac0b05d14",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Not Triggered Reasons",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryStart",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "nodeState",
+              "type": "string"
+            },
+            {
+              "name": "nodeAvailabilityState",
+              "type": "string"
+            },
+            {
+              "name": "faultInfo",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "filterName",
+              "type": "string"
+            },
+            {
+              "name": "resourceType",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryStart",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ServiceHealingNotTriggeredReason(queryStart, queryNodeId, queryContainerId)",
+          "panelPath": [
+            "Service Healing",
+            "Not Triggered Reasons"
+          ]
+        }
+      ]
+    },
+    "Service Healing > Service Healing Result": {
+      "panelPath": [
+        "Service Healing",
+        "Service Healing Result"
+      ],
+      "queries": [
+        {
+          "id": "7cc45fac-d656-4a2b-96eb-cc94a5bb0339",
+          "name": "Service Healing Result Events",
+          "groupId": "717e1441-7a30-4914-bd09-ac063b2efbce",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "accp.centralus",
+          "database": "AZSM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Service Healing Result",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "result",
+              "type": "string"
+            },
+            {
+              "name": "totalDurationInMilliSeconds",
+              "type": "long"
+            },
+            {
+              "name": "sourceContainerId",
+              "type": "string"
+            },
+            {
+              "name": "targetContainerId",
+              "type": "string"
+            },
+            {
+              "name": "JobId",
+              "type": "string"
+            },
+            {
+              "name": "triggerId",
+              "type": "string"
+            },
+            {
+              "name": "ContainerMigrationMetadata",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AzSMServiceHealingResultEvents\r\n| where sourceContainerId == queryContainerId\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| extend p = bag_pack(\r\n    'isContainerMigrationAttemptedOnContainerMismatch', isContainerMigrationAttemptedOnContainerMismatch,\r\n    'isContainerMigrationCrossFc', isContainerMigrationCrossFc,\r\n    'isContainerMigrationMiddleOfTenantUpgrade', isContainerMigrationMiddleOfTenantUpgrade,\r\n    'isContainerMigrationUpdated', isContainerMigrationUpdated,\r\n    'isMultipleRoleInstancesTenant', isMultipleRoleInstancesTenant)\r\n| summarize arg_max(PreciseTimeStamp, *) by sourceContainerId\r\n| project PreciseTimeStamp, Cluster, tenantName, result, totalDurationInMilliSeconds, sourceContainerId, targetContainerId, JobId, triggerId, ContainerMigrationMetadata = p",
+          "panelPath": [
+            "Service Healing",
+            "Service Healing Result"
+          ]
+        }
+      ]
+    },
+    "Service Healing > Tenant Triggered Fault Reason": {
+      "panelPath": [
+        "Service Healing",
+        "Tenant Triggered Fault Reason"
+      ],
+      "queries": [
+        {
+          "id": "9a931b01-7c66-4c53-b3e2-9039b51901a4",
+          "name": "Service Healing - TriggeredFaultReason",
+          "groupId": "830a2c35-019b-43ff-8a51-cd7033aee447",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Tenant Triggered Fault Reason",
+          "params": [
+            {
+              "name": "queryTenantName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TenantName",
+              "type": "string"
+            },
+            {
+              "name": "triggerType",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "faultInfo",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "FaultReason",
+              "type": "string"
+            },
+            {
+              "name": "owningTeam",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenantName",
+              "externalSourceName": "tenantName",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ServiceHealingTriggeredFaultReason(queryFrom, queryTenantName)\n| extend Message = FaultReason",
+          "panelPath": [
+            "Service Healing",
+            "Tenant Triggered Fault Reason"
+          ]
+        }
+      ]
+    },
+    "Sla Measurement Event": {
+      "panelPath": [
+        "Sla Measurement Event"
+      ],
+      "queries": [
+        {
+          "id": "5b76399a-a63b-43a3-8a4f-ca58f03f15ae",
+          "name": "Sla Measurement Event",
+          "groupId": "27396c4a-a942-4d05-b5fe-250f13d6581c",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Context",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "EntityState",
+              "type": "string"
+            },
+            {
+              "name": "Detail0",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "393f2e87-c2f4-4ba2-9ae6-18eea42ef8b0",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "TMMgmtSlaMeasurementEventEtwTable\r\n| where PreciseTimeStamp between(global_startTime..global_endTime) and ContainerID == queryContainerId\r\n| project PreciseTimeStamp, Context, RoleInstanceName, EntityState, Detail0\r\n| order by PreciseTimeStamp desc",
+          "panelPath": [
+            "Sla Measurement Event"
+          ]
+        }
+      ]
+    },
+    "TMMgmtContainerTraceEtwTable": {
+      "panelPath": [
+        "TMMgmtContainerTraceEtwTable"
+      ],
+      "queries": [
+        {
+          "id": "7eda4995-4649-4da8-9a9d-8acbf47d0649",
+          "name": "Query TMMgmtContainerTraceEtwTable",
+          "groupId": "d1ec677d-3011-41fb-92fc-08b357f42203",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus",
+          "database": "Fc",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "TMMgmtContainerTraceEtwTable",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "TMMgmtContainerTraceEtwTable\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where ContainerID  == queryContainerId\r\n| project PreciseTimeStamp, Message\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "TMMgmtContainerTraceEtwTable"
+          ]
+        }
+      ]
+    },
+    "TMMgmtLeaseManagerEtwTable": {
+      "panelPath": [
+        "TMMgmtLeaseManagerEtwTable"
+      ],
+      "queries": [
+        {
+          "id": "df3106da-0e17-4107-b7e2-a6275f947b48",
+          "name": "Query TMMgmtLeaseManagerEtwTable",
+          "groupId": "3f3d9df2-956a-4576-8215-c8f5517acd0a",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcsupfollower",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "TMMgmtLeaseManagerEtwTable",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "LeaseAction",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryContainerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "TMMgmtLeaseManagerEtwTable\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where ContainerId == queryContainerId\r\n| project PreciseTimeStamp, LeaseAction, Message\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "TMMgmtLeaseManagerEtwTable"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:31.550Z",
+    "totalPanels": 20,
+    "totalUniqueQueries": 30,
+    "totalWidgetRefs": 30
+  }
+}

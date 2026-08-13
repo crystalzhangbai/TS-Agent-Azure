@@ -1,0 +1,552 @@
+[
+  {
+    "id": "c3f366a4-52ef-41d8-9be2-8bc3baedf9f8",
+    "name": "ReadOperationService GetVnet Cirrus",
+    "groupId": "aea83650-c815-44b3-a32a-c596e96ac043",
+    "majorVersion": 4,
+    "minorVersion": 3,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let cirrusMetadata = cluster(\"cirrus.kusto.windows.net\").database(\"cirrus\").PerfMeasurement\r\n| where StartTime between(queryFrom..queryTo)\r\n| where SubscriptionId == \"75903edc-ce96-496f-8580-a4e306a69490\"\r\n| where RequestName contains \"ConcurrentVnetGet\"\r\n| distinct RequestName, ResourceName\r\n| parse RequestName with region\".\"concurrencyLevel\"ConcurrentVnetGet.\"ipConfigCount:int\"IpConfigs-CloudEx\"\r\n| project ipConfigCount, concurrencyLevel, ResourceName, Baseline=iff(region==\"CentralUsEUAP\", \"Frontend\", \"ReadOperationService\");\r\ncluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").FrontendReadOperationEtwEvent\r\n| where Region in (\"useast2euap\", \"uscentraleuap\")\r\n| where PreciseTimeStamp between(queryFrom..queryTo)\r\n| where SubscriptionId == \"75903edc-ce96-496f-8580-a4e306a69490\"\r\n| where ResourceType == \"virtualNetworks\"\r\n| summarize max(PreciseTimeStamp), min(PreciseTimeStamp) by OperationId, ResourceGroup\r\n| extend accurateTime = max_PreciseTimeStamp - min_PreciseTimeStamp\r\n| summarize StartTime=min(min_PreciseTimeStamp), Requests=count(), percentiles(accurateTime, 50, 75, 90, 95, 99, 99.9, 100) by ResourceGroup\r\n| join cirrusMetadata on $left.ResourceGroup == $right.ResourceName\r\n| project Baseline, StartTime, Requests, ipConfigCount, percentile_accurateTime_50, percentile_accurateTime_75, percentile_accurateTime_90, percentile_accurateTime_95, percentile_accurateTime_99, percentile_accurateTime_99_9, percentile_accurateTime_100\r\n| where ipConfigCount == vnetSize\r\n| order by ipConfigCount, Baseline",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-09T17:05:07.991Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-10T17:05:07.991Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "vnetSize",
+        "description": "",
+        "type": "string",
+        "default": "15000",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Baseline",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Requests",
+        "type": "long"
+      },
+      {
+        "name": "ipConfigCount",
+        "type": "int"
+      },
+      {
+        "name": "percentile_accurateTime_50",
+        "type": "timespan"
+      },
+      {
+        "name": "percentile_accurateTime_75",
+        "type": "timespan"
+      },
+      {
+        "name": "percentile_accurateTime_90",
+        "type": "timespan"
+      },
+      {
+        "name": "percentile_accurateTime_95",
+        "type": "timespan"
+      },
+      {
+        "name": "percentile_accurateTime_99",
+        "type": "timespan"
+      },
+      {
+        "name": "percentile_accurateTime_99_9",
+        "type": "timespan"
+      },
+      {
+        "name": "percentile_accurateTime_100",
+        "type": "timespan"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "51e69aca-d086-4f88-b352-2da105f0b0b7",
+    "name": "ReadOperationService OperationCount",
+    "groupId": "44724a8a-c66e-44dc-9bd0-75f5ac591893",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "DataSummary",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where SourceAssemblyFileVersion has_cs \"readoperations\"\r\n| summarize Value=tostring(count())",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-09T17:22:32.033Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-10T17:22:32.033Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Value",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "8ed7bb9e-0ec9-4a94-b3ec-4a694c374d94",
+    "name": "ReadOperationService OperationTimeseries",
+    "groupId": "13344413-bb86-40a8-981c-80699b63a40d",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where SourceAssemblyFileVersion has_cs \"readoperations\"\r\n| summarize count() by bin(PreciseTimeStamp, granularity), OperationName",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-09T17:29:46.929Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-10T17:29:46.929Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "granularity",
+        "description": "",
+        "type": "timespan",
+        "default": "15m",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ad7dab66-66bf-44b3-9cd8-62713abdeb06",
+    "name": "ReadOperationService OperationReliability",
+    "groupId": "1c00dd74-d39f-45c0-9b1d-b4eab47b2643",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "DataSummary",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where SourceAssemblyFileVersion has_cs \"readoperations\"\r\n| where OperationName != \"GetOperationResultOperation\" // exclude misleading polling op\r\n| extend reliability=iff(ErrorCode == \"InternalServerError\", 0.0, 1.0)\r\n| summarize Value=strcat(round(avg(reliability) * 100, 2), \"%\")",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-09T17:40:46.611Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-10T17:40:46.611Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Value",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "6f06e21e-8859-4121-846a-cbdae314fca5",
+    "name": "ReadOperationService OperationEnablement",
+    "groupId": "eaec2be7-4be2-48f7-820d-68753ecfcf9d",
+    "majorVersion": 3,
+    "minorVersion": 2,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where SourceAssemblyFileVersion has_cs \"readoperations\"\r\n| extend SuccessRate=iff(ErrorCode != \"InternalServerError\", 1.0, 0.0)\r\n| summarize OperationCount=count(), SubCount=dcount(SubscriptionId), SuccessRate=round(avg(SuccessRate) * 100.0, 2), Slices=make_set(SliceNum(SourceAssemblyFileVersion)) by Region, OperationName\r\n| order by OperationCount desc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-24T15:53:25.683Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-25T15:53:25.683Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationCount",
+        "type": "long"
+      },
+      {
+        "name": "SubCount",
+        "type": "long"
+      },
+      {
+        "name": "SuccessRate",
+        "type": "real"
+      },
+      {
+        "name": "Slices",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "832f5258-9464-40a2-b923-d42b36c6beb0",
+    "name": "ReadOperationService RPC Latency",
+    "groupId": "77b3ed1d-883b-41c4-b55d-8a0b7d8c51f2",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let serverSideRequests = FrontendOperationEtwEvent\r\n| where Region == \"useast2euap\"\r\n| where SourceAssemblyFileVersion contains_cs \".rc\"\r\n| where PreciseTimeStamp between(queryFrom..queryTo)\r\n| where EventCode == \"RemoteDataAccessServerDuration\"\r\n| where OperationName == \"RemoteDataAccessService\"\r\n| parse Message with \"RemoteDataAccessServer completed: \"repositoryOperation\" for requestId \"requestId\" in \"serverExecutionTime:timespan \r\n| project PreciseTimeStamp, ServerRole=RoleInstance, repositoryOperation, requestId, serverExecutionTime;\r\nlet clientSideRequests = FrontendReadOperationEtwEvent\r\n| where Region == \"useast2euap\"\r\n| where SourceAssemblyFileVersion contains_cs \".readoperations\"\r\n| where PreciseTimeStamp between(queryFrom..queryTo)\r\n| where EventCode == \"RemoteDataAccessClientDuration\"\r\n| parse Message with \"RemoteDataClient completed: \"clientRepositoryOperation\" for requestId \"requestId\" in \"clientExecutionTime:timespan \", attempts: \"*\r\n| project PreciseTimeStamp, ClientRole=RoleInstance, clientRepositoryOperation, requestId, clientExecutionTime;\r\nserverSideRequests\r\n| join clientSideRequests on requestId\r\n| extend networkingOverhead = (clientExecutionTime - serverExecutionTime) / 1ms\r\n| project PreciseTimeStamp1, repositoryOperation, requestId, clientExecutionTime, serverExecutionTime, networkingOverhead, ServerRole, ClientRole\r\n| summarize percentiles=percentiles(networkingOverhead, 50, 75, 95, 99, 99.9), samples=count() by repositoryOperation\r\n| project-rename p50=percentiles, p75=percentile_networkingOverhead_75, p95=percentile_networkingOverhead_95, p99=percentile_networkingOverhead_99, p99_9=percentile_networkingOverhead_99_9\r\n| order by p99 desc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-03T19:49:01.770Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-04T19:49:01.770Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "repositoryOperation",
+        "type": "string"
+      },
+      {
+        "name": "p50",
+        "type": "real"
+      },
+      {
+        "name": "p75",
+        "type": "real"
+      },
+      {
+        "name": "p95",
+        "type": "real"
+      },
+      {
+        "name": "p99",
+        "type": "real"
+      },
+      {
+        "name": "p99_9",
+        "type": "real"
+      },
+      {
+        "name": "samples",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "bb9259a1-240a-4bab-a3ab-86688fba80b8",
+    "name": "ReadOperationService GatewayReliability",
+    "groupId": "d8d3350b-aacc-45d6-b08b-cea73afd20be",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "DataSummary",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "GatewayServiceOperationEtwEvent\r\n| where HttpMethod == \"GET\"\r\n| where Message == \"Request is valid for use with Operation Service.\"\r\n| where PreciseTimeStamp  between(queryFrom..queryTo)\r\n| where Region == \"useast2euap\"\r\n| join kind=inner (GatewayServiceQosEtwEvent\r\n    | where PreciseTimeStamp between(queryFrom..queryTo)\r\n    | where Region == \"useast2euap\")\r\non OperationId\r\n| extend SuccessRate=iff(ErrorDetails == \"\", 1.0, 0.0)\r\n| summarize avg(SuccessRate)\r\n| project Value=strcat(tostring(round(100.0 * avg_SuccessRate, 2)), \"%\")",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-09T21:15:38.285Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-10T21:15:38.285Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Value",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "18caa50c-dae9-4795-b40c-ddc3eb455be2",
+    "name": "ReadOperationService Errors",
+    "groupId": "f30e0223-d6e8-4eb5-abc6-810aae3e802b",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where SourceAssemblyFileVersion has_cs \"readoperations\"\r\n| where UserError == false\r\n| summarize count(), SampleError=take_any(ErrorDetails), Slice=make_set(strcat(SliceNum(SourceAssemblyFileVersion), \"_\", Region)), Ops=make_set(OperationName) by newEMHash(ErrorDetails, ErrorCode)\r\n| project SampleError=substring(SampleError, 0, 500), Count=count_, Slice, Ops\r\n| order by Count desc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-23T17:07:30.264Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-24T17:07:30.264Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "SampleError",
+        "type": "string"
+      },
+      {
+        "name": "Count",
+        "type": "long"
+      },
+      {
+        "name": "Slice",
+        "type": "dynamic"
+      },
+      {
+        "name": "Ops",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "8ef3bb41-e332-4fd7-8b8e-ce871c9fc6e0",
+    "name": "ReadOperationService ErrorRates",
+    "groupId": "736b9a2b-2e1c-458c-b97c-b1e9b2c4571b",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where SourceAssemblyFileVersion has_cs \"readoperations\"\r\n| where UserError == false\r\n| where Success == false\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| make-series count() on PreciseTimeStamp from queryFrom to queryTo step 5min by strcat(Region, \"_\", SliceNum(SourceAssemblyFileVersion))\r\n| mv-expand count_, PreciseTimeStamp\r\n| project PreciseTimeStamp=todatetime(PreciseTimeStamp), Slice=Column1, Count=toint(count_)",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-23T18:38:30.298Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-24T18:38:30.298Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Slice",
+        "type": "string"
+      },
+      {
+        "name": "Count",
+        "type": "int"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

@@ -1,0 +1,816 @@
+{
+  "service": "ARM",
+  "page": "Subscriptions",
+  "pageId": "de0324eb-07c4-4b48-9b8c-bf6c4c368911",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "dd366b22-2db3-4c78-ad23-d90e76f8069f",
+          "name": "Retrieve Resource \"Subscriptions\"",
+          "groupId": "64930346-40d6-4a1b-86cf-08a49c493aca",
+          "majorVersion": 7,
+          "minorVersion": 2,
+          "cluster": "customerdomrptwus3prod.westus3",
+          "database": "customerdomdata",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_SubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "SubscriptionGuid",
+              "type": "guid"
+            },
+            {
+              "name": "FriendlySubscriptionName",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionCreatedDate",
+              "type": "datetime"
+            },
+            {
+              "name": "SubscriptionStartDate",
+              "type": "datetime"
+            },
+            {
+              "name": "DeprovisionedDate",
+              "type": "string"
+            },
+            {
+              "name": "CurrentSubscriptionStatus",
+              "type": "string"
+            },
+            {
+              "name": "OfferName",
+              "type": "string"
+            },
+            {
+              "name": "OfferType",
+              "type": "string"
+            },
+            {
+              "name": "CloudType",
+              "type": "string"
+            },
+            {
+              "name": "TenantCountryCode",
+              "type": "string"
+            },
+            {
+              "name": "TPID",
+              "type": "int"
+            },
+            {
+              "name": "TPNameTranslated",
+              "type": "string"
+            },
+            {
+              "name": "S500",
+              "type": "string"
+            },
+            {
+              "name": "RegionName",
+              "type": "string"
+            },
+            {
+              "name": "SubsidiaryName",
+              "type": "string"
+            },
+            {
+              "name": "BillingType",
+              "type": "string"
+            },
+            {
+              "name": "CloudCustomerName",
+              "type": "string"
+            },
+            {
+              "name": "TenantId",
+              "type": "string"
+            },
+            {
+              "name": "TenantName",
+              "type": "string"
+            },
+            {
+              "name": "StrategicType",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_SubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('customerdomrptwus3prod.westus3').database('customerdomdata').CustomerModel\n| where SubscriptionGuid == local_SubscriptionId\n| take 1\n| project SubscriptionGuid, FriendlySubscriptionName, SubscriptionCreatedDate, SubscriptionStartDate, DeprovisionedDate, \n    CurrentSubscriptionStatus, OfferName, OfferType, CloudType, TenantCountryCode, TPID, TPNameTranslated, S500, RegionName,\n    SubsidiaryName, BillingType, CloudCustomerName, TenantId, TenantName, StrategicType\n",
+          "panelPath": []
+        },
+        {
+          "id": "aa8010c7-be59-4281-b854-b34f74a3a97b",
+          "name": "Subscription Requests",
+          "groupId": "734e0551-8810-4086-981b-e5f1d08624f0",
+          "majorVersion": 3,
+          "minorVersion": 2,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Requests",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Requests",
+              "type": "long"
+            },
+            {
+              "name": "InternalServiceErrors",
+              "type": "long"
+            },
+            {
+              "name": "Throttled",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Requests').HttpIncomingRequests\n    | where PreciseTimeStamp between(queryFrom..queryTo)\n    | where subscriptionId == querySubscriptionId and TaskName != \"HttpIncomingRequestStart\"\n)\n| summarize Requests = count(), InternalServiceErrors = countif(httpStatusCode >= 500), Throttled = countif(httpStatusCode == 429) by bin(PreciseTimeStamp, 30m)\n| order by PreciseTimeStamp asc\n",
+          "panelPath": []
+        },
+        {
+          "id": "a2f783e9-865d-4227-966e-514ad0af4523",
+          "name": "Subscription Requests by User Agent",
+          "groupId": "9354670f-1ad4-49ac-81d8-c4f547598fd1",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Requests by User Agent",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryOptionalRegion",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryOptionalFilter",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "userAgentWithStatus",
+              "type": "string"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Requests",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "constant_value_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOptionalRegion",
+              "externalSourceName": "null",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "aaaf5333-2299-4865-8af3-afdc53cd1cb2",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOptionalFilter",
+              "externalSourceName": "Value",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Requests').HttpIncomingRequests\n    | where PreciseTimeStamp between (queryFrom .. queryTo)\n    | where subscriptionId =~ querySubscriptionId and TaskName != \"HttpIncomingRequestStart\"\n    | where isempty(queryOptionalFilter) \n        or (\n            (queryOptionalFilter == \"400s\" and httpStatusCode >= 400 and httpStatusCode < 500)\n        or\n            (queryOptionalFilter == \"500s\" and httpStatusCode >= 500)\n        )\n    | where isnotempty(userAgent)\n    | extend userAgentWithStatus = strcat(split(userAgent, \"/\")[0], \"-\", httpStatusCode)\n    | summarize Requests = count() by userAgentWithStatus, bin(PreciseTimeStamp, 30m)\n)\n| order by PreciseTimeStamp asc",
+          "panelPath": []
+        },
+        {
+          "id": "6ef97dc9-8c7f-4b83-a1c7-49edf652adc9",
+          "name": "Filter - Request Errors",
+          "groupId": "aaaf5333-2299-4865-8af3-afdc53cd1cb2",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "",
+          "database": "",
+          "type": "Filter",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Requests by User Agent",
+          "params": [],
+          "schema": [
+            {
+              "name": "Value",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "[\n    { \"Value\": \"400s\"},\n    { \"Value\": \"500s\"}\n]",
+          "panelPath": []
+        }
+      ]
+    },
+    "Deployments > Subscription Deployments": {
+      "panelPath": [
+        "Deployments",
+        "Subscription Deployments"
+      ],
+      "queries": [
+        {
+          "id": "87cfa7ec-1556-4d64-aa16-35b8f1f3ed5f",
+          "name": "Subscription Deployments",
+          "groupId": "c4b709ea-fe57-4e5d-b20c-b1d0c2d99c4f",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Subscription Deployments",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "qStart",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qEnd",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "deploymentName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupLocation",
+              "type": "string"
+            },
+            {
+              "name": "resourceCount",
+              "type": "long"
+            },
+            {
+              "name": "executionStatus",
+              "type": "string"
+            },
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "real"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qStart",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qEnd",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Deployments').Deployments\n    | where PreciseTimeStamp between(qStart .. qEnd)\n    | where subscriptionId == querySubscriptionId\n    | summarize arg_max(PreciseTimeStamp, *) by subscriptionId, resourceGroupName, deploymentName, ActivityId\n    | extend startTime = todatetime(startTime), endTime = todatetime(endTime)\n    | project \n        deploymentName, \n        resourceGroupName, \n        resourceGroupLocation, \n        resourceCount, \n        executionStatus, \n        startTime, \n        endTime, \n        durationInMilliseconds, \n        TaskName, \n        level = iif(TaskName == \"DeploymentsFailed\", \"error\", \"info\"),\n        correlationId\n)\n| order by startTime desc",
+          "panelPath": [
+            "Deployments",
+            "Subscription Deployments"
+          ]
+        }
+      ]
+    },
+    "Resource Groups > Resource Groups": {
+      "panelPath": [
+        "Resource Groups",
+        "Resource Groups"
+      ],
+      "queries": [
+        {
+          "id": "27cd161d-81be-4712-bea9-20b7480750a2",
+          "name": "Subscription Resource Groups",
+          "groupId": "2f5f81b1-ac18-40a1-ae9d-3bb8f3e899b1",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "argwus2nrpone.westus2",
+          "database": "AzureResourceGraph",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Resource Groups",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "qFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "SnapshotDate",
+              "type": "datetime"
+            },
+            {
+              "name": "location",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\n| where timestamp between ((qFrom - 3d) .. qTo)\n| where subscriptionId =~ querySubscriptionId\n| summarize SnapshotDate = arg_max(timestamp, location) by subscriptionId, resourceGroup\n| order by resourceGroup asc",
+          "panelPath": [
+            "Resource Groups",
+            "Resource Groups"
+          ]
+        }
+      ]
+    },
+    "Resources > All Resources": {
+      "panelPath": [
+        "Resources",
+        "All Resources"
+      ],
+      "queries": [
+        {
+          "id": "b5944151-d947-4fab-aa72-c1afe1103825",
+          "name": "Subscription Resources",
+          "groupId": "993abc25-a1d8-4f2c-9c64-dd3a5621f7f5",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "argwus2nrpone.westus2",
+          "database": "AzureResourceGraph",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "All Resources",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "ResourceId",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "Location",
+              "type": "string"
+            },
+            {
+              "name": "ProvisioningState",
+              "type": "string"
+            },
+            {
+              "name": "Deleted",
+              "type": "bool"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "Resources\n| where subscriptionId == querySubscriptionId\n| summarize arg_max(timestamp, deleted, name, type, subscriptionId, subResourceGroup, resourceGroup, location, properties) by id\n| project \n    ResourceId = id, \n    ResourceName = name, \n    ResourceGroupName = resourceGroup,\n    ResourceProvider = type, \n    Location = location, \n    ProvisioningState = tostring(properties.provisioningState),\n    Deleted = tobool(deleted)",
+          "panelPath": [
+            "Resources",
+            "All Resources"
+          ]
+        }
+      ]
+    },
+    "VMs > VMs": {
+      "panelPath": [
+        "VMs",
+        "VMs"
+      ],
+      "queries": [
+        {
+          "id": "933248da-fc62-44d1-9905-60da267f12f9",
+          "name": "Subscription VMs",
+          "groupId": "ffb0cd79-5d3f-4b80-af04-732b4035d857",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VMs",
+          "params": [
+            {
+              "name": "querySubscription",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "creationTime",
+              "type": "datetime"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscription",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\r\n| where PreciseTimeStamp between(queryFrom..queryTo) and subscriptionId == querySubscription\r\n| distinct creationTime, roleInstanceName, containerId, virtualMachineUniqueId, nodeId, tenantName, Tenant, Region\r\n| extend creationTime = todatetime(creationTime)\r\n",
+          "panelPath": [
+            "VMs",
+            "VMs"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:29:22.207Z",
+    "totalPanels": 5,
+    "totalUniqueQueries": 8,
+    "totalWidgetRefs": 8
+  }
+}

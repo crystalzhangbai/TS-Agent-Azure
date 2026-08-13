@@ -1,0 +1,335 @@
+{
+  "service": "NRP",
+  "page": "BackupOperation",
+  "pageId": "0577922b-45de-4ff1-8628-68c361a76f9d",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Backup Initiated Less than 20% of the total time.": {
+      "panelPath": [
+        "Backup Initiated Less than 20% of the total time."
+      ],
+      "queries": [
+        {
+          "id": "84d1f23b-9c81-456e-8dbf-19270721cdaf",
+          "name": "Not scheduled backup",
+          "groupId": "a68b1c32-6c7b-4847-849a-02d18961f0ca",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "PartitionId",
+              "type": "string"
+            },
+            {
+              "name": "totalBackupInitiated",
+              "type": "long"
+            },
+            {
+              "name": "min_PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "max_PreciseTimeStamp",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let datetimediff = datetime_diff('hour', endTime, startTime);\r\nlet totalBackupInitiated_threshold=datetimediff*2 *0.2;\r\nlet totalBackUpTriggered = (QosEtwEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    | where OperationName == 'BackupOperation'\r\n    | where SourceAssemblyFileVersion contains \"release/\"\r\n    | extend sliceNumber=SliceNum(SourceAssemblyFileVersion)\r\n    | where sliceNumber >= 0 and sliceNumber <= 9\r\n    | summarize totalBackupInitiated=count(), min(PreciseTimeStamp), max(PreciseTimeStamp) by Region, PartitionId\r\n    | where totalBackupInitiated <= totalBackupInitiated_threshold);\r\ntotalBackUpTriggered\r\n| order by totalBackupInitiated asc",
+          "panelPath": [
+            "Backup Initiated Less than 20% of the total time."
+          ]
+        }
+      ]
+    },
+    "Backup Scheduled vs Failed Per Region": {
+      "panelPath": [
+        "Backup Scheduled vs Failed Per Region"
+      ],
+      "queries": [
+        {
+          "id": "77979f49-c1a5-4c7a-bb8d-835f62b51a82",
+          "name": "Backup Scheduled",
+          "groupId": "d46c704b-89b1-465c-a5ef-77b1a4a8dbea",
+          "majorVersion": 3,
+          "minorVersion": 1,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "SourceAssemblyFileVersion",
+              "type": "string"
+            },
+            {
+              "name": "PartitionId",
+              "type": "string"
+            },
+            {
+              "name": "totalBackUpOperationFailedCount",
+              "type": "long"
+            },
+            {
+              "name": "totalBackupInitiated",
+              "type": "long"
+            },
+            {
+              "name": "totalFailedPercent",
+              "type": "real"
+            },
+            {
+              "name": "min_TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "max_TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "ErrorCode_Details",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "RegionDropDown",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let totalBackUpTriggered = (QosEtwEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    | where Region == region and OperationName == 'BackupOperation'\r\n    | where SourceAssemblyFileVersion contains \"release/\"\r\n    | extend sliceNumber=SliceNum(SourceAssemblyFileVersion)\r\n    | where sliceNumber >= 0 and sliceNumber <= 9\r\n    | summarize totalBackupInitiated=count(), min(TIMESTAMP), max(TIMESTAMP) by Region, SourceAssemblyFileVersion, PartitionId, bin(PreciseTimeStamp, 5h));\r\nlet totalFailedBackUpPersliceRegion = (QosEtwEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    | where Region == region and OperationName == 'BackupOperation'\r\n    | where UserError == 0 and Success == 0 and isnotempty(ErrorDetails)\r\n    | where SourceAssemblyFileVersion contains \"release/\"\r\n    | extend sliceNumber=SliceNum(SourceAssemblyFileVersion)\r\n    | where sliceNumber >= 0 and sliceNumber <= 9\r\n    | summarize totalBackUpOperationFailedCount=count(), make_set(ErrorCode), arg_max(PreciseTimeStamp, ErrorDetails), make_set(StackTrace) by Region, SourceAssemblyFileVersion, PartitionId, bin(PreciseTimeStamp, 5h));\r\nlet backup_fails=totalBackUpTriggered \r\n    | join kind= leftouter totalFailedBackUpPersliceRegion on Region, PartitionId\r\n    | extend totalFailedPercent = toreal(totalBackUpOperationFailedCount)/totalBackupInitiated\r\n    | project Region, SourceAssemblyFileVersion, PartitionId, totalBackUpOperationFailedCount =iff(isnull(totalBackUpOperationFailedCount), 0, totalBackUpOperationFailedCount), \r\n        totalBackupInitiated, totalFailedPercent = iff(isnull(totalFailedPercent), real(0), totalFailedPercent) , min_TIMESTAMP, max_TIMESTAMP, \r\n        ErrorCode_Details = ExceptionMessageHash( set_ErrorCode, ErrorDetails);\r\nbackup_fails\r\n| order by ErrorCode_Details asc;",
+          "panelPath": [
+            "Backup Scheduled vs Failed Per Region"
+          ]
+        }
+      ]
+    },
+    "Top Error Code in Backup Operations": {
+      "panelPath": [
+        "Top Error Code in Backup Operations"
+      ],
+      "queries": [
+        {
+          "id": "0e283347-c562-4d1a-9ca0-3700574e4f73",
+          "name": "Backup Top Error",
+          "groupId": "83f8af59-26f7-4693-808f-e4416b8c7487",
+          "majorVersion": 4,
+          "minorVersion": 0,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StackTrace",
+              "type": "string"
+            },
+            {
+              "name": "failedErrorCount",
+              "type": "long"
+            },
+            {
+              "name": "set_Region",
+              "type": "dynamic"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "ErrorCode_Details",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let totalFailedBackUpPersliceRegion = (QosEtwEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    | where  OperationName == 'BackupOperation'\r\n    | where UserError == 0 and Success == 0 and isnotempty(ErrorDetails)\r\n    | where SourceAssemblyFileVersion contains \"release/\"\r\n    | extend sliceNumber=SliceNum(SourceAssemblyFileVersion)\r\n    | where sliceNumber >= 0 and sliceNumber <= 9\r\n    | summarize failedErrorCount=count(),make_set(Region),  arg_max(PreciseTimeStamp, ErrorCode_Details= ExceptionMessageHash( ErrorCode, ErrorDetails)) by  StackTrace);\r\ntotalFailedBackUpPersliceRegion\r\n| order by failedErrorCount;",
+          "panelPath": [
+            "Top Error Code in Backup Operations"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:54.172Z",
+    "totalPanels": 3,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

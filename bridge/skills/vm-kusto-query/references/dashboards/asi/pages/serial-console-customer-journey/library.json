@@ -1,0 +1,190 @@
+{
+  "service": "Azure Serial Console",
+  "page": "Customer Journey",
+  "pageId": "4bf24d7d-001c-4abe-83a8-81103c89e96f",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "6472e0fa-a6a1-4364-b630-cddfac7d7d31",
+          "name": "uniquesubscriptions",
+          "groupId": "cc8dfe89-f1f1-45bb-b7fd-0d4ac2d40a93",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "https://azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Unique Subscriptions",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Count",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "FrontEndQoSEvents\r\n| distinct subscriptionID\r\n| count",
+          "panelPath": []
+        },
+        {
+          "id": "4149b0eb-4984-4b02-aab8-8f51611bf4d9",
+          "name": "icmcount",
+          "groupId": "1272bc0a-abe5-41a2-8530-c852d737713f",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcmDataWarehouse",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "CorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Incidents\r\n| where SourceCreateDate > ago(90d)\r\n| where OwningTeamName contains \"AzSerialConsole\"\r\n| where Status in (\"ACTIVE\")\r\n| where isnull(ParentIncidentId)\r\n| summarize count() by CorrelationId\r\n| order by count_ desc\r\n| limit 10",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:59:28.190Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

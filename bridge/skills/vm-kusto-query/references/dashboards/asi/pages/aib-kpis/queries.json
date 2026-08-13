@@ -1,0 +1,510 @@
+[
+  {
+    "id": "734f609f-0f9a-4d42-aa39-900be8469d3d",
+    "name": "Daily Build Success Rate",
+    "groupId": "5cdb941c-a698-4ccf-b424-6f7e53d8a93e",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncQoSEvents\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n// | where not(IsAIBSubscription(subscriptionID))\r\n| where iff(build != \"\", serviceBuild == build, true)\r\n| summarize\r\n    callCount=todouble(count()),\r\n    clientFailures=countif(resultType == 1),\r\n    serverFailures=countif(resultType == 2),\r\n    // failures=countif(resultType != 0),\r\n    failedSubs=dcountif(subscriptionID, resultType != 0)\r\n    by bin(PreciseTimeStamp, binTime)\r\n| extend successRate = round(((callCount - clientFailures - serverFailures) * 100 ) / (callCount - clientFailures), 2)\r\n| project PreciseTimeStamp, successRate, clientFailures, serverFailures\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-05T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-03-05T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "binTime",
+        "description": "",
+        "type": "timespan",
+        "default": "30m",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "build",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "successRate",
+        "type": "real"
+      },
+      {
+        "name": "clientFailures",
+        "type": "long"
+      },
+      {
+        "name": "serverFailures",
+        "type": "long"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "8ac7fca9-f69c-4058-9574-cc8b2ea2f2ff",
+    "name": "Daily Build Success by Operation Type",
+    "groupId": "e8faa480-ed60-4438-8430-809ee676f8ae",
+    "majorVersion": 5,
+    "minorVersion": 2,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncQoSEvents\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n// | where not(IsAIBSubscription(subscriptionID))\r\n| extend requestType = extract(\"([A-Z]+)$\", 1, operationName)\r\n| summarize\r\n    callCount=todouble(count()),\r\n    clientFailures=countif(resultType == 1),\r\n    serverFailures=countif(resultType == 2),\r\n    failedSubs=dcountif(subscriptionID, resultType != 0)\r\n    by bin(PreciseTimeStamp, binTime), requestType\r\n| extend successRate = round(((callCount - clientFailures - serverFailures) * 100 ) / (callCount - clientFailures), 2)\r\n| summarize\r\n    POST_successRate = maxif(successRate, requestType == \"POST\"),\r\n    PUT_successRate = maxif(successRate, requestType == \"PUT\"),\r\n    DELETE_successRate = maxif(successRate, requestType == \"DELETE\"),\r\n    clientFailures = sum(clientFailures),\r\n    serverFailures = sum(serverFailures)\r\n    by PreciseTimeStamp\r\n| project PreciseTimeStamp, POST_successRate, PUT_successRate, DELETE_successRate, clientFailures, serverFailures",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "binTime",
+        "description": "",
+        "type": "timespan",
+        "default": "1h",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "POST_successRate",
+        "type": "real"
+      },
+      {
+        "name": "PUT_successRate",
+        "type": "real"
+      },
+      {
+        "name": "DELETE_successRate",
+        "type": "real"
+      },
+      {
+        "name": "clientFailures",
+        "type": "long"
+      },
+      {
+        "name": "serverFailures",
+        "type": "long"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "7b06fc70-d575-4abf-8fe5-dc52b466bbaf",
+    "name": "Improved AsyncQoS",
+    "groupId": "41761c62-241d-49f5-84a2-32af92123d70",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let KPiWithTriggers =\r\n    AsyncQoSEvents\r\n    | where PreciseTimeStamp between (queryFrom .. queryTo)\r\n    // | where not(IsAIBSubscription(subscriptionID))\r\n    | summarize\r\n        callCount=count(),\r\n        clientFailures=countif(resultType == 1),\r\n        serverFailures=countif(resultType == 2),\r\n        failedSubs = dcountif(subscriptionID, resultType == 2)\r\n        by operationName\r\n    | extend\r\n        successRate = round((callCount - clientFailures - serverFailures) * 100.0 / (callCount - clientFailures), 3),\r\n        operationName\r\n    | sort by successRate asc\r\n    | project\r\n        operationName,\r\n        callCount,\r\n        clientFailures,\r\n        serverFailures,\r\n        successRate,\r\n        failedSubs;\r\nlet KPiWithoutTriggers =\r\n    AsyncQoSEvents\r\n    | where PreciseTimeStamp between (queryFrom .. queryTo)\r\n    // | where not(IsAIBSubscription(subscriptionID))\r\n    | where operationName startswith \"POST\"\r\n    | where subResourceName == \"\"\r\n    | summarize\r\n        callCount=count(),\r\n        clientFailures=countif(resultType == 1),\r\n        serverFailures=countif(resultType == 2),\r\n        failedSubs = dcountif(subscriptionID, resultType == 2)\r\n        by operationName\r\n    | extend\r\n        successRate = round((callCount - clientFailures - serverFailures) * 100.0 / (callCount - clientFailures), 3),\r\n        operationName = \"PostRunTemplateHandler.POST (without triggers)\"\r\n    | project\r\n        operationName,\r\n        callCount,\r\n        clientFailures,\r\n        serverFailures,\r\n        successRate,\r\n        failedSubs;\r\nKPiWithTriggers\r\n| union KPiWithoutTriggers\r\n| order by successRate desc\r\n| extend level = case(successRate == 100, \"info\", successRate > 99.5, \"warning\", successRate > 99, \"error\", \"fatal\")\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-27T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-03-06T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "callCount",
+        "type": "long"
+      },
+      {
+        "name": "clientFailures",
+        "type": "long"
+      },
+      {
+        "name": "serverFailures",
+        "type": "long"
+      },
+      {
+        "name": "successRate",
+        "type": "real"
+      },
+      {
+        "name": "failedSubs",
+        "type": "long"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "65c29bf5-c020-4d74-a207-e1636fb2c7c9",
+    "name": "Overall Success Rate",
+    "groupId": "967c8bfa-5240-4ef4-8744-8dc8be220d12",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "DataSummary",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "// Overall Success Rate for Time Period\r\nAsyncQoSEvents\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n// | where not(IsAIBSubscription(subscriptionID))\r\n| summarize\r\n    callCount=todouble(count()),\r\n    clientFailures=countif(resultType == 1),\r\n    serverFailures=countif(resultType == 2),\r\n    failedSubs=dcountif(subscriptionID, resultType != 0)\r\n| extend successRate = round(((callCount - clientFailures - serverFailures) * 100 ) / (callCount - clientFailures), 2)\r\n| extend Value = tostring(successRate)\r\n// | project Value\r\n| extend Health = case(successRate > 99, \"Healthy\", successRate > 98, \"Neutral\", successRate > 97, \"Degraded\", \"Unhealthy\")\r\n// | extend Description = \"Health over time period\"",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "callCount",
+        "type": "real"
+      },
+      {
+        "name": "clientFailures",
+        "type": "long"
+      },
+      {
+        "name": "serverFailures",
+        "type": "long"
+      },
+      {
+        "name": "failedSubs",
+        "type": "long"
+      },
+      {
+        "name": "successRate",
+        "type": "real"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "0a179fce-6888-4148-8929-4faf982e87a8",
+    "name": "AIB FrontEndQOS Failures",
+    "groupId": "6755015e-44ea-4d3c-b65a-ffbfe2c78255",
+    "majorVersion": 2,
+    "minorVersion": 7,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "// AIB FrontEndQos\r\nFrontEndQoSEvents\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n// | where not(IsAIBSubscription(subscriptionID))\r\n| summarize\r\n    callCount=todouble(count()),\r\n    clientFailures=countif(resultType == 1),\r\n    serverFailures=countif(resultType == 2),\r\n    failures=countif(resultType != 0)\r\n    by operationName\r\n| extend successRate = round(((callCount - clientFailures - serverFailures) * 100 ) / (callCount - clientFailures), 3)\r\n| project operationName, callCount, clientFailures, serverFailures, successRate\r\n| order by successRate desc\r\n| extend level = case(successRate == 100, \"info\", successRate > 99.5, \"warning\", successRate > 99, \"error\", \"fatal\")",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "userControl": {
+          "type": "DatePicker",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "2025-02-26T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-03-05T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "callCount",
+        "type": "real"
+      },
+      {
+        "name": "clientFailures",
+        "type": "long"
+      },
+      {
+        "name": "serverFailures",
+        "type": "long"
+      },
+      {
+        "name": "successRate",
+        "type": "real"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "4375fec0-00b0-499b-85e9-d78053c4ce1a",
+    "name": "Region AsyncQoSEvent Count",
+    "groupId": "1967ac8f-e518-43c1-b658-fb3c5826dcf1",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "CategoryChart",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncQoSEvents\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| summarize regionCount = count() by RPSector\r\n| extend Name = RPSector\r\n| project Name, regionCount\r\n| order by regionCount desc ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-26T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-03-12T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "regionCount",
+        "type": "long"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "82820392-38dd-404c-b36e-65c72d13526f",
+    "name": "Latest Refresh DateTime",
+    "groupId": "82d980de-5966-4069-b0c9-3e165d8638b9",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncQoSEvents\r\n| project PreciseTimeStamp\r\n| summarize latestRefresh = max(PreciseTimeStamp)\r\n| top 1 by latestRefresh desc",
+    "params": [],
+    "schema": [
+      {
+        "name": "latestRefresh",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "fa1bdd22-82d1-47c8-82f6-6866f65d6481",
+    "name": "Operation Warnings",
+    "groupId": "d0d09caf-1c3b-4c10-b1aa-89751b9dba7f",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "// AIB Issue Detector\r\nAsyncQoSEvents\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| summarize\r\n    callCount=todouble(count()),\r\n    clientFailures=countif(resultType == 1),\r\n    serverFailures=countif(resultType == 2),\r\n    failures=countif(resultType != 0),\r\n    // failedSubs=dcountif(subscriptionID, resultType != 0)\r\n    failedSubs = dcountif(subscriptionID, resultType == 2)\r\n    by operationName\r\n| extend successRate = round(((callCount - clientFailures - serverFailures) * 100 ) / (callCount - clientFailures), 3)\r\n| order by successRate asc  \r\n| where successRate < 99",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-03-04T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-03-10T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "callCount",
+        "type": "real"
+      },
+      {
+        "name": "clientFailures",
+        "type": "long"
+      },
+      {
+        "name": "serverFailures",
+        "type": "long"
+      },
+      {
+        "name": "failures",
+        "type": "long"
+      },
+      {
+        "name": "failedSubs",
+        "type": "long"
+      },
+      {
+        "name": "successRate",
+        "type": "real"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  }
+]

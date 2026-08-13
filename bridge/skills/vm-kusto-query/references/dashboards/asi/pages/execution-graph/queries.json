@@ -1,0 +1,128 @@
+[
+  {
+    "id": "835b648a-619e-4cbe-941c-24a13d1056b1",
+    "name": "Retrieve Resource \"Execution Graph\"",
+    "groupId": "55f3763f-b365-44f1-8ffa-2433d8bc5df5",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://egpublic.westus.kusto.windows.net",
+    "database": "eg",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AscSearchExecutionGraphV2(local_SubscriptionId, globalFrom, globalTo)\r\n| where EgId == local_EgId\r\n| take 1",
+    "params": [
+      {
+        "name": "globalFrom",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_EgId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_SubscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTimeUtc",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "LinkToExecutionGraph",
+        "type": "string"
+      },
+      {
+        "name": "TenantId",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "EgId",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroupNameOrServiceName",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "FailureSignature",
+        "type": "string"
+      },
+      {
+        "name": "FailureCategory",
+        "type": "string"
+      },
+      {
+        "name": "TeamResponsible",
+        "type": "string"
+      },
+      {
+        "name": "BugNumber",
+        "type": "long"
+      },
+      {
+        "name": "CssTsgUrl",
+        "type": "string"
+      },
+      {
+        "name": "ArticleName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Execution Graph"
+  }
+]

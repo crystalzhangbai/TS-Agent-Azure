@@ -1,0 +1,2708 @@
+{
+  "service": "EEE CRP",
+  "page": "VM Operation",
+  "pageId": "41f60fa8-1deb-4add-af23-6b21b348adbd",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "48d43a1f-ebcc-4416-be16-ecf78fcdb6d8",
+          "name": "Retrieve Resource \"VM Operation\"",
+          "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+          "majorVersion": 4,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_correlationId",
+              "externalSourceName": "correlationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "//print correlationId = local_correlationId, operationId = local_operationId\r\ncluster('azcrp.kusto.windows.net').database('crp_allprod').ApiQosEvent\r\n| where PreciseTimeStamp between(globalFrom .. globalTo)\r\n| where operationId == local_operationId\r\n| where operationName !contains \".GET\"\r\n| where operationName !contains \"FabricCallback\"\r\n| where operationName !contains \"NrpCallback\"\r\n| where operationName !contains \"AllocateDisks\"\r\n| extend StartTime = datetime_add('Millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| extend durationInMin = e2EDurationInMilliseconds / 1000 / 60\r\n| project StartTime, EndTime = PreciseTimeStamp, operationId, correlationId, operationName, resourceGroupName, resourceName, \r\n  httpStatusCode, e2EDurationInMilliseconds, durationInMin, resultCode, errorDetails, requestEntity, subscriptionId, userAgent, \r\n  apiVersion, labels, region, RPTenant, clientPrincipalName, clientRequestId\r\n| project correlationId, operationId, subscriptionId, resourceGroupName, resourceName\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "5e86cd65-ed5d-4c6d-a0bd-3a7f45351f6b",
+          "name": "Preemption",
+          "groupId": "f9e018c5-15b8-41be-bda0-8dd28ce2a930",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Preemption",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "operationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "preemption_operationId",
+              "type": "string"
+            },
+            {
+              "name": "preemption_count_string",
+              "type": "string"
+            },
+            {
+              "name": "preemption_count_long",
+              "type": "long"
+            },
+            {
+              "name": "preemption_status",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationid",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "union\r\n(cluster('azcrp.kusto.windows.net').database('crp_allprod').ContextActivity\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where activityId == operationid\r\n| where message contains \"is requesting preemption.\" or message contains \"Not preempting current execution as it was preempted too many times.\"\r\n| parse message with \"Activity \" preemption_operationId \" is requesting preemption. Current preemption count is \" preemption_count \".\"\r\n| order by PreciseTimeStamp asc\r\n| extend preemption_status = case (message contains \"is requesting preemption.\", \"Preempted\", \r\n    message contains \"Not preempting current execution as it was preempted too many times.\", \"Failed to preempt / Preempted too many times\", \"No Preemption\")\r\n| project PreciseTimeStamp, preemption_operationId, preemption_count, preemption_status),\r\n(print PreciseTimeStamp = now(), preemption_operationId = \"\", preemption_count = 0, preemption_status = \"Not Preempted\")\r\n| top 1 by PreciseTimeStamp asc",
+          "panelPath": []
+        },
+        {
+          "id": "1e2662c7-7294-4184-a742-3dba7f9454f7",
+          "name": "CRP Operation Info",
+          "groupId": "93851209-90a7-4176-9b43-22d8d0f88716",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Operation Information",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "operationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "e2EDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "resultType",
+              "type": "long"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "wFAppName",
+              "type": "string"
+            },
+            {
+              "name": "partitionId",
+              "type": "string"
+            },
+            {
+              "name": "replicaId",
+              "type": "long"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "clientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "clientPrincipalName",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "labels",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "goalSeekingActivityId",
+              "type": "string"
+            },
+            {
+              "name": "requestEntity",
+              "type": "string"
+            },
+            {
+              "name": "clientRoles",
+              "type": "string"
+            },
+            {
+              "name": "internalCorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "durationInMin",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationid",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('crp_allprod').ApiQosEvent\r\n| where PreciseTimeStamp between(starttime .. endtime)\r\n| where operationId == operationid\r\n| where operationName !contains \"GET\"\r\n| extend StartTime = datetime_add('Millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| extend durationInMin = e2EDurationInMilliseconds / 1000 / 60\r\n\r\n\r\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "Resource Operations > Subscription Operations > Subscription Operations > ARM > ARM > ARM Operation Timeline for Subscription": {
+      "panelPath": [
+        "Resource Operations",
+        "Subscription Operations",
+        "Subscription Operations",
+        "ARM",
+        "ARM",
+        "ARM Operation Timeline for Subscription"
+      ],
+      "queries": [
+        {
+          "id": "29728df0-a1da-4a49-a293-96aeea49ea3c",
+          "name": "ARM Operation Timeline",
+          "groupId": "d212951c-eb51-4c9a-bf20-46c8ca7ebba8",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprod",
+          "database": "ARMProd",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "ARM Operation Timeline for Subscription",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "TaskName1",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "correlationId1",
+              "type": "string"
+            },
+            {
+              "name": "httpMethod",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "contentLength",
+              "type": "long"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "targetUri",
+              "type": "string"
+            },
+            {
+              "name": "clientIpAddress",
+              "type": "string"
+            },
+            {
+              "name": "authorizationAction",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId1",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionid",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "cluster('armprod.kusto.windows.net').database('ARMProd').HttpIncomingRequests\r\n| where PreciseTimeStamp between (starttime..endtime)\r\n// | where correlationId == correlationid\r\n| where httpMethod <> \"GET\"\r\n| where subscriptionId == \"21128a5f-9486-40ab-bc5d-d398aadc0100\"\r\n// | where targetUri contains \"xSellSrvPrd\"\r\n| where TaskName == \"HttpIncomingRequestStart\"\r\n| project PreciseTimeStamp, RoleInstance, Level, ActivityId, TaskName, subscriptionId, correlationId, operationName, \r\n  httpMethod, hostName, targetUri, httpStatusCode, errorCode, errorMessage, durationInMilliseconds, \r\n  contentLength, referer, userAgent, clientIpAddress, SourceNamespace, failureCause, clientApplicationId\r\n| project StartTime = PreciseTimeStamp, TaskName, correlationId, ActivityId\r\n| join kind=leftouter (\r\n    cluster('armprod.kusto.windows.net').database('ARMProd').HttpIncomingRequests\r\n    | where PreciseTimeStamp between (starttime..endtime)\r\n//     | where correlationId == correlationid\r\n    | where subscriptionId == subscriptionid\r\n    | where TaskName contains \"HttpIncomingRequestEnd\"\r\n    | where httpMethod <> \"GET\"\r\n    | project EndTime = PreciseTimeStamp, TaskName, operationName, correlationId, httpMethod, httpStatusCode, durationInMilliseconds, contentLength, errorCode, targetUri, clientIpAddress, authorizationAction, ActivityId\r\n) on $left.correlationId == $right.correlationId and $left.ActivityId == $right.ActivityId\r\n| order by StartTime asc\r\n| extend GroupBy = authorizationAction, Content = tostring(httpStatusCode)\r\n| extend Health = case (httpStatusCode >= 500, \"Unhealthy\", \r\n    httpStatusCode >= 400, \"Degraded\", \r\n    \"Healthy\")\r\n\r\n",
+          "panelPath": [
+            "Resource Operations",
+            "Subscription Operations",
+            "Subscription Operations",
+            "ARM",
+            "ARM",
+            "ARM Operation Timeline for Subscription"
+          ]
+        }
+      ]
+    },
+    "Resource Operations > Subscription Operations > Subscription Operations > CRP > CRP > CRP Operations for Subscription": {
+      "panelPath": [
+        "Resource Operations",
+        "Subscription Operations",
+        "Subscription Operations",
+        "CRP",
+        "CRP",
+        "CRP Operations for Subscription"
+      ],
+      "queries": [
+        {
+          "id": "431aab6b-904c-4d96-9258-64ca2a34ca68",
+          "name": "CRP Operation Table",
+          "groupId": "8fb52b39-a694-4d97-b2bb-0ce2a750fe05",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "CRP Operations for Subscription",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "e2EDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "durationInMin",
+              "type": "long"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "requestEntity",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "labels",
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "clientPrincipalName",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionid",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('crp_allprod').ApiQosEvent\r\n| where PreciseTimeStamp between(starttime .. endtime)\r\n| where subscriptionId == subscriptionid\r\n| where operationName !contains \"GET\"\r\n| extend StartTime = datetime_add('Millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| extend durationInMin = e2EDurationInMilliseconds / 1000 / 60\r\n| project StartTime, EndTime = PreciseTimeStamp, operationId, correlationId, operationName, resourceGroupName, resourceName, \r\n  httpStatusCode, e2EDurationInMilliseconds, durationInMin, resultCode, errorDetails, requestEntity, subscriptionId, userAgent, \r\n  apiVersion, labels, region, RPTenant, clientPrincipalName, clientRequestId\r\n| extend level = case (isnotempty(resultCode), \"error\", \"info\")\r\n| order by StartTime asc\r\n\r\n",
+          "panelPath": [
+            "Resource Operations",
+            "Subscription Operations",
+            "Subscription Operations",
+            "CRP",
+            "CRP",
+            "CRP Operations for Subscription"
+          ]
+        }
+      ]
+    },
+    "Resource Operations > Subscription Operations > Subscription Operations > CRP > CRP > CRP Operations Timeline for Subscription": {
+      "panelPath": [
+        "Resource Operations",
+        "Subscription Operations",
+        "Subscription Operations",
+        "CRP",
+        "CRP",
+        "CRP Operations Timeline for Subscription"
+      ],
+      "queries": [
+        {
+          "id": "c57827c2-be70-4c66-a87a-972bc277a463",
+          "name": "CRP Operation Table",
+          "groupId": "3fb57428-9c12-4b8b-abc0-c49778baf5d9",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "CRP Operations Timeline for Subscription",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "e2EDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "durationInMin",
+              "type": "long"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "requestEntity",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "labels",
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "clientPrincipalName",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionid",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('crp_allprod').ApiQosEvent\r\n| where PreciseTimeStamp between(starttime .. endtime)\r\n| where subscriptionId == subscriptionid\r\n| where operationName !contains \"GET\"\r\n| extend StartTime = datetime_add('Millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| extend durationInMin = e2EDurationInMilliseconds / 1000 / 60\r\n| project StartTime, EndTime = PreciseTimeStamp, operationId, correlationId, operationName, resourceGroupName, resourceName, \r\n  httpStatusCode, e2EDurationInMilliseconds, durationInMin, resultCode, errorDetails, requestEntity, subscriptionId, userAgent, \r\n  apiVersion, labels, region, RPTenant, clientPrincipalName, clientRequestId\r\n| extend Content = resultCode\r\n| extend Health = case (isnotempty(resultCode), \"Unhealthy\", \"Healthy\")\r\n| extend GroupBy = operationName\r\n| order by operationName asc\r\n",
+          "panelPath": [
+            "Resource Operations",
+            "Subscription Operations",
+            "Subscription Operations",
+            "CRP",
+            "CRP",
+            "CRP Operations Timeline for Subscription"
+          ]
+        }
+      ]
+    },
+    "Resource Operations > VM Operations > VM Operations > ARM > ARM > ARM Operation": {
+      "panelPath": [
+        "Resource Operations",
+        "VM Operations",
+        "VM Operations",
+        "ARM",
+        "ARM",
+        "ARM Operation"
+      ],
+      "queries": [
+        {
+          "id": "26111f95-23a5-4be4-ac13-e06b8c88f60a",
+          "name": "ARM Operation for VM",
+          "groupId": "3ae15121-8b4d-4ce1-8589-7dbcf0d34154",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "armprod",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ARM Operation",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionid",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "resourcename",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "httpMethod",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "errorMessage",
+              "type": "string"
+            },
+            {
+              "name": "targetUri",
+              "type": "string"
+            },
+            {
+              "name": "failureCause",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionid",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "resourcename",
+              "externalSourceName": "resourceName",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "cluster('armprod.kusto.windows.net').database('ARMProd').HttpIncomingRequests\r\n| where PreciseTimeStamp between (starttime..endtime)\r\n// | where correlationId == correlationid\r\n| where httpMethod <> \"GET\"\r\n| where subscriptionId == subscriptionid\r\n| where targetUri contains resourcename\r\n| where TaskName == \"HttpIncomingRequestStart\"\r\n| project StartTime = PreciseTimeStamp, TaskName, correlationId, ActivityId\r\n| order by StartTime asc\r\n| join kind=leftouter (\r\n    cluster('armprod.kusto.windows.net').database('ARMProd').HttpIncomingRequests\r\n    | where PreciseTimeStamp between (starttime..endtime)\r\n    // | where correlationId == correlationid\r\n    | where subscriptionId == subscriptionid\r\n    | where targetUri contains resourcename\r\n    | where TaskName contains \"HttpIncomingRequestEnd\"\r\n    | where httpMethod <> \"GET\"\r\n    | project EndTime = PreciseTimeStamp, TaskName, operationName, correlationId, httpMethod, httpStatusCode, durationInMilliseconds, contentLength, errorCode, errorMessage, targetUri, clientIpAddress, authorizationAction, ActivityId, failureCause\r\n) on $left.correlationId == $right.correlationId and $left.ActivityId == $right.ActivityId\r\n| project StartTime, EndTime, correlationId, operationName, httpMethod, httpStatusCode, errorCode, errorMessage, targetUri, failureCause\r\n| order by StartTime asc\r\n| extend level = case (httpStatusCode >= 500, \"error\", \r\n    httpStatusCode >= 400, \"warning\", \r\n    \"info\")\r\n",
+          "panelPath": [
+            "Resource Operations",
+            "VM Operations",
+            "VM Operations",
+            "ARM",
+            "ARM",
+            "ARM Operation"
+          ]
+        }
+      ]
+    },
+    "Resource Operations > VM Operations > VM Operations > ARM > ARM > ARM Operation Timeline": {
+      "panelPath": [
+        "Resource Operations",
+        "VM Operations",
+        "VM Operations",
+        "ARM",
+        "ARM",
+        "ARM Operation Timeline"
+      ],
+      "queries": [
+        {
+          "id": "58eb6898-a313-48ac-b887-4d2059737a9b",
+          "name": "ARM Operation",
+          "groupId": "ee86c4e5-abfa-4377-be7e-0bd5a4a5a104",
+          "majorVersion": 3,
+          "minorVersion": 1,
+          "cluster": "armprod",
+          "database": "ARMProd",
+          "type": "CoBeTimeline",
+          "widgetType": "CoBeTimeline",
+          "widgetTitle": "ARM Operation Timeline",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionid",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "resourcename",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "TaskName1",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "correlationId1",
+              "type": "string"
+            },
+            {
+              "name": "httpMethod",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "contentLength",
+              "type": "long"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "targetUri",
+              "type": "string"
+            },
+            {
+              "name": "clientIpAddress",
+              "type": "string"
+            },
+            {
+              "name": "authorizationAction",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId1",
+              "type": "string"
+            },
+            {
+              "name": "EventId",
+              "type": "string"
+            },
+            {
+              "name": "EventName",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionid",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "resourcename",
+              "externalSourceName": "resourceName",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "cluster('armprod.kusto.windows.net').database('ARMProd').HttpIncomingRequests\r\n| where PreciseTimeStamp between (starttime..endtime)\r\n// | where correlationId == correlationid\r\n| where httpMethod <> \"GET\"\r\n| where subscriptionId == subscriptionid\r\n| where targetUri contains resourcename\r\n| where TaskName == \"HttpIncomingRequestStart\"\r\n| project PreciseTimeStamp, RoleInstance, Level, ActivityId, TaskName, subscriptionId, correlationId, operationName, \r\n  httpMethod, hostName, targetUri, httpStatusCode, errorCode, errorMessage, durationInMilliseconds, \r\n  contentLength, referer, userAgent, clientIpAddress, SourceNamespace, failureCause, clientApplicationId\r\n| project StartTime = PreciseTimeStamp, TaskName, correlationId, ActivityId\r\n| join kind=leftouter (\r\n    cluster('armprod.kusto.windows.net').database('ARMProd').HttpIncomingRequests\r\n    | where PreciseTimeStamp between (starttime..endtime)\r\n    //| where correlationId == correlationid\r\n    | where subscriptionId == subscriptionid\r\n    | where targetUri contains resourcename\r\n    | where TaskName contains \"HttpIncomingRequestEnd\"\r\n    | where httpMethod <> \"GET\"\r\n    | project EndTime = PreciseTimeStamp, TaskName, operationName, correlationId, httpMethod, httpStatusCode, durationInMilliseconds, contentLength, errorCode, targetUri, clientIpAddress, authorizationAction, ActivityId\r\n) on $left.correlationId == $right.correlationId and $left.ActivityId == $right.ActivityId\r\n| order by StartTime\r\n| extend EventId = correlationId, EventName = strcat(httpMethod, \" - \", authorizationAction)\r\n| extend Health = case (httpStatusCode >= 500, \"Unhealthy\", \r\n  httpStatusCode >= 400, \"Degraded\", \r\n  \"Healthy\")\r\n",
+          "panelPath": [
+            "Resource Operations",
+            "VM Operations",
+            "VM Operations",
+            "ARM",
+            "ARM",
+            "ARM Operation Timeline"
+          ]
+        }
+      ]
+    },
+    "Resource Operations > VM Operations > VM Operations > CRP > CRP > VM CRP Operations": {
+      "panelPath": [
+        "Resource Operations",
+        "VM Operations",
+        "VM Operations",
+        "CRP",
+        "CRP",
+        "VM CRP Operations"
+      ],
+      "queries": [
+        {
+          "id": "b9399ce4-4f36-4013-9145-4738f09e56dc",
+          "name": "CRP Operations for VM",
+          "groupId": "837591d4-3262-47b4-942c-e1682b84c33e",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VM CRP Operations",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionid",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "resourcename",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "resourcegroupname",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "e2EDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "durationInMin",
+              "type": "long"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "requestEntity",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "labels",
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "clientPrincipalName",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionid",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "resourcename",
+              "externalSourceName": "resourceName",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "resourcegroupname",
+              "externalSourceName": "resourceGroupName",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('crp_allprod').ApiQosEvent\r\n| where PreciseTimeStamp between(starttime .. endtime)\r\n| where subscriptionId == subscriptionid\r\n| where resourceName contains resourcename\r\n| where resourceGroupName contains resourcegroupname\r\n| where operationName !contains \"GET\"\r\n| extend StartTime = datetime_add('Millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| extend durationInMin = e2EDurationInMilliseconds / 1000 / 60\r\n| project StartTime, EndTime = PreciseTimeStamp, operationId, correlationId, operationName, resourceGroupName, resourceName, \r\n  httpStatusCode, e2EDurationInMilliseconds, durationInMin, resultCode, errorDetails, requestEntity, subscriptionId, userAgent, \r\n  apiVersion, labels, region, RPTenant, clientPrincipalName, clientRequestId\r\n| order by StartTime asc\r\n| extend level = case (resultCode <> \"\", \"error\", \"info\")\r\n",
+          "panelPath": [
+            "Resource Operations",
+            "VM Operations",
+            "VM Operations",
+            "CRP",
+            "CRP",
+            "VM CRP Operations"
+          ]
+        },
+        {
+          "id": "48d43a1f-ebcc-4416-be16-ecf78fcdb6d8",
+          "name": "Retrieve Resource \"VM Operation\"",
+          "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+          "majorVersion": 4,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "ResourceGet",
+          "widgetType": "Table",
+          "widgetTitle": "VM CRP Operations",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_correlationId",
+              "externalSourceName": "correlationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "//print correlationId = local_correlationId, operationId = local_operationId\r\ncluster('azcrp.kusto.windows.net').database('crp_allprod').ApiQosEvent\r\n| where PreciseTimeStamp between(globalFrom .. globalTo)\r\n| where operationId == local_operationId\r\n| where operationName !contains \".GET\"\r\n| where operationName !contains \"FabricCallback\"\r\n| where operationName !contains \"NrpCallback\"\r\n| where operationName !contains \"AllocateDisks\"\r\n| extend StartTime = datetime_add('Millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| extend durationInMin = e2EDurationInMilliseconds / 1000 / 60\r\n| project StartTime, EndTime = PreciseTimeStamp, operationId, correlationId, operationName, resourceGroupName, resourceName, \r\n  httpStatusCode, e2EDurationInMilliseconds, durationInMin, resultCode, errorDetails, requestEntity, subscriptionId, userAgent, \r\n  apiVersion, labels, region, RPTenant, clientPrincipalName, clientRequestId\r\n| project correlationId, operationId, subscriptionId, resourceGroupName, resourceName\r\n",
+          "panelPath": [
+            "Resource Operations",
+            "VM Operations",
+            "VM Operations",
+            "CRP",
+            "CRP",
+            "VM CRP Operations"
+          ]
+        }
+      ]
+    },
+    "Resource Operations > VM Operations > VM Operations > CRP > CRP > VM Operation Timeline": {
+      "panelPath": [
+        "Resource Operations",
+        "VM Operations",
+        "VM Operations",
+        "CRP",
+        "CRP",
+        "VM Operation Timeline"
+      ],
+      "queries": [
+        {
+          "id": "833387ca-d149-465d-bba3-bbf9928fcd0a",
+          "name": "VM Operation",
+          "groupId": "10fd74e2-d929-478b-b4af-9fdd725f15b9",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "VM Operation Timeline",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionid",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "resourcename",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "e2EDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "durationInMin",
+              "type": "long"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "requestEntity",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "labels",
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "clientPrincipalName",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "componentFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "componentTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionid",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "resourcename",
+              "externalSourceName": "resourceName",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('crp_allprod').ApiQosEvent\r\n| where PreciseTimeStamp between(starttime .. endtime)\r\n| where subscriptionId == subscriptionid\r\n| where resourceName contains resourcename\r\n| where operationName !contains \"GET\"\r\n| extend StartTime = datetime_add('Millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| extend durationInMin = e2EDurationInMilliseconds / 1000 / 60\r\n| project StartTime, EndTime = PreciseTimeStamp, operationId, correlationId, operationName, resourceGroupName, resourceName, \r\n  httpStatusCode, e2EDurationInMilliseconds, durationInMin, resultCode, errorDetails, requestEntity, subscriptionId, userAgent, \r\n  apiVersion, labels, region, RPTenant, clientPrincipalName, clientRequestId\r\n| extend Content = resultCode\r\n| extend Health = case (isnotempty(resultCode), \"Unhealthy\", \"Healthy\")\r\n| extend GroupBy = operationName\r\n| order by operationName",
+          "panelPath": [
+            "Resource Operations",
+            "VM Operations",
+            "VM Operations",
+            "CRP",
+            "CRP",
+            "VM Operation Timeline"
+          ]
+        }
+      ]
+    },
+    "VM / VMSS Activity > CRP Operation Log > CRP Operation Log > Component Call History": {
+      "panelPath": [
+        "VM / VMSS Activity",
+        "CRP Operation Log",
+        "CRP Operation Log",
+        "Component Call History"
+      ],
+      "queries": [
+        {
+          "id": "34408b30-7040-4614-a60e-49183d41ea9c",
+          "name": "Component Call",
+          "groupId": "8a17b430-7f0b-486a-b0de-6db42f2e892c",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Component Call History",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "operationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "componentName",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "operationResult",
+              "type": "string"
+            },
+            {
+              "name": "resultDetails",
+              "type": "string"
+            },
+            {
+              "name": "durationInMs",
+              "type": "real"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "operationid",
+              "externalSourceName": "operationId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('crp_allprod').ComponentQoSEvent\r\n| where PreciseTimeStamp between (starttime..endtime)\r\n| where activityId == operationid\r\n| project PreciseTimeStamp, activityId, componentName, operationName, operationResult, resultDetails, durationInMs, fabricCluster, fabricTenantName\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "VM / VMSS Activity",
+            "CRP Operation Log",
+            "CRP Operation Log",
+            "Component Call History"
+          ]
+        }
+      ]
+    },
+    "VM / VMSS Activity > CRP Operation Log > CRP Operation Log > CRP Context Activity Log": {
+      "panelPath": [
+        "VM / VMSS Activity",
+        "CRP Operation Log",
+        "CRP Operation Log",
+        "CRP Context Activity Log"
+      ],
+      "queries": [
+        {
+          "id": "e7fd01ab-f28e-4789-9e60-c0613496a179",
+          "name": "CRP Context Operation",
+          "groupId": "fdf7b2e7-c2cc-408f-9249-dcec46afa3a3",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "CRP Context Activity Log",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "operationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "traceLevel",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "callerName",
+              "type": "string"
+            },
+            {
+              "name": "lineNumber",
+              "type": "long"
+            },
+            {
+              "name": "sourceFile",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "operationid",
+              "externalSourceName": "operationId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('crp_allprod').ContextActivity\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where activityId == operationid\r\n| project PreciseTimeStamp, traceLevel, traceCode, Tid, subscriptionId, activityId, message, callerName, lineNumber, sourceFile, RPTenant, goalSeekingActivityId, tenantId, Node\r\n| project PreciseTimeStamp, traceLevel, Tid, activityId, message, callerName, lineNumber, sourceFile\r\n| extend level = case (traceLevel == 1, \"critical\", \r\n    traceLevel == 2, \"error\", \r\n    traceLevel == 3, \"warning\", \r\n    \"info\")\r\n| order by PreciseTimeStamp asc\r\n",
+          "panelPath": [
+            "VM / VMSS Activity",
+            "CRP Operation Log",
+            "CRP Operation Log",
+            "CRP Context Activity Log"
+          ]
+        }
+      ]
+    },
+    "VM / VMSS Activity > CRP Operation Log > CRP Operation Log > Operation Timeline": {
+      "panelPath": [
+        "VM / VMSS Activity",
+        "CRP Operation Log",
+        "CRP Operation Log",
+        "Operation Timeline"
+      ],
+      "queries": [
+        {
+          "id": "65ef953c-b33a-405d-b683-8ece6194de64",
+          "name": "Component Call",
+          "groupId": "328a3d36-fd31-4f35-9471-e5934e1b0a64",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Operation Timeline",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "operationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "componentName",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "operationResult",
+              "type": "string"
+            },
+            {
+              "name": "resultDetails",
+              "type": "string"
+            },
+            {
+              "name": "durationInMs",
+              "type": "real"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "8295d44c-699a-4c2e-b77c-562652c62398",
+              "majorVersion": 4,
+              "minorVersion": 0,
+              "internalDestinationName": "operationid",
+              "externalSourceName": "operationId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('crp_allprod').ComponentQoSEvent\r\n| where PreciseTimeStamp between (starttime..endtime)\r\n| where activityId == operationid\r\n| project PreciseTimeStamp, activityId, componentName, operationName, operationResult, resultDetails, durationInMs, fabricCluster, fabricTenantName\r\n| extend StartTime = datetime_add('Millisecond', -toint(durationInMs), PreciseTimeStamp), EndTime = PreciseTimeStamp\r\n| extend Health = case (operationResult == \"Success\", \"Healthy\", \"Unhealthy\")\r\n| extend GroupBy = strcat(componentName, \" : \", operationName), Content = operationName\r\n| order by StartTime asc",
+          "panelPath": [
+            "VM / VMSS Activity",
+            "CRP Operation Log",
+            "CRP Operation Log",
+            "Operation Timeline"
+          ]
+        }
+      ]
+    },
+    "VM / VMSS Activity > NRP Operation Log > NRP Operation Log > NRP Operation Log": {
+      "panelPath": [
+        "VM / VMSS Activity",
+        "NRP Operation Log",
+        "NRP Operation Log",
+        "NRP Operation Log"
+      ],
+      "queries": [
+        {
+          "id": "905cf7bb-5818-491e-bfb8-4b928a0aa6a6",
+          "name": "NRP Operation Log",
+          "groupId": "bbec12d8-d49d-41b9-a42e-ef28a7764c58",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "nrp",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "NRP Operation Log",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "crpoperationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "ResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceType",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationRequestId",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            },
+            {
+              "name": "HttpMethod",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "crpoperationid",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp.kusto.windows.net').database('mdsnrp').FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where InternalCorrelationId == crpoperationid\r\n| project PreciseTimeStamp, Level, ResourceGroup, ResourceName, ResourceType, CorrelationRequestId, Message, HttpMethod, OperationName, OperationId\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "VM / VMSS Activity",
+            "NRP Operation Log",
+            "NRP Operation Log",
+            "NRP Operation Log"
+          ]
+        }
+      ]
+    },
+    "VM / VMSS Activity > NRP Operation Log > NRP Operation Log > NRP Operation Timeline": {
+      "panelPath": [
+        "VM / VMSS Activity",
+        "NRP Operation Log",
+        "NRP Operation Log",
+        "NRP Operation Timeline"
+      ],
+      "queries": [
+        {
+          "id": "34872740-113a-40b3-bcfb-df2e4de55c86",
+          "name": "NRP Operation Timeline",
+          "groupId": "d34dbd01-8d8f-4e80-bb8d-b3ca53145074",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "nrp",
+          "database": "mdsnrp",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "NRP Operation Timeline",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "crpoperationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "CorrelationRequestId",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceType",
+              "type": "string"
+            },
+            {
+              "name": "HttpMethod",
+              "type": "string"
+            },
+            {
+              "name": "Success",
+              "type": "bool"
+            },
+            {
+              "name": "DurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "ErrorCode",
+              "type": "string"
+            },
+            {
+              "name": "ErrorDetails",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "crpoperationid",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp.kusto.windows.net').database('mdsnrp').QosEtwEvent\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where InternalCorrelationId == crpoperationid\r\n| project PreciseTimeStamp, todatetime(StartTime), CorrelationRequestId, OperationId, OperationName, ResourceGroup, ResourceName, ResourceType, HttpMethod, Success, DurationInMilliseconds, ErrorCode, ErrorDetails\r\n| extend EndTime = PreciseTimeStamp, GroupBy = OperationName, Content = ErrorCode\r\n| extend Health = case (Success == 0, \"Unhealthy\", \"Healthy\")\r\n| order by StartTime asc",
+          "panelPath": [
+            "VM / VMSS Activity",
+            "NRP Operation Log",
+            "NRP Operation Log",
+            "NRP Operation Timeline"
+          ]
+        }
+      ]
+    },
+    "VM / VMSS Activity > VM Allocation > VM Allocation > VM Allocation": {
+      "panelPath": [
+        "VM / VMSS Activity",
+        "VM Allocation",
+        "VM Allocation",
+        "VM Allocation"
+      ],
+      "queries": [
+        {
+          "id": "3b838496-0281-4c56-b968-e70477b02cbc",
+          "name": "VM Allocation in CRP",
+          "groupId": "5bc280ff-5bb9-410e-95a9-e16b8ecd70c1",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VM Allocation",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "operationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "traceLevel",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "callerName",
+              "type": "string"
+            },
+            {
+              "name": "lineNumber",
+              "type": "long"
+            },
+            {
+              "name": "sourceFile",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationid",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let starttime_crp_allocator = toscalar(cluster('azcrp.kusto.windows.net').database('crp_allprod').ContextActivity\r\n| where PreciseTimeStamp between( starttime .. endtime )\r\n| where activityId == operationid\r\n| where message contains \"+ ComputeAllocatorService.AllocateCompute\"\r\n| project PreciseTimeStamp);\r\nlet endtime_crp_allocator = toscalar(cluster('azcrp.kusto.windows.net').database('crp_allprod').ContextActivity\r\n| where PreciseTimeStamp between( starttime .. endtime )\r\n| where activityId == operationid\r\n| where message contains \"- ComputeAllocatorService.AllocateCompute\"\r\n| project PreciseTimeStamp);\r\ncluster('azcrp.kusto.windows.net').database('crp_allprod').ContextActivity\r\n| where PreciseTimeStamp between( starttime_crp_allocator .. endtime_crp_allocator )\r\n| where activityId == operationid\r\n| project PreciseTimeStamp, traceLevel, traceCode, Tid, subscriptionId, activityId, message, callerName, lineNumber, sourceFile, RPTenant, goalSeekingActivityId, tenantId, Node\r\n| project PreciseTimeStamp, traceLevel, Tid, activityId, message, callerName, lineNumber, sourceFile\r\n| order by PreciseTimeStamp asc\r\n| extend level = case (traceLevel == 1, \"critical\", \r\n    traceLevel == 2, \"error\", \r\n    traceLevel == 3, \"warning\", \r\n    \"info\")",
+          "panelPath": [
+            "VM / VMSS Activity",
+            "VM Allocation",
+            "VM Allocation",
+            "VM Allocation"
+          ]
+        }
+      ]
+    },
+    "VM / VMSS Activity > VMSS Goal Seeking (VMSS Only) > VMSS Goal Seeking (VMSS Only) > VMSS Container Goal Seeking Timeline": {
+      "panelPath": [
+        "VM / VMSS Activity",
+        "VMSS Goal Seeking (VMSS Only)",
+        "VMSS Goal Seeking (VMSS Only)",
+        "VMSS Container Goal Seeking Timeline"
+      ],
+      "queries": [
+        {
+          "id": "97e0941a-0f09-45a0-8152-cd0659ad3f3e",
+          "name": "VMSS Container Goal Seeking Timeline",
+          "groupId": "993389e7-a50e-4511-9173-895a8f808385",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "VMSS Container Goal Seeking Timeline",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "operationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationid",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('crp_allprod').VmssVMGoalSeekingActivity\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where activityId == operationid\r\n| project PreciseTimeStamp, traceLevel, Tid, activityId, message, vMName, goalStateResourceId\r\n| order by vMName asc, PreciseTimeStamp asc\r\n| extend StartTime = PreciseTimeStamp, Content = \"\", GroupBy = vMName, Health = \"healthy\"\r\n| extend flag = case (prev(vMName) <> vMName, \"start\", \r\n    next(vMName) <> vMName, \"end\", \"\")\r\n| where flag <> \"\"\r\n| extend EndTime = case(next(flag) == \"end\", next(PreciseTimeStamp), PreciseTimeStamp)\r\n| where flag <> \"end\"\r\n| project StartTime, EndTime, Content, GroupBy, Health, activityId",
+          "panelPath": [
+            "VM / VMSS Activity",
+            "VMSS Goal Seeking (VMSS Only)",
+            "VMSS Goal Seeking (VMSS Only)",
+            "VMSS Container Goal Seeking Timeline"
+          ]
+        }
+      ]
+    },
+    "VM / VMSS Activity > VMSS Goal Seeking (VMSS Only) > VMSS Goal Seeking (VMSS Only) > VMSS Goal Seeking Operation": {
+      "panelPath": [
+        "VM / VMSS Activity",
+        "VMSS Goal Seeking (VMSS Only)",
+        "VMSS Goal Seeking (VMSS Only)",
+        "VMSS Goal Seeking Operation"
+      ],
+      "queries": [
+        {
+          "id": "94ed83d4-1fb8-4544-b83a-f7444e46030a",
+          "name": "VMSS Goal Seeking Operation",
+          "groupId": "e2f96e6d-3643-44da-96c7-fb714ddbd51c",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VMSS Goal Seeking Operation",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "operationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "traceLevel",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "vMName",
+              "type": "string"
+            },
+            {
+              "name": "goalStateResourceId",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationid",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('crp_allprod').VmssVMGoalSeekingActivity\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where activityId == operationid\r\n| project PreciseTimeStamp, traceLevel, Tid, activityId, message, vMName, goalStateResourceId\r\n| order by PreciseTimeStamp asc\r\n| extend level = case( traceLevel == 1, \"critical\", \r\n    traceLevel == 2, \"error\",\r\n    traceLevel == 3, \"warning\",\r\n    \"info\")",
+          "panelPath": [
+            "VM / VMSS Activity",
+            "VMSS Goal Seeking (VMSS Only)",
+            "VMSS Goal Seeking (VMSS Only)",
+            "VMSS Goal Seeking Operation"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:36:00.437Z",
+    "totalPanels": 16,
+    "totalUniqueQueries": 18,
+    "totalWidgetRefs": 19
+  }
+}

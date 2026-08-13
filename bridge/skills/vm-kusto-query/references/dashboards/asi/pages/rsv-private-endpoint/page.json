@@ -1,0 +1,405 @@
+{
+  "properties": {
+    "alwaysExpandHeader": true
+  },
+  "entityType": "Page",
+  "id": "03c97547-575f-4c4e-82b1-0ac19405f770",
+  "description": "Gives details of lifecycle of PE created for RS vault",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "080fa0e3-d514-4fd7-bc3a-4e657116e4b8",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "RecoveryServices Private Endpoint",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "61c0093d-a65d-404b-8c85-ccd750edbffb",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "28bdee9f-cf7c-40b8-88be-384e1fa89269",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Table",
+                "id": "bc324c90-7324-46c0-825d-afbe10763a0b",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "TIMESTAMP",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+                      "majorVersion": 6,
+                      "minorVersion": 0,
+                      "internalDestinationName": "",
+                      "externalSourceName": "TIMESTAMP",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "TIMESTAMP",
+                    "uuid": "2e01d7a5-e2e9-4d45-94f6-9ab948e657a6",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "ResourceId",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+                      "majorVersion": 6,
+                      "minorVersion": 0,
+                      "internalDestinationName": "TIMESTAMP",
+                      "externalSourceName": "ResourceId",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "ResourceId",
+                    "uuid": "d939d9c3-4067-4e9b-b3dd-53585633600a",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "PEName",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+                      "majorVersion": 6,
+                      "minorVersion": 0,
+                      "internalDestinationName": "(All Data)",
+                      "externalSourceName": "PEName",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "PEName",
+                    "uuid": "a6e99384-77e5-4c84-a2ee-5074d8593a93",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Recovery Services Vaults - PrivateEndpointPage",
+                    "props": {
+                      "pageServiceId": "Recovery Services Vaults"
+                    },
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "7fb63dcc-e57e-4829-a5a5-b6ba0985e967",
+                    "pageId": "ea61255e-e5d5-4feb-9cce-0f256b3ac860",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+                        "majorVersion": 6,
+                        "minorVersion": 0,
+                        "internalDestinationName": "PEName",
+                        "externalSourceName": "PEName",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+                        "majorVersion": 6,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVResourceId",
+                        "externalSourceName": "ResourceId",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVDeploymentName",
+                        "externalSourceName": "RSVDeploymentName",
+                        "required": false
+                      }
+                    ],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "7e56fb69-0eca-4d7b-adcf-d845b4592469",
+                    "idForPopups": "7e56fb69-0eca-4d7b-adcf-d845b4592469",
+                    "groupId": "f5c51840-254b-48c1-b09f-75f554a06cbe",
+                    "majorVersion": 3,
+                    "minorVersion": 1,
+                    "serviceId": "Recovery Services Vaults",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVSubscriptionId",
+                        "externalSourceName": "RSVSubscriptionId",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVName",
+                        "externalSourceName": "RSVName",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVDeploymentName",
+                        "externalSourceName": "RSVDeploymentName",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "StartTime",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "EndTime",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  },
+                  {
+                    "id": "ae4c5d71-5859-4d9c-a73a-a4bdbb26a456",
+                    "idForPopups": "ae4c5d71-5859-4d9c-a73a-a4bdbb26a456",
+                    "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+                    "majorVersion": 6,
+                    "minorVersion": 0,
+                    "serviceId": "Recovery Services Vaults",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVSubscriptionId",
+                        "externalSourceName": "RSVSubscriptionId",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVDeploymentName",
+                        "externalSourceName": "RSVDeploymentName",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "StartTime",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "EndTime",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVName",
+                        "externalSourceName": "RSVName",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "Private Endpoints for Vault",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "InlineUnderneath"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 48,
+  "basedOnVersionId": "d47244b5-f1f1-44c9-8397-c2d450b71e64",
+  "groupId": "87940dbe-7b57-4961-8d43-c8b0d9922660",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "RSVSubscriptionId",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "default": "14d16a2a-56f6-4c75-b091-084df9640297",
+      "optional": false,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "RSVDeploymentName",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "RSVName",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "default": "hana-swagger-pe-vault1",
+      "optional": false,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "Recovery Services Vaults",
+      "groupId": "f5c51840-254b-48c1-b09f-75f554a06cbe",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Recovery Services Vaults",
+      "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Recovery Services Vaults",
+      "id": "ea61255e-e5d5-4feb-9cce-0f256b3ac860",
+      "groupId": "ea61255e-e5d5-4feb-9cce-0f256b3ac860",
+      "entityType": "Page"
+    }
+  ],
+  "serviceId": "Recovery Services Vaults",
+  "deleted": false,
+  "name": "Private Endpoint",
+  "_ts": 1721304780,
+  "databaseSavedTimestamp": "2024-07-18T12:13:00+00:00",
+  "_etag": "\"0a006ae2-0000-2000-0000-669906cc0000\"",
+  "createdAt": "2024-07-18T12:13:00.6715276+00:00",
+  "createdBy": "shtriv@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "shtriv@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2024-07-18T12:13:00.6715276+00:00",
+  "tags": []
+}

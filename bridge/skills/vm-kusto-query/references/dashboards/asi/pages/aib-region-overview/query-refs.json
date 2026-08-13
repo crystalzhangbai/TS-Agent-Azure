@@ -1,0 +1,399 @@
+[
+  {
+    "groupId": "1c942b1f-6258-4496-8aad-2b35a0c2fa69",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "RegionOverview",
+      "PopReceipt Count Over Time"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PopReceipt Count Over Time",
+    "queryId": "24b25df6-4f05-42bf-9ece-65fbcfc36600",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "9c02dbad-c15a-4d9f-b833-b2054e496d6c",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "internalDestinationName": "targetRegion",
+        "externalSourceName": "Value",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PopReceipt Count Over Time - No VMSS",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "targetRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "MessageInProcess",
+        "type": "long"
+      },
+      {
+        "name": "Threshold",
+        "type": "long"
+      },
+      {
+        "name": "HalfThreshold",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9c02dbad-c15a-4d9f-b833-b2054e496d6c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "RegionOverview",
+      "PopReceipt Count Over Time"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PopReceipt Count Over Time",
+    "queryId": "0f3105b7-89d2-41e2-b1ed-be69b54bb239",
+    "inputMappings": [],
+    "name": "ListRpSectors",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Filter",
+    "params": [],
+    "schema": [
+      {
+        "name": "Value",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1c942b1f-6258-4496-8aad-2b35a0c2fa69",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "RegionOverview",
+      "PopReceipt Count Over Time"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "PreciseTimeStamp",
+    "name": "PopReceipt Count Over Time - No VMSS",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "targetRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "MessageInProcess",
+        "type": "long"
+      },
+      {
+        "name": "Threshold",
+        "type": "long"
+      },
+      {
+        "name": "HalfThreshold",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1c942b1f-6258-4496-8aad-2b35a0c2fa69",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "RegionOverview",
+      "PopReceipt Count Over Time"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "RPSector",
+    "name": "PopReceipt Count Over Time - No VMSS",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "targetRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "MessageInProcess",
+        "type": "long"
+      },
+      {
+        "name": "Threshold",
+        "type": "long"
+      },
+      {
+        "name": "HalfThreshold",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1c942b1f-6258-4496-8aad-2b35a0c2fa69",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "RegionOverview",
+      "PopReceipt Count Over Time"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "MessageInProcess",
+    "name": "PopReceipt Count Over Time - No VMSS",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "targetRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "MessageInProcess",
+        "type": "long"
+      },
+      {
+        "name": "Threshold",
+        "type": "long"
+      },
+      {
+        "name": "HalfThreshold",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1c942b1f-6258-4496-8aad-2b35a0c2fa69",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "RegionOverview",
+      "PopReceipt Count Over Time"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Threshold",
+    "name": "PopReceipt Count Over Time - No VMSS",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "targetRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "MessageInProcess",
+        "type": "long"
+      },
+      {
+        "name": "Threshold",
+        "type": "long"
+      },
+      {
+        "name": "HalfThreshold",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1c942b1f-6258-4496-8aad-2b35a0c2fa69",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "RegionOverview",
+      "PopReceipt Count Over Time"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "HalfThreshold",
+    "name": "PopReceipt Count Over Time - No VMSS",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "targetRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "MessageInProcess",
+        "type": "long"
+      },
+      {
+        "name": "Threshold",
+        "type": "long"
+      },
+      {
+        "name": "HalfThreshold",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  }
+]

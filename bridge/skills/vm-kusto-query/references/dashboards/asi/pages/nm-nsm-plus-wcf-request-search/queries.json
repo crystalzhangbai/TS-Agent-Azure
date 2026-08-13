@@ -1,0 +1,146 @@
+[
+  {
+    "id": "b56fda94-83e9-481b-84e1-3f9ffbf9280b",
+    "name": "Retrieve Resource \"NsmPlus WcfRequest Search\"",
+    "groupId": "5299dc36-6860-440c-9337-b12984a36e60",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "nsmplus",
+    "type": "ResourceGet",
+    "kustoQuery": "let startTime = datetime_add('day', -1, local_PreciseTimeStamp);\nlet endTime = datetime_add('hour', 1, local_PreciseTimeStamp);\nWcfRequestProcessing\n| where PreciseTimeStamp between (startTime .. endTime)\n| where additional has local_TenantName\n| summarize arg_max(PreciseTimeStamp, *) by additional\n| extend TenantName = local_TenantName\n| project PreciseTimeStamp, Tenant, action, additional, TenantName\n| top 1 by PreciseTimeStamp desc",
+    "params": [
+      {
+        "name": "local_PreciseTimeStamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_TenantName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "action",
+        "type": "string"
+      },
+      {
+        "name": "additional",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  },
+  {
+    "id": "4aa6946d-45f2-4d9d-a132-de5bcfeeba93",
+    "name": "NsmPlus TraceLog",
+    "groupId": "11297adb-3a3e-4c91-9c26-cbfe1a6915d0",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "nsmplus",
+    "type": "Table",
+    "kustoQuery": "let startTime = datetime_add('hour', -12, timestamp);\nlet endTime = datetime_add('hour', 1, timestamp);\nTraceLogs\n| where PreciseTimeStamp between (startTime..endTime) \n| where text contains TenantName\n//| where text contains 'Exception'\n//| where text !contains 'Updated: /vnets'\n| project PreciseTimeStamp, Tenant, text \n| top 100 by PreciseTimeStamp desc",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "TenantName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  },
+  {
+    "id": "d8a738ce-9608-4091-b585-3c5a444f1ccd",
+    "name": "NsmPlusWcfRequest",
+    "groupId": "1b69ec68-9c39-4229-a33a-daa9007c34d4",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "nsmplus",
+    "type": "CoBeTimeline",
+    "kustoQuery": "let startTime = datetime_add('hour', -12, timestamp);\nlet endTime = datetime_add('hour', 1, timestamp);\nWcfRequestProcessing\n| where PreciseTimeStamp between (startTime..endTime) \n| where additional has TenantName\n| summarize arg_min(PreciseTimeStamp, *) by additional\n| top 100 by PreciseTimeStamp desc\n| project  StartTime = PreciseTimeStamp, EventId = messageId, EventName = action,\nProperties = tostring(pack('additional', additional))",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "TenantName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  }
+]

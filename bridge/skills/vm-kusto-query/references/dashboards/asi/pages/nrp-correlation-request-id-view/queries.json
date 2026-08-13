@@ -1,0 +1,1546 @@
+[
+  {
+    "id": "dcbb5ae1-4ed3-4816-8f1a-125fa64fdd4b",
+    "name": "correlId",
+    "groupId": "eb0a6d81-1256-4ffe-aa2f-3f01c04d7916",
+    "majorVersion": 15,
+    "minorVersion": 6,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let qos_errs=QosEtwEvent\r\n        | where TIMESTAMP between(queryFrom..queryTo)\r\n        | where (region==\"all\" or isempty(region)) or Region ==region\r\n        | where Success==false\r\n        | where isempty(subscriptionId) or SubscriptionId ==subscriptionId\r\n        | where isempty(correlationId) or CorrelationRequestId==correlationId\r\n        | where isempty(operationId) or OperationId==operationId\r\n        | where (isempty(resourceGroupName_) or resourceGroupName_ startswith \"Test\") or ResourceGroup ==resourceGroupName_\r\n        | summarize qos_err_count=countif(Success==false), UserError=strcat_array(make_set(UserError), '|'), ErrorCodes=make_set_if(ErrorCode, isnotempty(ErrorCode)) by CorrelationRequestId;\r\nFrontendOperationEtwEvent\r\n| union  withsource=TableName FrontendReadOperationEtwEvent\r\n| where Tables=='all' or TableName==Tables\r\n        | where TIMESTAMP between(queryFrom..queryTo)\r\n        | where (region==\"all\" or isempty(region)) or Region ==region\r\n        | where isempty(subscriptionId) or SubscriptionId ==subscriptionId\r\n        | where isempty(correlationId) or CorrelationRequestId==correlationId\r\n        | where isempty(operationId) or OperationId==operationId\r\n        | where (isempty(resourceGroupName_) or resourceGroupName_ startswith \"Test\") or ResourceGroup ==resourceGroupName_\r\n        | where show_only_operationNames==false or isnotempty(OperationName)\r\n        | extend query_key=bag_pack_columns(TIMESTAMP, Region, OperationName, SubscriptionId, CorrelationRequestId, OperationId, TableName, ResourceGroup, ResourceName)\r\n        | extend  Content=strcat(OperationName, 'corrid:', substring(CorrelationRequestId, 0, 6), '|opid:', substring(OperationId, 0, 6))\r\n        | join kind=leftouter qos_errs on CorrelationRequestId\r\n        | extend ERR=qos_err_count>0//Level<=2 or Message contains \"exception\"\r\n        | extend qos_err_msg=iff(ERR, strcat(';', strcat_array(ErrorCodes, ',')),''),\r\n                 feerr_msg=iff((Level<=2 or Message contains \"exception\"), \r\n                                        strcat('FEmsg:', iff(isnotempty(EventCode), EventCode, substring(Message, 0, 40)))\r\n                                        , '')\r\n        | extend err_msg=strcat(qos_err_msg, feerr_msg)\r\n        | summarize n=count(),\r\n                    min(Sequence), max(Sequence),\r\n                    err=sum(qos_err_count), err_msgs=make_set_if(err_msg, ERR==true),\r\n                    min_Lvl=min(Level),\r\n                    StartTime=arg_min(PreciseTimeStamp, query_key),\r\n                    EndTime=max(PreciseTimeStamp),\r\n                    num_locks=countif(EventCode==\"Locked\"),\r\n                    ResourceGroups=strcat_array(make_set_if(ResourceGroup, isnotempty(ResourceGroup)), ','),\r\n                    ResourceNames=strcat_array(make_set_if(ResourceName, isnotempty(ResourceName)), ',')\r\n                    by Content\r\n        | where show_only_errs==false or err>0\r\n         | where show_only_locks==false or num_locks>0\r\n        | extend Content=strcat(Content, '|n:', n, iff(err>0, strcat('|err:', err), ''), '|minLvl:', min_Lvl, iff(num_locks>0, strcat('|Locks:', num_locks), ''))\r\n        | extend duration_msecs=datetime_diff(\"millisecond\", EndTime, StartTime)\r\n        | extend t=bin(datetime_diff(\"millisecond\", StartTime, queryFrom), bin_size_sec*1000.0)\r\n        | where duration_msecs>=minDurationToShow_sec*1000.0\r\n        | extend Content=strcat(Content, '|msecs:', duration_msecs), t=tolong(t), duration_hrs=round(duration_msecs/1000.0/60.0/60.0,1)\r\n        | extend GroupBy=strcat('msecs_from_qstart:', strcat_array(repeat('0', 8 - strlen(tostring(t))),''), tostring(t)), Health=iff(min_Lvl<=2, \"Error\", iff(min_Lvl<=4, \"Degraded\",\"Neutral\")),\r\n                 err_enum=strcat_array(err_msgs, ',')\r\n        | sort by StartTime asc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-05-31T06:45:15.272Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-01T06:45:15.272Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "correlationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "bin_size_sec",
+        "description": "",
+        "type": "real",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "minDurationToShow_sec",
+        "description": "",
+        "type": "real",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "show_only_errs",
+        "description": "",
+        "type": "bool",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "show_only_locks",
+        "description": "",
+        "type": "bool",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "show_only_operationNames",
+        "description": "",
+        "type": "bool",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroupName_",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "Tables",
+        "description": "",
+        "type": "enum",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "n",
+        "type": "long"
+      },
+      {
+        "name": "min_Sequence",
+        "type": "long"
+      },
+      {
+        "name": "max_Sequence",
+        "type": "long"
+      },
+      {
+        "name": "err",
+        "type": "long"
+      },
+      {
+        "name": "err_msgs",
+        "type": "dynamic"
+      },
+      {
+        "name": "min_Lvl",
+        "type": "long"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "query_key",
+        "type": "dynamic"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "num_locks",
+        "type": "long"
+      },
+      {
+        "name": "ResourceGroups",
+        "type": "string"
+      },
+      {
+        "name": "ResourceNames",
+        "type": "string"
+      },
+      {
+        "name": "duration_msecs",
+        "type": "long"
+      },
+      {
+        "name": "t",
+        "type": "long"
+      },
+      {
+        "name": "duration_hrs",
+        "type": "real"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "err_enum",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "cffb1b06-1fc9-4fc9-aa6d-1b27dae20e88",
+    "name": "fe_popup",
+    "groupId": "3c14f2e7-6adb-4c28-89f8-db0a9251de36",
+    "majorVersion": 8,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let starttime=todatetime(qk.TIMESTAMP)-10m;\r\nlet endtime=starttime+1h;\r\nlet correllationId=tostring(qk.CorrelationRequestId);\r\nlet operationId=tostring(qk.OperationId);\r\nlet region=tostring(qk.Region);\r\nlet tid_query=iff(tid_query_>0, tolong(tid_query_), long(null));\r\n//\r\nFrontendOperationEtwEvent|union  FrontendReadOperationEtwEvent\r\n| where TIMESTAMP between(starttime..endtime)\r\n        | where isempty(region) or Region ==region\r\n        //| where SubscriptionId ==\"322291f3-f4f0-4c13-81b3-a008a87d891b\"\r\n        | where CorrelationRequestId==correllationId\r\n        | where isempty(operationId) or OperationId==operationId\r\n        | where isempty(tid_query) or Tid==tid_query\r\n        | where show_only_locks==false or EventCode contains \"lock\"\r\n        | where Sequence >min_Sequence and (max_Sequence<=0 or Sequence <max_Sequence)\r\n        | project SourceAssemblyFileVersion, TIMESTAMP, SubscriptionId, ResourceGroup, ResourceName, OperationName, \r\n                         CorrelationRequestId, OperationId, Tid, Level, EventCode, Sequence, Continuation, msg_sz=string_size(Message), Message, group=strcat(CorrelationRequestId),PreciseTimeStamp\r\n        | invoke StepTimer()\r\n        | where min_step_dur==0 or step_duration_ms >=min_step_dur\r\n        | where Level <= maxLevel\r\n        | extend ERR= Level<=2 or Message contains \"exception\"\r\n        | where show_only_errs==false or ERR==true",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-05-31T06:45:15.272Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-01T06:45:15.272Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qk",
+        "description": "",
+        "type": "dynamic",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "min_step_dur",
+        "description": "",
+        "type": "long",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "maxLevel",
+        "description": "",
+        "type": "long",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "tid_query_",
+        "description": "",
+        "type": "long",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "min_Sequence",
+        "description": "",
+        "type": "long",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "max_Sequence",
+        "description": "",
+        "type": "long",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "show_only_locks",
+        "description": "",
+        "type": "bool",
+        "default": "false",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "show_only_errs",
+        "description": "",
+        "type": "bool",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "SourceAssemblyFileVersion",
+        "type": "string"
+      },
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      },
+      {
+        "name": "Sequence",
+        "type": "long"
+      },
+      {
+        "name": "Continuation",
+        "type": "bool"
+      },
+      {
+        "name": "msg_sz",
+        "type": "long"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "group",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "cumulative_duration",
+        "type": "long"
+      },
+      {
+        "name": "step_num",
+        "type": "long"
+      },
+      {
+        "name": "step_duration_ms",
+        "type": "long"
+      },
+      {
+        "name": "final_group_duration",
+        "type": "long"
+      },
+      {
+        "name": "ERR",
+        "type": "bool"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "d6b98839-e6c0-4065-a6a0-1d8100b1fcb2",
+    "name": "GetRequestBody",
+    "groupId": "85be01a8-a215-417b-a537-fb7b68965c6f",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let starttime=todatetime(qk.TIMESTAMP)-10m;\r\nlet endtime=starttime+1d;\r\nlet correllationId=tostring(qk.CorrelationRequestId);\r\nlet operationId=tostring(qk.OperationId);\r\nlet region=tostring(qk.Region);\r\n//print query=qk\r\nWriteOperationResponseEtwEvent\r\n| union ReadOperationResponseEtwEvent\r\n| where TIMESTAMP between(starttime..endtime) \r\n| where Region==region \r\n| where CorrelationRequestId ==correllationId\r\n| where QueryWithOperationId==false or OperationId==operationId \r\n| project TIMESTAMP, OperationName, HttpMethod, DurationInMillisecond, Request, Response, HttpStatusCode, Message, ErrorCode, CorrelationRequestId, OperationId",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-05-30T23:59:05.102Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-01T23:59:05.102Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qk",
+        "description": "",
+        "type": "dynamic",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "QueryWithOperationId",
+        "description": "",
+        "type": "bool",
+        "default": "true",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "HttpMethod",
+        "type": "string"
+      },
+      {
+        "name": "DurationInMillisecond",
+        "type": "long"
+      },
+      {
+        "name": "Request",
+        "type": "string"
+      },
+      {
+        "name": "Response",
+        "type": "string"
+      },
+      {
+        "name": "HttpStatusCode",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "1e82f18b-f5ab-4d4e-b8e4-316db4d42267",
+    "name": "FE_Tid_query",
+    "groupId": "28f079d6-58b8-46f5-8f36-bdf4d01c2d4f",
+    "majorVersion": 6,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let starttime=todatetime(qk.TIMESTAMP)-1d;\r\nlet endtime=todatetime(qk.TIMESTAMP)+1d;\r\nlet correllationId=tostring(qk.CorrelationRequestId);\r\nlet operationId=tostring(qk.OperationId);\r\nlet region=tostring(qk.Region);\r\nlet errlist=iff(isempty(errors), dynamic(null), split(errors, ','));\r\n//\r\nFrontendOperationEtwEvent|union  FrontendReadOperationEtwEvent\r\n| where TIMESTAMP between(starttime..endtime)\r\n        | where isempty(region) or Region ==region\r\n        | where CorrelationRequestId==correllationId\r\n        | where isempty(operationId) or OperationId==operationId\r\n        | extend ERR= Level<=2 or Message contains \"exception\"\r\n        | extend err_msg=iff(ERR, iff(isnotempty(EventCode), EventCode, substring(Message, 0, 40)), '')\r\n        | where isempty(errlist) or err_msg in (errlist)\r\n        | summarize StartTime=min(PreciseTimeStamp),\r\n                    EndTime=max(PreciseTimeStamp),\r\n                    n=count(),\r\n                    err=countif(ERR),\r\n                    min_Lvl=min(Level),\r\n                    err_msgs=make_set_if(err_msg, ERR==true),\r\n                    num_locks=countif(EventCode contains \"Lock\"),\r\n                    make_set(Level),\r\n                    min(Sequence), max(Sequence)\r\n                    by OperationName, CorrelationRequestId, OperationId, Tid\r\n        | where select_locks==false or num_locks>0\r\n        | extend //Content=strcat('Tid:', Tid, '|', OperationName, '|n:', n, iff(num_locks>0, strcat('|Locks:', num_locks), '')),\r\n                 Content=strcat('Tid:', Tid, '|', OperationName, iff(err>0, strcat('err:', err), ''), '|n:', n, '|minLvl:', min_Lvl, '|Locks:', num_locks),\r\n                 Tooltip=strcat_array(err_msgs, ','),\r\n                GroupBy=strcat('Tid:', Tid, '|Opid:', substring(OperationId, 0, 8), '|', OperationName),\r\n                Health=iff(min_Lvl<=2, \"Error\", iff(min_Lvl<=4, \"Degraded\",\"Neutral\"))\r\n        | sort by StartTime asc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-01T16:24:00.489Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-02T01:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qk",
+        "description": "",
+        "type": "dynamic",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "errors",
+        "description": "",
+        "type": "dynamic",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "select_locks",
+        "description": "",
+        "type": "bool",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "n",
+        "type": "long"
+      },
+      {
+        "name": "err",
+        "type": "long"
+      },
+      {
+        "name": "min_Lvl",
+        "type": "long"
+      },
+      {
+        "name": "err_msgs",
+        "type": "dynamic"
+      },
+      {
+        "name": "num_locks",
+        "type": "long"
+      },
+      {
+        "name": "set_Level",
+        "type": "dynamic"
+      },
+      {
+        "name": "min_Sequence",
+        "type": "long"
+      },
+      {
+        "name": "max_Sequence",
+        "type": "long"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "7a13a129-14b7-4e48-945c-3b0372cdb5c0",
+    "name": "ARM_Correl",
+    "groupId": "7154d656-0046-4aeb-ac5e-3360157baf71",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let starttime=todatetime(qk.TIMESTAMP)-1h;\r\nlet endtime=starttime+2h;\r\nlet correllationId_q=tostring(qk.CorrelationRequestId);\r\nlet subscriptionId_q=tostring(qk.SubscriptionId);\r\n//\r\nlet ARMPRODEntityGroup = entity_group [cluster('armprodeus.eastus.kusto.windows.net'),\r\n                                       cluster('armprodweu.westeurope.kusto.windows.net'),\r\n                                       cluster('armprodsea.southeastasia.kusto.windows.net')];\r\nmacro-expand isfuzzy=true ARMPRODEntityGroup as X\r\n    (\r\n        X.database('Requests').HttpIncomingRequests | union X.database(\"Requests\").HttpIncomingRequests\r\n        | extend $cluster = X.$current_cluster_endpoint\r\n        | where PreciseTimeStamp between(starttime..endtime)\r\n       // | where targetResourceProvider==\"MICROSOFT.NETWORK\"\r\n       | where ignore_200==false or bin(httpStatusCode, 100)!=200\r\n        | where correlationId == correllationId_q\r\n    )",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-04-30T05:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-04-30T12:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "test",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qk",
+        "description": "",
+        "type": "dynamic",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "ignore_200",
+        "description": "",
+        "type": "bool",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Deployment",
+        "type": "string"
+      },
+      {
+        "name": "RoleLocation",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "ReleaseVersion",
+        "type": "string"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "ProviderGuid",
+        "type": "string"
+      },
+      {
+        "name": "ProviderName",
+        "type": "string"
+      },
+      {
+        "name": "EventId",
+        "type": "long"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "TaskName",
+        "type": "string"
+      },
+      {
+        "name": "ActivityId",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "principalOid",
+        "type": "string"
+      },
+      {
+        "name": "principalPuid",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "authorizationSource",
+        "type": "string"
+      },
+      {
+        "name": "authorizationAction",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "httpMethod",
+        "type": "string"
+      },
+      {
+        "name": "hostName",
+        "type": "string"
+      },
+      {
+        "name": "targetUri",
+        "type": "string"
+      },
+      {
+        "name": "userAgent",
+        "type": "string"
+      },
+      {
+        "name": "clientRequestId",
+        "type": "string"
+      },
+      {
+        "name": "clientSessionId",
+        "type": "string"
+      },
+      {
+        "name": "clientIpAddress",
+        "type": "string"
+      },
+      {
+        "name": "clientApplicationId",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "contentLength",
+        "type": "long"
+      },
+      {
+        "name": "serviceRequestId",
+        "type": "string"
+      },
+      {
+        "name": "durationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "httpStatusCode",
+        "type": "long"
+      },
+      {
+        "name": "exceptionMessage",
+        "type": "string"
+      },
+      {
+        "name": "errorCode",
+        "type": "string"
+      },
+      {
+        "name": "failureCause",
+        "type": "string"
+      },
+      {
+        "name": "errorMessage",
+        "type": "string"
+      },
+      {
+        "name": "referer",
+        "type": "string"
+      },
+      {
+        "name": "commandName",
+        "type": "string"
+      },
+      {
+        "name": "parameterSetName",
+        "type": "string"
+      },
+      {
+        "name": "contentType",
+        "type": "string"
+      },
+      {
+        "name": "contentEncoding",
+        "type": "string"
+      },
+      {
+        "name": "armServiceRequestId",
+        "type": "string"
+      },
+      {
+        "name": "organizationId",
+        "type": "string"
+      },
+      {
+        "name": "activityVector",
+        "type": "string"
+      },
+      {
+        "name": "locale",
+        "type": "string"
+      },
+      {
+        "name": "realPuid",
+        "type": "string"
+      },
+      {
+        "name": "altSecId",
+        "type": "string"
+      },
+      {
+        "name": "additionalProperties",
+        "type": "string"
+      },
+      {
+        "name": "targetResourceProvider",
+        "type": "string"
+      },
+      {
+        "name": "targetResourceType",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "ClusterName",
+        "type": "string"
+      },
+      {
+        "name": "MonitoringApplication",
+        "type": "string"
+      },
+      {
+        "name": "ProviderNamespace",
+        "type": "string"
+      },
+      {
+        "name": "body",
+        "type": "string"
+      },
+      {
+        "name": "env_name",
+        "type": "string"
+      },
+      {
+        "name": "env_time",
+        "type": "datetime"
+      },
+      {
+        "name": "env_ver",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "severityNumber",
+        "type": "long"
+      },
+      {
+        "name": "severityText",
+        "type": "string"
+      },
+      {
+        "name": "$cluster",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "dc4540ac-7df3-4401-b42a-f6f667c00df0",
+    "name": "correlActivity",
+    "groupId": "a6d46a77-737a-44cc-a1ce-f24993d43ad3",
+    "majorVersion": 6,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let correllationId=tostring(qk.CorrelationRequestId);\r\nlet operationId=tostring(qk.OperationId);\r\nlet region=tostring(qk.Region);\r\nlet time_span=1m;\r\n//\r\nlet activity=FrontendOperationEtwEvent\r\n| where TIMESTAMP between(starttime..endtime)\r\n        | where isempty(region) or Region ==region\r\n        | where CorrelationRequestId==correllationId\r\n       // | where isempty(operationId) or OperationId==operationId\r\n        | extend ERR= Level<=2 or Message contains \"exception\"\r\n        | extend err_msg=iff(ERR, iff(isnotempty(EventCode), EventCode, substring(Message, 0, 40)), ''),\r\n                timepoint=bin(TIMESTAMP, time_span)\r\n        | summarize n=count(),\r\n                    Lock_actvity=countif(EventCode contains \"lock\"),\r\n                    err=countif(ERR)\r\n             by CorrelationRequestId, OperationId, timepoint, Level, RoleInstance, Pid\r\n        | summarize \r\n                    activity=sum(n),\r\n                    dcount(CorrelationRequestId),\r\n                    dcount(OperationId),\r\n                    Lock_actvity=sum(Lock_actvity),\r\n                    err=sum(err),\r\n                    Lvl2=sumif(n,Level<=2),\r\n                    Lvl4=sumif(n,Level<=4),\r\n                    Lvl8=sumif(n,Level<=8)\r\n             by timepoint, RoleInstance, Pid;\r\n       let rrq=toscalar(activity| summarize count() by RoleInstance, Pid| top 1 by count_| project pack_all());\r\n       let contentionrate=PerfCounterQuery_NRPCounter5m(starttime, endtime, role_instance_query=tostring(rrq.RoleInstance), countername_query=\"Contention Rate / sec\", pid_query=tolong(rrq.Pid), time_span=time_span, CounterValueType=\"P90\", ServiceTypes=\"GatewayService|Nrp.Frontend.Service|Nrp.RcFrontend.Service\")\r\n        | summarize ContentionRate=tolong(max(CounterValue)) by timepoint=bin(timepoint, time_span), label=strcat(RoleInstance, '|pid:', Pid)\r\n        | where ContentionRate>0;\r\n      activity \r\n      | project timepoint, label=strcat(RoleInstance, '|pid:', Pid), activity, dcount_OperationId, \r\n                 Lock_actvity, err, Lvl2, Lvl4, Lvl8\r\n      | union contentionrate\r\n      | project timepoint, label, ContentionRate,\r\n                activity, dcount_OperationId, \r\n                 Lock_actvity, err, Lvl2, Lvl4",
+    "params": [
+      {
+        "name": "qk",
+        "description": "",
+        "type": "dynamic",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "starttime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endtime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "timepoint",
+        "type": "datetime"
+      },
+      {
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "name": "ContentionRate",
+        "type": "long"
+      },
+      {
+        "name": "activity",
+        "type": "long"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "Lock_actvity",
+        "type": "long"
+      },
+      {
+        "name": "err",
+        "type": "long"
+      },
+      {
+        "name": "Lvl2",
+        "type": "long"
+      },
+      {
+        "name": "Lvl4",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "470803e6-25cd-4c48-abd7-c3e8e81682fb",
+    "name": "crp_apiqos",
+    "groupId": "a40b99a8-0cf9-42bc-8556-2a3b15174e6e",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let starttime=todatetime(qk.TIMESTAMP)-1h;\r\nlet endtime=starttime+1h;\r\nlet correllationId_q=tostring(qk.CorrelationRequestId);\r\nlet operationId_q=tostring(qk.OperationId);\r\nlet subscriptionId_q=tostring(qk.SubscriptionId);\r\nlet nrp_region_q=tostring(qk.Region);\r\nlet arm_region=NRPToARM(nrp_region_q);\r\ncluster('azcrp.kusto.windows.net').database('crp_allprod').ApiQosEvent\r\n    | where PreciseTimeStamp  between (starttime..endtime)\r\n    | where tolower(region)==arm_region or tolower(region)==nrp_region_q\r\n    | where ignore_200==false or bin(httpStatusCode, 100)!=200\r\n//\r\n    | where operationId==correllationId_q or goalSeekingActivityId==correllationId_q// or subscriptionId==subscriptionId_q\r\n    | extend queryMatch=iff(operationId==correllationId_q, 'nrp_correll_crpoperationId', iff(goalSeekingActivityId==correllationId_q, 'nrp_correll_crpgoalseekId', 'subid'))\r\n    | project TIMESTAMP, region, queryMatch, operationName, resourceGroupName, resourceName, operationId, resultType, httpStatusCode, resultCode, exceptionType, errorDetails, ids=bag_pack_columns(subscriptionId, operationId, clientRequestId, correlationId, internalCorrelationId)",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-07-19T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-07-21T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qk",
+        "description": "",
+        "type": "dynamic",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "ignore_200",
+        "description": "",
+        "type": "bool",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "queryMatch",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "operationId",
+        "type": "string"
+      },
+      {
+        "name": "resultType",
+        "type": "long"
+      },
+      {
+        "name": "httpStatusCode",
+        "type": "long"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "exceptionType",
+        "type": "string"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      },
+      {
+        "name": "ids",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "88dfe202-fa0b-49e9-aad9-711dd01a43a9",
+    "name": "correl_activity",
+    "groupId": "564ab03d-48a2-48d4-a051-db2daa9d98b8",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let time_span=10m;\r\nlet starttime=queryFrom;\r\nlet endtime=queryTo;\r\nlet resourceGroup_query=iff(isempty(resourceGroup_query_) or resourceGroup_query_ startswith(\"Test\"), '', resourceGroup_query_);\r\n//\r\nlet activity=FrontendOperationEtwEvent\r\n| where TIMESTAMP between(starttime..endtime)\r\n        | where region=='all' or Region==region\r\n        | where SubscriptionId==subscriptionId\r\n        | where isempty(correllationId) or CorrelationRequestId==correllationId\r\n        | where isempty(resourceGroup_query) or ResourceGroup contains resourceGroup_query\r\n        | extend ERR= Level<=2 or Message contains \"exception\"\r\n        | extend err_msg=iff(ERR, iff(isnotempty(EventCode), EventCode, substring(Message, 0, 40)), ''),\r\n                timepoint=bin(TIMESTAMP, time_span)\r\n        | summarize n=count(),\r\n                    Lock_actvity=countif(EventCode contains \"lock\"),\r\n                    err=countif(ERR)\r\n             by CorrelationRequestId, OperationId, timepoint, Level, RoleInstance, Pid\r\n        | summarize \r\n                    activity=sum(n),\r\n                    dcount(CorrelationRequestId),\r\n                    dcount(OperationId),\r\n                    Lock_actvity=sum(Lock_actvity),\r\n                    err=sum(err),\r\n                    Lvl2=sumif(n,Level==2),\r\n                    Lvl4=sumif(n,Level==4),\r\n                    Lvl8=sumif(n,Level==8)\r\n             by timepoint, RoleInstance, Pid;\r\n       let rrq=toscalar(activity| summarize count() by RoleInstance, Pid| top 1 by count_| project pack_all());\r\n       let contentionrate=PerfCounterQuery_NRPCounter5m(starttime, endtime, role_instance_query=tostring(rrq.RoleInstance), countername_query=\"Contention Rate / sec\", pid_query=tolong(rrq.Pid), time_span=time_span, CounterValueType=\"P90\", ServiceTypes=\"GatewayService|Nrp.Frontend.Service|Nrp.RcFrontend.Service\")\r\n        | summarize ContentionRate=tolong(max(CounterValue)) by timepoint=bin(timepoint, time_span), label=strcat(RoleInstance, '|pid:', Pid)\r\n        | where ContentionRate>0;\r\n      activity \r\n      | project timepoint, label=strcat(RoleInstance, '|pid:', Pid), activity, dcount_OperationId, \r\n                 Lock_actvity, err, Lvl2, Lvl4, Lvl8\r\n      | union contentionrate\r\n      | project timepoint, label, ContentionRate,\r\n                activity, dcount_OperationId, \r\n                 Lock_actvity, err, Lvl2, Lvl4",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-07-19T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-07-21T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "correllationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "enum",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroup_query_",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "timepoint",
+        "type": "datetime"
+      },
+      {
+        "name": "label",
+        "type": "string"
+      },
+      {
+        "name": "ContentionRate",
+        "type": "long"
+      },
+      {
+        "name": "activity",
+        "type": "long"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "Lock_actvity",
+        "type": "long"
+      },
+      {
+        "name": "err",
+        "type": "long"
+      },
+      {
+        "name": "Lvl2",
+        "type": "long"
+      },
+      {
+        "name": "Lvl4",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ac7756e6-9780-46e0-ab91-90b91c3a20b7",
+    "name": "qos_errs",
+    "groupId": "100b1029-b599-42f0-aff8-68ad5b981b7c",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let qos_errs=QosEtwEvent\r\n| where TIMESTAMP between(queryFrom..queryTo) and isnotempty(coalesce(subscriptionId, correlationId, resourceGroupName))\r\n| where region=='all' or Region==region\r\n| where isempty(subscriptionId) or SubscriptionId==subscriptionId\r\n| where isempty(correlationId) or CorrelationRequestId==correlationId\r\n| where isempty(resourceGroupName) or ResourceGroup==resourceGroupName\r\n| where ignoreSuccess==false or Success==False\r\n| extend RoleInstancePid=strcat(RoleInstance, '|', Pid),\r\n         Resource=strcat(ResourceGroup, '|', ResourceName)\r\n| summarize RoleInstancePid=strcat_array(array_sort_asc(make_set(RoleInstancePid)), ','), \r\n            dcount(CorrelationRequestId), \r\n            dcount(OperationId), \r\n            dcount(Resource), \r\n            Resources=make_set(Resource, 5), \r\n            max(TIMESTAMP),\r\n            take_any(ErrorDetails) \r\n        by Table=\"QosEtwEvent\", StackTrace, OperationName, UserError, ErrorCode;\r\nlet frontend_errs=FrontendOperationEtwEvent\r\n| where TIMESTAMP between(queryFrom..queryTo) and isnotempty(coalesce(subscriptionId, correlationId))\r\n| where region=='all' or Region==region\r\n| where isempty(subscriptionId) or SubscriptionId==subscriptionId\r\n| where isempty(correlationId) or CorrelationRequestId==correlationId\r\n| where isempty(resourceGroupName) or ResourceGroup==resourceGroupName\r\n| where Level<=2\r\n| extend RoleInstancePid=strcat(RoleInstance, '|', Pid),\r\n         Resource=strcat(ResourceGroup,'|', ResourceName)\r\n| summarize RoleInstancePid=strcat_array(array_sort_asc(make_set(RoleInstancePid)), ','), dcount(CorrelationRequestId), dcount(OperationId), dcount(Resource), Resources=make_set(Resource, 5), max(TIMESTAMP),  take_any(ErrorDetails=Message) by Table=\"FrontendOperationEtwEvent\", OperationName, EventCode;\r\nqos_errs| union frontend_errs\r\n| extend Resources=strcat('n=', dcount_Resource, '\\n', strcat_array(Resources, '\\n'))\r\n| sort by OperationName, Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-07-19T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-07-20T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "correlationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "enum",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "ignoreSuccess",
+        "description": "",
+        "type": "bool",
+        "default": "true",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Table",
+        "type": "string"
+      },
+      {
+        "name": "StackTrace",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "UserError",
+        "type": "bool"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstancePid",
+        "type": "string"
+      },
+      {
+        "name": "dcount_CorrelationRequestId",
+        "type": "long"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "dcount_Resource",
+        "type": "long"
+      },
+      {
+        "name": "Resources",
+        "type": "string"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

@@ -1,0 +1,565 @@
+{
+  "properties": {
+    "alwaysExpandHeader": true
+  },
+  "entityType": "Page",
+  "id": "6ea9c594-2e9d-42c3-b4c3-37e9e6d0438f",
+  "description": "Status of current build in Prod and Stage",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "bb762f89-1708-4c95-adc6-b9f4cd9796d8",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "Build Status",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "390e449c-fee7-40cd-9d6c-ba626c82bcd7",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "1e4513f7-35e6-4157-a17f-cd7afdbc0423",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Timeline",
+                "id": "1f115953-cc6b-4472-bf6c-f07234e03a35",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [
+                  {
+                    "type": "Popup",
+                    "id": "b33d0ab9-f434-40c7-9af1-ed877985183f",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "61fa36d5-a5dd-45ec-8ecc-ef061d55124c",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "a5286e94-4a9b-407f-b5f9-02d94eb13d55",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Card",
+                                "id": "867808c0-473e-479b-a650-d768ad6b75a1",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "{{ Content }}",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [
+                                  {
+                                    "friendlyName": "Build",
+                                    "props": {
+                                      "pageServiceId": "Azure VM Image Builder"
+                                    },
+                                    "type": "LinkToPage",
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "uuid": "3ca8b5ab-dc7b-4672-aa26-504861e023a6",
+                                    "linkText": "{{ GroupBy }}",
+                                    "pageId": "dc690046-3663-4d02-bc8a-b53389b6aef9",
+                                    "linkToPageInputMapping": [
+                                      {
+                                        "source": "Query_ColumnFromSingleRow",
+                                        "groupId": "3515ba14-75d1-45cd-ad77-5a6b017e690f",
+                                        "majorVersion": 5,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "serviceBuild",
+                                        "externalSourceName": "GroupBy",
+                                        "required": false,
+                                        "rowSelectionCriteria": "default",
+                                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                      }
+                                    ],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "Region",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "3515ba14-75d1-45cd-ad77-5a6b017e690f",
+                                      "majorVersion": 5,
+                                      "minorVersion": 0,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "Content",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default",
+                                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "Content",
+                                    "uuid": "1f2ca63c-4036-47dc-80dd-85500961ed37",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "StartTime",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "3515ba14-75d1-45cd-ad77-5a6b017e690f",
+                                      "majorVersion": 5,
+                                      "minorVersion": 0,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "StartTime",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default",
+                                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "StartTime",
+                                    "uuid": "2a5d34c4-20c8-47f0-b132-39582278a2c3",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "EndTime",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "3515ba14-75d1-45cd-ad77-5a6b017e690f",
+                                      "majorVersion": 5,
+                                      "minorVersion": 0,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "EndTime",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default",
+                                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "EndTime",
+                                    "uuid": "409220ce-8277-443f-bdd4-52c959575687",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  }
+                                ],
+                                "inputs": [],
+                                "queries": [],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "None"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "None"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {
+                      "forQueryReferenceId": "124a4b40-be9a-4bec-8531-3daa1238065c"
+                    },
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "124a4b40-be9a-4bec-8531-3daa1238065c",
+                    "idForPopups": "124a4b40-be9a-4bec-8531-3daa1238065c",
+                    "groupId": "3515ba14-75d1-45cd-ad77-5a6b017e690f",
+                    "majorVersion": 5,
+                    "minorVersion": 0,
+                    "serviceId": "Azure VM Image Builder",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "component_time_selector",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryFrom",
+                        "externalSourceName": "componentFrom",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "component_time_selector",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryTo",
+                        "externalSourceName": "componentTo",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "Build",
+                        "externalSourceName": "Build",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "cloud",
+                        "externalSourceName": "CloudEnvironment",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {
+                  "stack": "true",
+                  "initialZoomRange": "Source Mapping",
+                  "showRowNames": "true",
+                  "showFilter": "false",
+                  "sourceMappingStartTime": "{\"source\":\"asi_values\",\"internalDestinationName\":\"\",\"externalSourceName\":\"globalFrom\",\"required\":false,\"multipleValuesProcessingMode\":\"PassValuesIntoOneField\"}",
+                  "sourceMappingEndTime": "{\"source\":\"asi_values\",\"internalDestinationName\":\"\",\"externalSourceName\":\"globalTo\",\"required\":false,\"multipleValuesProcessingMode\":\"PassValuesIntoOneField\"}",
+                  "minZoom": "1296000",
+                  "headerInViewMode": "false",
+                  "isScrollable": "true"
+                },
+                "header": "Production Build Status",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "InlineOnRight"
+              },
+              {
+                "type": "Table",
+                "id": "5e5f67ea-5e0f-4acb-a544-0ebae3ac2bcd",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Builds",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "serviceBuild",
+                    "props": {
+                      "pageServiceId": "Azure VM Image Builder"
+                    },
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "2bc6eaa1-6059-4dfb-8d09-1f799f0621db",
+                    "linkText": "{{ serviceBuild }}",
+                    "pageId": "dc690046-3663-4d02-bc8a-b53389b6aef9",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+                        "majorVersion": 2,
+                        "minorVersion": 0,
+                        "internalDestinationName": "serviceBuild",
+                        "externalSourceName": "serviceBuild",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "RPTenant",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+                      "majorVersion": 2,
+                      "minorVersion": 0,
+                      "internalDestinationName": "serviceBuild",
+                      "externalSourceName": "RPTenant",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "RPTenant",
+                    "uuid": "cc1486bd-a2fb-4173-b958-28c317257f13",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "count",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+                      "majorVersion": 2,
+                      "minorVersion": 0,
+                      "internalDestinationName": "serviceBuild",
+                      "externalSourceName": "count",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "count",
+                    "uuid": "e8d5e8dd-ea8c-41f7-a918-64cd224500fa",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "firstSeen",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+                      "majorVersion": 2,
+                      "minorVersion": 0,
+                      "internalDestinationName": "serviceBuild",
+                      "externalSourceName": "firstSeen",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "firstSeen",
+                    "uuid": "2bf8fe23-3714-420c-8021-27519bec5c75",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "lastSeen",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+                      "majorVersion": 2,
+                      "minorVersion": 0,
+                      "internalDestinationName": "serviceBuild",
+                      "externalSourceName": "lastSeen",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "lastSeen",
+                    "uuid": "b57a1a00-8934-46fd-b46b-221da7f9ffa0",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "21fd2f6d-aa1b-4a03-a531-d8f638bf2163",
+                    "idForPopups": "21fd2f6d-aa1b-4a03-a531-d8f638bf2163",
+                    "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+                    "majorVersion": 2,
+                    "minorVersion": 0,
+                    "serviceId": "Azure VM Image Builder",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "Build",
+                        "externalSourceName": "Build",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 44,
+  "basedOnVersionId": "ad0730a8-6127-4ef6-a66f-efc3ea13d3fa",
+  "groupId": "d085fb56-6784-4f83-bfc0-2be98e9ffa33",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "Build",
+      "description": "Service Build",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "Azure VM Image Builder",
+      "groupId": "3515ba14-75d1-45cd-ad77-5a6b017e690f",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Azure VM Image Builder",
+      "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Azure VM Image Builder",
+      "id": "dc690046-3663-4d02-bc8a-b53389b6aef9",
+      "groupId": "dc690046-3663-4d02-bc8a-b53389b6aef9",
+      "entityType": "Page"
+    },
+    {
+      "serviceId": "Azure VM Image Builder",
+      "id": "dc690046-3663-4d02-bc8a-b53389b6aef9",
+      "groupId": "dc690046-3663-4d02-bc8a-b53389b6aef9",
+      "entityType": "Page"
+    }
+  ],
+  "serviceId": "Azure VM Image Builder",
+  "deleted": false,
+  "name": "Build Status",
+  "_ts": 1769697574,
+  "databaseSavedTimestamp": "2026-01-29T14:39:34+00:00",
+  "_etag": "\"0800c40c-0000-0800-0000-697b71260000\"",
+  "createdAt": "2026-01-29T14:39:34.1673799+00:00",
+  "createdBy": "cwoehrle@microsoft.com",
+  "createdByUserType": "User",
+  "modifiedBy": "cwoehrle@microsoft.com",
+  "modifiedByUserType": "User",
+  "savedAt": "2026-01-29T14:39:34.1673799+00:00",
+  "tags": []
+}

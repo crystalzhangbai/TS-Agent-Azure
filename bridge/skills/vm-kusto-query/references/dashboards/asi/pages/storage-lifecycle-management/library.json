@@ -1,0 +1,1039 @@
+{
+  "service": "Storage Tools",
+  "page": "Life Cycle Managment",
+  "pageId": "610d4a26-0023-49f5-a770-a7247cbb9976",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Aggregated LCM Account Policy Execution Summary (Below number of Rows)": {
+      "panelPath": [
+        "Aggregated LCM Account Policy Execution Summary (Below number of Rows)"
+      ],
+      "queries": [
+        {
+          "id": "fc665c24-8381-43b9-a2a0-a93c254857dc",
+          "name": "Aggregate Account LCM run result",
+          "groupId": "d638e22a-58c1-4405-bda1-ef75fe268d9c",
+          "majorVersion": 2,
+          "minorVersion": 7,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Aggregated LCM Account Policy Execution Summary (Below number of Rows)",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "ScheduledTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Action",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "taskID",
+              "type": "string"
+            },
+            {
+              "name": "sum_RowsScanned",
+              "type": "real"
+            },
+            {
+              "name": "TotalProcessed",
+              "type": "real"
+            },
+            {
+              "name": "sum_RowsMoveToHot",
+              "type": "real"
+            },
+            {
+              "name": "sum_RowsMoveToCool",
+              "type": "real"
+            },
+            {
+              "name": "sum_RowsMoveToCold",
+              "type": "real"
+            },
+            {
+              "name": "sum_RowsMoveToArchive",
+              "type": "real"
+            },
+            {
+              "name": "sum_RowsDeleted",
+              "type": "real"
+            },
+            {
+              "name": "sum_RowsFailed",
+              "type": "real"
+            },
+            {
+              "name": "TotalDispatched",
+              "type": "long"
+            },
+            {
+              "name": "TasksInitialPull",
+              "type": "long"
+            },
+            {
+              "name": "TasksCompleted",
+              "type": "long"
+            },
+            {
+              "name": "TaskFailed",
+              "type": "long"
+            },
+            {
+              "name": "set_HResult",
+              "type": "dynamic"
+            },
+            {
+              "name": "timetaken",
+              "type": "timespan"
+            },
+            {
+              "name": "ErrorsOccuredDuringRun",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ETWEventOLCMSchedulerDispatchStatsProdHourly\r\n| union ETWEventOLCMScannerStatsProdHourly\r\n//| where TIMESTAMP between (startofweek(queryFrom) .. endofweek(queryTo))\r\n| where TIMESTAMP between ((queryFrom) .. (queryTo))\r\n| where AccountName == trim(@\"[\\s]+\", storageAccountName)\r\n| extend temp = RowsDeleted + RowsMoveToCool + RowsMoveToArchive + RowsMoveToHot + RowsMoveToCold, taskID = trim(@'^\\[\\\"|\\\"\\]$',tostring(split(TaskId, \"_\", 3)))\r\n| summarize TotalDispatched = dcountif(TaskId,Action contains \"dis\"), min(PreciseTimeStamp), max(PreciseTimeStamp),sum(RowsScanned),TotalProcessed = sum(temp), sum(RowsDeleted), sum(RowsMoveToHot),sum(RowsMoveToCool), sum(RowsMoveToCold), sum(RowsMoveToArchive), sum(RowsFailed),TasksInitialPull = dcountif(TaskId,Action startswith \"init\"),TasksCompleted = dcountif(TaskId,Action startswith \"comp\"),TaskFailed = dcountif(TaskId,Action contains \"drop\"),make_set_if(HResult,Action contains \"drop\"),ErrorsOccuredDuringRun = make_set_if(HResult,Action !contains \"drop\" and Action contains \"faile\") by AccountName, bin(ScheduledTime,1d), Action, ActivityId, taskID\r\n| extend timetaken = max_PreciseTimeStamp - min_PreciseTimeStamp\r\n| where Action == \"Completed\" or Action == \"Failed\"\r\n| project ScheduledTime, Action, ActivityId, taskID, sum_RowsScanned,TotalProcessed, sum_RowsMoveToHot, sum_RowsMoveToCool, sum_RowsMoveToCold, sum_RowsMoveToArchive, sum_RowsDeleted ,sum_RowsFailed,TotalDispatched,TasksInitialPull,TasksCompleted,TaskFailed,set_HResult,timetaken,ErrorsOccuredDuringRun\r\n| order by ScheduledTime desc\r\n \r\n\r\n// ETWEventOLCMSchedulerDispatchStatsProdHourly\r\n// | union ETWEventOLCMScannerStatsProdHourly\r\n// | where TIMESTAMP between (startofweek(queryFrom) .. endofweek(queryTo))\r\n// | extend temp = RowsDeleted + RowsMoveToCool + RowsMoveToArchive + RowsMoveToHot + RowsMoveToCold\r\n// | summarize TotalDispatched = dcountif(TaskId,Action contains \"dis\"), min(PreciseTimeStamp), max(PreciseTimeStamp),sum(RowsScanned),TotalProcessed = sum(temp), sum(RowsDeleted), sum(RowsMoveToHot),sum(RowsMoveToCool), sum(RowsMoveToCold), sum(RowsMoveToArchive), sum(RowsFailed),TasksInitialPull = dcountif(TaskId,Action startswith \"init\"),TasksCompleted = dcountif(TaskId,Action startswith \"comp\"),TaskFailed = dcountif(TaskId,Action contains \"drop\"),make_set_if(HResult,Action contains \"drop\"),ErrorsOccuredDuringRun = make_set_if(HResult,Action !contains \"drop\" and Action contains \"faile\") by AccountName, bin(ScheduledTime,1d)\r\n// | extend timetaken = max_PreciseTimeStamp - min_PreciseTimeStamp\r\n// | project ScheduledTime,Action = actionToFilter, sum_RowsScanned,TotalProcessed, sum_RowsMoveToHot, sum_RowsMoveToCool, sum_RowsMoveToCold, sum_RowsMoveToArchive, sum_RowsDeleted ,sum_RowsFailed,TotalDispatched,TasksInitialPull,TasksCompleted,TaskFailed,set_HResult,timetaken,ErrorsOccuredDuringRun\r\n// | order by ScheduledTime desc",
+          "panelPath": [
+            "Aggregated LCM Account Policy Execution Summary (Below number of Rows)"
+          ]
+        }
+      ]
+    },
+    "LCM Account Policy Execution Stats": {
+      "panelPath": [
+        "LCM Account Policy Execution Stats"
+      ],
+      "queries": [
+        {
+          "id": "6def2a7e-11d0-49b2-8910-9233186a6eba",
+          "name": "LCM Account Policy Execution Stats",
+          "groupId": "dc1ea2e4-9005-45e8-a2fa-204122b16deb",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "LCM Account Policy Execution Stats",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "AccountName",
+              "type": "string"
+            },
+            {
+              "name": "RowsScanned",
+              "type": "long"
+            },
+            {
+              "name": "DispatchTime",
+              "type": "datetime"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "SuccessActions",
+              "type": "long"
+            },
+            {
+              "name": "FailedActions",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ETWEventOLCMAccountPolicyExecutionStatsTable\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where AccountName == trim(@\"[\\s]+\", accountName) \r\n| project TIMESTAMP, ActivityId, AccountName, RowsScanned, DispatchTime, StartTime, \r\nSuccessActions = (ActionDeleteSucceededBlobs + ActionDownToArchiveSucceededBlobs + ActionDownToColdSucceededBlobs + ActionDownToCoolSucceededBlobs), \r\nFailedActions = (ActionDeleteFailedBlobs + ActionDownToArchiveFailedBlobs + ActionDownToColdFailedBlobs + ActionDownToCoolFailedBlobs)",
+          "panelPath": [
+            "LCM Account Policy Execution Stats"
+          ]
+        }
+      ]
+    },
+    "LCM Long Running Tasks": {
+      "panelPath": [
+        "LCM Long Running Tasks"
+      ],
+      "queries": [
+        {
+          "id": "3be219cd-d681-49ef-9fb2-e5a79690e59a",
+          "name": "LCM Long Running Task Stats",
+          "groupId": "736de1c2-e04c-47e9-aebb-ff74cf7eb466",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "LCM Long Running Tasks",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "AccountName",
+              "type": "string"
+            },
+            {
+              "name": "Action",
+              "type": "string"
+            },
+            {
+              "name": "Reason",
+              "type": "string"
+            },
+            {
+              "name": "RowKey",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ETWEventOLCMSchedulerLongRunningTasksStatsTable\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where AccountName == trim(@\"[\\s]+\", accountName)\r\n| project TIMESTAMP, Tenant, RoleInstance, ActivityId, AccountName, Action, Reason, RowKey",
+          "panelPath": [
+            "LCM Long Running Tasks"
+          ]
+        }
+      ]
+    },
+    "LCM Policy": {
+      "panelPath": [
+        "LCM Policy"
+      ],
+      "queries": [
+        {
+          "id": "6250b824-072b-4c97-963c-5e1005aceb29",
+          "name": "Get LCM policy definition",
+          "groupId": "5d37c747-5d1c-4b27-991c-46af4ed4b1d9",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "https://xstore.westcentralus.kusto.windows.net/",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "LCM Policy",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "AccountName",
+              "type": "string"
+            },
+            {
+              "name": "PerformanceType",
+              "type": "string"
+            },
+            {
+              "name": "RuleName",
+              "type": "string"
+            },
+            {
+              "name": "PolicyObj",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ETWEventOLCMSchedulerActionStatsEventTableHourly\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where AccountName == storageAccountName\r\n| where Action == \"AccountTasksDispatched\"\r\n| extend PolicyObj = parse_json(Policy)\r\n| mv-expand Rule = PolicyObj.rules\r\n| project TIMESTAMP, AccountName, PerformanceType, RuleName = tostring(Rule.name), PolicyObj",
+          "panelPath": [
+            "LCM Policy"
+          ]
+        }
+      ]
+    },
+    "LCM Scheduler Actions": {
+      "panelPath": [
+        "LCM Scheduler Actions"
+      ],
+      "queries": [
+        {
+          "id": "cbb2d8f4-935f-4e66-a5aa-64641689e0fe",
+          "name": "Aggregate LCM Scheduler Actions",
+          "groupId": "b241788e-f1ea-4f3d-ae69-600467cf2b33",
+          "majorVersion": 2,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "LCM Scheduler Actions",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "AccountName",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "SchedulerActionStart",
+              "type": "datetime"
+            },
+            {
+              "name": "SchedulerActionEnds",
+              "type": "datetime"
+            },
+            {
+              "name": "SchedulerActionList",
+              "type": "dynamic"
+            },
+            {
+              "name": "SchedulerActionResult",
+              "type": "dynamic"
+            },
+            {
+              "name": "EffectiveLCMPolicy",
+              "type": "string"
+            },
+            {
+              "name": "Duration",
+              "type": "timespan"
+            },
+            {
+              "name": "LCMTaskScheduled",
+              "type": "bool"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ETWEventOLCMSchedulerActionStatsEventTableHourly  \r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where AccountName == trim(@\"[\\s]+\", storageAccountName)\r\n| summarize SchedulerActionStart = min(TIMESTAMP), SchedulerActionEnds = max(TIMESTAMP), SchedulerActionList=make_list(Action), SchedulerActionResult=make_set(HResult), EffectiveLCMPolicy = max(Policy) by AccountName, ActivityId, RoleInstance\r\n| extend Duration = SchedulerActionEnds - SchedulerActionStart\r\n| extend LCMTaskScheduled = iif((SchedulerActionList) has_all (\"AccountTasksDispatched\"), True, False)\r\n| order by AccountName asc  ",
+          "panelPath": [
+            "LCM Scheduler Actions"
+          ]
+        }
+      ]
+    },
+    "LCM Task Execution Details ": {
+      "panelPath": [
+        "LCM Task Execution Details "
+      ],
+      "queries": [
+        {
+          "id": "a1933f7e-e1d8-4e00-84c4-74f08ee8ae32",
+          "name": "Aggregate LCM Tasks",
+          "groupId": "3ff375f2-c123-414c-bf7f-8ba42af74f95",
+          "majorVersion": 6,
+          "minorVersion": 1,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "LCM Task Execution Details ",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "AccountName",
+              "type": "string"
+            },
+            {
+              "name": "TaskId",
+              "type": "string"
+            },
+            {
+              "name": "ScheduledTime",
+              "type": "datetime"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "LastAtionTime",
+              "type": "datetime"
+            },
+            {
+              "name": "CompletedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ActionList",
+              "type": "dynamic"
+            },
+            {
+              "name": "set_HResult",
+              "type": "dynamic"
+            },
+            {
+              "name": "TimeUsedInSecond",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ETWEventOLCMScannerStatsProdHourly \r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where AccountName == trim(@\"[\\s]+\", storageAccountName) \r\n| order by ActionTime asc \r\n| extend CompleteTime = iff(Action == \"Completed\", ActionTime, datetime(1000-01-01T00:00:00.0Z))\r\n| summarize StartTime = min(ActionTime), LastAtionTime = max(ActionTime), CompletedTime=max(CompleteTime), ActionList=make_list(Action), make_set(HResult), TimeUsedInSecond=sum(ElapsedTimeInSecond) by AccountName,TaskId, ScheduledTime\r\n//| where list_Action !contains \"Completed\" ",
+          "panelPath": [
+            "LCM Task Execution Details "
+          ]
+        }
+      ]
+    },
+    "LCM Transactions Summary": {
+      "panelPath": [
+        "LCM Transactions Summary"
+      ],
+      "queries": [
+        {
+          "id": "04d47c80-9210-4467-8379-9294c77cf5a4",
+          "name": "Get LCM Transactions",
+          "groupId": "4ed2a2bd-77a6-4247-ad0a-4154992532f3",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xdataanalytics",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "LCM Transactions Summary",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "RequestType",
+              "type": "string"
+            },
+            {
+              "name": "sum_BillableTransactionCount",
+              "type": "real"
+            },
+            {
+              "name": "sum_TransactionCount",
+              "type": "real"
+            },
+            {
+              "name": "sum_TotalSuccessCount",
+              "type": "real"
+            },
+            {
+              "name": "sum_TotalIngress",
+              "type": "real"
+            },
+            {
+              "name": "sum_TotalEgress",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XStoreAccountTransactionsHourly\r\n| where TimePeriod between (queryFrom .. queryTo)\r\n| where Account contains strcat(trim(@\"[\\s]+\", storageAccountName),\";\") and TransactionType == \"lcmservice\"\r\n| summarize sum(BillableTransactionCount),sum(TransactionCount), sum(TotalSuccessCount), sum(TotalIngress), sum(TotalEgress) by RequestType",
+          "panelPath": [
+            "LCM Transactions Summary"
+          ]
+        }
+      ]
+    },
+    "Quick Links": {
+      "panelPath": [
+        "Quick Links"
+      ],
+      "queries": [
+        {
+          "id": "f13fec28-2acc-4ba7-af79-37be3cab900f",
+          "name": "Get Tenant Info by Account",
+          "groupId": "b760a659-e8eb-4ff6-ac4b-2614f64bc29c",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "CompoundWidgetContainer",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XStoreAccountPropertiesHourly()\r\n| where TimePeriod > ago(3d)\r\n| where Account startswith strcat(trim(@\"[\\s]+\", accountName),\";\")\r\n| order by TimePeriod desc \r\n| take 1\r\n| project Tenant, Subscription\r\n// if Account not found, retuns empty Tenant instead of ASI error\r\n| union (        \r\n    print Tenant=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1\r\n",
+          "panelPath": [
+            "Quick Links"
+          ]
+        }
+      ]
+    },
+    "Quick Links > Pages - Storage Tools": {
+      "panelPath": [
+        "Quick Links",
+        "Pages - Storage Tools"
+      ],
+      "queries": [
+        {
+          "id": "f13fec28-2acc-4ba7-af79-37be3cab900f",
+          "name": "Get Tenant Info by Account",
+          "groupId": "b760a659-e8eb-4ff6-ac4b-2614f64bc29c",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XStoreAccountPropertiesHourly()\r\n| where TimePeriod > ago(3d)\r\n| where Account startswith strcat(trim(@\"[\\s]+\", accountName),\";\")\r\n| order by TimePeriod desc \r\n| take 1\r\n| project Tenant, Subscription\r\n// if Account not found, retuns empty Tenant instead of ASI error\r\n| union (        \r\n    print Tenant=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1\r\n",
+          "panelPath": [
+            "Quick Links",
+            "Pages - Storage Tools"
+          ]
+        },
+        {
+          "id": "2bc22049-e59c-45fe-8074-40dfea9dac00",
+          "name": "TrimStorageName",
+          "groupId": "013910c6-a3a7-4a35-8c20-8591d0282342",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "local_StorageNameName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StorageName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_StorageNameName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let trimmed_StorageName = trim(@\"[\\s]+\", local_StorageNameName);\r\nprint StorageName = trimmed_StorageName ;",
+          "panelPath": [
+            "Quick Links",
+            "Pages - Storage Tools"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:54:41.451Z",
+    "totalPanels": 9,
+    "totalUniqueQueries": 9,
+    "totalWidgetRefs": 10
+  }
+}

@@ -1,0 +1,139 @@
+[
+  {
+    "groupId": "2f1e4714-43cb-41eb-9088-2acf890700dc",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Private Link Service",
+      "Last Operations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Last Operations",
+    "queryId": "f725df10-1009-46a1-9cf4-e9a67a21f17d",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "PLS_Subscription",
+        "externalSourceName": "PLS_Subscription",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "PLS_ResourceGroup",
+        "externalSourceName": "PLS_ResourceGroup",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "PLS_ResourceName",
+        "externalSourceName": "PLS_ResourceName",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "PLS_Key",
+        "externalSourceName": "PLS_Key",
+        "required": false
+      }
+    ],
+    "name": "PLS_QosEtw",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "PLS_Subscription",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "PLS_ResourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "PLS_ResourceName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "PLS_Key",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "UserError",
+        "type": "bool"
+      }
+    ],
+    "missing": false
+  }
+]

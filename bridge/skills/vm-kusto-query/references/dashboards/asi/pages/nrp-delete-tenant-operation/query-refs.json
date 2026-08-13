@@ -1,0 +1,525 @@
+[
+  {
+    "groupId": "788e53a7-4537-4f46-8818-71b332abc9f8",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "DeleteTenant Perf Improvement Enabled"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "DeleteTenant Perf Improvement Enabled",
+    "queryId": "32f6c629-3dc3-4c84-9518-413a22999029",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "delete tenant perf improvement enabled",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "ReleaseBuild",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "fb2694e4-efa8-4d0d-8c51-7097c31d5f51",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Existing Vs New Behavior Sync Part Performance"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Existing Vs New Behavior Sync Part Performance",
+    "queryId": "f6ddce42-7799-4599-a674-c9fe24cd5ed2",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "globalRegion",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscription",
+        "externalSourceName": "globalSubscription",
+        "required": false
+      }
+    ],
+    "name": "ExistingVsNewDeleteTenantPerf",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscription",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "behavior",
+        "type": "string"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "max_SynchronousDurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "avg_SynchronousDurationInMilliseconds",
+        "type": "real"
+      },
+      {
+        "name": "percentile_SynchronousDurationInMilliseconds_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_SynchronousDurationInMilliseconds_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_SynchronousDurationInMilliseconds_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_SynchronousDurationInMilliseconds_99_9",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "48be16c4-bf36-4a77-b28a-5580d8d755d6",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Already Deleted Tenants Performance"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Already Deleted Tenants Performance",
+    "queryId": "ea3511d2-5ddb-4ec4-a44c-5900d63eb3c0",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscription",
+        "externalSourceName": "globalSubscription",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "globalRegion",
+        "required": false
+      }
+    ],
+    "name": "Already Deleted Tenants Sync Time",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscription",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "behavior",
+        "type": "string"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "max_DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "avg_DurationInMilliseconds",
+        "type": "real"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_99_9",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "5d17d44e-f73b-43c2-918b-1bb3acbd67d7",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "panelPath": [
+      "Already Deleted Tenant Logical Timstamp Info"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Already Deleted Tenant Logical Timstamp Info",
+    "queryId": "32574388-181e-4603-8721-bfed73bb1593",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "globalRegion",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscription",
+        "externalSourceName": "globalSubscription",
+        "required": false
+      }
+    ],
+    "name": "Count of Tenants Already Deleted",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscription",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "logicalTimestamp",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a669a7f7-4369-4a35-8bbb-594e775a2454",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Errors when Tenant Already Deleted"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Errors when Tenant Already Deleted",
+    "queryId": "f992cf9c-fbfa-423a-9ecc-6a31cfdef999",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "ArbitraryString",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscription",
+        "externalSourceName": "Arbitrary String",
+        "required": false,
+        "default": "*"
+      },
+      {
+        "source": "ArbitraryString",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "Arbitrary String",
+        "required": false,
+        "default": "useast2euap"
+      }
+    ],
+    "name": "Errors for Tenants Already Deleted",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscription",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "BackgroundTaskQos",
+        "type": "bool"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a669a7f7-4369-4a35-8bbb-594e775a2454",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Errors when Tenant Already Deleted"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Errors when Tenant Already Deleted",
+    "via": "selectedProperty",
+    "propertyName": "(All Data)",
+    "name": "Errors for Tenants Already Deleted",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscription",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "BackgroundTaskQos",
+        "type": "bool"
+      }
+    ],
+    "missing": false
+  }
+]

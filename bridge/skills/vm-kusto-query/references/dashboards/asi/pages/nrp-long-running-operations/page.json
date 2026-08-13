@@ -1,0 +1,1184 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "1397401a-e5bc-4026-b2ac-019a3e50668c",
+  "description": "which operations are putting out large message sizes in FrontendOperationEtwEvent",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "4e4c4c88-34e5-4461-8d41-bc6facff3e4b",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "LongRunningOperations",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "91c7005c-f98b-4c39-8731-0bc626a8b330",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "9cca194f-da34-4ebe-b037-53a11718d3c2",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Table",
+                "id": "295a2827-e013-44d2-8bb1-1459fe59471e",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "GridViewByOperationName",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [
+                  {
+                    "source": "ArbitraryString",
+                    "majorVersion": 0,
+                    "minorVersion": 0,
+                    "internalDestinationName": "lookback_days",
+                    "externalSourceName": "Arbitrary String",
+                    "required": false,
+                    "default": "5"
+                  }
+                ],
+                "selectedProperties": [],
+                "inputs": [
+                  {
+                    "name": "lookback_days",
+                    "description": "",
+                    "type": "string",
+                    "optional": false,
+                    "useTestValueAsDefault": false,
+                    "typeSpecificOptions": {
+                      "enumTypeData": "[]"
+                    },
+                    "displayConditions": []
+                  }
+                ],
+                "queries": [
+                  {
+                    "id": "1396c502-2dfc-4ab6-ae91-6842f2e4e65b",
+                    "idForPopups": "1396c502-2dfc-4ab6-ae91-6842f2e4e65b",
+                    "groupId": "bc1b9418-2a79-48ba-a602-d7c5f12efa8d",
+                    "majorVersion": 7,
+                    "minorVersion": 0,
+                    "serviceId": "NRP",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "operationName_query_",
+                        "externalSourceName": "operationName_query",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "region_query_",
+                        "externalSourceName": "region_query",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "duration_threshold",
+                        "externalSourceName": "min_OperationDurationThreshold_hr",
+                        "required": false
+                      },
+                      {
+                        "source": "node_input",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "lookback_days",
+                        "externalSourceName": "lookback_days",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "apply_knownOperations",
+                        "externalSourceName": "apply_knownOperations",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "Table",
+                "id": "0b5670c9-4b90-4075-a0ec-47110baea4fe",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "LongRunningOperations",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [
+                  {
+                    "type": "Popup",
+                    "id": "07e0a500-35eb-496c-9eb1-cc348494d3a9",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "efd5cce4-c40a-44aa-885b-ae1a2ee989e6",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "41a66e7e-4adf-47d9-b95d-ea72a006815c",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Card",
+                                "id": "cdda8f6c-3863-4383-9744-e93b6d8904f0",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [
+                                  {
+                                    "friendlyName": "CorrelationRequestId",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "CorrelationRequestId",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "CorrelationRequestId",
+                                    "uuid": "8957d1eb-c9b0-4d3d-a457-a9fe806f9413",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "max_DurationInHrs",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "max_DurationInHrs",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "max_DurationInHrs",
+                                    "uuid": "bc7d340a-5d7e-4ab5-88ef-a0b8928edde6",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "querylink_kusto",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "querylink_kusto",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "querylink_kusto",
+                                    "uuid": "cce7354e-e2cb-43e2-8fe9-b7f95ffa2c31",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "sum_DurationInHrs",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "sum_DurationInHrs",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "sum_DurationInHrs",
+                                    "uuid": "675c01fc-ef0b-4c0c-9efd-17c963d6c573",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "OperationNames",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "OperationNames",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "OperationNames",
+                                    "uuid": "b3069118-f36e-4e9a-8778-d11c0982e192",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "op_dict",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "op_dict",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "op_dict",
+                                    "uuid": "30e0990b-390b-4e24-b142-14dcd9918474",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "sum_opid_Duration",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "sum_opid_Duration",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "sum_opid_Duration",
+                                    "uuid": "a3301da7-a4f0-44ac-9c40-691485938e20",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "min_TIMESTAMP",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "min_TIMESTAMP",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "min_TIMESTAMP",
+                                    "uuid": "8b6559aa-af11-44c2-b13e-6b0aca37c0ae",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "max_TIMESTAMP",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "max_TIMESTAMP",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "max_TIMESTAMP",
+                                    "uuid": "99c89837-9a2e-4f38-9dac-89fdb6e0697f",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "correl_Log_Duration",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "correl_Log_Duration",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "correl_Log_Duration",
+                                    "uuid": "6484b324-9d8c-4178-bfe8-541945bbe08e",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "NRP - RequestCorrelationIdView",
+                                    "props": {
+                                      "pageServiceId": "NRP"
+                                    },
+                                    "type": "LinkToPage",
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "uuid": "c0c3afd6-e202-4c40-a8dc-992e5eabc715",
+                                    "pageId": "65bfb971-c0f0-4037-bb25-21d23ee02ea4",
+                                    "linkToPageInputMapping": [
+                                      {
+                                        "source": "ArbitraryString",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "Arbitrary String",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "Query_ColumnFromSingleRow",
+                                        "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                        "majorVersion": 4,
+                                        "minorVersion": 1,
+                                        "internalDestinationName": "correlationRequestId",
+                                        "externalSourceName": "CorrelationRequestId",
+                                        "required": false,
+                                        "rowSelectionCriteria": "default"
+                                      },
+                                      {
+                                        "source": "Query_ColumnFromSingleRow",
+                                        "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                        "majorVersion": 4,
+                                        "minorVersion": 1,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false,
+                                        "rowSelectionCriteria": "default"
+                                      },
+                                      {
+                                        "source": "Query_ColumnFromSingleRow",
+                                        "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                        "majorVersion": 4,
+                                        "minorVersion": 1,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false,
+                                        "rowSelectionCriteria": "default"
+                                      }
+                                    ],
+                                    "conditions": []
+                                  }
+                                ],
+                                "inputs": [],
+                                "queries": [],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "8a86f983-6616-4a3d-93b4-7287d0803254",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "OperationNames",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [
+                                  {
+                                    "friendlyName": "OperationName",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "a38c1bb4-ed38-43ce-8d0f-981a3da86035",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "",
+                                      "externalSourceName": "OperationName",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "OperationName",
+                                    "uuid": "ce82a8ed-3474-477e-afe9-ce4adbb37167",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "dcount_OperationId",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "a38c1bb4-ed38-43ce-8d0f-981a3da86035",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "OperationName",
+                                      "externalSourceName": "dcount_OperationId",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "dcount_OperationId",
+                                    "uuid": "17c7fd26-0384-4372-8fec-b76aaa4e283a",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "sum_opid_Duration",
+                                    "props": {},
+                                    "type": "Kusto",
+                                    "mapping": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "a38c1bb4-ed38-43ce-8d0f-981a3da86035",
+                                      "majorVersion": 4,
+                                      "minorVersion": 1,
+                                      "internalDestinationName": "OperationName",
+                                      "externalSourceName": "sum_opid_Duration",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default"
+                                    },
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "paramName": "sum_opid_Duration",
+                                    "uuid": "dffc997d-452d-4786-b5b7-f5c1f133a3de",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  },
+                                  {
+                                    "friendlyName": "FE_query",
+                                    "props": {},
+                                    "formatting": "[FE_query]({{{querylink_kusto}}})",
+                                    "type": "Markdown",
+                                    "groupMajorVersion": 0,
+                                    "groupMinorVersion": 0,
+                                    "required": false,
+                                    "uuid": "0676ab8d-521d-4a63-b208-b17ec24466ac",
+                                    "linkToPageInputMapping": [],
+                                    "conditions": []
+                                  }
+                                ],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "c5cd00ec-8a19-4cfe-88ce-befd908f5013",
+                                    "idForPopups": "c5cd00ec-8a19-4cfe-88ce-befd908f5013",
+                                    "groupId": "a38c1bb4-ed38-43ce-8d0f-981a3da86035",
+                                    "majorVersion": 4,
+                                    "minorVersion": 1,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "Query_ColumnFromSingleRow",
+                                        "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                        "majorVersion": 4,
+                                        "minorVersion": 1,
+                                        "internalDestinationName": "op_dict",
+                                        "externalSourceName": "op_dict",
+                                        "required": false,
+                                        "rowSelectionCriteria": "default"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "136da309-fbf8-4ae5-992a-39c70069641e",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "OperationId_Timings",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "c561eacd-9830-48e3-8b09-6afee2d67e06",
+                                    "idForPopups": "c561eacd-9830-48e3-8b09-6afee2d67e06",
+                                    "groupId": "2e857c52-8492-4e39-a152-06ec499bd43f",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "Query_ColumnFromSingleRow",
+                                        "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                                        "majorVersion": 4,
+                                        "minorVersion": 1,
+                                        "internalDestinationName": "correlationRequestId",
+                                        "externalSourceName": "CorrelationRequestId",
+                                        "required": false,
+                                        "rowSelectionCriteria": "default"
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "None"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "None"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "Region",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                      "majorVersion": 4,
+                      "minorVersion": 1,
+                      "internalDestinationName": "",
+                      "externalSourceName": "Region",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "Region",
+                    "uuid": "78eb6312-f4d5-4392-a8ba-119fb3523f4f",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "OperationNames",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                      "majorVersion": 4,
+                      "minorVersion": 1,
+                      "internalDestinationName": "CorrelationRequestId",
+                      "externalSourceName": "OperationNames",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "OperationNames",
+                    "uuid": "08bcd8f1-b1fd-459a-a3c0-7537ac29341a",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "max_DurationInHrs",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                      "majorVersion": 4,
+                      "minorVersion": 1,
+                      "internalDestinationName": "",
+                      "externalSourceName": "max_DurationInHrs",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "max_DurationInHrs",
+                    "uuid": "29b8c74c-cfcc-4bf9-ba54-64f98da99498",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "correl_Log_Duration",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                      "majorVersion": 4,
+                      "minorVersion": 1,
+                      "internalDestinationName": "Region",
+                      "externalSourceName": "correl_Log_Duration",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "correl_Log_Duration",
+                    "uuid": "85ed055b-af03-4e73-a02c-c7751a8f291c",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "TimeRange",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                      "majorVersion": 4,
+                      "minorVersion": 1,
+                      "internalDestinationName": "Region",
+                      "externalSourceName": "TimeRange",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "TimeRange",
+                    "uuid": "3094da71-78fe-4899-bc94-25b53a2602dd",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "CorrelationRequestId",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                      "majorVersion": 4,
+                      "minorVersion": 1,
+                      "internalDestinationName": "",
+                      "externalSourceName": "CorrelationRequestId",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "CorrelationRequestId",
+                    "uuid": "6c2e7bf4-16ba-4b98-afad-e2112f9d02e0",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "SubscriptionId",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                      "majorVersion": 4,
+                      "minorVersion": 1,
+                      "internalDestinationName": "Region",
+                      "externalSourceName": "SubscriptionId",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "SubscriptionId",
+                    "uuid": "9a9ed7bd-7352-4439-a7cb-7886a955d727",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "SubscriptionName",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                      "majorVersion": 4,
+                      "minorVersion": 1,
+                      "internalDestinationName": "Region",
+                      "externalSourceName": "SubscriptionName",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "SubscriptionName",
+                    "uuid": "e18dcbc2-37f2-4ef9-aba7-272395fb771a",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "NRP - RequestCorrelationIdView",
+                    "props": {
+                      "pageServiceId": "NRP"
+                    },
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "50448b84-95cc-40ca-b98d-7a8520fa2b2d",
+                    "linkText": "CorrelationRequestIdView",
+                    "pageId": "65bfb971-c0f0-4037-bb25-21d23ee02ea4",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                        "majorVersion": 4,
+                        "minorVersion": 1,
+                        "internalDestinationName": "region",
+                        "externalSourceName": "Region",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                        "majorVersion": 4,
+                        "minorVersion": 1,
+                        "internalDestinationName": "correlationRequestId",
+                        "externalSourceName": "CorrelationRequestId",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      },
+                      {
+                        "source": "constant_value_selector",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "operationId",
+                        "externalSourceName": "empty_string",
+                        "required": false
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                        "majorVersion": 4,
+                        "minorVersion": 1,
+                        "internalDestinationName": "subscriptionId",
+                        "externalSourceName": "SubscriptionId",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "query_link_kusto",
+                    "props": {},
+                    "formatting": "[FE_query]({{{querylink_kusto}}})",
+                    "type": "Markdown",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "6ff4c5b7-0fa9-46e2-bc93-77355ae97126",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "4d02aef9-11ab-400b-8ee4-de9e9c55d1fa",
+                    "idForPopups": "4d02aef9-11ab-400b-8ee4-de9e9c55d1fa",
+                    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+                    "majorVersion": 4,
+                    "minorVersion": 1,
+                    "serviceId": "NRP",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryFrom",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryTo",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "operationName_query_",
+                        "externalSourceName": "operationName_query",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "region_query_",
+                        "externalSourceName": "region_query",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "min_OpertionDurationTHreshold_hr",
+                        "externalSourceName": "min_OperationDurationThreshold_hr",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "apply_knownOperations",
+                        "externalSourceName": "apply_knownOperations",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "Modal"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 64,
+  "basedOnVersionId": "a0000ce8-7f34-4397-a8d4-f07d40317143",
+  "groupId": "f2d50182-5f45-4ea4-8588-a2218e0f40c1",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "region_query",
+      "description": "",
+      "type": "enum",
+      "userControl": {
+        "type": "Dropdown",
+        "options": {
+          "userControlOptions": "{\"source\":\"PredefinedValues\",\"options\":[{\"name\":\"all\",\"description\":\"\"},{\"name\":\"asiaeast\",\"description\":\"\"},{\"name\":\"asiasoutheast\",\"description\":\"\"},{\"name\":\"australiac\",\"description\":\"\"},{\"name\":\"australiac2\",\"description\":\"\"},{\"name\":\"australiaeast\",\"description\":\"\"},{\"name\":\"australiasoutheast\",\"description\":\"\"},{\"name\":\"brazilse\",\"description\":\"\"},{\"name\":\"brazilsouth\",\"description\":\"\"},{\"name\":\"canadacentral\",\"description\":\"\"},{\"name\":\"canadaeast\",\"description\":\"\"},{\"name\":\"europenorth\",\"description\":\"\"},{\"name\":\"europewest\",\"description\":\"\"},{\"name\":\"francec\",\"description\":\"\"},{\"name\":\"frances\",\"description\":\"\"},{\"name\":\"germanyn\",\"description\":\"\"},{\"name\":\"germanywc\",\"description\":\"\"},{\"name\":\"indiacentral\",\"description\":\"\"},{\"name\":\"indiasouth\",\"description\":\"\"},{\"name\":\"indiawest\",\"description\":\"\"},{\"name\":\"israelc\",\"description\":\"\"},{\"name\":\"italyn\",\"description\":\"\"},{\"name\":\"japaneast\",\"description\":\"\"},{\"name\":\"japanwest\",\"description\":\"\"},{\"name\":\"jioinc\",\"description\":\"\"},{\"name\":\"jioinw\",\"description\":\"\"},{\"name\":\"koreacentral\",\"description\":\"\"},{\"name\":\"koreasouth\",\"description\":\"\"},{\"name\":\"malaysias\",\"description\":\"\"},{\"name\":\"mexicoc\",\"description\":\"\"},{\"name\":\"newzealandn\",\"description\":\"\"},{\"name\":\"norwaye\",\"description\":\"\"},{\"name\":\"norwayw\",\"description\":\"\"},{\"name\":\"polandc\",\"description\":\"\"},{\"name\":\"qatarc\",\"description\":\"\"},{\"name\":\"southafrican\",\"description\":\"\"},{\"name\":\"southafricaw\",\"description\":\"\"},{\"name\":\"spainc\",\"description\":\"\"},{\"name\":\"swedenc\",\"description\":\"\"},{\"name\":\"swedens\",\"description\":\"\"},{\"name\":\"switzerlandn\",\"description\":\"\"},{\"name\":\"switzerlandw\",\"description\":\"\"},{\"name\":\"taiwann\",\"description\":\"\"},{\"name\":\"taiwannw\",\"description\":\"\"},{\"name\":\"uaec\",\"description\":\"\"},{\"name\":\"uaen\",\"description\":\"\"},{\"name\":\"uksouth\",\"description\":\"\"},{\"name\":\"ukwest\",\"description\":\"\"},{\"name\":\"uscentral\",\"description\":\"\"},{\"name\":\"uscentraleuap\",\"description\":\"\"},{\"name\":\"useast\",\"description\":\"\"},{\"name\":\"useast2\",\"description\":\"\"},{\"name\":\"useast2euap\",\"description\":\"\"},{\"name\":\"usnorth\",\"description\":\"\"},{\"name\":\"ussouth\",\"description\":\"\"},{\"name\":\"usstagee\",\"description\":\"\"},{\"name\":\"usstagesc\",\"description\":\"\"},{\"name\":\"uswest\",\"description\":\"\"},{\"name\":\"uswest2\",\"description\":\"\"},{\"name\":\"uswest3\",\"description\":\"\"},{\"name\":\"uswest_Validation\",\"description\":\"\"},{\"name\":\"uswestcentral\",\"description\":\"\"}]}"
+        }
+      },
+      "default": "all",
+      "optional": true,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[{\"name\":\"all\",\"description\":\"\"},{\"name\":\"asiaeast\",\"description\":\"\"},{\"name\":\"asiasoutheast\",\"description\":\"\"},{\"name\":\"australiac\",\"description\":\"\"},{\"name\":\"australiac2\",\"description\":\"\"},{\"name\":\"australiaeast\",\"description\":\"\"},{\"name\":\"australiasoutheast\",\"description\":\"\"},{\"name\":\"brazilse\",\"description\":\"\"},{\"name\":\"brazilsouth\",\"description\":\"\"},{\"name\":\"canadacentral\",\"description\":\"\"},{\"name\":\"canadaeast\",\"description\":\"\"},{\"name\":\"europenorth\",\"description\":\"\"},{\"name\":\"europewest\",\"description\":\"\"},{\"name\":\"francec\",\"description\":\"\"},{\"name\":\"frances\",\"description\":\"\"},{\"name\":\"germanyn\",\"description\":\"\"},{\"name\":\"germanywc\",\"description\":\"\"},{\"name\":\"indiacentral\",\"description\":\"\"},{\"name\":\"indiasouth\",\"description\":\"\"},{\"name\":\"indiawest\",\"description\":\"\"},{\"name\":\"israelc\",\"description\":\"\"},{\"name\":\"italyn\",\"description\":\"\"},{\"name\":\"japaneast\",\"description\":\"\"},{\"name\":\"japanwest\",\"description\":\"\"},{\"name\":\"jioinc\",\"description\":\"\"},{\"name\":\"jioinw\",\"description\":\"\"},{\"name\":\"koreacentral\",\"description\":\"\"},{\"name\":\"koreasouth\",\"description\":\"\"},{\"name\":\"malaysias\",\"description\":\"\"},{\"name\":\"mexicoc\",\"description\":\"\"},{\"name\":\"newzealandn\",\"description\":\"\"},{\"name\":\"norwaye\",\"description\":\"\"},{\"name\":\"norwayw\",\"description\":\"\"},{\"name\":\"polandc\",\"description\":\"\"},{\"name\":\"qatarc\",\"description\":\"\"},{\"name\":\"southafrican\",\"description\":\"\"},{\"name\":\"southafricaw\",\"description\":\"\"},{\"name\":\"spainc\",\"description\":\"\"},{\"name\":\"swedenc\",\"description\":\"\"},{\"name\":\"swedens\",\"description\":\"\"},{\"name\":\"switzerlandn\",\"description\":\"\"},{\"name\":\"switzerlandw\",\"description\":\"\"},{\"name\":\"taiwann\",\"description\":\"\"},{\"name\":\"taiwannw\",\"description\":\"\"},{\"name\":\"uaec\",\"description\":\"\"},{\"name\":\"uaen\",\"description\":\"\"},{\"name\":\"uksouth\",\"description\":\"\"},{\"name\":\"ukwest\",\"description\":\"\"},{\"name\":\"uscentral\",\"description\":\"\"},{\"name\":\"uscentraleuap\",\"description\":\"\"},{\"name\":\"useast\",\"description\":\"\"},{\"name\":\"useast2\",\"description\":\"\"},{\"name\":\"useast2euap\",\"description\":\"\"},{\"name\":\"usnorth\",\"description\":\"\"},{\"name\":\"ussouth\",\"description\":\"\"},{\"name\":\"usstagee\",\"description\":\"\"},{\"name\":\"usstagesc\",\"description\":\"\"},{\"name\":\"uswest\",\"description\":\"\"},{\"name\":\"uswest2\",\"description\":\"\"},{\"name\":\"uswest3\",\"description\":\"\"},{\"name\":\"uswest_Validation\",\"description\":\"\"},{\"name\":\"uswestcentral\",\"description\":\"\"}]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "operationName_query",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "default": "",
+      "optional": true,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "min_OperationDurationThreshold_hr",
+      "description": "",
+      "type": "long",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "default": "2",
+      "optional": true,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "apply_knownOperations",
+      "description": "let operations=dynamic([    \"DeleteNicOperation\",    \"GetPublishedResourceDataOperation\",    \"BackupOperation\",    \"PutVMScaleSetOperation\",    \"PutNetworkSecurityGroupOperation\",    \"PutPrivateEndpointOperation\",    \"PutLoadBalancerOperation\",    \"PutSubscriptionOperation\",    \"DeletePacketCaptureOperation\",    \"DeleteTenantOperation\",    \"PutKeyValueItemOperation\",    \"DeleteLoadBalancerOperation\",    \"PutSecurityRuleOperation\",    \"AllocateTenantNetworkResourcesOperation\",    \"ValidateVMScaleSetOperation\",    \"GetNicEffectiveRouteTableOperation\",    \"PutPrivateDnsZoneGroupOperation\",    \"DeleteFlowLogOperation\",    \"GetTenantClustersOperation\",    \"PutFlowLogOperation\",    \"PutNicOperation\"  ]);",
+      "type": "bool",
+      "userControl": {
+        "type": "Dropdown",
+        "options": {
+          "userControlOptions": "{\"source\":\"Boolean\",\"options\":[]}"
+        }
+      },
+      "default": "true",
+      "optional": true,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "NRP",
+      "groupId": "bc1b9418-2a79-48ba-a602-d7c5f12efa8d",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "a38c1bb4-ed38-43ce-8d0f-981a3da86035",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "2e857c52-8492-4e39-a152-06ec499bd43f",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "id": "65bfb971-c0f0-4037-bb25-21d23ee02ea4",
+      "groupId": "65bfb971-c0f0-4037-bb25-21d23ee02ea4",
+      "entityType": "Page"
+    },
+    {
+      "serviceId": "NRP",
+      "id": "65bfb971-c0f0-4037-bb25-21d23ee02ea4",
+      "groupId": "65bfb971-c0f0-4037-bb25-21d23ee02ea4",
+      "entityType": "Page"
+    }
+  ],
+  "serviceId": "NRP",
+  "deleted": false,
+  "name": "LongRunningOperations",
+  "_ts": 1721261498,
+  "databaseSavedTimestamp": "2024-07-18T00:11:38+00:00",
+  "_etag": "\"19000b61-0000-0800-0000-66985dba0000\"",
+  "createdAt": "2024-07-18T00:11:38.870892+00:00",
+  "createdBy": "dosuciu@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "dosuciu@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2024-07-18T00:11:38.870892+00:00",
+  "tags": []
+}

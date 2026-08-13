@@ -1,0 +1,190 @@
+{
+  "service": "Azure Dedicated Host",
+  "page": "Host Groups",
+  "pageId": "2f42c146-4251-40bd-a1e1-9c762048a4c0",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "891bfd96-04ca-4a3f-b9fa-71de28e513de",
+          "name": "Retrieve Resource \"Host Groups\"",
+          "groupId": "488f05d2-fafc-4a85-8a48-0afe38ad6fe6",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcsupfollower.centralus.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_hostName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "dedicatedHostId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "creationDate",
+              "type": "string"
+            },
+            {
+              "name": "hostName",
+              "type": "string"
+            },
+            {
+              "name": "lifecycleState",
+              "type": "string"
+            },
+            {
+              "name": "stateChangeTime",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_hostName",
+              "externalSourceName": "hostName",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "LogDedicatedHostSnapshot\r\n| where PreciseTimeStamp between ((globalFrom - 1h) .. (globalTo + 1h)) and assert(isnotempty(local_subscriptionId) or isnotempty(local_hostName), \"Either a container Id or VM Id must be specified\")\r\n| where (isempty(local_subscriptionId) or hostName == local_hostName)\r\n| summarize arg_max(PreciseTimeStamp, PreciseTimeStamp, dedicatedHostId, nodeId, creationDate, hostName, lifecycleState, stateChangeTime, RegionFriendlyName) by nodeId\r\n| distinct PreciseTimeStamp, dedicatedHostId, nodeId, creationDate, hostName, lifecycleState, stateChangeTime, RegionFriendlyName\r\n\r\n",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.213Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

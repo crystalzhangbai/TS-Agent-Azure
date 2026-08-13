@@ -1,0 +1,46 @@
+[
+  {
+    "groupId": "026dc4f8-0cec-4b42-879c-0a1040e1d296",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "BYOIP Usage",
+      "Monthly Active Users"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Monthly Active Users",
+    "queryId": "c212bd10-5271-480a-a426-758855a96a26",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "Monthly Calls for Create/Delete CustomIPPRefix",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "CustomIpPrefix",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  }
+]

@@ -1,0 +1,160 @@
+[
+  {
+    "id": "540f8cd5-ea41-4aea-8ef1-df97385523fd",
+    "name": "Build Timeline",
+    "groupId": "3515ba14-75d1-45cd-ad77-5a6b017e690f",
+    "majorVersion": 5,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontEndQoSEvents\r\n| where TIMESTAMP between(queryFrom .. queryTo)\r\n| where case( cloud == \"public\", RPTenant == \"prod\", cloud == \"ussec\", RPTenant == \"secprod\", cloud == \"usnat\", RPTenant == \"natprod\", true )\r\n| project serviceBuild, RPTenant, PreciseTimeStamp, RPSector\r\n| summarize requests=count(), firstSeen=min(PreciseTimeStamp), lastSeen=max(PreciseTimeStamp) by serviceBuild, RPSector\r\n| extend Content = RPSector, StartTime = firstSeen, EndTime = lastSeen, Tooltip = tostring(requests), GroupBy = serviceBuild\r\n| project GroupBy, Content, StartTime, EndTime, Tooltip\r\n| extend Health=\"Neutral\"\r\n| order by StartTime desc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "Build",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "cloud",
+        "description": "",
+        "type": "string",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "public",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "cb5b5432-a83b-42b4-99d0-6ef2530c4a50",
+    "name": "Service Build Saturation",
+    "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "UsageKpiEvent\r\n| project serviceBuild, RPTenant, PreciseTimeStamp\r\n| where Build == \"\" or serviceBuild == Build\r\n| summarize count=count(), firstSeen=min(PreciseTimeStamp), lastSeen=max(PreciseTimeStamp) by serviceBuild, RPTenant\r\n| order by firstSeen desc\r\n| extend StartTime = firstSeen, EndTime = lastSeen, Tooltip = ['count'], GroupBy = RPTenant",
+    "params": [
+      {
+        "name": "Build",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "count",
+        "type": "long"
+      },
+      {
+        "name": "firstSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "lastSeen",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tooltip",
+        "type": "long"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  }
+]

@@ -1,0 +1,219 @@
+{
+  "service": "CRP",
+  "page": "CRP Home",
+  "pageId": "719b0edb-5a4c-4ad1-97f9-d8a7bd17baf8",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "QoS - All": {
+      "panelPath": [
+        "QoS - All"
+      ],
+      "queries": [
+        {
+          "id": "fd309a76-05a8-4875-b07b-502315408848",
+          "name": "QoS - All",
+          "groupId": "b8fe13a9-761f-4ea5-b8bf-824d074548be",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "QoS - All",
+          "params": [
+            {
+              "name": "qFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Requests",
+              "type": "long"
+            },
+            {
+              "name": "UnexpectedFailures",
+              "type": "long"
+            },
+            {
+              "name": "QoS",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "\r\nApiQosEvent\r\n| where PreciseTimeStamp between (qFrom .. qTo)\r\n| project PreciseTimeStamp, operationName, operationId, resultType, RPTenant, region\r\n| summarize \r\n    Requests = dcount(operationId),\r\n    UnexpectedFailures = dcountif(operationId, resultType == 2) \r\n    by bin(PreciseTimeStamp, 1m)\r\n| extend QoS = (100 - round((toreal(UnexpectedFailures) / Requests) * 100, 4))\r\n",
+          "panelPath": [
+            "QoS - All"
+          ]
+        }
+      ]
+    },
+    "QoS - By Operation": {
+      "panelPath": [
+        "QoS - By Operation"
+      ],
+      "queries": [
+        {
+          "id": "e6e24c2c-0fc9-4443-93dc-932d2c111267",
+          "name": "QoS By Operation",
+          "groupId": "cdd0c8f2-dbe1-4ef1-957e-422e6175f390",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "QoS - By Operation",
+          "params": [
+            {
+              "name": "qFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Operation",
+              "type": "string"
+            },
+            {
+              "name": "QoS",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let qOperations = dynamic([\r\n    'AvailabilitySets.StartTenantUpdate.POST',\r\n    'KvsData.Get.GET',\r\n    'Subscriptions.Put.PUT',\r\n    'VirtualMachines.Capture.POST',\r\n    'VirtualMachines.Deallocate.POST',\r\n    'VirtualMachines.GetVMs.GET',\r\n    'VirtualMachines.instanceView.GET',\r\n    'VirtualMachines.Restart.POST',\r\n    'VirtualMachines.ResourceOperation.DELETE',\r\n    'VirtualMachines.ResourceOperation.GET',\r\n    'VirtualMachines.ResourceOperation.PUT',\r\n    'VirtualMachines.Start.POST',\r\n    'VirtualMachines.Stop.POST',\r\n    'VirtualMachineScaleSets.Deallocate.POST',\r\n    'VirtualMachineScaleSets.ResourceOperation.DELETE',\r\n    'VirtualMachineScaleSets.ResourceOperation.PUT',\r\n    'VMExtensions.VMExtensionOperation.PUT',\r\n    'VMExtensions.VMExtensionOperation.DELETE',\r\n    'VMScaleSetVMExtensions.VMScaleSetVMExtensionOperation.PUT'\r\n]);\r\nApiQosEvent\r\n| where PreciseTimeStamp between (qFrom .. qTo)\r\n| where operationName in~ (qOperations)\r\n| project PreciseTimeStamp, operationName, operationId, resultType, RPTenant, region\r\n| summarize \r\n    Requests = dcount(operationId),\r\n    UnexpectedFailures = dcountif(operationId, resultType == 2) \r\n    by Operation = operationName, bin(PreciseTimeStamp, 5m)\r\n| extend QoS = (100 - round((toreal(UnexpectedFailures) / Requests) * 100, 4))\r\n| project PreciseTimeStamp, Operation, QoS\r\n| order by Operation asc, PreciseTimeStamp asc",
+          "panelPath": [
+            "QoS - By Operation"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:18:19.177Z",
+    "totalPanels": 2,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

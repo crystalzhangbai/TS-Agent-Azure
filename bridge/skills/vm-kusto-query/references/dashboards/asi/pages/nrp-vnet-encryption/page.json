@@ -1,0 +1,1489 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "3effc780-8354-4246-94ea-5e828b19bf1d",
+  "description": "health monitor for vnet encryption",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "61e79a35-19de-4fc0-8d46-c0a078969f78",
+    "dateSelectEnabled": false,
+    "props": {
+      "gridColumns": 12
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "9b09b221-ac64-44d5-bb5e-8ec54a639394",
+        "dateSelectEnabled": false,
+        "props": {},
+        "children": [
+          {
+            "type": "Column",
+            "id": "979d8c4e-ee30-4e68-9de4-1d0c447058d5",
+            "dateSelectEnabled": false,
+            "props": {
+              "gridColumns": 12
+            },
+            "children": [
+              {
+                "type": "Card",
+                "id": "d634d99e-0762-489e-8d6e-4b419b999919",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "NRP Performance DrillDown"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "https://azureserviceinsights.trafficmanager.net/edit/services/NRP/pages/2b789dd3-257f-42ac-b756-19c5d8c54730",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "Card",
+                "id": "50651cd9-9d4d-4d87-9f62-41ac71f04524",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "All NRP Regions"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "\"norwaye\", \"useast\", \"uswest2\", \"australiac2\", \"uswest\", \"europewest\", \"uswestcentral\", \"usnorth\", \"koreacentral\", \"southafricaw\", \"australiaeast\", \"uscentral\", \"germanywc\", \"switzerlandn\", \"canadaeast\", \"useast2euap\", \"qatarc\", \"japanwest\", \"asiaeast\", \"ukwest\", \"southafrican\", \"brazilse\", \"uswest3\", \"uksouth\", \"indiacentral\", \"australiac\", \"usstagee\", \"brazilsouth\", \"ussouth\", \"europenorth\", \"useast2\", \"uaen\", \"indiawest\", \"jioinw\", \"frances\", \"usstagesc\", \"japaneast\", \"uaec\", \"norwayw\", \"indiasouth\", \"koreasouth\", \"canadacentral\", \"germanyn\", \"swedens\", \"swedenc\", \"switzerlandw\", \"francec\", \"asiasoutheast\", \"uscentraleuap\", \"australiasoutheast\", \"uswest_Validation\", \"jioinc\"",
+                "popupDisplayStrategy": "FloatBottomRight"
+              },
+              {
+                "type": "TabPane",
+                "id": "55b2cbf7-531a-4235-a281-f56c2e608b5d",
+                "dateSelectEnabled": false,
+                "props": {},
+                "children": [
+                  {
+                    "type": "Row",
+                    "id": "59673ea5-3915-42f0-84bb-83a03dae3b4b",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Put EncryptedVnet Request"
+                    },
+                    "children": [
+                      {
+                        "type": "Column",
+                        "id": "c86e180b-caf3-4d36-a742-9f04304708fd",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "gridColumns": 12
+                        },
+                        "children": [
+                          {
+                            "type": "TimeSeries",
+                            "id": "ceffaadd-f266-4870-bc88-d9ffd891f651",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Put EncryptedVnet Request Traffic"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "7bd2f514-fafe-45fb-94bc-9dc3ae4a854d",
+                                "groupId": "7f129a3d-5443-4d58-ab3b-6ec1aac24952",
+                                "majorVersion": 1,
+                                "minorVersion": 5,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "Total Traffic on Put Vnet Operation with Encryption",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "19892953-4fb2-466b-a35a-2545ffd3217e",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Put Vnet Encryption Call Outside Supported Regions"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "abccb578-9088-4b2e-8e2f-bb50927fa692",
+                                "groupId": "e8bbab21-875b-4c09-a207-ecdc987cc485",
+                                "majorVersion": 1,
+                                "minorVersion": 0,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "Supported Regions: \"uswestcentral\", \"usnorth\", \"uscentraleuap\", \"useast2euap\", \"useast2\", \"uswest2\"",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "9aff074b-0022-40b4-bd44-517b9aa97afc",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Put EncryptedVnet SuccessOrError"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "bd45f19a-04ec-4396-8dbe-3d3bb4b8d473",
+                                "groupId": "9c25f47a-523b-47f8-99f9-18de550533cc",
+                                "majorVersion": 1,
+                                "minorVersion": 7,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {
+                              "componentDateType": "none",
+                              "componentDateLastDuration": "12"
+                            },
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "01907d90-f92a-48ef-887e-b6e0c1301d78",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "If Put Encrypted Vnet Request Comes from ARM Template Deployment"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "bf309a4f-a43d-4ab8-9382-2a28bb15512f",
+                                "groupId": "efb4c35d-9c1a-4bc2-be70-2e163e898c53",
+                                "majorVersion": 1,
+                                "minorVersion": 0,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "None"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "FloatBottomRight"
+                  },
+                  {
+                    "type": "Row",
+                    "id": "04a441d0-dd44-4524-8181-fa99646abbba",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Get Tenant Cluster Request"
+                    },
+                    "children": [
+                      {
+                        "type": "Column",
+                        "id": "1f189741-5fc6-4b62-bd2d-00c498586fd6",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "gridColumns": 12
+                        },
+                        "children": [
+                          {
+                            "type": "TimeSeries",
+                            "id": "a411bf4e-0a1c-43fa-a307-d815ca978d54",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Avg Time Taken To Read VNet"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "a3e37826-5a1b-4ab6-8e48-5ab4a8b8ae1f",
+                                "groupId": "4b548353-caa2-4735-9c68-726460a8be9a",
+                                "majorVersion": 2,
+                                "minorVersion": 1,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "With the existence of cache, average time we spent to each read vnet call on each correlation request should be reduced. ",
+                            "footer": "",
+                            "helpText": "add vnet size? top 10 subscription or outliers using the most reading time",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "cc4bd437-e809-4b1e-aa89-0c1cbf8841f2",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Get Tenant Cluster Request"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "43958a63-c278-42e9-baa5-022e82f38160",
+                                "groupId": "5d4d088d-498f-4754-8dda-8ca1b610059b",
+                                "majorVersion": 2,
+                                "minorVersion": 6,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "If the GetTenantClusterRequest has required Encryption",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "dae8869f-8d17-4cf3-9d4a-bf6467e7213b",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Returned Clusters List when Encryption Capable Cluster is Required"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "54559549-0634-437e-beed-eecc218807f2",
+                                "groupId": "50113174-b603-4328-9667-8f30dcb8e1c0",
+                                "majorVersion": 1,
+                                "minorVersion": 0,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "Response (capable clusters list) for GetTenantClusterRequest when VnetEncryption is required.",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "None"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "FloatBottomRight"
+                  },
+                  {
+                    "type": "Row",
+                    "id": "ee7de3fc-38c0-44d7-81ef-e4e8bc016e4e",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Put Peering Request With Encryption"
+                    },
+                    "children": [
+                      {
+                        "type": "Column",
+                        "id": "c711a2f9-5629-4512-94ef-378cb277da80",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "gridColumns": 12
+                        },
+                        "children": [
+                          {
+                            "type": "Table",
+                            "id": "d24e1d6d-43ac-48f3-b5d9-e33e2825eb1f",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Peering Failure Due To Old Api Version"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "dd51649e-1429-41be-af58-d8de40b85240",
+                                "groupId": "7a839eea-4d28-4f8c-a745-cc327528fd96",
+                                "majorVersion": 1,
+                                "minorVersion": 4,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "Put Peering with remote encrypted vnet might fail due to old api version",
+                            "footer": "",
+                            "helpText": "Note that this will not show as an Error in NRP. It will be processed as a regular put vnet/peering request without encryption if the Api Version is old, that is, remoteVirtualNetworkEncryption field will not be set. ",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "FloatBottomRight"
+                  },
+                  {
+                    "type": "Row",
+                    "id": "51975535-0fcf-4678-a763-9176fc3410d2",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Merlin-AllocateVirtualMachines"
+                    },
+                    "children": [
+                      {
+                        "type": "Column",
+                        "id": "dca917fe-81b6-4ac8-9060-5320473a6d4f",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "gridColumns": 12
+                        },
+                        "children": [
+                          {
+                            "type": "Table",
+                            "id": "433161bb-56d1-499b-a5bd-3af0499ba646",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Get Expected Nic Flag"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "12afb663-63e4-4ce3-8ea7-b9e9906ab537",
+                                "groupId": "ef7eb284-5850-468d-a0a0-dd3da7a14ecd",
+                                "majorVersion": 1,
+                                "minorVersion": 4,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "Check the recent value of VnetEncryptionSupported",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "FloatBottomRight"
+                  },
+                  {
+                    "type": "Row",
+                    "id": "f185bf43-af42-4fd1-a01f-e415a011638f",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "RNM-AllocateTenantNetworkResources"
+                    },
+                    "children": [
+                      {
+                        "type": "Column",
+                        "id": "32af79ed-9f37-4047-9220-9885a70a5f49",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "gridColumns": 12
+                        },
+                        "children": [
+                          {
+                            "type": "Table",
+                            "id": "bc7f0f42-fe69-481a-938d-1458b0e596dd",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "(RNM Stack) Get Expected Nic Flag"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "54d11fb4-a931-4341-8c1e-80ee836f6a64",
+                                "groupId": "54c1a653-38a7-447e-92f5-0a9029794922",
+                                "majorVersion": 1,
+                                "minorVersion": 2,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "FloatBottomRight"
+                  },
+                  {
+                    "type": "Row",
+                    "id": "5690bdca-98fe-4c04-b903-953058981b2f",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Runner Activities"
+                    },
+                    "children": [
+                      {
+                        "type": "Column",
+                        "id": "f973b99f-9921-40f3-8b7f-37cbb2eb3144",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "gridColumns": 12
+                        },
+                        "children": [
+                          {
+                            "type": "Card",
+                            "id": "df08192e-2d07-49c2-9ed0-c64b5ff855a6",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Explanation"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "This tab is built to debug runner failures in control plane (sub id c51a6f0a-b599-46bc-8484-6cb32b0ac038). We have collected logs from NRP, CRP and ARM in the following tables. ",
+                            "footer": "",
+                            "helpText": "How to use it?\n1. If you have any information about correlation id, operation id, resource group name, etc, put the info you have in following NRP CRP ARM tables. \n2. If you don't have any of the above information you can use https://jarvis-west.dc.ad.msft.net/3963A1CE to find failed resource group name (if you don't have the RG name yet) from Runners log, and then proceed to find the corresponding log in NRP, CRP, ARM",
+                            "popupDisplayStrategy": "None"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "32dbca0f-dffd-4b63-b578-1315dc795473",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "NRP and Control Path Runner Succeed Rate"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "160cd6e0-bf15-4576-9cfd-437721815c33",
+                                "groupId": "dfff75aa-36ea-4d3a-8ecd-8ef1469b26cb",
+                                "majorVersion": 1,
+                                "minorVersion": 3,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "succeed rate for nrp runner and control path runner",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "1fdd059c-9f35-408e-b834-ecc09376dad5",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Runner Sub Failure in NRP logs"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "308ee52d-7f59-40f6-a8cd-b15686463589",
+                                "groupId": "c2bb1a41-bdc2-489b-83aa-ef1694483eb9",
+                                "majorVersion": 1,
+                                "minorVersion": 1,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "runner sub: c51a6f0a-b599-46bc-8484-6cb32b0ac038",
+                            "footer": "",
+                            "helpText": "Excluded error during Get/Delete operation",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "e666d1b4-d6fd-4c99-b527-de475069c71c",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "Runner Sub Failure in CRP logs"
+                            },
+                            "children": [
+                              {
+                                "type": "Popup",
+                                "id": "47a599e2-03e1-4dfc-9dce-90b5f814a0f0",
+                                "dateSelectEnabled": false,
+                                "props": {},
+                                "children": [
+                                  {
+                                    "type": "Row",
+                                    "id": "2b612248-fbd2-4a6c-a3cf-d7d19cba2051",
+                                    "dateSelectEnabled": false,
+                                    "props": {},
+                                    "children": [
+                                      {
+                                        "type": "Column",
+                                        "id": "be79227e-27a8-4857-9286-fea07a2dcef1",
+                                        "dateSelectEnabled": false,
+                                        "props": {
+                                          "gridColumns": 12
+                                        },
+                                        "children": [
+                                          {
+                                            "type": "Card",
+                                            "id": "ee9c23d9-cf5b-4784-a102-e08dbfe1858a",
+                                            "dateSelectEnabled": false,
+                                            "props": {},
+                                            "children": [],
+                                            "mapping": [],
+                                            "selectedProperties": [],
+                                            "inputs": [],
+                                            "queries": [],
+                                            "conditions": [],
+                                            "widgetProperties": {},
+                                            "header": "",
+                                            "footer": "",
+                                            "helpText": "",
+                                            "popupDisplayStrategy": "None"
+                                          }
+                                        ],
+                                        "mapping": [],
+                                        "selectedProperties": [],
+                                        "inputs": [],
+                                        "queries": [],
+                                        "conditions": [],
+                                        "widgetProperties": {},
+                                        "header": "",
+                                        "footer": "",
+                                        "helpText": "",
+                                        "popupDisplayStrategy": "None"
+                                      }
+                                    ],
+                                    "mapping": [],
+                                    "selectedProperties": [],
+                                    "inputs": [],
+                                    "queries": [],
+                                    "conditions": [],
+                                    "widgetProperties": {},
+                                    "header": "",
+                                    "footer": "",
+                                    "helpText": "",
+                                    "popupDisplayStrategy": "None"
+                                  }
+                                ],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "83775b2a-8734-4fa8-91d6-675746aaabd5",
+                                "groupId": "3a50ce65-7ad0-4793-a8c6-379bf988e7b6",
+                                "majorVersion": 1,
+                                "minorVersion": 2,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "runner sub: c51a6f0a-b599-46bc-8484-6cb32b0ac038\nNote that the operationId in CRP logs corresponds to the correlationId in NRP and ARM logs",
+                            "footer": "",
+                            "helpText": "Excluded error during Get/Delete operation",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "dd31505b-7f4a-43d3-9535-df57496b8a63",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "ARM Incoming Requests"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "a8ad236e-289a-4a4c-9578-7aa8c3466897",
+                                "groupId": "6ebc46dd-db86-4b89-9053-5b4ba43f1219",
+                                "majorVersion": 1,
+                                "minorVersion": 1,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "startTime",
+                                    "externalSourceName": "globalFrom",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "global_time_selector",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "endTime",
+                                    "externalSourceName": "globalTo",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "runner sub: c51a6f0a-b599-46bc-8484-6cb32b0ac038    Note that the targetUri contains the resource group name and resource name",
+                            "footer": "",
+                            "helpText": "Operation excluded: Get/Delete; \ndurationInMilliseconds > 1\n\n",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "FloatBottomRight"
+                  },
+                  {
+                    "type": "Row",
+                    "id": "8487da4d-e3e8-41ab-b632-dcf99e076b22",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Regional Setting Status"
+                    },
+                    "children": [
+                      {
+                        "type": "Column",
+                        "id": "16734d91-3c57-4df0-adf4-27712d957703",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "gridColumns": 12
+                        },
+                        "children": [
+                          {
+                            "type": "Table",
+                            "id": "52bb6063-7528-426f-bb97-bbc2b456cfca",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "SupportVNetEncryptionFeature Setting"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "528f605b-c8e8-428e-b82a-5bb135406008",
+                                "groupId": "dfb29fd5-d3f0-4dae-afd5-b3dc33a4c593",
+                                "majorVersion": 3,
+                                "minorVersion": 0,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "Add NSM setting",
+                            "footer": "",
+                            "helpText": "Default value: false\n1). set to true on usnorth, uswestcentral, east and central canary from NRP 163 deployment\n2). set to true on useast2, uswest2 through dynamic setting on 03/31/2022",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "536d9817-7f65-4bd1-b167-9ffa0581d4c2",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "ValidateEncryptionBasedOnVMSizeOnly Setting "
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "0e5590b0-c4bd-4ddf-a9a1-972fbabd4026",
+                                "groupId": "74447321-1c60-44ad-9210-5be7b478d0e3",
+                                "majorVersion": 3,
+                                "minorVersion": 0,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "Default Value: true\n1). set to false on usnorth, uswestcentral, east and central canary from NRP 163 deployment\n2). set to false on eastus2, westus2 through dynamic setting on 03/31/2022",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Table",
+                            "id": "5994b0cd-8d7b-4780-8ba5-7dc2755588f2",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "SupportVNetEncryptionOnRNMStack  Setting"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "77ab5562-d654-464b-abcc-60ae5703e21f",
+                                "groupId": "47063873-3945-4965-8c01-4a82c2762c3b",
+                                "majorVersion": 3,
+                                "minorVersion": 0,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "page",
+                                    "majorVersion": 0,
+                                    "minorVersion": 0,
+                                    "internalDestinationName": "region",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  }
+                                ],
+                                "aggregationRule": {
+                                  "type": "Append"
+                                }
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "Default value: false\nset to true on 2 slices of subscription 5833e0eb-b53c-4156-b478-2eac8f04aec6 and bd25b40f-f098-4505-ac95-81961898161f in east canary.",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "FloatBottomRight"
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "FloatBottomRight"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "FloatBottomRight"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "FloatBottomRight"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "FloatBottomRight"
+  },
+  "queries": [],
+  "versionNumber": 76,
+  "basedOnVersionId": "ddcac479-966b-424b-945a-23c31e3705b3",
+  "groupId": "3084211f-037e-4cdb-9404-ec10a6b231bf",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "Subscription",
+      "description": "",
+      "type": "string",
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {},
+      "displayConditions": []
+    },
+    {
+      "name": "Region",
+      "description": "",
+      "type": "string",
+      "default": "",
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {},
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "groupId": "7f129a3d-5443-4d58-ab3b-6ec1aac24952",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "e8bbab21-875b-4c09-a207-ecdc987cc485",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "9c25f47a-523b-47f8-99f9-18de550533cc",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "efb4c35d-9c1a-4bc2-be70-2e163e898c53",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "4b548353-caa2-4735-9c68-726460a8be9a",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "5d4d088d-498f-4754-8dda-8ca1b610059b",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "50113174-b603-4328-9667-8f30dcb8e1c0",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "7a839eea-4d28-4f8c-a745-cc327528fd96",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "ef7eb284-5850-468d-a0a0-dd3da7a14ecd",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "54c1a653-38a7-447e-92f5-0a9029794922",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "dfff75aa-36ea-4d3a-8ecd-8ef1469b26cb",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "c2bb1a41-bdc2-489b-83aa-ef1694483eb9",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "3a50ce65-7ad0-4793-a8c6-379bf988e7b6",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "6ebc46dd-db86-4b89-9053-5b4ba43f1219",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "dfb29fd5-d3f0-4dae-afd5-b3dc33a4c593",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "74447321-1c60-44ad-9210-5be7b478d0e3",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "47063873-3945-4965-8c01-4a82c2762c3b",
+      "entityType": "Query"
+    }
+  ],
+  "serviceId": "NRP",
+  "deleted": false,
+  "name": "Vnet Encryption",
+  "_ts": 1665038929,
+  "databaseSavedTimestamp": "2022-10-06T06:48:49+00:00",
+  "_etag": "\"6600dece-0000-1a00-0000-633e7a510000\"",
+  "createdAt": "2022-04-19T00:26:26.2422255+00:00",
+  "createdBy": "dantu@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "dantu@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2022-04-19T00:26:26.2422255+00:00",
+  "tags": []
+}

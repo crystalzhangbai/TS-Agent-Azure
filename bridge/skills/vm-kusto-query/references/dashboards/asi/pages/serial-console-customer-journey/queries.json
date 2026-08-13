@@ -1,0 +1,98 @@
+[
+  {
+    "id": "6472e0fa-a6a1-4364-b630-cddfac7d7d31",
+    "name": "uniquesubscriptions",
+    "groupId": "cc8dfe89-f1f1-45bb-b7fd-0d4ac2d40a93",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "https://azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontEndQoSEvents\r\n| distinct subscriptionID\r\n| count",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-03-13T04:41:21.482Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-03-14T04:41:21.482Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Count",
+        "type": "long"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  },
+  {
+    "id": "4149b0eb-4984-4b02-aab8-8f51611bf4d9",
+    "name": "icmcount",
+    "groupId": "1272bc0a-abe5-41a2-8530-c852d737713f",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "https://icmcluster.kusto.windows.net",
+    "database": "IcmDataWarehouse",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "Incidents\r\n| where SourceCreateDate > ago(90d)\r\n| where OwningTeamName contains \"AzSerialConsole\"\r\n| where Status in (\"ACTIVE\")\r\n| where isnull(ParentIncidentId)\r\n| summarize count() by CorrelationId\r\n| order by count_ desc\r\n| limit 10",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-03-13T04:41:21.482Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-03-14T04:41:21.482Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "CorrelationId",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  }
+]

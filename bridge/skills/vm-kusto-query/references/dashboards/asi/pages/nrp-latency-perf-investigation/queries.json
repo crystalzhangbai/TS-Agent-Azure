@@ -1,0 +1,244 @@
+[
+  {
+    "id": "660198b6-eaef-4450-809c-8047ce44a2b3",
+    "name": "Queue Processing Percentiles",
+    "groupId": "8047eac5-299c-47d1-b68c-37b93dbe12b4",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance\r\n| parse Message with \"Dequeue job id \"id\" of type \"jobName\" for execution in queue \"queueId\" duration in queue: \"duration\r\n| summarize percentiles(toint(duration), 50, 75, 95, 99) by queueId\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "queueId",
+        "type": "string"
+      },
+      {
+        "name": "percentile_duration_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_95",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_99",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "d5889d0d-ccd7-48b7-b282-c3b50992a56f",
+    "name": "Long Running Jobs",
+    "groupId": "9ee40a84-bb1a-4886-b214-c6fbfcb061bc",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where Message contains \"Long execution duration execution job id\"\r\n| parse Message with \"Long execution duration execution job id: \" LongRunningJobId \", duration: \" ExecutionDuration\r\n| extend jobDuration = toint(ExecutionDuration)\r\n| project PreciseTimeStamp, JobId, JobName, Message, jobDuration\r\n| summarize avg(jobDuration) by bin(PreciseTimeStamp, 1s), JobName, JobId\r\n| render timechart\r\n\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "JobName",
+        "type": "string"
+      },
+      {
+        "name": "JobId",
+        "type": "string"
+      },
+      {
+        "name": "avg_jobDuration",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "69e31a05-7e68-46f6-8aa2-10bfbb2db936",
+    "name": "Batch Sizes",
+    "groupId": "934f889c-053b-493d-a0f9-13b065f7f4b5",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let batchSizes = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscription\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId\r\n| where Message startswith \"Complete dequeue chunk of\"\r\n| parse Message with \"Complete dequeue chunk of \"batchsize\" jobs. Added \"other\" jobs to chunk id \"JobChunkId;\r\nlet completedJobs = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscription\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId, JobChunkId, JobId\r\n| where EventCode == \"TransactionJobExecutionFinished\";\r\nbatchSizes\r\n| join completedJobs on JobChunkId\r\n| project batchsize, JobId, QueueId\r\n| summarize percentiles(toint(batchsize), 50, 75, 90, 99.9) by QueueId\r\n| project QueueId, percentile_batchsize_50, percentile_batchsize_75, percentile_batchsize_90, percentile_batchsize_99_9\r\n\r\n  ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscription",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "QueueId",
+        "type": "string"
+      },
+      {
+        "name": "percentile_batchsize_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_99_9",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

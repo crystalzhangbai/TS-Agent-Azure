@@ -1,0 +1,720 @@
+{
+  "service": "Storage Tools",
+  "page": "Control Plane Dashboard",
+  "pageId": "478583e4-0342-4c98-9bdd-fe3125c542c7",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "f13fec28-2acc-4ba7-af79-37be3cab900f",
+          "name": "Get Tenant Info by Account",
+          "groupId": "b760a659-e8eb-4ff6-ac4b-2614f64bc29c",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "CompoundWidgetContainer",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XStoreAccountPropertiesHourly()\r\n| where TimePeriod > ago(3d)\r\n| where Account startswith strcat(trim(@\"[\\s]+\", accountName),\";\")\r\n| order by TimePeriod desc \r\n| take 1\r\n| project Tenant, Subscription\r\n// if Account not found, retuns empty Tenant instead of ASI error\r\n| union (        \r\n    print Tenant=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1\r\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "ARM Operations": {
+      "panelPath": [
+        "ARM Operations"
+      ],
+      "queries": [
+        {
+          "id": "5919635a-8dc0-48fd-837f-0ca81cbaf914",
+          "name": "Get account ARM requests",
+          "groupId": "eeeb610c-2b98-452b-b9d2-ad26df69e040",
+          "majorVersion": 5,
+          "minorVersion": 0,
+          "cluster": "https://armprodgbl.eastus.kusto.windows.net/",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ARM Operations",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subID",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "corrID",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "isNoGet",
+              "type": "bool",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "principalOid",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "httpMethod",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "targetUri",
+              "type": "string"
+            },
+            {
+              "name": "clientIpAddress",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "contentLength",
+              "type": "long"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "targetResourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "targetResourceType",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subID",
+              "externalSourceName": "SubscriptionID",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "corrID",
+              "externalSourceName": "CorrelationID",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "node_input",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "isNoGet",
+              "externalSourceName": "NoGet",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Requests').HttpIncomingRequests\n    | where PreciseTimeStamp between (queryFrom .. queryTo)\n    | where subscriptionId =~ subID and TaskName != \"HttpIncomingRequestStart\"\n    | where targetResourceProvider == \"MICROSOFT.STORAGE\"\n    | where targetUri matches regex  strcat(\"https://management.azure.com:443/subscriptions/\", subID, \"/resourceGroups/.*/providers/Microsoft.Storage/storageAccounts/\", accountName, \"/.*\")\n    | where correlationId has corrID\n    | where httpMethod != iff(isNoGet, 'GET', '')\n    | limit 1000\n)\n| order by PreciseTimeStamp asc\n| project TIMESTAMP, Level, ActivityId, correlationId, principalOid, operationName, httpMethod, httpStatusCode, targetUri, clientIpAddress, apiVersion, contentLength, durationInMilliseconds, targetResourceProvider, targetResourceType",
+          "panelPath": [
+            "ARM Operations"
+          ]
+        }
+      ]
+    },
+    "Pages - Storage Tools": {
+      "panelPath": [
+        "Pages - Storage Tools"
+      ],
+      "queries": [
+        {
+          "id": "f13fec28-2acc-4ba7-af79-37be3cab900f",
+          "name": "Get Tenant Info by Account",
+          "groupId": "b760a659-e8eb-4ff6-ac4b-2614f64bc29c",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XStoreAccountPropertiesHourly()\r\n| where TimePeriod > ago(3d)\r\n| where Account startswith strcat(trim(@\"[\\s]+\", accountName),\";\")\r\n| order by TimePeriod desc \r\n| take 1\r\n| project Tenant, Subscription\r\n// if Account not found, retuns empty Tenant instead of ASI error\r\n| union (        \r\n    print Tenant=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1\r\n",
+          "panelPath": [
+            "Pages - Storage Tools"
+          ]
+        },
+        {
+          "id": "2bc22049-e59c-45fe-8074-40dfea9dac00",
+          "name": "TrimStorageName",
+          "groupId": "013910c6-a3a7-4a35-8c20-8591d0282342",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "local_StorageNameName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StorageName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_StorageNameName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let trimmed_StorageName = trim(@\"[\\s]+\", local_StorageNameName);\r\nprint StorageName = trimmed_StorageName ;",
+          "panelPath": [
+            "Pages - Storage Tools"
+          ]
+        }
+      ]
+    },
+    "SRP Operations": {
+      "panelPath": [
+        "SRP Operations"
+      ],
+      "queries": [
+        {
+          "id": "7f5f67e8-91e1-49ec-844f-4cead8adcb5a",
+          "name": "List SRP Operations ",
+          "groupId": "22731642-b81a-44cc-aa00-35f06f8aced1",
+          "majorVersion": 4,
+          "minorVersion": 0,
+          "cluster": "https://xstorepartners.kusto.windows.net/",
+          "database": "SRP",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "SRP Operations",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subID",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "corrID",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "isNoGet",
+              "type": "bool",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "e2EDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "method",
+              "type": "string"
+            },
+            {
+              "name": "account",
+              "type": "string"
+            },
+            {
+              "name": "status",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subID",
+              "externalSourceName": "SubscriptionID",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "corrID",
+              "externalSourceName": "CorrelationID",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "node_input",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "isNoGet",
+              "externalSourceName": "NoGet",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "RegionalSRP_ServiceApiQosEvent\r\n| where PreciseTimeStamp between ( queryFrom .. queryTo)\r\n| where subscriptionId == subID and account == accountName\r\n| where method != iff(isNoGet, 'GET', '')\r\n| where correlationId has corrID\r\n| project PreciseTimeStamp, Tenant, RoleInstance, subscriptionId, operationId, clientRequestId, correlationId, operationName, resourceGroupName, durationInMilliseconds, e2EDurationInMilliseconds, httpStatusCode, exceptionType, errorDetails, region, method, account, status",
+          "panelPath": [
+            "SRP Operations"
+          ]
+        }
+      ]
+    },
+    "SRP Throttling Detector": {
+      "panelPath": [
+        "SRP Throttling Detector"
+      ],
+      "queries": [
+        {
+          "id": "4e5e0f29-ae87-47eb-8c08-c449062cadb0",
+          "name": "Detect SRP throttling Errors",
+          "groupId": "cbee276b-9ce3-41b3-90ee-3c555a33b507",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "https://xstorepartners.kusto.windows.net/",
+          "database": "SRP",
+          "type": "IssueDetector",
+          "widgetType": "IssueDetector",
+          "widgetTitle": "SRP Throttling Detector",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "429count",
+              "type": "long"
+            },
+            {
+              "name": "Severity",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            },
+            {
+              "name": "UriText",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "RegionalSRP_ServiceApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where account == accountName\r\n| where httpStatusCode == 429\r\n| summarize 429count = count()\r\n| extend Severity = iff(429count > 0, \"error\", \"information\")\r\n| extend Description = iff(429count > 0, strcat(\"There are\", ['429count'], \"throttling error detected in the given period.\"), \"No SRP throttling error detected.\")\r\n| extend UriText = \"Test\" ",
+          "panelPath": [
+            "SRP Throttling Detector"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:54:41.134Z",
+    "totalPanels": 5,
+    "totalUniqueQueries": 5,
+    "totalWidgetRefs": 6
+  }
+}

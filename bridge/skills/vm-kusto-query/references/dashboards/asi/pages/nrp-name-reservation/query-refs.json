@@ -1,0 +1,153 @@
+[
+  {
+    "groupId": "7fa865d0-ae11-462a-a644-944e1a10defe",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Operations with NRS call"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "",
+    "queryId": "2053cc6b-b46f-4539-bc92-2e00fb66d0a9",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "Operations with NRS call",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "f650049d-6edc-4d3a-87a8-46945ab76c82",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Operations with NRS call",
+      "NRS Call Failures"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "NRS Call Failures",
+    "queryId": "4f0e0123-0222-469b-bcb7-3f123f556654",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "Region",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "NRS call failures",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "Region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

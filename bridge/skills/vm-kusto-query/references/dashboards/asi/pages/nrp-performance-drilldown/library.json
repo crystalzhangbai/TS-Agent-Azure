@@ -1,0 +1,2474 @@
+{
+  "service": "NRP",
+  "page": "Nrp Performance Drilldown",
+  "pageId": "de04e8d2-41d2-4449-ae90-96ef23cbd4c5",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Batch Manager Summary > Batch Job Durations": {
+      "panelPath": [
+        "Batch Manager Summary",
+        "Batch Job Durations"
+      ],
+      "queries": [
+        {
+          "id": "2c91fc5f-8cc3-4b1e-bca2-20c5019cf13c",
+          "name": "Batch Job Durations",
+          "groupId": "29de2c54-f079-4509-ab8b-5b9cddacea11",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Batch Job Durations",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "JobName",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            },
+            {
+              "name": "percentile_Duration_50",
+              "type": "long"
+            },
+            {
+              "name": "percentile_Duration_75",
+              "type": "long"
+            },
+            {
+              "name": "percentile_Duration_95",
+              "type": "long"
+            },
+            {
+              "name": "percentile_Duration_99_9",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where EventCode == \"TransactionJobExecutionFinished\"\r\n| where iff(QueueId startswith \"ResourceLockingTransactionJob\", Message endswith \"ResourceLockingBatchQueue.\", true)\r\n| summarize count(), percentiles(toint(Duration), 50, 75, 95, 99.9) by JobName\r\n| order by percentile_Duration_50",
+          "panelPath": [
+            "Batch Manager Summary",
+            "Batch Job Durations"
+          ]
+        }
+      ]
+    },
+    "Batch Manager Summary > Batch Queue Processing Percentiles": {
+      "panelPath": [
+        "Batch Manager Summary",
+        "Batch Queue Processing Percentiles"
+      ],
+      "queries": [
+        {
+          "id": "77bbaf01-3fe6-460b-a7a5-f3277e50d1f6",
+          "name": "Batch Manager Queue Processing Percentiles",
+          "groupId": "a77a22dc-18d8-42cb-bee6-c6f0960cc310",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Batch Queue Processing Percentiles",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "queueId",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            },
+            {
+              "name": "percentile_duration_50",
+              "type": "long"
+            },
+            {
+              "name": "percentile_duration_75",
+              "type": "long"
+            },
+            {
+              "name": "percentile_duration_99",
+              "type": "long"
+            },
+            {
+              "name": "percentile_duration_99_9",
+              "type": "long"
+            },
+            {
+              "name": "percentile_duration_100",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance\r\n| where Message startswith \"Dequeue job id\"\r\n| parse Message with \"Dequeue job id \"id\" of type \"jobName\" for execution in queue \"queueId\" duration in queue: \"duration\r\n| summarize count(), percentiles(toint(duration), 50, 75, 99, 99.9, 100) by queueId",
+          "panelPath": [
+            "Batch Manager Summary",
+            "Batch Queue Processing Percentiles"
+          ]
+        }
+      ]
+    },
+    "Batch Manager Summary > Batch Sizes": {
+      "panelPath": [
+        "Batch Manager Summary",
+        "Batch Sizes"
+      ],
+      "queries": [
+        {
+          "id": "d1c09007-de8b-4473-bfe2-965f73520f02",
+          "name": "Batch Sizes",
+          "groupId": "104bfde5-b5e9-4a62-b792-849e343b330b",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "CategoryChart",
+          "widgetType": "CategoryChart",
+          "widgetTitle": "Batch Sizes",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "QueueId",
+              "type": "string"
+            },
+            {
+              "name": "percentile_batchsize_50",
+              "type": "long"
+            },
+            {
+              "name": "percentile_batchsize_75",
+              "type": "long"
+            },
+            {
+              "name": "percentile_batchsize_90",
+              "type": "long"
+            },
+            {
+              "name": "percentile_batchsize_99_9",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let batchSizes = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId\r\n| where Message startswith \"Complete dequeue chunk of\"\r\n| parse Message with \"Complete dequeue chunk of \"batchsize\" jobs. Added \"other\" jobs to chunk id \"JobChunkId;\r\nlet completedJobs = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId, JobChunkId, JobId\r\n| where EventCode == \"TransactionJobExecutionFinished\";\r\nbatchSizes\r\n| join completedJobs on JobChunkId\r\n| project batchsize, JobId, QueueId\r\n| summarize percentiles(toint(batchsize), 50, 75, 90, 99.9) by QueueId\r\n| project QueueId, percentile_batchsize_50, percentile_batchsize_75, percentile_batchsize_90, percentile_batchsize_99_9\r\n| render barchart  by QueueId\r\n",
+          "panelPath": [
+            "Batch Manager Summary",
+            "Batch Sizes"
+          ]
+        }
+      ]
+    },
+    "Batch Manager Summary > Commit Duration": {
+      "panelPath": [
+        "Batch Manager Summary",
+        "Commit Duration"
+      ],
+      "queries": [
+        {
+          "id": "675dce92-88af-4699-916d-92b00f2751de",
+          "name": "Commit Duration",
+          "groupId": "15b585ff-c4d3-4ffd-b975-089a7e78fc71",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Commit Duration",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "queueId",
+              "type": "string"
+            },
+            {
+              "name": "percentile_commitTime_50",
+              "type": "long"
+            },
+            {
+              "name": "percentile_commitTime_75",
+              "type": "long"
+            },
+            {
+              "name": "percentile_commitTime_95",
+              "type": "long"
+            },
+            {
+              "name": "percentile_commitTime_99",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId ==  subscriptionId\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId\r\n| parse Message with \"Finished commit of job chunk \"jobChunk\" from queue \"queueId\" in \"commitTime\" ms\"\r\n| summarize percentiles(toint(commitTime), 50, 75, 95, 99) by queueId\r\n| order by percentile_commitTime_50 desc",
+          "panelPath": [
+            "Batch Manager Summary",
+            "Commit Duration"
+          ]
+        }
+      ]
+    },
+    "Batch Manager Summary > Long Running Jobs": {
+      "panelPath": [
+        "Batch Manager Summary",
+        "Long Running Jobs"
+      ],
+      "queries": [
+        {
+          "id": "75f9841c-5fd5-4128-9892-3e51ab32ae0f",
+          "name": "Long Running Jobs",
+          "groupId": "0b9ab269-da98-484d-a543-c71a58cd2b89",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Long Running Jobs",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscription",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "JobName",
+              "type": "string"
+            },
+            {
+              "name": "JobId",
+              "type": "string"
+            },
+            {
+              "name": "avg_jobDuration",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscription",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscription\r\n| where Message contains \"Long execution duration execution job id\"\r\n| parse Message with \"Long execution duration execution job id: \" LongRunningJobId \", duration: \" ExecutionDuration\r\n| extend jobDuration = toint(ExecutionDuration)\r\n| project PreciseTimeStamp, JobId, JobName, Message, jobDuration\r\n| summarize avg(jobDuration) by bin(PreciseTimeStamp, 1s), JobName, JobId\r\n| render timechart",
+          "panelPath": [
+            "Batch Manager Summary",
+            "Long Running Jobs"
+          ]
+        }
+      ]
+    },
+    "Batch Manager Summary > Worst-Performing Non-Tenant Operations": {
+      "panelPath": [
+        "Batch Manager Summary",
+        "Worst-Performing Non-Tenant Operations"
+      ],
+      "queries": [
+        {
+          "id": "968f49d3-622b-4dc2-864e-f03f241c8b60",
+          "name": "Worst Performing Non-Tenant Operations",
+          "groupId": "d0a543b7-186a-43a1-bfbb-b4b7966389c2",
+          "majorVersion": 3,
+          "minorVersion": 2,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "CategoryChart",
+          "widgetType": "CategoryChart",
+          "widgetTitle": "Worst-Performing Non-Tenant Operations",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            },
+            {
+              "name": "duration",
+              "type": "int"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            }
+          ],
+          "kustoQuery": "\r\ncluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| parse Message with \"Dequeue job id \"JobId\" of type \"jobName\" for execution in queue \"queueId\" duration in queue: \"duration\r\n| project PreciseTimeStamp, duration, JobId, OperationId, OperationName, RoleInstance, Pid\r\n| where OperationName !contains \"tenant\" and OperationName !contains \"VirtualMachine\" and OperationName !contains \"ScaleSet\"\r\n| sort by toint(duration) desc \r\n| take 1000\r\n| project OperationName, OperationId, toint(duration)\r\n| render columnchart  by OperationName",
+          "panelPath": [
+            "Batch Manager Summary",
+            "Worst-Performing Non-Tenant Operations"
+          ]
+        }
+      ]
+    },
+    "Batch Manager Summary > Worst-Performing Tenant Operations": {
+      "panelPath": [
+        "Batch Manager Summary",
+        "Worst-Performing Tenant Operations"
+      ],
+      "queries": [
+        {
+          "id": "2e145bcd-001d-455c-a896-de28bb5a3d2b",
+          "name": "Worst Performing Tenant Operations",
+          "groupId": "dee03fde-3b0d-499f-ac07-c3b102f02930",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "CategoryChart",
+          "widgetType": "CategoryChart",
+          "widgetTitle": "Worst-Performing Tenant Operations",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            },
+            {
+              "name": "duration",
+              "type": "int"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| parse Message with \"Dequeue job id \"JobId\" of type \"jobName\" for execution in queue \"queueId\" duration in queue: \"duration\r\n| project PreciseTimeStamp, duration, JobId, OperationId, OperationName, RoleInstance, Pid\r\n| where OperationName contains \"tenant\" or OperationName contains \"VirtualMachine\" or OperationName contains \"ScaleSet\"\r\n| sort by toint(duration) desc \r\n| take 1000\r\n| project OperationName, OperationId, toint(duration)\r\n| render columnchart  by OperationName",
+          "panelPath": [
+            "Batch Manager Summary",
+            "Worst-Performing Tenant Operations"
+          ]
+        }
+      ]
+    },
+    "EG Breakdown > NRP EG Exclusive Times": {
+      "panelPath": [
+        "EG Breakdown",
+        "NRP EG Exclusive Times"
+      ],
+      "queries": [
+        {
+          "id": "210b2139-71b0-48d8-8f02-856304e6eaad",
+          "name": "NRP EG Percentile Times",
+          "groupId": "c78cf12d-7754-4fa6-92d3-108b8d447166",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "NRP EG Exclusive Times",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            },
+            {
+              "name": "percentile_durationMs_50",
+              "type": "long"
+            },
+            {
+              "name": "percentile_durationMs_75",
+              "type": "long"
+            },
+            {
+              "name": "percentile_durationMs_99_9",
+              "type": "long"
+            },
+            {
+              "name": "percentile_durationMs_100",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let jobNameTimes = cluster('nrp').database('mdsnrp').QosEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where BackgroundTaskQos == 0\r\n| project OperationId, OperationName, ResourceName, ResourceGroup, SynchronousDurationInMilliseconds, AsynchronousDurationInMilliseconds, SourceAssemblyFileVersion, PreciseTimeStamp;\r\nlet operationToTrackMetadata = jobNameTimes\r\n| distinct OperationId, OperationName, SourceAssemblyFileVersion;\r\nlet filteredIfx = NrpIfxOperationV3Event\r\n| where env_time > startTime and env_time < endTime\r\n| where Tenant == region\r\n| where SubscriptionId == subscriptionId;\r\nlet syncRootFrame = filteredIfx\r\n| where operationName endswith \"Operation\"\r\n| parse env_cv with \"##\"parentGuid1\"_\"parentguid2\"_\"frameGuid\r\n| extend childEnvPrefix = strcat(\"##\", frameGuid)\r\n| project parentOperationName=operationName, parentDuration=durationMs, childEnvPrefix, runningOperationId=OperationId;\r\nlet asyncRootFrame = filteredIfx\r\n| where operationName endswith \"Operation-Async\"\r\n| parse env_cv with \"##\"parentGuid1\"_\"parentguid2\"_\"frameGuid\r\n| extend childEnvPrefix = strcat(\"##\", frameGuid)\r\n| project parentOperationName=operationName, parentDuration=durationMs, childEnvPrefix, runningOperationId=OperationId;\r\nlet asyncFrames = filteredIfx\r\n| parse env_cv with prefix\"_\"*\r\n| join kind=inner asyncRootFrame on $left.prefix == $right.childEnvPrefix\r\n| project operationName, durationMs, childEnvPrefix, runningOperationId;\r\nlet syncFrames = filteredIfx\r\n| parse env_cv with prefix\"_\"*\r\n| join kind=inner syncRootFrame on $left.prefix == $right.childEnvPrefix\r\n| where operationName != strcat(parentOperationName, \"-Async\")\r\n| project operationName, durationMs, childEnvPrefix, runningOperationId;\r\nlet totalAsyncChildTime = asyncFrames\r\n| summarize sum(durationMs) by childEnvPrefix;\r\nlet totalSyncChildTime = syncFrames\r\n| summarize sum(durationMs) by childEnvPrefix;\r\nlet enhancedAsyncRootFrame = asyncRootFrame\r\n| join kind=leftouter totalAsyncChildTime on childEnvPrefix\r\n| extend effectiveDuration = parentDuration - iff(isnull(sum_durationMs), 0, sum_durationMs)\r\n| project operationName=parentOperationName, effectiveDuration, runningOperationId;\r\nlet enhancedSyncRootFrame = syncRootFrame\r\n| join kind=leftouter totalAsyncChildTime on childEnvPrefix\r\n| extend effectiveDuration = parentDuration - iff(isnull(sum_durationMs), 0, sum_durationMs)\r\n| project operationName=parentOperationName, effectiveDuration, runningOperationId;\r\nlet combinedFrames = asyncFrames\r\n| union syncFrames\r\n| project operationName, effectiveDuration=tolong(durationMs), runningOperationId\r\n| union enhancedSyncRootFrame\r\n| union enhancedAsyncRootFrame;\r\ncombinedFrames\r\n| join kind=inner operationToTrackMetadata on $left.runningOperationId == $right.OperationId\r\n| summarize count(), percentiles(durationMs=effectiveDuration, 50, 75, 99.9, 100) by operationName//, ResourceGroup=EffectiveResourceGroup\r\n| order by percentile_durationMs_50",
+          "panelPath": [
+            "EG Breakdown",
+            "NRP EG Exclusive Times"
+          ]
+        }
+      ]
+    },
+    "Exclusive Write Attribution > Exclusive Write Time Distribution": {
+      "panelPath": [
+        "Exclusive Write Attribution",
+        "Exclusive Write Time Distribution"
+      ],
+      "queries": [
+        {
+          "id": "8e9fdb10-6e2b-4ac8-ac43-7ced372eab98",
+          "name": "ExclusiveWriteTimes",
+          "groupId": "910571e9-9e54-4de6-a04e-80e081410b23",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Exclusive Write Time Distribution",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "JobName",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            },
+            {
+              "name": "sum_Duration",
+              "type": "long"
+            },
+            {
+              "name": "PercentExclusiveUtilization",
+              "type": "real"
+            },
+            {
+              "name": "percentile_Duration_50",
+              "type": "long"
+            },
+            {
+              "name": "percentile_Duration_75",
+              "type": "long"
+            },
+            {
+              "name": "percentile_Duration_90",
+              "type": "long"
+            },
+            {
+              "name": "percentile_Duration_99_9",
+              "type": "long"
+            },
+            {
+              "name": "percentile_batchsize_50",
+              "type": "long"
+            },
+            {
+              "name": "percentile_batchsize_75",
+              "type": "long"
+            },
+            {
+              "name": "percentile_batchsize_90",
+              "type": "long"
+            },
+            {
+              "name": "percentile_batchsize_99_9",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let batchSizes = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId\r\n| where Message startswith \"Complete dequeue chunk of\"\r\n| parse Message with \"Complete dequeue chunk of \"batchsize\" jobs. Added \"other\" jobs to chunk id \"JobChunkId;\r\nlet completedJobs = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId, JobChunkId, JobId, Duration, JobName\r\n| where EventCode == \"TransactionJobExecutionFinished\" and iff(QueueId contains \"ResourceLockingTransactionJob\", Message endswith \"ResourceLockingBatchQueue.\", true);\r\nlet subLockStats = cluster('nrp').database(\"mdsnrp\").FrontendOperationEtwEvent \r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where EventCode == \"LockReleased\"\r\n| parse Message with * \"Operation \"fullOpName\" (\"opId\")\"\" released lock \"lockResource\" after \"lockDuration\" ms, refCount: \"refcount\r\n| project lockResource, lockDuration, PreciseTimeStamp, OperationId, SubscriptionId, OperationName\r\n| where lockResource == SubscriptionId\r\n| project JobName = strcat(\"SubLoc_\", OperationName), batchsize=\"1\", Duration = tolong(lockDuration);\r\nbatchSizes\r\n| join completedJobs on JobChunkId\r\n| project batchsize, Duration, JobName\r\n| union subLockStats\r\n| summarize count(), sum(Duration), percentiles(Duration, 50, 75, 90, 99.9), percentiles(toint(batchsize), 50, 75, 90, 99.9) by JobName\r\n| extend  PercentExclusiveUtilization=sum_Duration / ((endTime-startTime) / 1ms)\r\n| project JobName, count_, sum_Duration, PercentExclusiveUtilization, percentile_Duration_50, percentile_Duration_75, percentile_Duration_90, percentile_Duration_99_9, percentile_batchsize_50, percentile_batchsize_75, percentile_batchsize_90, percentile_batchsize_99_9\r\n| order by sum_Duration",
+          "panelPath": [
+            "Exclusive Write Attribution",
+            "Exclusive Write Time Distribution"
+          ]
+        }
+      ]
+    },
+    "QOS Overview > QOS Overview": {
+      "panelPath": [
+        "QOS Overview",
+        "QOS Overview"
+      ],
+      "queries": [
+        {
+          "id": "7c370d81-527d-4e48-8113-6794fa1ae37c",
+          "name": "QOS Overview",
+          "groupId": "2a9a6f8e-a6f9-40c2-99a9-1d071e60f364",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "QOS Overview",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            },
+            {
+              "name": "sucessRate",
+              "type": "real"
+            },
+            {
+              "name": "failureRate",
+              "type": "real"
+            },
+            {
+              "name": "throttleRate",
+              "type": "real"
+            },
+            {
+              "name": "percentile_DurationInMilliseconds_50",
+              "type": "long"
+            },
+            {
+              "name": "percentile_DurationInMilliseconds_99_9",
+              "type": "long"
+            },
+            {
+              "name": "percentile_DurationInMilliseconds_100",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let qosLogs = QosEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where OperationName !startswith \"Get\";\r\nlet logCount = qosLogs\r\n| summarize count() by OperationId;\r\nqosLogs\r\n| join kind=inner logCount on OperationId\r\n| extend isLast = iff(BackgroundTaskQos == 0, count_ == 1, true)\r\n| where isLast == true\r\n| summarize failures=sum(ErrorDetails != \"\" and ErrorCode != \"RetryableError\"), throttles=sum(ErrorCode == \"RetryableError\"), count(), percentiles(DurationInMilliseconds, 50, 99.9, 100) by OperationName\r\n| extend sucessRate = 1 - (todouble(failures) + todouble(throttles)) / todouble(count_), failureRate = todouble(failures) / todouble(count_), throttleRate = todouble(throttles) / todouble(count_)\r\n| project OperationName, count_, sucessRate, failureRate, throttleRate, percentile_DurationInMilliseconds_50, percentile_DurationInMilliseconds_99_9, percentile_DurationInMilliseconds_100\r\n| order by sucessRate asc",
+          "panelPath": [
+            "QOS Overview",
+            "QOS Overview"
+          ]
+        }
+      ]
+    },
+    "Resource Locking Summary > Resource Locks Acquired": {
+      "panelPath": [
+        "Resource Locking Summary",
+        "Resource Locks Acquired"
+      ],
+      "queries": [
+        {
+          "id": "679d1244-1086-4b64-9587-732337d86316",
+          "name": "Resource Locks Acquired",
+          "groupId": "41ed975b-bf46-4179-8db6-8300e7cc9b03",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Resource Locks Acquired",
+          "params": [
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "EffectiveResourceType",
+              "type": "string"
+            },
+            {
+              "name": "LockType",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            },
+            {
+              "name": "set_OperationName",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "componentTo",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let readLocks = cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance\r\n| where Message startswith \"Locking transaction with Id \" and Message contains \"aquired shared resource lock on\"\r\n| parse Message with \"Locking transaction with Id \"lockManagerId\" running in job \"jobId\" aquired shared resource lock on \"resourceIdWithNormalizedAppend\r\n| parse resourceIdWithNormalizedAppend with resourceId\" Stored under \"normalizedTopLevelKey\r\n| extend ResourceId = iff(resourceIdWithNormalizedAppend contains \"Stored under\", resourceId, resourceIdWithNormalizedAppend)\r\n| parse ResourceId with \"/subscriptions/\"ResourceSubId\"/resourceGroups/\"ResourceRg\"/providers/\"ResourceProvider\"/\"ResourceType\"/\"ResourceName\r\n| parse ResourceId with \"/children//subscriptions/\"NormResourceSubId\"/resourceGroups/\"NormResourceRg\"/providers/\"NormResourceProvider\"/\"NormResourceType\"/\"NormResourceName\"/\"NormChildCollection\r\n| parse NormChildCollection with childCollection\"/\"childName\r\n| parse NormChildCollection with referencingChildType\"/\"referencingChild\"/\"referenceCollection\"@\"referencedResource\r\n| extend EffectiveResourceType = iff(ResourceType == \"\", strcat(\"/children/ \", NormResourceType, \" \", iff(referenceCollection == \"\", childCollection, strcat(\"reference:\", referencingChildType, \"/\", referenceCollection))), ResourceType)\r\n| summarize count(), make_set(OperationName) by EffectiveResourceType, LockType=\"ReadLock\";\r\nlet writeLocks = cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance\r\n| where Message startswith \"Locking transaction with Id \" and Message contains \"aquired resource lock on\"\r\n| parse Message with \"Locking transaction with Id \"lockManagerId\" running in job \"jobId\" aquired resource lock on \"resourceIdWithNormalizedAppend\r\n| parse resourceIdWithNormalizedAppend with resourceId\" Stored under \"normalizedTopLevelKey\r\n| extend ResourceId = iff(resourceIdWithNormalizedAppend contains \"Stored under\", resourceId, resourceIdWithNormalizedAppend)\r\n| parse ResourceId with \"/subscriptions/\"ResourceSubId\"/resourceGroups/\"ResourceRg\"/providers/\"ResourceProvider\"/\"ResourceType\"/\"ResourceName\r\n| parse ResourceId with \"/children//subscriptions/\"NormResourceSubId\"/resourceGroups/\"NormResourceRg\"/providers/\"NormResourceProvider\"/\"NormResourceType\"/\"NormResourceName\"/\"NormChildCollection\r\n| parse NormChildCollection with childCollection\"/\"childName\r\n| parse NormChildCollection with referencingChildType\"/\"referencingChild\"/\"referenceCollection\"@\"referencedResource\r\n| extend EffectiveResourceType = iff(ResourceType == \"\", strcat(\"/children/ \", NormResourceType, \" \", iff(referenceCollection == \"\", childCollection, strcat(\"reference:\", referencingChildType, \"/\", referenceCollection))), ResourceType)\r\n| summarize count(), make_set(OperationName) by EffectiveResourceType, LockType=\"WriteLockLock\";\r\nreadLocks\r\n| union writeLocks",
+          "panelPath": [
+            "Resource Locking Summary",
+            "Resource Locks Acquired"
+          ]
+        }
+      ]
+    },
+    "Resource Locking Summary > Resource Locks Acquisition Failures": {
+      "panelPath": [
+        "Resource Locking Summary",
+        "Resource Locks Acquisition Failures"
+      ],
+      "queries": [
+        {
+          "id": "dc37d39e-dc2b-41ab-9813-c06e1046140b",
+          "name": "Resource Lock Acquisition Failures",
+          "groupId": "77a08035-ef01-4b63-8a36-3cf91b7661b8",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Resource Locks Acquisition Failures",
+          "params": [
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "ResourceType",
+              "type": "string"
+            },
+            {
+              "name": "ResourceId",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "componentTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance\r\n| where EventCode == \"ResourceLockingTransactionAquisitionFailure\"\r\n| parse Message with \"Failed to aquire resource lock on \"ResourceId\" in job \"JobId\" with operation id \"OperationIdOfLockFailure\", going to restart job on lock aquisition.\"*\r\n| parse ResourceId with \"/subscriptions/\"ResourceSubId\"/resourceGroups/\"ResourceRg\"/providers/\"ResourceProvider\"/\"ResourceType\"/\"ResourceName\r\n| project PreciseTimeStamp, ResourceType, ResourceId, OperationId, OperationName, SourceAssemblyFileVersion\r\n| summarize count() by ResourceType, ResourceId, OperationName",
+          "panelPath": [
+            "Resource Locking Summary",
+            "Resource Locks Acquisition Failures"
+          ]
+        }
+      ]
+    },
+    "Subscription Lock Summary > Subscription Lock Durations": {
+      "panelPath": [
+        "Subscription Lock Summary",
+        "Subscription Lock Durations"
+      ],
+      "queries": [
+        {
+          "id": "09521aed-4e79-4e29-b2a1-4374d8e9509d",
+          "name": "Subscription Lock Durations",
+          "groupId": "f5b50975-9517-43de-aacf-7a59c97f8492",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Subscription Lock Durations",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            },
+            {
+              "name": "percentile_lockDuration_50",
+              "type": "long"
+            },
+            {
+              "name": "percentile_lockDuration_75",
+              "type": "long"
+            },
+            {
+              "name": "percentile_lockDuration_99",
+              "type": "long"
+            },
+            {
+              "name": "percentile_lockDuration_99_9",
+              "type": "long"
+            },
+            {
+              "name": "percentile_lockDuration_100",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent \r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where EventCode == \"LockReleased\"\r\n| parse Message with * \"Operation \"fullOpName\" (\"opId\")\"\" released lock \"lockResource\" after \"lockDuration\" ms, refCount: \"refcount\r\n| project lockResource, lockDuration, PreciseTimeStamp, OperationId, SubscriptionId, OperationName\r\n| where lockResource == SubscriptionId\r\n| summarize count(), percentiles(toint(lockDuration), 50, 75, 99, 99.9,  100) by OperationName",
+          "panelPath": [
+            "Subscription Lock Summary",
+            "Subscription Lock Durations"
+          ]
+        }
+      ]
+    },
+    "Top Possible Perf Issues > Highest Reading Operations": {
+      "panelPath": [
+        "Top Possible Perf Issues",
+        "Highest Reading Operations"
+      ],
+      "queries": [
+        {
+          "id": "83e14493-f673-4c52-ac08-41663041539f",
+          "name": "Highest Read Size Operations",
+          "groupId": "fcfc8c43-c5e9-4d85-8636-14a0339e5962",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Highest Reading Operations",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "transactionOwner",
+              "type": "string"
+            },
+            {
+              "name": "OperationIdOrJobChunkId",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationRequestId",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            },
+            {
+              "name": "ReadSize",
+              "type": "long"
+            },
+            {
+              "name": "WriteSize",
+              "type": "long"
+            },
+            {
+              "name": "sum_TransactionCacheHit",
+              "type": "long"
+            },
+            {
+              "name": "sum_TransactionCacheMiss",
+              "type": "long"
+            },
+            {
+              "name": "sum_GlobalCacheHit",
+              "type": "long"
+            },
+            {
+              "name": "sum_GlobalCacheMiss",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let ['_startTime']=ago(1d);\r\nlet ['_endTime']=now();\r\nlet batchManagerTransactionStats = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"Batch Manager Queue \", QueueId)\r\n| extend transactionInstance = JobChunkId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region, CorrelationRequestId;\r\nlet frontendTransactionStats = cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"FrontendOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region, CorrelationRequestId;\r\nlet readOpTransactionStats = cluster('nrp').database('mdsnrp').FrontendReadOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"ReadOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region, CorrelationRequestId;\r\nreadOpTransactionStats\r\n| union batchManagerTransactionStats\r\n| union frontendTransactionStats\r\n| summarize count(), ReadSize=sum(toint(readSize)), WriteSize=sum(toint(addSize))+sum(toint(updateSize)), sum(toint(TransactionCacheHit)), sum(toint(TransactionCacheMiss)), sum(toint(GlobalCacheHit)), sum(toint(GlobalCacheMiss)) by transactionOwner, OperationIdOrJobChunkId=transactionInstance, CorrelationRequestId, SubscriptionId\r\n//| summarize count(), ReadSize=sum(sum_readSize), WriteSize=sum(sum_addSize)+sum(sum_updateSize), TransactionCacheHits=sum(sum_TransactionCacheHit), TransactionCacheMisses=sum(sum_TransactionCacheMiss), GlobalCacheHits=sum(sum_GlobalCacheHit), GlobalCacheMisses=sum(sum_GlobalCacheMiss) by transactionOwner, SubscriptionId\r\n| order by ReadSize\r\n| take 10",
+          "panelPath": [
+            "Top Possible Perf Issues",
+            "Highest Reading Operations"
+          ]
+        }
+      ]
+    },
+    "Top Possible Perf Issues > Longest EG Frames": {
+      "panelPath": [
+        "Top Possible Perf Issues",
+        "Longest EG Frames"
+      ],
+      "queries": [
+        {
+          "id": "e8768971-78a4-4c29-a316-bd3bb9d8cdd0",
+          "name": "Longest EG Frames",
+          "groupId": "6310445c-32de-4333-bfea-93503512539d",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Longest EG Frames",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "effectiveDuration",
+              "type": "long"
+            },
+            {
+              "name": "runningOperationId",
+              "type": "string"
+            },
+            {
+              "name": "runningOperationName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let jobNameTimes = cluster('nrp').database('mdsnrp').QosEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where BackgroundTaskQos == 0\r\n| project OperationId, OperationName, ResourceName, ResourceGroup, SynchronousDurationInMilliseconds, AsynchronousDurationInMilliseconds, SourceAssemblyFileVersion, PreciseTimeStamp;\r\nlet operationToTrackMetadata = jobNameTimes\r\n| distinct OperationId, OperationName, SourceAssemblyFileVersion;\r\nlet filteredIfx = NrpIfxOperationV3Event\r\n| where env_time > startTime and env_time < endTime\r\n| where Tenant == region;\r\nlet syncRootFrame = filteredIfx\r\n| where operationName endswith \"Operation\"\r\n| parse env_cv with \"##\"parentGuid1\"_\"parentguid2\"_\"frameGuid\r\n| extend childEnvPrefix = strcat(\"##\", frameGuid)\r\n| project parentOperationName=operationName, parentDuration=durationMs, childEnvPrefix, runningOperationId=OperationId;\r\nlet asyncRootFrame = filteredIfx\r\n| where operationName endswith \"Operation-Async\"\r\n| parse env_cv with \"##\"parentGuid1\"_\"parentguid2\"_\"frameGuid\r\n| extend childEnvPrefix = strcat(\"##\", frameGuid)\r\n| project parentOperationName=operationName, parentDuration=durationMs, childEnvPrefix, runningOperationId=OperationId;\r\nlet asyncFrames = filteredIfx\r\n| parse env_cv with prefix\"_\"*\r\n| join kind=inner asyncRootFrame on $left.prefix == $right.childEnvPrefix\r\n| project operationName, durationMs, childEnvPrefix, runningOperationId;\r\nlet syncFrames = filteredIfx\r\n| parse env_cv with prefix\"_\"*\r\n| join kind=inner syncRootFrame on $left.prefix == $right.childEnvPrefix\r\n| where operationName != strcat(parentOperationName, \"-Async\")\r\n| project operationName, durationMs, childEnvPrefix, runningOperationId;\r\nlet totalAsyncChildTime = asyncFrames\r\n| summarize sum(durationMs) by childEnvPrefix;\r\nlet totalSyncChildTime = syncFrames\r\n| summarize sum(durationMs) by childEnvPrefix;\r\nlet enhancedAsyncRootFrame = asyncRootFrame\r\n| join kind=leftouter totalAsyncChildTime on childEnvPrefix\r\n| extend effectiveDuration = parentDuration - iff(isnull(sum_durationMs), 0, sum_durationMs)\r\n| project operationName=parentOperationName, effectiveDuration, runningOperationId;\r\nlet enhancedSyncRootFrame = syncRootFrame\r\n| join kind=leftouter totalAsyncChildTime on childEnvPrefix\r\n| extend effectiveDuration = parentDuration - iff(isnull(sum_durationMs), 0, sum_durationMs)\r\n| project operationName=parentOperationName, effectiveDuration, runningOperationId;\r\nlet combinedFrames = asyncFrames\r\n| union syncFrames\r\n| project operationName, effectiveDuration=tolong(durationMs), runningOperationId\r\n| union enhancedSyncRootFrame\r\n| union enhancedAsyncRootFrame;\r\ncombinedFrames\r\n| join kind=inner operationToTrackMetadata on $left.runningOperationId == $right.OperationId\r\n| order by effectiveDuration\r\n| project operationName, effectiveDuration, runningOperationId, runningOperationName=OperationName\r\n| take 10",
+          "panelPath": [
+            "Top Possible Perf Issues",
+            "Longest EG Frames"
+          ]
+        }
+      ]
+    },
+    "Top Possible Perf Issues > Longest Subscription Locks": {
+      "panelPath": [
+        "Top Possible Perf Issues",
+        "Longest Subscription Locks"
+      ],
+      "queries": [
+        {
+          "id": "30dabf9b-7fb3-4a92-a0e2-5e6867362823",
+          "name": "Longest Sub Locks",
+          "groupId": "e6991165-0182-4635-b239-1578ff1910d8",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Longest Subscription Locks",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "lockDuration",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationRequestId",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent \r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where EventCode == \"LockReleased\"\r\n| parse Message with * \"Operation \"fullOpName\" (\"opId\")\"\" released lock \"lockResource\" after \"lockDuration\" ms, refCount: \"refcount\r\n| where lockResource == SubscriptionId\r\n| project PreciseTimeStamp, lockDuration, OperationName, OperationId, CorrelationRequestId, SubscriptionId\r\n| order by toint(lockDuration)\r\n| take 10",
+          "panelPath": [
+            "Top Possible Perf Issues",
+            "Longest Subscription Locks"
+          ]
+        }
+      ]
+    },
+    "Top Possible Perf Issues > Slowest Batch Jobs": {
+      "panelPath": [
+        "Top Possible Perf Issues",
+        "Slowest Batch Jobs"
+      ],
+      "queries": [
+        {
+          "id": "633dda65-7951-4b71-bb26-ad6a69a96878",
+          "name": "Slowest Batch Jobs",
+          "groupId": "ed2143dd-86d5-46aa-9658-16c847b9b188",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Slowest Batch Jobs",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Duration",
+              "type": "long"
+            },
+            {
+              "name": "JobName",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationRequestId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, JobChunkId, OperationId, OperationName, EventCode, Duration, SourceAssemblyFileVersion, JobName, CorrelationRequestId\r\n| where EventCode == \"TransactionJobExecutionFinished\"\r\n| order by Duration\r\n| take 10\r\n| project PreciseTimeStamp, Duration, JobName, OperationName, OperationId, CorrelationRequestId",
+          "panelPath": [
+            "Top Possible Perf Issues",
+            "Slowest Batch Jobs"
+          ]
+        }
+      ]
+    },
+    "Transaction Stats > Resource Type Read Count": {
+      "panelPath": [
+        "Transaction Stats",
+        "Resource Type Read Count"
+      ],
+      "queries": [
+        {
+          "id": "a3663a0e-0f09-40da-85dd-9ffcb1d810de",
+          "name": "Resource Type Read Count",
+          "groupId": "51f2c1d2-700d-4933-ae42-744c2b8e8708",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Resource Type Read Count",
+          "params": [
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "resourceType",
+              "type": "string"
+            },
+            {
+              "name": "transactionOwner",
+              "type": "string"
+            },
+            {
+              "name": "sum_readCount",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "componentTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let batchManagerTransactionStats = cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with *\"ResourceTypeBasedReadCount:\"resourceReadCount\r\n| extend SplitResources = split(resourceReadCount, \";\")\r\n| project PreciseTimeStamp, OperationId, SplitResources, OperationName, SourceAssemblyFileVersion, SubscriptionId, Region\r\n| mv-expand SplitResources\r\n| where SplitResources contains \":\"\r\n| extend readParts = split(SplitResources, \":\")\r\n| extend resourceType = readParts[0]\r\n| extend readCount = toint(readParts[1])\r\n| extend transactionOwner = strcat(\"Batch Manager Queue \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, resourceType, readCount, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nlet frontendTransactionStats = cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with *\"ResourceTypeBasedReadCount:\"resourceReadCount\r\n| extend SplitResources = split(resourceReadCount, \";\")\r\n| project PreciseTimeStamp, OperationId, SplitResources, OperationName, SourceAssemblyFileVersion, SubscriptionId, Region\r\n| mv-expand SplitResources\r\n| where SplitResources contains \":\"\r\n| extend readParts = split(SplitResources, \":\")\r\n| extend resourceType = readParts[0]\r\n| extend readCount = toint(readParts[1])\r\n| extend transactionOwner = strcat(\"FrontendOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, resourceType, readCount, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nlet readOpTransactionStats = cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").FrontendReadOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with *\"ResourceTypeBasedReadCount:\"resourceReadCount\r\n| extend SplitResources = split(resourceReadCount, \";\")\r\n| project PreciseTimeStamp, OperationId, SplitResources, OperationName, SourceAssemblyFileVersion, SubscriptionId, Region\r\n| mv-expand SplitResources\r\n| where SplitResources contains \":\"\r\n| extend readParts = split(SplitResources, \":\")\r\n| extend resourceType = readParts[0]\r\n| extend readCount = toint(readParts[1])\r\n| extend transactionOwner = strcat(\"ReadOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, resourceType, readCount, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nreadOpTransactionStats\r\n| union batchManagerTransactionStats\r\n| union frontendTransactionStats\r\n| summarize sum(readCount) by tostring(resourceType), transactionOwner",
+          "panelPath": [
+            "Transaction Stats",
+            "Resource Type Read Count"
+          ]
+        }
+      ]
+    },
+    "Transaction Stats > Transaction Stats": {
+      "panelPath": [
+        "Transaction Stats",
+        "Transaction Stats"
+      ],
+      "queries": [
+        {
+          "id": "f4eae85e-843f-43e4-908d-dca61e24124b",
+          "name": "Transaction Stats",
+          "groupId": "a7f98a54-b9ee-4cd2-8275-0bd93bc1511c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Transaction Stats",
+          "params": [
+            {
+              "name": "correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "transactionOwner",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            },
+            {
+              "name": "ReadSize",
+              "type": "long"
+            },
+            {
+              "name": "WriteSize",
+              "type": "long"
+            },
+            {
+              "name": "TransactionCacheHits",
+              "type": "long"
+            },
+            {
+              "name": "TransactionCacheMisses",
+              "type": "long"
+            },
+            {
+              "name": "GlobalCacheHits",
+              "type": "long"
+            },
+            {
+              "name": "GlobalCacheMisses",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "correlationId",
+              "externalSourceName": "CorrelationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "OperationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let ['_startTime']=ago(1d);\r\nlet ['_endTime']=now();\r\nlet batchManagerTransactionStats = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"Batch Manager Queue \", QueueId)\r\n| extend transactionInstance = JobChunkId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nlet frontendTransactionStats = cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"FrontendOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nlet readOpTransactionStats = cluster('nrp').database('mdsnrp').FrontendReadOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"ReadOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nreadOpTransactionStats\r\n| union batchManagerTransactionStats\r\n| union frontendTransactionStats\r\n| summarize count(), sum(toint(readSize)), sum(toint(addSize)), sum(toint(updateSize)), sum(toint(TransactionCacheHit)), sum(toint(TransactionCacheMiss)), sum(toint(GlobalCacheHit)), sum(toint(GlobalCacheMiss)) by transactionOwner, transactionInstance, SubscriptionId\r\n| summarize count(), ReadSize=sum(sum_readSize), WriteSize=sum(sum_addSize)+sum(sum_updateSize), TransactionCacheHits=sum(sum_TransactionCacheHit), TransactionCacheMisses=sum(sum_TransactionCacheMiss), GlobalCacheHits=sum(sum_GlobalCacheHit), GlobalCacheMisses=sum(sum_GlobalCacheMiss) by transactionOwner, SubscriptionId\r\n| order by ReadSize",
+          "panelPath": [
+            "Transaction Stats",
+            "Transaction Stats"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:54.061Z",
+    "totalPanels": 19,
+    "totalUniqueQueries": 19,
+    "totalWidgetRefs": 19
+  }
+}

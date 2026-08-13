@@ -1,0 +1,96 @@
+[
+  {
+    "id": "1f67b694-2ff3-4aea-be32-af3914c77d1f",
+    "name": "Retrieve Resource \"VMHistory\"",
+    "groupId": "fcfd976b-889b-451f-952b-7528b2c237ea",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "Azurecm",
+    "database": "AzureCM",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "LogNodeSnapshot\r\n| where PreciseTimeStamp > ago(3h) and nodeId == local_nodeId\r\n| extend hostingEnvironment = parse_json(hostingEnvironment)\r\n| extend HostOS = tostring(hostingEnvironment.OSBaseImageName), AgentPackage = tostring(hostingEnvironment.AgentPackageName), ipAddress\r\n| distinct Region, Tenant, DataCenterName, nodeId, ipAddress, containerCount, HostOS, AgentPackage, diskConfiguration, machinePoolName\r\n| join kind=leftouter(\r\n    cluster('Azuredcm').database('AzureDCMDb').ResourceSnapshotHistoryV1\r\n    | where ResourceId == local_nodeId and PreciseTimeStamp > ago(1d)\r\n    | summarize arg_max(PreciseTimeStamp, *)\r\n    | project Sku, Manufacturer, Model, ResourceId\r\n) on $left.nodeId == $right.ResourceId\r\n| project-away ResourceId",
+    "params": [
+      {
+        "name": "local_Region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_Tenant",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_nodeId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "DataCenterName",
+        "type": "string"
+      },
+      {
+        "name": "nodeId",
+        "type": "string"
+      },
+      {
+        "name": "ipAddress",
+        "type": "string"
+      },
+      {
+        "name": "containerCount",
+        "type": "string"
+      },
+      {
+        "name": "HostOS",
+        "type": "string"
+      },
+      {
+        "name": "AgentPackage",
+        "type": "string"
+      },
+      {
+        "name": "diskConfiguration",
+        "type": "string"
+      },
+      {
+        "name": "machinePoolName",
+        "type": "string"
+      },
+      {
+        "name": "Sku",
+        "type": "string"
+      },
+      {
+        "name": "Manufacturer",
+        "type": "string"
+      },
+      {
+        "name": "Model",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VMDash"
+  }
+]

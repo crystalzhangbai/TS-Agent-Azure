@@ -1,0 +1,248 @@
+{
+  "service": "Azure Serial Console",
+  "page": "Usage Statistics",
+  "pageId": "9015c3c2-7f43-490f-9db9-7d590996a955",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "d1c13fdd-520a-400c-9732-ddc2667ea2ad",
+          "name": "Global usage",
+          "groupId": "5f334a32-c6ee-4555-b578-9272df766bf3",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Global usage by distinct Serial Console session",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "dcount_sessionId",
+              "type": "int"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "ConnectorContainerActivity\r\n| where ['time'] > queryFrom\r\n| where ['time'] < queryTo\r\n| summarize dcount(sessionId) by startofday(TIMESTAMP)\r\n| render columnchart",
+          "panelPath": []
+        },
+        {
+          "id": "59286bac-845a-454a-8ac3-20a181d57a93",
+          "name": "Successful connection count by RP region",
+          "groupId": "f3b51744-bbba-4055-a3a0-b44b03bc2d42",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Successful connection count by RP region",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "rpRegion",
+              "type": "string"
+            },
+            {
+              "name": "CountByRpRegion",
+              "type": "decimal"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "ConnectorContainerActivity\r\n| where TIMESTAMP > queryFrom\r\n| where TIMESTAMP <= queryTo\r\n| where cloudEnv == \"prod\"\r\n| where message startswith \"NodeInfo: \"\r\n| summarize CountByRpRegion = count() by rpRegion\r\n| project rpRegion, CountByRpRegion",
+          "panelPath": []
+        },
+        {
+          "id": "edd6de90-17a2-4aae-b37e-56bbbea4c104",
+          "name": "Successful connection count by VM location",
+          "groupId": "d55ea87f-864e-4892-88d8-f2a15ffef36c",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Successful connection count by VM location",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "vmLocation",
+              "type": "string"
+            },
+            {
+              "name": "CountByVMLocation",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "ConnectorContainerActivity\r\n| where TIMESTAMP > queryFrom\r\n| where TIMESTAMP <= queryTo\r\n| where cloudEnv == \"prod\"\r\n| where message startswith \"NodeInfo: \"\r\n| summarize CountByVMLocation = count() by vmLocation\r\n| project vmLocation, CountByVMLocation",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:59:24.251Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

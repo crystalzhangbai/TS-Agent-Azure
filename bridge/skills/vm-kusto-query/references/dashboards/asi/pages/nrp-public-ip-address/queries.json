@@ -1,0 +1,162 @@
+[
+  {
+    "id": "9ae1fa7a-a4d6-4819-a8d9-73e5d97997ca",
+    "name": "Retrieve Resource \"Public IP Address\"",
+    "groupId": "63bf5d87-3156-4144-8f84-5b3a358f1b38",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2",
+    "database": "AzureResourceGraph",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let idMatch = strcat(\"/subscriptions/\", local_subscriptionId, \"/resourceGroups/\", local_resourceGroup, \"/providers/Microsoft.Network/publicIPAddresses/\", local_name);\r\ncluster('argwus2nrpone.westus2.kusto.windows.net').database('AzureResourceGraph').Resources\r\n| where (isempty(local_timestamp) or timestamp between(datetime_add('hour', -1, local_timestamp) .. datetime_add('hour', 1, local_timestamp)))\r\n    and type == \"microsoft.network/publicipaddresses\" and not(partial) and not(deleted)\r\n    and subscriptionId == local_subscriptionId\r\n| where resourceGroup =~ local_resourceGroup and name =~ local_name\r\n| top 1 by timestamp desc\r\n| extend JSON = parse_json(properties)\r\n| extend provisioningState = tostring(JSON.provisioningState)\r\n| extend resourceGuid = tostring(JSON.resourceGuid)\r\n| extend ipAddress = tostring(JSON.ipAddress)\r\n| extend publicIPAddressVersion = tostring(JSON.publicIPAddressVersion)\r\n| extend publicIPAllocationMethod = tostring(JSON.publicIPAllocationMethod)\r\n| extend idleTimeoutInMinutes = toint(JSON.idleTimeoutInMinutes)\r\n| extend ipTags = JSON.ipTags\r\n| extend ipConfiguration = JSON.ipConfiguration\r\n| extend ipConfigId= tostring(JSON.ipConfiguration.id)\r\n| project-away properties\r\n| project timestamp, name, resourceGroup, subscriptionId, id, type, sku, tags, provisioningState, resourceGuid, ipAddress, \r\n    publicIPAddressVersion, publicIPAllocationMethod, idleTimeoutInMinutes, ipTags, ipConfiguration, ipConfigId,\r\n    JSON\r\n| extend natGateway = tostring(JSON.natGateway.id)\r\n\r\n",
+    "params": [
+      {
+        "name": "local_name",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_resourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "resourceGuid",
+        "type": "string"
+      },
+      {
+        "name": "ipAddress",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddressVersion",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "int"
+      },
+      {
+        "name": "ipTags",
+        "type": "dynamic"
+      },
+      {
+        "name": "ipConfiguration",
+        "type": "dynamic"
+      },
+      {
+        "name": "ipConfigId",
+        "type": "string"
+      },
+      {
+        "name": "JSON",
+        "type": "dynamic"
+      },
+      {
+        "name": "natGateway",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

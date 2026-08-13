@@ -1,0 +1,44 @@
+[
+  {
+    "id": "f3abc4e0-eea4-4462-b698-d8c0be886834",
+    "name": "Retrieve Resource \"Nodes\"",
+    "groupId": "3c9f3089-1ac6-4e2c-8319-d106e2f4b6c4",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "LogNodeSnapshot\r\n| where PreciseTimeStamp > ago(2h)\r\n| where nodeId == local_NodeId\r\n| summarize arg_max(PreciseTimeStamp, State=nodeState, Availability=nodeAvailabilityState) by NodeId = nodeId",
+    "params": [
+      {
+        "name": "local_NodeId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "State",
+        "type": "string"
+      },
+      {
+        "name": "Availability",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Node Heartbeat"
+  }
+]

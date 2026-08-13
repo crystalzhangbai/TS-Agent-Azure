@@ -1,0 +1,144 @@
+{
+  "service": "EEE Compute Manager",
+  "page": "Throttling",
+  "pageId": "ef0a00ac-effe-450a-bb20-47a6cba9c859",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "48910be8-7479-4a78-baa7-4c32bb438273",
+          "name": "HighCostGet30Min",
+          "groupId": "1fc161d0-4e4b-48e7-815e-7b160dbc1a0f",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "crp_allprod",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "HighCostGet30Min",
+          "params": [
+            {
+              "name": "subscription_id",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "crp_region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "count",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "1275bae6-2852-4a5e-9113-827510f79d62",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "subscription_id",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "groupId": "1275bae6-2852-4a5e-9113-827510f79d62",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "crp_region",
+              "externalSourceName": "region",
+              "required": false
+            }
+          ],
+          "kustoQuery": "ApiQosEvent\n| where PreciseTimeStamp between (global_startTime..global_endTime)\n| where subscriptionId =~ 'subscription_id'\n| where region =~ 'crp_region'\n| where operationName in (\"VirtualMachines.GetVMs.GET\",\n                          \"Subscriptions.GetVMs.GET\",\n                          \"Subscriptions.GetAvailabilitySets.GET\",\n                          \"ProximityPlacementGroups.ResourceOperation.GET\",\n                          \"SpotEvictionRates.bulkQuery.POST\",\n                          \"SpotPriceHistory.bulkQuery.POST\")\n| summarize count = count() by bin(PreciseTimeStamp, 30m), region",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.418Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

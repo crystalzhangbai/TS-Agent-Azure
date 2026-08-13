@@ -1,0 +1,210 @@
+[
+  {
+    "groupId": "8977eda0-9256-4672-aa17-6230c3b5f1a0",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "1a7fca07-1f05-40d3-a27c-cc3bae264d44",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_PreciseTimeStamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_Tenant",
+        "externalSourceName": "Tenant",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_TenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"Mizar Validation\"",
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "local_PreciseTimeStamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_Tenant",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_TenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "ContainerInstanceId",
+        "type": "dynamic"
+      },
+      {
+        "name": "InterfaceId",
+        "type": "dynamic"
+      },
+      {
+        "name": "MacAddress",
+        "type": "dynamic"
+      },
+      {
+        "name": "success",
+        "type": "bool"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "95c0a60e-c899-4422-948b-649ea09d749f",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "NetworkServiceManagerEvents"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "45487bdb-607e-4ecb-a14b-798509a5aec8",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      }
+    ],
+    "name": "LogNetworkInterface",
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "TaskName",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "cd91f40d-1126-45c1-a7ec-f161276f1bfb",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "NicInstanceStateMachine"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "c469e4f3-7baf-4eca-adaf-9980fb7bc3dc",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "8977eda0-9256-4672-aa17-6230c3b5f1a0",
+        "majorVersion": 1,
+        "minorVersion": 4,
+        "internalDestinationName": "queryTenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      }
+    ],
+    "name": "NicInstanceStateMachine",
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "data",
+        "type": "dynamic"
+      }
+    ],
+    "missing": false
+  }
+]

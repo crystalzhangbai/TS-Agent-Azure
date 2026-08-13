@@ -1,0 +1,37 @@
+[
+  {
+    "id": "abe567df-0db9-433c-aeb4-209db8d5be01",
+    "name": "Monthly Calls for Create/Delete CustomIPPRefix",
+    "groupId": "026dc4f8-0cec-4b42-879c-0a1040e1d296",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(90d)\r\n| where Region == region\r\n| where OperationName contains \"CustomIpPrefix\"\r\n| summarize ct = count() by bin(TIMESTAMP, 30d)\r\n| summarize CustomIpPrefix = sum(ct)/1.0 by bin(TIMESTAMP, 30d)\r\n| project TIMESTAMP, CustomIpPrefix",
+    "params": [
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "CustomIpPrefix",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

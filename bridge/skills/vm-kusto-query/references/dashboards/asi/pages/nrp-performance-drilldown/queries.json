@@ -1,0 +1,1692 @@
+[
+  {
+    "id": "77bbaf01-3fe6-460b-a7a5-f3277e50d1f6",
+    "name": "Batch Manager Queue Processing Percentiles",
+    "groupId": "a77a22dc-18d8-42cb-bee6-c6f0960cc310",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance\r\n| where Message startswith \"Dequeue job id\"\r\n| parse Message with \"Dequeue job id \"id\" of type \"jobName\" for execution in queue \"queueId\" duration in queue: \"duration\r\n| summarize count(), percentiles(toint(duration), 50, 75, 99, 99.9, 100) by queueId",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "default": "uscentraleuap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "default": "75903edc-ce96-496f-8580-a4e306a69490",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "default": "2021-06-24T05:17:01Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "default": "2021-06-24T17:17:01Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "queueId",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_99",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_99_9",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_100",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "2c91fc5f-8cc3-4b1e-bca2-20c5019cf13c",
+    "name": "Batch Job Durations",
+    "groupId": "29de2c54-f079-4509-ab8b-5b9cddacea11",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where EventCode == \"TransactionJobExecutionFinished\"\r\n| where iff(QueueId startswith \"ResourceLockingTransactionJob\", Message endswith \"ResourceLockingBatchQueue.\", true)\r\n| summarize count(), percentiles(toint(Duration), 50, 75, 95, 99.9) by JobName\r\n| order by percentile_Duration_50",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "JobName",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "percentile_Duration_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_Duration_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_Duration_95",
+        "type": "long"
+      },
+      {
+        "name": "percentile_Duration_99_9",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "09521aed-4e79-4e29-b2a1-4374d8e9509d",
+    "name": "Subscription Lock Durations",
+    "groupId": "f5b50975-9517-43de-aacf-7a59c97f8492",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent \r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where EventCode == \"LockReleased\"\r\n| parse Message with * \"Operation \"fullOpName\" (\"opId\")\"\" released lock \"lockResource\" after \"lockDuration\" ms, refCount: \"refcount\r\n| project lockResource, lockDuration, PreciseTimeStamp, OperationId, SubscriptionId, OperationName\r\n| where lockResource == SubscriptionId\r\n| summarize count(), percentiles(toint(lockDuration), 50, 75, 99, 99.9,  100) by OperationName",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "percentile_lockDuration_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_lockDuration_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_lockDuration_99",
+        "type": "long"
+      },
+      {
+        "name": "percentile_lockDuration_99_9",
+        "type": "long"
+      },
+      {
+        "name": "percentile_lockDuration_100",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "210b2139-71b0-48d8-8f02-856304e6eaad",
+    "name": "NRP EG Percentile Times",
+    "groupId": "c78cf12d-7754-4fa6-92d3-108b8d447166",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let jobNameTimes = cluster('nrp').database('mdsnrp').QosEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where BackgroundTaskQos == 0\r\n| project OperationId, OperationName, ResourceName, ResourceGroup, SynchronousDurationInMilliseconds, AsynchronousDurationInMilliseconds, SourceAssemblyFileVersion, PreciseTimeStamp;\r\nlet operationToTrackMetadata = jobNameTimes\r\n| distinct OperationId, OperationName, SourceAssemblyFileVersion;\r\nlet filteredIfx = NrpIfxOperationV3Event\r\n| where env_time > startTime and env_time < endTime\r\n| where Tenant == region\r\n| where SubscriptionId == subscriptionId;\r\nlet syncRootFrame = filteredIfx\r\n| where operationName endswith \"Operation\"\r\n| parse env_cv with \"##\"parentGuid1\"_\"parentguid2\"_\"frameGuid\r\n| extend childEnvPrefix = strcat(\"##\", frameGuid)\r\n| project parentOperationName=operationName, parentDuration=durationMs, childEnvPrefix, runningOperationId=OperationId;\r\nlet asyncRootFrame = filteredIfx\r\n| where operationName endswith \"Operation-Async\"\r\n| parse env_cv with \"##\"parentGuid1\"_\"parentguid2\"_\"frameGuid\r\n| extend childEnvPrefix = strcat(\"##\", frameGuid)\r\n| project parentOperationName=operationName, parentDuration=durationMs, childEnvPrefix, runningOperationId=OperationId;\r\nlet asyncFrames = filteredIfx\r\n| parse env_cv with prefix\"_\"*\r\n| join kind=inner asyncRootFrame on $left.prefix == $right.childEnvPrefix\r\n| project operationName, durationMs, childEnvPrefix, runningOperationId;\r\nlet syncFrames = filteredIfx\r\n| parse env_cv with prefix\"_\"*\r\n| join kind=inner syncRootFrame on $left.prefix == $right.childEnvPrefix\r\n| where operationName != strcat(parentOperationName, \"-Async\")\r\n| project operationName, durationMs, childEnvPrefix, runningOperationId;\r\nlet totalAsyncChildTime = asyncFrames\r\n| summarize sum(durationMs) by childEnvPrefix;\r\nlet totalSyncChildTime = syncFrames\r\n| summarize sum(durationMs) by childEnvPrefix;\r\nlet enhancedAsyncRootFrame = asyncRootFrame\r\n| join kind=leftouter totalAsyncChildTime on childEnvPrefix\r\n| extend effectiveDuration = parentDuration - iff(isnull(sum_durationMs), 0, sum_durationMs)\r\n| project operationName=parentOperationName, effectiveDuration, runningOperationId;\r\nlet enhancedSyncRootFrame = syncRootFrame\r\n| join kind=leftouter totalAsyncChildTime on childEnvPrefix\r\n| extend effectiveDuration = parentDuration - iff(isnull(sum_durationMs), 0, sum_durationMs)\r\n| project operationName=parentOperationName, effectiveDuration, runningOperationId;\r\nlet combinedFrames = asyncFrames\r\n| union syncFrames\r\n| project operationName, effectiveDuration=tolong(durationMs), runningOperationId\r\n| union enhancedSyncRootFrame\r\n| union enhancedAsyncRootFrame;\r\ncombinedFrames\r\n| join kind=inner operationToTrackMetadata on $left.runningOperationId == $right.OperationId\r\n| summarize count(), percentiles(durationMs=effectiveDuration, 50, 75, 99.9, 100) by operationName//, ResourceGroup=EffectiveResourceGroup\r\n| order by percentile_durationMs_50",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "percentile_durationMs_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_durationMs_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_durationMs_99_9",
+        "type": "long"
+      },
+      {
+        "name": "percentile_durationMs_100",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "f4eae85e-843f-43e4-908d-dca61e24124b",
+    "name": "Transaction Stats",
+    "groupId": "a7f98a54-b9ee-4cd2-8275-0bd93bc1511c",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let ['_startTime']=ago(1d);\r\nlet ['_endTime']=now();\r\nlet batchManagerTransactionStats = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"Batch Manager Queue \", QueueId)\r\n| extend transactionInstance = JobChunkId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nlet frontendTransactionStats = cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"FrontendOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nlet readOpTransactionStats = cluster('nrp').database('mdsnrp').FrontendReadOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"ReadOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nreadOpTransactionStats\r\n| union batchManagerTransactionStats\r\n| union frontendTransactionStats\r\n| summarize count(), sum(toint(readSize)), sum(toint(addSize)), sum(toint(updateSize)), sum(toint(TransactionCacheHit)), sum(toint(TransactionCacheMiss)), sum(toint(GlobalCacheHit)), sum(toint(GlobalCacheMiss)) by transactionOwner, transactionInstance, SubscriptionId\r\n| summarize count(), ReadSize=sum(sum_readSize), WriteSize=sum(sum_addSize)+sum(sum_updateSize), TransactionCacheHits=sum(sum_TransactionCacheHit), TransactionCacheMisses=sum(sum_TransactionCacheMiss), GlobalCacheHits=sum(sum_GlobalCacheHit), GlobalCacheMisses=sum(sum_GlobalCacheMiss) by transactionOwner, SubscriptionId\r\n| order by ReadSize",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "transactionOwner",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "ReadSize",
+        "type": "long"
+      },
+      {
+        "name": "WriteSize",
+        "type": "long"
+      },
+      {
+        "name": "TransactionCacheHits",
+        "type": "long"
+      },
+      {
+        "name": "TransactionCacheMisses",
+        "type": "long"
+      },
+      {
+        "name": "GlobalCacheHits",
+        "type": "long"
+      },
+      {
+        "name": "GlobalCacheMisses",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "7c370d81-527d-4e48-8113-6794fa1ae37c",
+    "name": "QOS Overview",
+    "groupId": "2a9a6f8e-a6f9-40c2-99a9-1d071e60f364",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let qosLogs = QosEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where OperationName !startswith \"Get\";\r\nlet logCount = qosLogs\r\n| summarize count() by OperationId;\r\nqosLogs\r\n| join kind=inner logCount on OperationId\r\n| extend isLast = iff(BackgroundTaskQos == 0, count_ == 1, true)\r\n| where isLast == true\r\n| summarize failures=sum(ErrorDetails != \"\" and ErrorCode != \"RetryableError\"), throttles=sum(ErrorCode == \"RetryableError\"), count(), percentiles(DurationInMilliseconds, 50, 99.9, 100) by OperationName\r\n| extend sucessRate = 1 - (todouble(failures) + todouble(throttles)) / todouble(count_), failureRate = todouble(failures) / todouble(count_), throttleRate = todouble(throttles) / todouble(count_)\r\n| project OperationName, count_, sucessRate, failureRate, throttleRate, percentile_DurationInMilliseconds_50, percentile_DurationInMilliseconds_99_9, percentile_DurationInMilliseconds_100\r\n| order by sucessRate asc",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "sucessRate",
+        "type": "real"
+      },
+      {
+        "name": "failureRate",
+        "type": "real"
+      },
+      {
+        "name": "throttleRate",
+        "type": "real"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_99_9",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_100",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "633dda65-7951-4b71-bb26-ad6a69a96878",
+    "name": "Slowest Batch Jobs",
+    "groupId": "ed2143dd-86d5-46aa-9658-16c847b9b188",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, JobChunkId, OperationId, OperationName, EventCode, Duration, SourceAssemblyFileVersion, JobName, CorrelationRequestId\r\n| where EventCode == \"TransactionJobExecutionFinished\"\r\n| order by Duration\r\n| take 10\r\n| project PreciseTimeStamp, Duration, JobName, OperationName, OperationId, CorrelationRequestId",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Duration",
+        "type": "long"
+      },
+      {
+        "name": "JobName",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "83e14493-f673-4c52-ac08-41663041539f",
+    "name": "Highest Read Size Operations",
+    "groupId": "fcfc8c43-c5e9-4d85-8636-14a0339e5962",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let ['_startTime']=ago(1d);\r\nlet ['_endTime']=now();\r\nlet batchManagerTransactionStats = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"Batch Manager Queue \", QueueId)\r\n| extend transactionInstance = JobChunkId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region, CorrelationRequestId;\r\nlet frontendTransactionStats = cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"FrontendOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region, CorrelationRequestId;\r\nlet readOpTransactionStats = cluster('nrp').database('mdsnrp').FrontendReadOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with \"Transaction duration: \"duration\" ms; Reads: \"readCount\"/\"readSize\"; Adds: \"addCount\"/\"addSize\"; Updates: \"updateCount\"/\"updateSize\"; Deletes: \"deleteCount\"; Metadata: \"Metadata\"; SerializeDuration: \"SerializeDuration\"; DeserializeDuration: \"DeserializeDuration\"; TransactionCacheHit: \"TransactionCacheHit\"; TransactionCacheMiss: \"TransactionCacheMiss\"; GlobalCacheHit: \"GlobalCacheHit\"; GlobalCacheMiss: \"GlobalCacheMiss\"; \" *\r\n| extend transactionOwner = strcat(\"ReadOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, readCount, readSize, addCount, addSize, updateCount, updateSize, deleteCount, TransactionCacheHit, TransactionCacheMiss, GlobalCacheHit, GlobalCacheMiss, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region, CorrelationRequestId;\r\nreadOpTransactionStats\r\n| union batchManagerTransactionStats\r\n| union frontendTransactionStats\r\n| summarize count(), ReadSize=sum(toint(readSize)), WriteSize=sum(toint(addSize))+sum(toint(updateSize)), sum(toint(TransactionCacheHit)), sum(toint(TransactionCacheMiss)), sum(toint(GlobalCacheHit)), sum(toint(GlobalCacheMiss)) by transactionOwner, OperationIdOrJobChunkId=transactionInstance, CorrelationRequestId, SubscriptionId\r\n//| summarize count(), ReadSize=sum(sum_readSize), WriteSize=sum(sum_addSize)+sum(sum_updateSize), TransactionCacheHits=sum(sum_TransactionCacheHit), TransactionCacheMisses=sum(sum_TransactionCacheMiss), GlobalCacheHits=sum(sum_GlobalCacheHit), GlobalCacheMisses=sum(sum_GlobalCacheMiss) by transactionOwner, SubscriptionId\r\n| order by ReadSize\r\n| take 10",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "transactionOwner",
+        "type": "string"
+      },
+      {
+        "name": "OperationIdOrJobChunkId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "ReadSize",
+        "type": "long"
+      },
+      {
+        "name": "WriteSize",
+        "type": "long"
+      },
+      {
+        "name": "sum_TransactionCacheHit",
+        "type": "long"
+      },
+      {
+        "name": "sum_TransactionCacheMiss",
+        "type": "long"
+      },
+      {
+        "name": "sum_GlobalCacheHit",
+        "type": "long"
+      },
+      {
+        "name": "sum_GlobalCacheMiss",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "30dabf9b-7fb3-4a92-a0e2-5e6867362823",
+    "name": "Longest Sub Locks",
+    "groupId": "e6991165-0182-4635-b239-1578ff1910d8",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent \r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where EventCode == \"LockReleased\"\r\n| parse Message with * \"Operation \"fullOpName\" (\"opId\")\"\" released lock \"lockResource\" after \"lockDuration\" ms, refCount: \"refcount\r\n| where lockResource == SubscriptionId\r\n| project PreciseTimeStamp, lockDuration, OperationName, OperationId, CorrelationRequestId, SubscriptionId\r\n| order by toint(lockDuration)\r\n| take 10",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "lockDuration",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "e8768971-78a4-4c29-a316-bd3bb9d8cdd0",
+    "name": "Longest EG Frames",
+    "groupId": "6310445c-32de-4333-bfea-93503512539d",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let jobNameTimes = cluster('nrp').database('mdsnrp').QosEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where BackgroundTaskQos == 0\r\n| project OperationId, OperationName, ResourceName, ResourceGroup, SynchronousDurationInMilliseconds, AsynchronousDurationInMilliseconds, SourceAssemblyFileVersion, PreciseTimeStamp;\r\nlet operationToTrackMetadata = jobNameTimes\r\n| distinct OperationId, OperationName, SourceAssemblyFileVersion;\r\nlet filteredIfx = NrpIfxOperationV3Event\r\n| where env_time > startTime and env_time < endTime\r\n| where Tenant == region;\r\nlet syncRootFrame = filteredIfx\r\n| where operationName endswith \"Operation\"\r\n| parse env_cv with \"##\"parentGuid1\"_\"parentguid2\"_\"frameGuid\r\n| extend childEnvPrefix = strcat(\"##\", frameGuid)\r\n| project parentOperationName=operationName, parentDuration=durationMs, childEnvPrefix, runningOperationId=OperationId;\r\nlet asyncRootFrame = filteredIfx\r\n| where operationName endswith \"Operation-Async\"\r\n| parse env_cv with \"##\"parentGuid1\"_\"parentguid2\"_\"frameGuid\r\n| extend childEnvPrefix = strcat(\"##\", frameGuid)\r\n| project parentOperationName=operationName, parentDuration=durationMs, childEnvPrefix, runningOperationId=OperationId;\r\nlet asyncFrames = filteredIfx\r\n| parse env_cv with prefix\"_\"*\r\n| join kind=inner asyncRootFrame on $left.prefix == $right.childEnvPrefix\r\n| project operationName, durationMs, childEnvPrefix, runningOperationId;\r\nlet syncFrames = filteredIfx\r\n| parse env_cv with prefix\"_\"*\r\n| join kind=inner syncRootFrame on $left.prefix == $right.childEnvPrefix\r\n| where operationName != strcat(parentOperationName, \"-Async\")\r\n| project operationName, durationMs, childEnvPrefix, runningOperationId;\r\nlet totalAsyncChildTime = asyncFrames\r\n| summarize sum(durationMs) by childEnvPrefix;\r\nlet totalSyncChildTime = syncFrames\r\n| summarize sum(durationMs) by childEnvPrefix;\r\nlet enhancedAsyncRootFrame = asyncRootFrame\r\n| join kind=leftouter totalAsyncChildTime on childEnvPrefix\r\n| extend effectiveDuration = parentDuration - iff(isnull(sum_durationMs), 0, sum_durationMs)\r\n| project operationName=parentOperationName, effectiveDuration, runningOperationId;\r\nlet enhancedSyncRootFrame = syncRootFrame\r\n| join kind=leftouter totalAsyncChildTime on childEnvPrefix\r\n| extend effectiveDuration = parentDuration - iff(isnull(sum_durationMs), 0, sum_durationMs)\r\n| project operationName=parentOperationName, effectiveDuration, runningOperationId;\r\nlet combinedFrames = asyncFrames\r\n| union syncFrames\r\n| project operationName, effectiveDuration=tolong(durationMs), runningOperationId\r\n| union enhancedSyncRootFrame\r\n| union enhancedAsyncRootFrame;\r\ncombinedFrames\r\n| join kind=inner operationToTrackMetadata on $left.runningOperationId == $right.OperationId\r\n| order by effectiveDuration\r\n| project operationName, effectiveDuration, runningOperationId, runningOperationName=OperationName\r\n| take 10",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "effectiveDuration",
+        "type": "long"
+      },
+      {
+        "name": "runningOperationId",
+        "type": "string"
+      },
+      {
+        "name": "runningOperationName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "8e9fdb10-6e2b-4ac8-ac43-7ced372eab98",
+    "name": "ExclusiveWriteTimes",
+    "groupId": "910571e9-9e54-4de6-a04e-80e081410b23",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let batchSizes = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId\r\n| where Message startswith \"Complete dequeue chunk of\"\r\n| parse Message with \"Complete dequeue chunk of \"batchsize\" jobs. Added \"other\" jobs to chunk id \"JobChunkId;\r\nlet completedJobs = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId, JobChunkId, JobId, Duration, JobName\r\n| where EventCode == \"TransactionJobExecutionFinished\" and iff(QueueId contains \"ResourceLockingTransactionJob\", Message endswith \"ResourceLockingBatchQueue.\", true);\r\nlet subLockStats = cluster('nrp').database(\"mdsnrp\").FrontendOperationEtwEvent \r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| where EventCode == \"LockReleased\"\r\n| parse Message with * \"Operation \"fullOpName\" (\"opId\")\"\" released lock \"lockResource\" after \"lockDuration\" ms, refCount: \"refcount\r\n| project lockResource, lockDuration, PreciseTimeStamp, OperationId, SubscriptionId, OperationName\r\n| where lockResource == SubscriptionId\r\n| project JobName = strcat(\"SubLoc_\", OperationName), batchsize=\"1\", Duration = tolong(lockDuration);\r\nbatchSizes\r\n| join completedJobs on JobChunkId\r\n| project batchsize, Duration, JobName\r\n| union subLockStats\r\n| summarize count(), sum(Duration), percentiles(Duration, 50, 75, 90, 99.9), percentiles(toint(batchsize), 50, 75, 90, 99.9) by JobName\r\n| extend  PercentExclusiveUtilization=sum_Duration / ((endTime-startTime) / 1ms)\r\n| project JobName, count_, sum_Duration, PercentExclusiveUtilization, percentile_Duration_50, percentile_Duration_75, percentile_Duration_90, percentile_Duration_99_9, percentile_batchsize_50, percentile_batchsize_75, percentile_batchsize_90, percentile_batchsize_99_9\r\n| order by sum_Duration",
+    "params": [
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "JobName",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "sum_Duration",
+        "type": "long"
+      },
+      {
+        "name": "PercentExclusiveUtilization",
+        "type": "real"
+      },
+      {
+        "name": "percentile_Duration_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_Duration_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_Duration_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_Duration_99_9",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_99_9",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "dc37d39e-dc2b-41ab-9813-c06e1046140b",
+    "name": "Resource Lock Acquisition Failures",
+    "groupId": "77a08035-ef01-4b63-8a36-3cf91b7661b8",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance\r\n| where EventCode == \"ResourceLockingTransactionAquisitionFailure\"\r\n| parse Message with \"Failed to aquire resource lock on \"ResourceId\" in job \"JobId\" with operation id \"OperationIdOfLockFailure\", going to restart job on lock aquisition.\"*\r\n| parse ResourceId with \"/subscriptions/\"ResourceSubId\"/resourceGroups/\"ResourceRg\"/providers/\"ResourceProvider\"/\"ResourceType\"/\"ResourceName\r\n| project PreciseTimeStamp, ResourceType, ResourceId, OperationId, OperationName, SourceAssemblyFileVersion\r\n| summarize count() by ResourceType, ResourceId, OperationName",
+    "params": [
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ResourceType",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "679d1244-1086-4b64-9587-732337d86316",
+    "name": "Resource Locks Acquired",
+    "groupId": "41ed975b-bf46-4179-8db6-8300e7cc9b03",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let readLocks = cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance\r\n| where Message startswith \"Locking transaction with Id \" and Message contains \"aquired shared resource lock on\"\r\n| parse Message with \"Locking transaction with Id \"lockManagerId\" running in job \"jobId\" aquired shared resource lock on \"resourceIdWithNormalizedAppend\r\n| parse resourceIdWithNormalizedAppend with resourceId\" Stored under \"normalizedTopLevelKey\r\n| extend ResourceId = iff(resourceIdWithNormalizedAppend contains \"Stored under\", resourceId, resourceIdWithNormalizedAppend)\r\n| parse ResourceId with \"/subscriptions/\"ResourceSubId\"/resourceGroups/\"ResourceRg\"/providers/\"ResourceProvider\"/\"ResourceType\"/\"ResourceName\r\n| parse ResourceId with \"/children//subscriptions/\"NormResourceSubId\"/resourceGroups/\"NormResourceRg\"/providers/\"NormResourceProvider\"/\"NormResourceType\"/\"NormResourceName\"/\"NormChildCollection\r\n| parse NormChildCollection with childCollection\"/\"childName\r\n| parse NormChildCollection with referencingChildType\"/\"referencingChild\"/\"referenceCollection\"@\"referencedResource\r\n| extend EffectiveResourceType = iff(ResourceType == \"\", strcat(\"/children/ \", NormResourceType, \" \", iff(referenceCollection == \"\", childCollection, strcat(\"reference:\", referencingChildType, \"/\", referenceCollection))), ResourceType)\r\n| summarize count(), make_set(OperationName) by EffectiveResourceType, LockType=\"ReadLock\";\r\nlet writeLocks = cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == subscriptionId\r\n| where Region == region\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance\r\n| where Message startswith \"Locking transaction with Id \" and Message contains \"aquired resource lock on\"\r\n| parse Message with \"Locking transaction with Id \"lockManagerId\" running in job \"jobId\" aquired resource lock on \"resourceIdWithNormalizedAppend\r\n| parse resourceIdWithNormalizedAppend with resourceId\" Stored under \"normalizedTopLevelKey\r\n| extend ResourceId = iff(resourceIdWithNormalizedAppend contains \"Stored under\", resourceId, resourceIdWithNormalizedAppend)\r\n| parse ResourceId with \"/subscriptions/\"ResourceSubId\"/resourceGroups/\"ResourceRg\"/providers/\"ResourceProvider\"/\"ResourceType\"/\"ResourceName\r\n| parse ResourceId with \"/children//subscriptions/\"NormResourceSubId\"/resourceGroups/\"NormResourceRg\"/providers/\"NormResourceProvider\"/\"NormResourceType\"/\"NormResourceName\"/\"NormChildCollection\r\n| parse NormChildCollection with childCollection\"/\"childName\r\n| parse NormChildCollection with referencingChildType\"/\"referencingChild\"/\"referenceCollection\"@\"referencedResource\r\n| extend EffectiveResourceType = iff(ResourceType == \"\", strcat(\"/children/ \", NormResourceType, \" \", iff(referenceCollection == \"\", childCollection, strcat(\"reference:\", referencingChildType, \"/\", referenceCollection))), ResourceType)\r\n| summarize count(), make_set(OperationName) by EffectiveResourceType, LockType=\"WriteLockLock\";\r\nreadLocks\r\n| union writeLocks",
+    "params": [
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "EffectiveResourceType",
+        "type": "string"
+      },
+      {
+        "name": "LockType",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "set_OperationName",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "a3663a0e-0f09-40da-85dd-9ffcb1d810de",
+    "name": "Resource Type Read Count",
+    "groupId": "51f2c1d2-700d-4933-ae42-744c2b8e8708",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let batchManagerTransactionStats = cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").BatchTransactionManagerEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with *\"ResourceTypeBasedReadCount:\"resourceReadCount\r\n| extend SplitResources = split(resourceReadCount, \";\")\r\n| project PreciseTimeStamp, OperationId, SplitResources, OperationName, SourceAssemblyFileVersion, SubscriptionId, Region\r\n| mv-expand SplitResources\r\n| where SplitResources contains \":\"\r\n| extend readParts = split(SplitResources, \":\")\r\n| extend resourceType = readParts[0]\r\n| extend readCount = toint(readParts[1])\r\n| extend transactionOwner = strcat(\"Batch Manager Queue \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, resourceType, readCount, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nlet frontendTransactionStats = cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with *\"ResourceTypeBasedReadCount:\"resourceReadCount\r\n| extend SplitResources = split(resourceReadCount, \";\")\r\n| project PreciseTimeStamp, OperationId, SplitResources, OperationName, SourceAssemblyFileVersion, SubscriptionId, Region\r\n| mv-expand SplitResources\r\n| where SplitResources contains \":\"\r\n| extend readParts = split(SplitResources, \":\")\r\n| extend resourceType = readParts[0]\r\n| extend readCount = toint(readParts[1])\r\n| extend transactionOwner = strcat(\"FrontendOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, resourceType, readCount, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nlet readOpTransactionStats = cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").FrontendReadOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| where EventCode == \"DisposingKvsTransaction\"\r\n| extend valid = iff(operationId == \"\", iff(correlationId == \"\", true, CorrelationRequestId == correlationId), OperationId == operationId)\r\n| where valid == true\r\n| parse Message with *\"ResourceTypeBasedReadCount:\"resourceReadCount\r\n| extend SplitResources = split(resourceReadCount, \";\")\r\n| project PreciseTimeStamp, OperationId, SplitResources, OperationName, SourceAssemblyFileVersion, SubscriptionId, Region\r\n| mv-expand SplitResources\r\n| where SplitResources contains \":\"\r\n| extend readParts = split(SplitResources, \":\")\r\n| extend resourceType = readParts[0]\r\n| extend readCount = toint(readParts[1])\r\n| extend transactionOwner = strcat(\"ReadOp \", OperationName)\r\n| extend transactionInstance = OperationId\r\n| project transactionOwner, transactionInstance, resourceType, readCount, SourceAssemblyFileVersion, SubscriptionId, PreciseTimeStamp, Region;\r\nreadOpTransactionStats\r\n| union batchManagerTransactionStats\r\n| union frontendTransactionStats\r\n| summarize sum(readCount) by tostring(resourceType), transactionOwner",
+    "params": [
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "correlationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "resourceType",
+        "type": "string"
+      },
+      {
+        "name": "transactionOwner",
+        "type": "string"
+      },
+      {
+        "name": "sum_readCount",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "75f9841c-5fd5-4128-9892-3e51ab32ae0f",
+    "name": "Long Running Jobs",
+    "groupId": "0b9ab269-da98-484d-a543-c71a58cd2b89",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscription\r\n| where Message contains \"Long execution duration execution job id\"\r\n| parse Message with \"Long execution duration execution job id: \" LongRunningJobId \", duration: \" ExecutionDuration\r\n| extend jobDuration = toint(ExecutionDuration)\r\n| project PreciseTimeStamp, JobId, JobName, Message, jobDuration\r\n| summarize avg(jobDuration) by bin(PreciseTimeStamp, 1s), JobName, JobId\r\n| render timechart",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscription",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "JobName",
+        "type": "string"
+      },
+      {
+        "name": "JobId",
+        "type": "string"
+      },
+      {
+        "name": "avg_jobDuration",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "d1c09007-de8b-4473-bfe2-965f73520f02",
+    "name": "Batch Sizes",
+    "groupId": "104bfde5-b5e9-4a62-b792-849e343b330b",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "CategoryChart",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let batchSizes = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId\r\n| where Message startswith \"Complete dequeue chunk of\"\r\n| parse Message with \"Complete dequeue chunk of \"batchsize\" jobs. Added \"other\" jobs to chunk id \"JobChunkId;\r\nlet completedJobs = cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId, JobChunkId, JobId\r\n| where EventCode == \"TransactionJobExecutionFinished\";\r\nbatchSizes\r\n| join completedJobs on JobChunkId\r\n| project batchsize, JobId, QueueId\r\n| summarize percentiles(toint(batchsize), 50, 75, 90, 99.9) by QueueId\r\n| project QueueId, percentile_batchsize_50, percentile_batchsize_75, percentile_batchsize_90, percentile_batchsize_99_9\r\n| render barchart  by QueueId\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "QueueId",
+        "type": "string"
+      },
+      {
+        "name": "percentile_batchsize_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_99_9",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "675dce92-88af-4699-916d-92b00f2751de",
+    "name": "Commit Duration",
+    "groupId": "15b585ff-c4d3-4ffd-b975-089a7e78fc71",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').BatchTransactionManagerEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId ==  subscriptionId\r\n| project PreciseTimeStamp, Message, OperationId, OperationName, EventCode, SourceAssemblyFileVersion, RoleInstance, QueueId\r\n| parse Message with \"Finished commit of job chunk \"jobChunk\" from queue \"queueId\" in \"commitTime\" ms\"\r\n| summarize percentiles(toint(commitTime), 50, 75, 95, 99) by queueId\r\n| order by percentile_commitTime_50 desc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "queueId",
+        "type": "string"
+      },
+      {
+        "name": "percentile_commitTime_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_commitTime_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_commitTime_95",
+        "type": "long"
+      },
+      {
+        "name": "percentile_commitTime_99",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "968f49d3-622b-4dc2-864e-f03f241c8b60",
+    "name": "Worst Performing Non-Tenant Operations",
+    "groupId": "d0a543b7-186a-43a1-bfbb-b4b7966389c2",
+    "majorVersion": 3,
+    "minorVersion": 2,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "CategoryChart",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "\r\ncluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| parse Message with \"Dequeue job id \"JobId\" of type \"jobName\" for execution in queue \"queueId\" duration in queue: \"duration\r\n| project PreciseTimeStamp, duration, JobId, OperationId, OperationName, RoleInstance, Pid\r\n| where OperationName !contains \"tenant\" and OperationName !contains \"VirtualMachine\" and OperationName !contains \"ScaleSet\"\r\n| sort by toint(duration) desc \r\n| take 1000\r\n| project OperationName, OperationId, toint(duration)\r\n| render columnchart  by OperationName",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "int"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "2e145bcd-001d-455c-a896-de28bb5a3d2b",
+    "name": "Worst Performing Tenant Operations",
+    "groupId": "dee03fde-3b0d-499f-ac07-c3b102f02930",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "CategoryChart",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('nrp').database('mdsnrp').FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subscriptionId\r\n| parse Message with \"Dequeue job id \"JobId\" of type \"jobName\" for execution in queue \"queueId\" duration in queue: \"duration\r\n| project PreciseTimeStamp, duration, JobId, OperationId, OperationName, RoleInstance, Pid\r\n| where OperationName contains \"tenant\" or OperationName contains \"VirtualMachine\" or OperationName contains \"ScaleSet\"\r\n| sort by toint(duration) desc \r\n| take 1000\r\n| project OperationName, OperationId, toint(duration)\r\n| render columnchart  by OperationName",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "int"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

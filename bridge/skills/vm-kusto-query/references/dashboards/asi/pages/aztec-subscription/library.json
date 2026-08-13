@@ -1,0 +1,437 @@
+{
+  "service": "Aztec",
+  "page": "Subscription",
+  "pageId": "031a6e13-ec76-4bb3-9291-c53de093c0c5",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "196b1a0e-a445-404d-ba5d-c7966c06d638",
+          "name": "Retrieve Resource \"Subscription\"",
+          "groupId": "13a45e5e-7b5e-4444-90db-7a25748259fa",
+          "majorVersion": 11,
+          "minorVersion": 0,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\r\n| where PreciseTimeStamp between (local_startDate..local_endDate)\r\n| where subscriptionId =~ local_subscriptionId\r\n| project subscriptionId\r\n| limit 01",
+          "panelPath": []
+        }
+      ]
+    },
+    "Availability Sets": {
+      "panelPath": [
+        "Availability Sets"
+      ],
+      "queries": [
+        {
+          "id": "8f20ef90-9803-40fe-b548-4d9ef1e5c348",
+          "name": "Subscription AvailabilitySet List",
+          "groupId": "5187e75d-4c8c-46e7-85c9-8d4b4b40d951",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Availability Sets",
+          "params": [
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "LastSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "availabilitySetName",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "13a45e5e-7b5e-4444-90db-7a25748259fa",
+              "majorVersion": 11,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\r\n| where PreciseTimeStamp between (local_startDate..local_endDate)\r\n| where subscriptionId =~ local_subscriptionId\r\n| summarize max(PreciseTimeStamp) by availabilitySetName,tenantName,AvailabilityZone,Region\r\n| extend LastSeen=max_PreciseTimeStamp\r\n| project LastSeen,availabilitySetName,tenantName,AvailabilityZone,Region\r\n| order by LastSeen desc",
+          "panelPath": [
+            "Availability Sets"
+          ]
+        }
+      ]
+    },
+    "Related Activity Ids": {
+      "panelPath": [
+        "Related Activity Ids"
+      ],
+      "queries": [
+        {
+          "id": "e4f88faa-fb41-4014-91ac-f8d9b4b45f4c",
+          "name": "Subscription RelatedActivityId List",
+          "groupId": "1680b517-351c-4751-ab9e-6c65ea44377b",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Related Activity Ids",
+          "params": [
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RelatedActivityId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "13a45e5e-7b5e-4444-90db-7a25748259fa",
+              "majorVersion": 11,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let operationIds=cluster('azcrp').database('crp_allprod').ApiQosEvent\r\n| where PreciseTimeStamp between (local_startDate..local_endDate)\r\n| where subscriptionId =~ local_subscriptionId\r\n| distinct operationId;\r\nlet RelatedActivityIds=CommonWebOperationStart\r\n| where PreciseTimeStamp between (local_startDate..local_endDate)\r\n| where RelatedActivityId in (operationIds)\r\n| distinct RelatedActivityId;\r\ncluster('azcrp').database('crp_allprod').ApiQosEvent\r\n| where PreciseTimeStamp between (local_startDate..local_endDate)\r\n| where operationId in (RelatedActivityIds)\r\n| project PreciseTimeStamp,RelatedActivityId=operationId,operationName,resourceGroupName,resourceName,resultCode,exceptionType",
+          "panelPath": [
+            "Related Activity Ids"
+          ]
+        }
+      ]
+    },
+    "Role Instances / VMs": {
+      "panelPath": [
+        "Role Instances / VMs"
+      ],
+      "queries": [
+        {
+          "id": "89b38b95-e828-41ca-9867-ba702178cc4c",
+          "name": "Subscription RoleInstance List",
+          "groupId": "e6f5cef5-8b84-40d0-90fa-dd828787cd9c",
+          "majorVersion": 4,
+          "minorVersion": 3,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Role Instances / VMs",
+          "params": [
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "LastSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySetName",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "13a45e5e-7b5e-4444-90db-7a25748259fa",
+              "majorVersion": 11,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\r\n| where PreciseTimeStamp between (local_startDate..local_endDate)\r\n| where subscriptionId =~ local_subscriptionId\r\n| summarize max(PreciseTimeStamp) by roleInstanceName, availabilitySetName,virtualMachineUniqueId,AvailabilityZone,Region\r\n| extend LastSeen=max_PreciseTimeStamp\r\n| project LastSeen,roleInstanceName,availabilitySetName,virtualMachineUniqueId,AvailabilityZone,Region\r\n| order by LastSeen desc",
+          "panelPath": [
+            "Role Instances / VMs"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:29.170Z",
+    "totalPanels": 4,
+    "totalUniqueQueries": 4,
+    "totalWidgetRefs": 4
+  }
+}

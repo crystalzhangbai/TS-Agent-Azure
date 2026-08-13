@@ -1,0 +1,384 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "44df4b03-88ff-4883-a1f8-241890fd60c2",
+  "description": "",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "192a898c-33ee-4028-bc50-0bdb5b442de1",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "9b726213-3e4c-4e59-a94c-a92b970361d7",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "e16d4dd5-20d8-490f-adf1-dd5de126837a",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Card",
+                "id": "818a7462-62f9-4665-90ea-92fd0f535189",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "NRP - Private Endpoint",
+                    "props": {
+                      "pageServiceId": "NRP"
+                    },
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "960b886b-17cf-498a-b3e1-8a13c9b9c69d",
+                    "pageId": "eb73e12d-166d-432a-86cc-ede1efcad8e9",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "439b8893-3495-4163-bd8b-20dd51702be8",
+                        "majorVersion": 2,
+                        "minorVersion": 2,
+                        "internalDestinationName": "name",
+                        "externalSourceName": "PEName",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "439b8893-3495-4163-bd8b-20dd51702be8",
+                        "majorVersion": 2,
+                        "minorVersion": 2,
+                        "internalDestinationName": "resourceGroup",
+                        "externalSourceName": "PEResourceGroupName",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "439b8893-3495-4163-bd8b-20dd51702be8",
+                        "majorVersion": 2,
+                        "minorVersion": 2,
+                        "internalDestinationName": "subscriptionId",
+                        "externalSourceName": "PESubscriptionId",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "PEDetails",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_AllData",
+                      "groupId": "439b8893-3495-4163-bd8b-20dd51702be8",
+                      "majorVersion": 2,
+                      "minorVersion": 2,
+                      "internalDestinationName": "TIMESTAMP",
+                      "externalSourceName": "(All Data)",
+                      "required": false,
+                      "rowSelectionCriteria": "allRows"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "(All Data)",
+                    "uuid": "3ccf51ac-4311-437d-bf2a-140030945e82",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "8b70adfa-3e31-4cb8-bcfa-752dcb5c9e4b",
+                    "idForPopups": "8b70adfa-3e31-4cb8-bcfa-752dcb5c9e4b",
+                    "groupId": "439b8893-3495-4163-bd8b-20dd51702be8",
+                    "majorVersion": 2,
+                    "minorVersion": 2,
+                    "serviceId": "Recovery Services Vaults",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVDeploymentName",
+                        "externalSourceName": "RSVDeploymentName",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVResourceId",
+                        "externalSourceName": "RSVResourceId",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "PENameInput",
+                        "externalSourceName": "PEName",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "StartTime",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "EndTime",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "Timeline",
+                "id": "aea42575-cbff-47dd-9a7f-65fc82ee7fd9",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "07828797-947b-4d77-9415-bb7d19f1e10c",
+                    "idForPopups": "07828797-947b-4d77-9415-bb7d19f1e10c",
+                    "groupId": "895e0996-5777-4804-b46c-dd381d454b4e",
+                    "majorVersion": 1,
+                    "minorVersion": 7,
+                    "serviceId": "Recovery Services Vaults",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryFrom",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryTo",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVResourceId",
+                        "externalSourceName": "RSVResourceId",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVPEName",
+                        "externalSourceName": "PEName",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "RSVDeploymentName",
+                        "externalSourceName": "RSVDeploymentName",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {
+                  "stack": "true"
+                },
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 9,
+  "basedOnVersionId": "3f0dd021-d07d-42f8-9e8b-9b51eeeb7da9",
+  "groupId": "ea61255e-e5d5-4feb-9cce-0f256b3ac860",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "PEName",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "RSVResourceId",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "RSVDeploymentName",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "Recovery Services Vaults",
+      "groupId": "439b8893-3495-4163-bd8b-20dd51702be8",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Recovery Services Vaults",
+      "groupId": "895e0996-5777-4804-b46c-dd381d454b4e",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Recovery Services Vaults",
+      "id": "eb73e12d-166d-432a-86cc-ede1efcad8e9",
+      "groupId": "eb73e12d-166d-432a-86cc-ede1efcad8e9",
+      "entityType": "Page"
+    }
+  ],
+  "serviceId": "Recovery Services Vaults",
+  "deleted": false,
+  "name": "PrivateEndpointPage",
+  "_ts": 1721304487,
+  "databaseSavedTimestamp": "2024-07-18T12:08:07+00:00",
+  "_etag": "\"0a00a7d6-0000-2000-0000-669905a70000\"",
+  "createdAt": "2024-07-18T12:08:07.3017015+00:00",
+  "createdBy": "shtriv@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "shtriv@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2024-07-18T12:08:07.3017015+00:00",
+  "tags": []
+}

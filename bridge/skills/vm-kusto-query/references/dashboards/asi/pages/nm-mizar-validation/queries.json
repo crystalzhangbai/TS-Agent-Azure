@@ -1,0 +1,164 @@
+[
+  {
+    "id": "5488bfe1-6660-437a-b82d-642a14effe04",
+    "name": "Retrieve Resource \"Mizar Validation\"",
+    "groupId": "8977eda0-9256-4672-aa17-6230c3b5f1a0",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = datetime_add('hour', -48, local_PreciseTimeStamp);\r\nlet endTime = datetime_add('hour', 24, local_PreciseTimeStamp);\r\nDCMNMQOSInfoEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Tenant == local_Tenant\r\n| where operation == 'BatchUpdateNetworkResource-Allocation'\r\n| where additionalMessage contains local_TenantName\r\n| top 1 by PreciseTimeStamp asc \r\n| extend TenantName = extract(@'Tenant Name: ([a-z0-9\\-]+)', 1, additionalMessage)\r\n| extend ContainerInstanceId = extract_all(@'ContainerId:\\s+([a-z0-9\\-]+)', additionalMessage)\r\n| extend InterfaceId = extract_all(@'InterfaceId:\\s+([a-z0-9\\-]+)', additionalMessage)\r\n| extend InterfaceName = extract_all(@'InterfaceName:\\s+([A-Za-z0-9\\-]+)', additionalMessage)\r\n| extend MacAddress = extract_all(@'MacAddress:\\s+([a-z0-9\\-]+)', additionalMessage)\r\n| project Region, Tenant, TenantName, ContainerInstanceId, InterfaceId, MacAddress, success, message",
+    "params": [
+      {
+        "name": "local_PreciseTimeStamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_Tenant",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_TenantName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "ContainerInstanceId",
+        "type": "dynamic"
+      },
+      {
+        "name": "InterfaceId",
+        "type": "dynamic"
+      },
+      {
+        "name": "MacAddress",
+        "type": "dynamic"
+      },
+      {
+        "name": "success",
+        "type": "bool"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  },
+  {
+    "id": "9f4454af-d1cd-4a10-9b94-1fca3ce2cd49",
+    "name": "LogNetworkInterface",
+    "groupId": "95c0a60e-c899-4422-948b-649ea09d749f",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = datetime_add('hour', -48, timestamp);\r\nlet endTime = datetime_add('hour', 24, timestamp);\r\nlet targets = DCMNMQOSInfoEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where operation == 'BatchUpdateNetworkResource-Allocation'\r\n| where additionalMessage contains queryTenantName\r\n| top 1 by PreciseTimeStamp asc \r\n| extend TenantName = extract(@'Tenant Name: ([a-z0-9\\-]+)', 1, additionalMessage)\r\n| extend ContainerInstanceId = extract_all(@'ContainerId:\\s+([a-z0-9\\-]+)', additionalMessage)\r\n| extend InterfaceId = extract_all(@'InterfaceId:\\s+([a-z0-9\\-]+)', additionalMessage)\r\n| extend MacAddress = extract_all(@'MacAddress:\\s+([a-z0-9\\-]+)', additionalMessage)\r\n| project TenantName, ContainerInstanceId, InterfaceId, MacAddress, Tenant, Region;\r\nlet nicIds = NetworkServiceManagerEvents\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where TaskName != \"ChangedSetting\"\r\n| where Message has_any (( targets | project TenantName)) or Message has_any ((targets | project ContainerInstanceId)) or Message has_any (( targets | project InterfaceId)) \r\n| where TaskName == \"LogNetworkInterfacePersistedForContainerInterface\"\r\n| extend nicId = extract(@'nicId=\"([a-z0-9\\-]+)\"', 1, Message)\r\n| distinct nicId;\r\nlet compartmentsId = NetworkServiceManagerEvents\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where TaskName != \"ChangedSetting\"\r\n| where Message has_any (( targets | project InterfaceId)) and Message contains \"/compartments/\"\r\n| extend nicId = extract(@'nicId=\"([a-z0-9\\-]+)\"', 1, Message)\r\n| extend compartmentsId = extract(@'compartments/([a-z0-9\\-]+)', 1, Message)\r\n| distinct compartmentsId;\r\nlet ContainerIds = NetworkServiceManagerEvents\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where TaskName != \"ChangedSetting\"\r\n| where Message has_any ((targets | project TenantName)) or Message has_any ((targets | project ContainerInstanceId)) or Message has_any ((targets | project InterfaceId)) \r\n      or Message has_any (nicIds)\r\n| where TaskName == \"LogMerlinNetworkInterfaceInstanceConfigAddToPublish\"\r\n| where Message has \"ContainerId\"\r\n| extend ContainerId = extract(@'\\\\\"ContainerId\\\\\": ([a-z0-9\\-]+)', 1, Message)\r\n| distinct ContainerId;\r\nNetworkServiceManagerEvents\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where TaskName != \"ChangedSetting\"\r\n| where Message has_any ((targets | project TenantName)) or Message has_any ((targets | project ContainerInstanceId)) or Message has_any ((targets | project InterfaceId)) \r\n      or Message has_any (nicIds) or Message has_any (ContainerIds) or Message has_any (compartmentsId)\r\n| project PreciseTimeStamp, TaskName, Message\r\n| sort by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "TaskName",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  },
+  {
+    "id": "b346512b-2245-4052-b14a-3592459aa9e0",
+    "name": "NicInstanceStateMachine",
+    "groupId": "cd91f40d-1126-45c1-a7ec-f161276f1bfb",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = datetime_add('hour', -48, timestamp);\r\nlet endTime = datetime_add('hour', 24, timestamp);\r\nlet targets = DCMNMQOSInfoEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where operation == 'BatchUpdateNetworkResource-Allocation'\r\n| where additionalMessage contains queryTenantName\r\n| top 1 by PreciseTimeStamp asc \r\n| extend InterfaceId = extract_all(@'InterfaceId:\\s+([a-z0-9\\-]+)', additionalMessage)\r\n| project Tenant, InterfaceId;\r\nNetworkServiceManagerMessages\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Tenant in ((targets | project Tenant))\r\n| project PreciseTimeStamp, data = parse_json(text)\r\n| where data.category == 'StateMachine'\r\n| where data.id has_any ((targets | project InterfaceId))\r\n| top 1000 by PreciseTimeStamp desc ",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "data",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "Network Manager"
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "service": "EEE RDOS",
+  "page": "Start Hub",
+  "pageId": "212c7d6e-6d49-4bd1-9bb8-74e5bc3153d9",
+  "sourceUrlPattern": "https://asi.azure.ms/services/EEE%20RDOS/pages/Start%20Hub?cluster=<cluster>&containerid=<containerid>&nodeid=<nodeid>&roleInstanceName=<roleInstanceName>&tenantname=<tenantname>&vmid=<vmid>&globalFrom=<ISO>&globalTo=<ISO>",
+  "pageInputs": {
+    "cluster": "Compute cluster (Tenant) name, e.g. IAD03PrdGPC06",
+    "containerid": "Container GUID",
+    "nodeid": "Physical node GUID",
+    "roleInstanceName": "Role instance name, e.g. _xxx-yyy-001",
+    "tenantname": "Tenant (NIC tenant) GUID",
+    "vmid": "Virtual machine unique ID (GUID)",
+    "globalFrom": "ISO datetime UTC, e.g. 2026-05-07T23:00:00.000Z",
+    "globalTo": "ISO datetime UTC, e.g. 2026-05-08T01:00:00.000Z"
+  },
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId"
+    ]
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T05:18:09.175Z",
+    "totalPanels": 31,
+    "totalUniqueQueries": 166,
+    "totalWidgetRefs": 172
+  },
+  "notes": [
+    "Library was extracted from a live ASI session. To refresh, see ../../extractor/README.md.",
+    "Replay via: ../../../.github/skills/vm-kusto-query/scripts/eee_replay.py (uses this library by default).",
+    "Two queries (ICM Report, Planned Maintenance) require icmcluster.IcMDataWarehouse access; expect 'Access denied' for accounts without that DB."
+  ]
+}

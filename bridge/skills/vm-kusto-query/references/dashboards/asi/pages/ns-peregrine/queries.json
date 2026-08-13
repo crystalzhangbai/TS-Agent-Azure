@@ -1,0 +1,602 @@
+[
+  {
+    "id": "4cf4b221-c8c1-49e4-a395-b28900782d75",
+    "name": "NodeServiceEventsEtwTable",
+    "groupId": "e4f7d5c2-f9c8-4152-95a1-bb94c848c319",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "NodeServiceEventEtwTable\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where ScopeIdentifier == containerId\r\n| project PreciseTimeStamp, Message",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-09T20:19:44.899Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-10T20:19:44.899Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "f158f14f-25cc-41e9-8e12-33eab39db0d3",
+    "name": "AzCiMContainerWillBe",
+    "groupId": "9e746dae-a486-4e45-8e75-92021ba026c5",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AzCiMContainerWillBe\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where PhysicalContainerId == containerId\r\n| project PreciseTimeStamp, WillBe\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-09T20:19:44.899Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-10T20:19:44.899Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "WillBe",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "92f81094-a59a-4012-bca8-79a60063d0ec",
+    "name": "AzCiMContainerWas",
+    "groupId": "7a6fd985-3e71-41ba-a1b7-fd9fca6c1b6f",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "AzureCP",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AzCiMContainerWas\r\n| where PhysicalContainerId ==  containerId\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| project PreciseTimeStamp, Was\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-09T20:19:44.899Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-10T20:19:44.899Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Was",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "f7973b19-3ba9-4416-93cf-cd58e3e1038f",
+    "name": "NodeServiceMadariEventsEtwTable",
+    "groupId": "3012def8-ee5d-4231-9758-817bfecd9c3e",
+    "majorVersion": 3,
+    "minorVersion": 2,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "NodeServiceMadariEventsEtwTable\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where RelativePath contains containerId\r\n| project PreciseTimeStamp, Message, Operation, RelativePath, ContextSelector",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-09T20:19:44.899Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-10T20:19:44.899Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "Operation",
+        "type": "string"
+      },
+      {
+        "name": "RelativePath",
+        "type": "string"
+      },
+      {
+        "name": "ContextSelector",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "58537a6c-1d4f-4022-a5a5-861deae2d3ae",
+    "name": "AzCiMMadariOperationEvent",
+    "groupId": "d520fbc3-54a7-4474-a299-b5b5c8f6b904",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AzCiMMadariOperationEvent\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where * contains containerId\r\n| project PreciseTimeStamp, Result",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-17T00:53:33.915Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-18T00:53:33.915Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "46ce398d-25a1-4129-a121-adf22930abd9",
+    "name": "AgentNfcHttpDownloadFileEtwTable",
+    "groupId": "2cca0f9b-ed10-4f6d-a36c-6d1c9bd26ca8",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let nodeId = NodeServiceEventEtwTable\r\n| where ScopeIdentifier == containerId\r\n| take 1\r\n| project NodeId;\r\nAgentNfcHttpDownloadFileEtwTable\r\n| where PreciseTimeStamp between(queryFrom..queryTo)\r\n| where NodeId in (nodeId)\r\n| where Url contains \"|/\"\r\n| project PreciseTimeStamp, Url, StatusCode",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-17T00:53:33.915Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-18T00:53:33.915Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Url",
+        "type": "string"
+      },
+      {
+        "name": "StatusCode",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "03d119ed-6bde-4f4e-a2e7-e61de049bd7d",
+    "name": "WillBePublishesToMadariFromAzCiM",
+    "groupId": "b64ae817-c46d-49dc-bb05-987e64ef2c46",
+    "majorVersion": 1,
+    "minorVersion": 8,
+    "cluster": "https://azcim-centralus.centralus.kusto.windows.net",
+    "database": "AZCIM",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AzCiMContainerWillBe\r\n| where PhysicalContainerId == containerId\r\n| where PreciseTimeStamp > queryFrom and PreciseTimeStamp < queryTo\r\n| sort by PreciseTimeStamp asc\r\n| parse WillBe with '{\"revision\":' Revision ',' * '\"state\":\"' State '\",' *\r\n| project PreciseTimeStamp, Revision, State, WillBe\r\n| serialize \r\n| where prev(State) != State\r\n| project Table=\"WillBePublishesToMadari\",\r\n          StartTime=PreciseTimeStamp, \r\n          Content=case(isempty(Revision), \"Deleted\",\r\n                       State),\r\n          Tooltip=case(isempty(Revision), \"Deleted\",\r\n                       strcat(\"Revision=\", Revision)),\r\n          WillBe",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-04-04T00:17:56.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-04-04T01:17:56.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "default": "b1d6ec41-a09e-4fc8-afe7-2a4663b20622",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Table",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "WillBe",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "7ab27149-7c44-47ba-acbc-ec44baa498ae",
+    "name": "WillBeReceiptsFromMadari",
+    "groupId": "29bab2ab-2b9e-428e-bf14-38a613f7d9cb",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "NodeServiceMadariEventsEtwTable\r\n| where RelativePath == strcat(\"/containers/\", containerId)\r\n| where PreciseTimeStamp > queryFrom and PreciseTimeStamp < queryTo\r\n| where Operation == \"MadariNotificationCallback\"\r\n| project Table=\"WillBeReceiptsFromMadari\",\r\n          StartTime=PreciseTimeStamp,\r\n          Content=tostring(MadariVersion),\r\n          Tooltip=strcat(Message, \" MadariVersion=\", MadariVersion)",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-04-04T21:35:28.725Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-04-05T21:35:28.725Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "default": "b1d6ec41-a09e-4fc8-afe7-2a4663b20622",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Table",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "10616843-f163-46e3-a63c-8f28957017d3",
+    "name": "ContainerWorkflowBlocked",
+    "groupId": "8f1a3280-b4c1-4501-8908-062c25577eaf",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "NodeServiceEventEtwTable\r\n| where Message contains containerId\r\n| where PreciseTimeStamp > queryFrom and PreciseTimeStamp < queryTo\r\n| where Message contains \"Overpacking\" or Message contains \"Container workflow blocked\"\r\n| sort by PreciseTimeStamp asc\r\n| parse Message with * \"overpackedCaseReason=\" OverpackedCaseReason\r\n| parse Message with * \"Container workflow blocked: \" WorkflowBlockedReason \".\" *\r\n| parse Message with * \"EscalateTo: \" EscalateTo \".\" *\r\n| project Table=\"OverpackingTable\",\r\n          StartTime=PreciseTimeStamp,\r\n          Content=case(OverpackedCaseReason != \"\", OverpackedCaseReason,\r\n                       WorkflowBlockedReason)\r\n| summarize min(StartTime), max(StartTime), count() by Content\r\n| project StartTime=min_StartTime,\r\n          EndTime=max_StartTime,\r\n          Content,\r\n          Tooltip=tostring(count_),\r\n          GroupBy=Content",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-04-04T21:35:28.725Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-04-05T21:35:28.725Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "default": "b1d6ec41-a09e-4fc8-afe7-2a4663b20622",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  }
+]

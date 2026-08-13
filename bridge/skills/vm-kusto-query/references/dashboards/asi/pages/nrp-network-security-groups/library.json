@@ -1,0 +1,1178 @@
+{
+  "service": "NRP",
+  "page": "Network Security Groups",
+  "pageId": "0dcdf3b2-2d57-42fb-8c81-18c7d54a4445",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "8ccacdbe-dd85-45b5-9692-223bdba2f5a5",
+          "name": "Retrieve Resource \"Network Security Groups\"",
+          "groupId": "22f5258a-0a0b-40b8-9895-3a52214d68ea",
+          "majorVersion": 3,
+          "minorVersion": 1,
+          "cluster": "argwus2nrpone.westus2",
+          "database": "AzureResourceGraph",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_name",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_resourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_timestamp",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "deleted",
+              "type": "bool"
+            },
+            {
+              "name": "id",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "type",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "kind",
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "managedBy",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "sku",
+              "type": "dynamic"
+            },
+            {
+              "name": "plan",
+              "type": "dynamic"
+            },
+            {
+              "name": "properties",
+              "type": "dynamic"
+            },
+            {
+              "name": "tags",
+              "type": "dynamic"
+            },
+            {
+              "name": "timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "subResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "aliases",
+              "type": "dynamic"
+            },
+            {
+              "name": "source",
+              "type": "string"
+            },
+            {
+              "name": "rowId",
+              "type": "string"
+            },
+            {
+              "name": "storeUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "routingType",
+              "type": "int"
+            },
+            {
+              "name": "partial",
+              "type": "bool"
+            },
+            {
+              "name": "identity",
+              "type": "dynamic"
+            },
+            {
+              "name": "zones",
+              "type": "dynamic"
+            },
+            {
+              "name": "scopeType",
+              "type": "int"
+            },
+            {
+              "name": "scopeId",
+              "type": "string"
+            },
+            {
+              "name": "extendedLocation",
+              "type": "dynamic"
+            },
+            {
+              "name": "systemData",
+              "type": "dynamic"
+            },
+            {
+              "name": "rowSize",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_name",
+              "externalSourceName": "name",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_resourceGroupName",
+              "externalSourceName": "resourceGroupName",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_timestamp",
+              "externalSourceName": "timestamp",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Resources\r\n| where isempty(local_timestamp) or \r\n    timestamp between((local_timestamp-15m)..(local_timestamp+15m))\r\n| where subscriptionId == local_subscriptionId and resourceGroup =~ local_resourceGroupName and name =~ local_name\r\n| top 1 by timestamp desc",
+          "panelPath": []
+        },
+        {
+          "id": "8a545217-0535-4cb0-ace2-3ad97a260278",
+          "name": "Get Network Security Group",
+          "groupId": "645e6e4d-292b-4d3d-b450-08648b8c5a95",
+          "majorVersion": 3,
+          "minorVersion": 1,
+          "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+          "database": "AzureResourceGraph",
+          "type": "Single",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryNSGName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "deleted",
+              "type": "bool"
+            },
+            {
+              "name": "id",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "type",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "kind",
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "managedBy",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "sku",
+              "type": "dynamic"
+            },
+            {
+              "name": "plan",
+              "type": "dynamic"
+            },
+            {
+              "name": "properties",
+              "type": "dynamic"
+            },
+            {
+              "name": "tags",
+              "type": "dynamic"
+            },
+            {
+              "name": "timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "subResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "aliases",
+              "type": "dynamic"
+            },
+            {
+              "name": "source",
+              "type": "string"
+            },
+            {
+              "name": "rowId",
+              "type": "string"
+            },
+            {
+              "name": "storeUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "routingType",
+              "type": "int"
+            },
+            {
+              "name": "partial",
+              "type": "bool"
+            },
+            {
+              "name": "identity",
+              "type": "dynamic"
+            },
+            {
+              "name": "zones",
+              "type": "dynamic"
+            },
+            {
+              "name": "scopeType",
+              "type": "int"
+            },
+            {
+              "name": "scopeId",
+              "type": "string"
+            },
+            {
+              "name": "extendedLocation",
+              "type": "dynamic"
+            },
+            {
+              "name": "systemData",
+              "type": "dynamic"
+            },
+            {
+              "name": "rowSize",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "querySubscriptionId",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroupName",
+              "externalSourceName": "queryResourceGroupName",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryNSGName",
+              "externalSourceName": "queryNSGName",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where isnotempty(queryNSGName) and (resourceGroup =~ queryResourceGroupName and subscriptionId =~ querySubscriptionId)\r\n| where type == \"microsoft.network/networksecuritygroups\" and not(partial)\r\n| where name =~ queryNSGName\r\n| top 1 by timestamp desc",
+          "panelPath": []
+        }
+      ]
+    },
+    "Current Rules > Current Rules > Security Rules": {
+      "panelPath": [
+        "Current Rules",
+        "Current Rules",
+        "Security Rules"
+      ],
+      "queries": [
+        {
+          "id": "bb1e36b2-e4a3-41dd-a883-b183d0b4165b",
+          "name": "NSG Security Rules",
+          "groupId": "a422638c-61bf-4b8e-a8ce-ae324f2d87c4",
+          "majorVersion": 3,
+          "minorVersion": 4,
+          "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+          "database": "AzureResourceGraph",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Security Rules",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryHintTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "provisioningState",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "name": "protocol",
+              "type": "string"
+            },
+            {
+              "name": "sourcePortRange",
+              "type": "string"
+            },
+            {
+              "name": "destinationPortRange",
+              "type": "string"
+            },
+            {
+              "name": "sourceAddressPrefix",
+              "type": "string"
+            },
+            {
+              "name": "destinationAddressPrefix",
+              "type": "string"
+            },
+            {
+              "name": "priority",
+              "type": "int"
+            },
+            {
+              "name": "direction",
+              "type": "string"
+            },
+            {
+              "name": "internalSecurityRuleName",
+              "type": "string"
+            },
+            {
+              "name": "Type",
+              "type": "string"
+            },
+            {
+              "name": "access",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "querySubscriptionId",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroupName",
+              "externalSourceName": "queryResourceGroupName",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryName",
+              "externalSourceName": "queryNSGName",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryHintTime",
+              "externalSourceName": "queryOptionalHintTime",
+              "required": false
+            }
+          ],
+          "kustoQuery": "// AS :: moved to new Kusto\r\nlet nsg = cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where isempty(queryHintTime) or timestamp between(datetime_add('hour', -1, queryHintTime) .. datetime_add('hour', 1, queryHintTime))\r\n| where isnotempty(queryName) and (resourceGroup =~ queryResourceGroupName and subscriptionId =~ querySubscriptionId)\r\n| where type == \"microsoft.network/networksecuritygroups\" and not(partial)\r\n| where name =~ queryName\r\n| top 1 by timestamp desc\r\n| extend Json = parse_json(properties)\r\n| extend Subnets = Json.subnets\r\n| extend defaultSecurityRules = Json.defaultSecurityRules\r\n| extend securityRules = Json.securityRules;\r\nlet defaultRules = nsg\r\n| mv-expand securityRule = defaultSecurityRules\r\n| extend Type = 'DefaultSecurityRule';\r\nlet securityRules = nsg\r\n| mv-expand securityRule = securityRules\r\n| extend Type = 'CustomSecurityRule';\r\nunion kind=outer defaultRules, securityRules\r\n| extend \r\n    destinationPortRange = securityRule.properties.destinationPortRange,\r\n    destinationPortRanges = securityRule.properties.destinationPortRanges,\r\n    sourcePortRanges = securityRule.properties.sourcePortRanges,\r\n    sourcePortRange = securityRule.properties.sourcePortRange\r\n| extend access = tostring(securityRule.properties.access)\r\n| project \r\n    name = tostring(securityRule.name),\r\n    provisioningState = tostring(securityRule.properties.provisioningState),\r\n    description = tostring(securityRule.properties.description),\r\n    protocol = tostring(securityRule.properties.protocol),\r\n    sourcePortRange = tostring(coalesce(sourcePortRange, array_strcat(sourcePortRanges, \", \"))),\r\n    destinationPortRange = tostring(coalesce(destinationPortRange, array_strcat(destinationPortRanges, \", \"))),\r\n    sourceAddressPrefix = iif(\r\n        isempty(securityRule.properties.sourceAddressPrefix), \r\n        array_strcat(securityRule.properties.sourceAddressPrefixes, \", \"),\r\n        tostring(securityRule.properties.sourceAddressPrefix)\r\n        ), \r\n    destinationAddressPrefix = iif(\r\n        isempty(securityRule.properties.destinationAddressPrefix), \r\n        array_strcat(securityRule.properties.destinationAddressPrefixes, \", \"), \r\n        tostring(securityRule.properties.destinationAddressPrefix)\r\n        ),\r\n    priority = toint(securityRule.properties.priority),\r\n    direction = tostring(securityRule.properties.direction),\r\n    internalSecurityRuleName = tostring(securityRule.properties.internalSecurityRuleName),\r\n    Type,\r\n    access,\r\n    level = iif(access == \"Deny\", \"error\", \"info\")\r\n| order by priority asc \r\n",
+          "panelPath": [
+            "Current Rules",
+            "Current Rules",
+            "Security Rules"
+          ]
+        }
+      ]
+    },
+    "NSG Updates": {
+      "panelPath": [
+        "NSG Updates"
+      ],
+      "queries": [
+        {
+          "id": "6bd04928-c085-4077-b75b-d78eed15098b",
+          "name": "NSG Updates",
+          "groupId": "0162fa72-3842-4c1a-8997-2f2155fdc8e4",
+          "majorVersion": 1,
+          "minorVersion": 5,
+          "cluster": "nrp",
+          "database": "mdsnrp",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "NSG Updates",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryNSGName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "ResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "HttpMethod",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceType",
+              "type": "string"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "ProviderGuid",
+              "type": "string"
+            },
+            {
+              "name": "EventId",
+              "type": "long"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "EventName",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "SynchronousDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "AsynchronousDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "DurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "Success",
+              "type": "bool"
+            },
+            {
+              "name": "UserError",
+              "type": "bool"
+            },
+            {
+              "name": "ErrorCode",
+              "type": "string"
+            },
+            {
+              "name": "StackTrace",
+              "type": "string"
+            },
+            {
+              "name": "InnerExceptionStackTrace",
+              "type": "string"
+            },
+            {
+              "name": "ErrorDetails",
+              "type": "string"
+            },
+            {
+              "name": "BackgroundTaskQos",
+              "type": "bool"
+            },
+            {
+              "name": "BackgroundTaskCancelled",
+              "type": "bool"
+            },
+            {
+              "name": "InternalOperation",
+              "type": "bool"
+            },
+            {
+              "name": "TeamName",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "InternalCorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "ComputeSubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "ClientOperationId",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            },
+            {
+              "name": "ParentOperationId",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationRequestId",
+              "type": "string"
+            },
+            {
+              "name": "ApiVersion",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "AzureRoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "PartitionId",
+              "type": "string"
+            },
+            {
+              "name": "ReplicaId",
+              "type": "long"
+            },
+            {
+              "name": "SourceAssemblyFileVersion",
+              "type": "string"
+            },
+            {
+              "name": "EventCode",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "Sequence",
+              "type": "long"
+            },
+            {
+              "name": "Continuation",
+              "type": "bool"
+            },
+            {
+              "name": "OrigTS",
+              "type": "datetime"
+            },
+            {
+              "name": "TraceSource",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "OpcodeName",
+              "type": "string"
+            },
+            {
+              "name": "KeywordName",
+              "type": "string"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "EventMessage",
+              "type": "string"
+            },
+            {
+              "name": "ClientAppId",
+              "type": "string"
+            },
+            {
+              "name": "NRPGatewayRequestId",
+              "type": "string"
+            },
+            {
+              "name": "InternalErrorCode",
+              "type": "string"
+            },
+            {
+              "name": "IsFastPath",
+              "type": "bool"
+            },
+            {
+              "name": "HttpStatusCode",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "querySubscriptionId",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroupName",
+              "externalSourceName": "queryResourceGroupName",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryNSGName",
+              "externalSourceName": "queryNSGName",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "componentFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "componentTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "QosEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where isnotempty(queryNSGName) and (SubscriptionId == querySubscriptionId and ResourceGroup =~ queryResourceGroupName and HttpMethod != \"GET\")\r\n| where (ResourceType == \"networkSecurityGroups\" and ResourceName == queryNSGName) or (ResourceType == \"securityRules\")\r\n| where ResourceType in (\"networkSecurityGroups\", \"securityRules\")\r\n| extend StartTime = todatetime(StartTime)\r\n| extend Content = case(\r\n    ResourceType == \"networkSecurityGroups\", OperationName, \r\n    strcat(OperationName, \" - \", ResourceName)\r\n) \r\n| project-reorder ResourceGroup, ResourceName, HttpMethod, OperationName, ResourceType\r\n| top 1000 by PreciseTimeStamp desc\r\n",
+          "panelPath": [
+            "NSG Updates"
+          ]
+        }
+      ]
+    },
+    "Snapshots > Snapshots > NSG Snapshots (ARG)": {
+      "panelPath": [
+        "Snapshots",
+        "Snapshots",
+        "NSG Snapshots (ARG)"
+      ],
+      "queries": [
+        {
+          "id": "626cc084-2d05-4c1c-aab2-56c5aafba6a8",
+          "name": "Graph NSG Snapshots",
+          "groupId": "53190e96-993c-44df-b75f-87a2bc6c2b33",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+          "database": "AzureResourceGraph",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "NSG Snapshots (ARG)",
+          "params": [
+            {
+              "name": "queryName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryHintTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "deleted",
+              "type": "bool"
+            },
+            {
+              "name": "source",
+              "type": "string"
+            },
+            {
+              "name": "provisioningState",
+              "type": "dynamic"
+            },
+            {
+              "name": "type",
+              "type": "string"
+            },
+            {
+              "name": "rowId",
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "kind",
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "managedBy",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "sku",
+              "type": "dynamic"
+            },
+            {
+              "name": "plan",
+              "type": "dynamic"
+            },
+            {
+              "name": "tags",
+              "type": "dynamic"
+            },
+            {
+              "name": "subResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "aliases",
+              "type": "dynamic"
+            },
+            {
+              "name": "storeUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "routingType",
+              "type": "int"
+            },
+            {
+              "name": "partial",
+              "type": "bool"
+            },
+            {
+              "name": "identity",
+              "type": "dynamic"
+            },
+            {
+              "name": "zones",
+              "type": "dynamic"
+            },
+            {
+              "name": "scopeType",
+              "type": "int"
+            },
+            {
+              "name": "scopeId",
+              "type": "string"
+            },
+            {
+              "name": "extendedLocation",
+              "type": "dynamic"
+            },
+            {
+              "name": "systemData",
+              "type": "dynamic"
+            },
+            {
+              "name": "rowSize",
+              "type": "long"
+            },
+            {
+              "name": "JSON",
+              "type": "dynamic"
+            },
+            {
+              "name": "resourceGuid",
+              "type": "dynamic"
+            },
+            {
+              "name": "PreviousJSON",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryName",
+              "externalSourceName": "queryNSGName",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroupName",
+              "externalSourceName": "queryResourceGroupName",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "querySubscriptionId",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryHintTime",
+              "externalSourceName": "queryOptionalHintTime",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            }
+          ],
+          "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where (isempty(queryHintTime) and timestamp > (queryFrom - 5d)) \r\n    or timestamp between(datetime_add('day', 1, queryHintTime) .. datetime_add('hour', 6, queryHintTime))\r\n| where name =~ queryName and resourceGroup =~ queryResourceGroupName\r\n| where subscriptionId =~ querySubscriptionId and type == \"microsoft.network/networksecuritygroups\"\r\n| where not(partial)\r\n| extend JSON = properties\r\n| extend provisioningState = JSON.provisioningState\r\n| extend resourceGuid = JSON.resourceGuid\r\n| order by timestamp desc\r\n// because we are descending, we need next instead\r\n| extend PreviousJSON = next(properties)\r\n| project-away properties\r\n| project-reorder timestamp, deleted, source, provisioningState, type, rowId\r\n| where strlen(tostring(JSON)) != strlen(tostring(PreviousJSON))\r\n",
+          "panelPath": [
+            "Snapshots",
+            "Snapshots",
+            "NSG Snapshots (ARG)"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:53.695Z",
+    "totalPanels": 4,
+    "totalUniqueQueries": 5,
+    "totalWidgetRefs": 5
+  }
+}

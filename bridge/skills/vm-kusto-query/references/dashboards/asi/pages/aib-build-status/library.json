@@ -1,0 +1,265 @@
+{
+  "service": "Azure VM Image Builder",
+  "page": "Build Status",
+  "pageId": "6ea9c594-2e9d-42c3-b4c3-37e9e6d0438f",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "540f8cd5-ea41-4aea-8ef1-df97385523fd",
+          "name": "Build Timeline",
+          "groupId": "3515ba14-75d1-45cd-ad77-5a6b017e690f",
+          "majorVersion": 5,
+          "minorVersion": 0,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "Build",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "cloud",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "GroupBy",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "componentFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "componentTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "Build",
+              "externalSourceName": "Build",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "cloud",
+              "externalSourceName": "CloudEnvironment",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "FrontEndQoSEvents\r\n| where TIMESTAMP between(queryFrom .. queryTo)\r\n| where case( cloud == \"public\", RPTenant == \"prod\", cloud == \"ussec\", RPTenant == \"secprod\", cloud == \"usnat\", RPTenant == \"natprod\", true )\r\n| project serviceBuild, RPTenant, PreciseTimeStamp, RPSector\r\n| summarize requests=count(), firstSeen=min(PreciseTimeStamp), lastSeen=max(PreciseTimeStamp) by serviceBuild, RPSector\r\n| extend Content = RPSector, StartTime = firstSeen, EndTime = lastSeen, Tooltip = tostring(requests), GroupBy = serviceBuild\r\n| project GroupBy, Content, StartTime, EndTime, Tooltip\r\n| extend Health=\"Neutral\"\r\n| order by StartTime desc",
+          "panelPath": []
+        }
+      ]
+    },
+    "Builds": {
+      "panelPath": [
+        "Builds"
+      ],
+      "queries": [
+        {
+          "id": "cb5b5432-a83b-42b4-99d0-6ef2530c4a50",
+          "name": "Service Build Saturation",
+          "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Builds",
+          "params": [
+            {
+              "name": "Build",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "count",
+              "type": "long"
+            },
+            {
+              "name": "firstSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "lastSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Tooltip",
+              "type": "long"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "Build",
+              "externalSourceName": "Build",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "UsageKpiEvent\r\n| project serviceBuild, RPTenant, PreciseTimeStamp\r\n| where Build == \"\" or serviceBuild == Build\r\n| summarize count=count(), firstSeen=min(PreciseTimeStamp), lastSeen=max(PreciseTimeStamp) by serviceBuild, RPTenant\r\n| order by firstSeen desc\r\n| extend StartTime = firstSeen, EndTime = lastSeen, Tooltip = ['count'], GroupBy = RPTenant",
+          "panelPath": [
+            "Builds"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:12:07.988Z",
+    "totalPanels": 2,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

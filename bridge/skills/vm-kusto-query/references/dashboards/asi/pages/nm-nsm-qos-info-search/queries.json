@@ -1,0 +1,533 @@
+[
+  {
+    "id": "12030513-2733-417e-9893-93e9b4a87c87",
+    "name": "Retrieve Resource \"NsmQosInfo Search\"",
+    "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+    "majorVersion": 1,
+    "minorVersion": 9,
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = datetime_add('day', -1, local_PreciseTimeStamp);\nlet endTime = datetime_add('hour', 1, local_PreciseTimeStamp);\nDCMNMQOSInfoEtwTable\n| where PreciseTimeStamp between (startTime .. endTime)\n| where additionalMessage contains local_TenantName or message contains local_TenantName\n| where operation !startswith \"Get\"\n| extend TenantName = local_TenantName\n| project PreciseTimeStamp, Tenant, operation, success, additionalMessage, message, duration, Region, TenantName\n| top 1 by PreciseTimeStamp desc",
+    "params": [
+      {
+        "name": "local_PreciseTimeStamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_TenantName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "operation",
+        "type": "string"
+      },
+      {
+        "name": "success",
+        "type": "bool"
+      },
+      {
+        "name": "additionalMessage",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  },
+  {
+    "id": "976f85fc-4671-434b-8739-b34f9a9b10fa",
+    "name": "RNM ResourceRelease",
+    "groupId": "cc42c5cd-534f-446d-9ee8-1ed9bb9009f9",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = datetime_add('hour', -24, timestamp);\nlet endTime = datetime_add('hour', 4, timestamp);\nResourceReleaseEvent\n| where PreciseTimeStamp between (startTime..endTime) \n| where Region endswith queryRegion\n| where Message contains queryTenantName\n| extend serviceId = extract(@'service: ([^\\s]+) ', 1, Message)\n| extend serviceId = iff(serviceId == '', extract(@'ServiceId: ([^\\s]+) ', 1, Message), serviceId)\n| extend fabricId = extract(@'Cleanup of resource in fabric ([^\\s]+) exceeded', 1, Message)\n| project PreciseTimeStamp, RnmPartitionId, Message, PendingComponent, serviceId, fabricId\n| top 1000 by PreciseTimeStamp desc\n",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RnmPartitionId",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "PendingComponent",
+        "type": "string"
+      },
+      {
+        "name": "serviceId",
+        "type": "string"
+      },
+      {
+        "name": "fabricId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  },
+  {
+    "id": "620f4134-cfd7-4968-bdd5-75e0da1d24e6",
+    "name": "Frontend",
+    "groupId": "b30f7e50-0018-4128-8a23-4db71fb664df",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "kustoQuery": "let startTime = datetime_add('hour', -120, timestamp);\nlet endTime = datetime_add('hour', 4, timestamp);\nlet CRPResourceGroup = materialize  (\ncluster('azcrp').database('crp_allprod').VMApiQosEvent\n| where PreciseTimeStamp between (startTime..endTime) \n| where fabricTenantName == queryTenantName\n| top 1 by PreciseTimeStamp desc);\nFrontendOperationEtwEvent\n| where PreciseTimeStamp between (startTime..endTime) \n| where HttpMethod != 'GET'\n| where ResourceGroup in ((CRPResourceGroup | project resourceGroupName)) and SubscriptionId in ((CRPResourceGroup | project subscriptionId))\n| top 200 by PreciseTimeStamp desc\n| project PreciseTimeStamp, Tenant, Role, RoleInstance, ClientOperationId, Message",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "default": "2020-12-14",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "default": "575ae7aa-dba3-4221-ade1-590f44535f18",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "ClientOperationId",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  },
+  {
+    "id": "a5b08635-857d-4e3f-8446-1bfcd8071191",
+    "name": "RNMRequest",
+    "groupId": "3d25cc76-b206-4ced-98a1-e78f025cb10a",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Table",
+    "kustoQuery": "let startTime = datetime_add('hour', -72, timestamp);\nlet endTime = datetime_add('hour', 4, timestamp);\nlet LoadBalancerInstanceId = materialize( ServiceExecutionEvent\n| where PreciseTimeStamp between (startTime .. endTime)\n| where Region endswith queryRegion\n| where Message has queryTenantName\n| where Message contains \"CreateOrUpdateLoadBalancer\"\n| extend LoadBalancerInstanceId =  extract('LoadBalancerInstanceId:([0-9a-z-]+)', 1, Message)\n| project LoadBalancerInstanceId);\nlet continuationIds = materialize (ServiceExecutionEvent\n| where PreciseTimeStamp between (startTime .. endTime)\n| where Region endswith queryRegion\n| where Message has queryTenantName\n    or Message has_any (LoadBalancerInstanceId)\n| where ContinuationId != 'null' \n| summarize arg_max(PreciseTimeStamp, *) by ContinuationId\n| top 1000 by PreciseTimeStamp desc\n| distinct ContinuationId\n);\nServiceExecutionEvent\n| where PreciseTimeStamp between (startTime .. endTime)\n| where Region endswith queryRegion\n| where ContinuationId in (continuationIds)\n    or Message has queryTenantName\n    or Message has_any (LoadBalancerInstanceId) // LB instance ID\n| project PreciseTimeStamp, OpName, Message, ContinuationId, EventType, RnmPartitionId, UserIdentity\n| top 1000 by PreciseTimeStamp desc",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "default": "2020-12-15",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "default": "575ae7aa-dba3-4221-ade1-590f44535f18",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "default": "uswestcentral",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "OpName",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "ContinuationId",
+        "type": "string"
+      },
+      {
+        "name": "EventType",
+        "type": "string"
+      },
+      {
+        "name": "RnmPartitionId",
+        "type": "string"
+      },
+      {
+        "name": "UserIdentity",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  },
+  {
+    "id": "8be5f42d-11d9-4771-ae34-fa100e418fef",
+    "name": "GetResourceGroup",
+    "groupId": "cd334ea4-8fb1-4026-bf40-4fa4e49cf5f1",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Single",
+    "kustoQuery": "let startTime = datetime_add('day', -10, timestamp);\nlet endTime = datetime_add('hour', 1, timestamp);\nVMApiQosEvent\n| where PreciseTimeStamp between (startTime..endTime) \n| where fabricTenantName == queryTenantName\n| top 1 by PreciseTimeStamp desc\n| extend StartTime = datetime_add('hour', -4, PreciseTimeStamp);",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "default": "2020-12-14",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "default": "575ae7aa-dba3-4221-ade1-590f44535f18",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "MonitoringApplication",
+        "type": "string"
+      },
+      {
+        "name": "Node",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "durationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "operationId",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "resultType",
+        "type": "long"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "wFAppName",
+        "type": "string"
+      },
+      {
+        "name": "partitionId",
+        "type": "string"
+      },
+      {
+        "name": "exceptionType",
+        "type": "string"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      },
+      {
+        "name": "vMId",
+        "type": "string"
+      },
+      {
+        "name": "isManaged",
+        "type": "string"
+      },
+      {
+        "name": "vMSize",
+        "type": "string"
+      },
+      {
+        "name": "oSType",
+        "type": "string"
+      },
+      {
+        "name": "oSDiskStorageAccountType",
+        "type": "string"
+      },
+      {
+        "name": "userVMImage",
+        "type": "string"
+      },
+      {
+        "name": "availabilitySet",
+        "type": "string"
+      },
+      {
+        "name": "fabricCluster",
+        "type": "string"
+      },
+      {
+        "name": "fabricTenantName",
+        "type": "string"
+      },
+      {
+        "name": "allocationAction",
+        "type": "string"
+      },
+      {
+        "name": "oSProvisionDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "physicalAvailablityZone",
+        "type": "string"
+      },
+      {
+        "name": "preprovisionedVMReuse",
+        "type": "string"
+      },
+      {
+        "name": "proximityPlacementGroup",
+        "type": "string"
+      },
+      {
+        "name": "networkSpineIds",
+        "type": "string"
+      },
+      {
+        "name": "galleryImage",
+        "type": "string"
+      },
+      {
+        "name": "extraVMProperties",
+        "type": "string"
+      },
+      {
+        "name": "platformImage",
+        "type": "string"
+      },
+      {
+        "name": "availabilitySetKind",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "Network Manager"
+  },
+  {
+    "id": "c383ea9a-1a1f-433e-83b5-6a9548692bea",
+    "name": "NsmQosOps",
+    "groupId": "7008ca46-a8d3-45ed-bbbd-b9362dbde811",
+    "majorVersion": 2,
+    "minorVersion": 4,
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "CoBeTimeline",
+    "kustoQuery": "let startTime = datetime_add('hour', -120, timestamp);\nlet endTime = datetime_add('hour', 1, timestamp);\nDCMNMQOSInfoEtwTable\n| where PreciseTimeStamp between (startTime .. endTime)\n| where additionalMessage contains queryTenantName or message contains queryTenantName\n| where operation !in ('QueryAllAllocatedRootSnatResources', 'GetVipAllocationStatus', 'PopulateLBSettingsApplianceIdsUntransacted')\n| extend Health = iff(success, 'Healthy', 'Unhealthy')\n| extend StartTime = datetime_add('Millisecond', 0 - toint(todouble(duration)), PreciseTimeStamp)\n| summarize arg_max(PreciseTimeStamp, *) by ActivityId\n| extend StartTime = iff(isnull(StartTime), PreciseTimeStamp, StartTime)\n| project EventId = ActivityId, StartTime, EndTime = PreciseTimeStamp, EventName = operation, Health,\nProperties = tostring(pack('message', message, 'additionalMessage',additionalMessage))",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  }
+]

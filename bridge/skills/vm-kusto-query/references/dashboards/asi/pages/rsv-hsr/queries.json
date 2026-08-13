@@ -1,0 +1,1605 @@
+[
+  {
+    "id": "8f04bee6-2b85-44cc-9c65-b5b929e99ab4",
+    "name": "Retrieve Resource \"HSR\"",
+    "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WBEBackupStatsAll\r\n| where LogicalContainerId == local_LogicalContainerId\r\n| where SubscriptionId == local_SubscriptionId\r\n|top 1 by TimeStamp desc\r\n| project SubscriptionId,LogicalContainerId",
+    "params": [
+      {
+        "name": "local_HSRNameGivenInPreRegScript",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_LogicalContainerId",
+        "description": "",
+        "type": "long",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_SubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "LogicalContainerId",
+        "type": "long"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "9d4bc558-4174-4ead-9ff6-cd63727d1130",
+    "name": "Backup Success Without user error",
+    "groupId": "b26ce0eb-1306-4d7a-ac9c-3694b268ceff",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "DataSummary",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "\r\nlet st = queryFrom;\r\nlet end = queryTo;\r\nlet prevstart = queryFrom-(end-st);\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (st .. end)\r\n| where DatasourceType contains \"SAPHana\"\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| extend ErrorCode = iff(ErrorCode contains \"usererror\", ErrorCode = \"UserError\", ErrorCode = ErrorCode)\r\n| where ErrorCode !contains \"usererror\"\r\n| summarize CountNow = dcount(TaskId)  by ErrorCode\r\n| as CT\r\n| extend PercentageNow = round(100.0 * CountNow / toscalar(CT | summarize sum(CountNow)), 3)\r\n| project ErrorCode,CountNow,PercentageNow\r\n| join kind=leftouter \r\n(\r\n WBEBackupStatsAll\r\n | where TIMESTAMP between (prevstart .. st ) \r\n | where DatasourceType contains \"SAPHana\"\r\n | where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n | extend ErrorCode = iff(ErrorCode contains \"usererror\", ErrorCode = \"UserError\", ErrorCode = ErrorCode)\r\n | where ErrorCode !contains \"usererror\"\r\n | summarize CountPrev = dcount(TaskId)  by ErrorCode\r\n | as PT\r\n | extend PercentagePrev = round(100.0 * CountPrev / toscalar(PT | summarize sum(CountPrev)), 3)\r\n ) on ErrorCode\r\n | extend PercentageChange = todouble(PercentageNow-PercentagePrev)\r\n | project ErrorCode,CountPrev,CountNow,PercentagePrev,PercentageNow,PercentageChange\r\n | where ErrorCode == \"Success\"\r\n| sort by CountNow desc\r\n| extend Value = tostring(PercentageNow) \r\n| extend Health = case(PercentageNow > 99 , \"Healthy\" , case(PercentageNow < 90, \"Unhealthy\" ,\"Degraded\" ))\r\n| extend ValueContext = tostring(PercentageChange)\r\n| extend Trend = case(PercentageChange > 0 , \"Up\", case( PercentageChange == 0 , \"Neutral\", \"Down\"))\r\n| extend Description = \"Backup stats without user error\"\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-26T03:24:48.592Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-27T03:24:48.592Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "CountPrev",
+        "type": "long"
+      },
+      {
+        "name": "CountNow",
+        "type": "long"
+      },
+      {
+        "name": "PercentagePrev",
+        "type": "real"
+      },
+      {
+        "name": "PercentageNow",
+        "type": "real"
+      },
+      {
+        "name": "PercentageChange",
+        "type": "real"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "ValueContext",
+        "type": "string"
+      },
+      {
+        "name": "Trend",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "83048494-8f1b-41f2-98ac-cd7983fe2430",
+    "name": "Restore stats",
+    "groupId": "f40ab010-1eda-4f4e-9023-c04e570ee998",
+    "majorVersion": 1,
+    "minorVersion": 5,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "DataSummary",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "\r\nlet st = queryFrom;\r\nlet end = queryTo;\r\nlet prevstart = queryFrom-(end-st);\r\nlet dsIds = \r\nWBEBackupStatsAll\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where TIMESTAMP >  ago(90d)\r\n| distinct DatasourceId;\r\nWBERecoveryStatsAll\r\n| where TIMESTAMP between (st .. end)\r\n| where DatasourceType contains \"SAPHana\"\r\n| where SubscriptionId == local_subscriptionId\r\n| where DatasourceId  in (dsIds)\r\n| extend ErrorCode = iff(ErrorCode contains \"usererror\", ErrorCode = \"UserError\", ErrorCode = ErrorCode)\r\n| where ErrorCode !contains \"usererror\"\r\n| summarize CountNow = dcount(TaskId)  by ErrorCode\r\n| as CT\r\n| extend PercentageNow = round(100.0 * CountNow / toscalar(CT | summarize sum(CountNow)), 3)\r\n| project ErrorCode,CountNow,PercentageNow\r\n| join kind=leftouter \r\n(\r\n WBERecoveryStatsAll\r\n | where TIMESTAMP between (prevstart .. st ) \r\n | where DatasourceType contains \"SAPHana\"\r\n | where SubscriptionId == local_subscriptionId\r\n| where DatasourceId  in (dsIds)\r\n | extend ErrorCode = iff(ErrorCode contains \"usererror\", ErrorCode = \"UserError\", ErrorCode = ErrorCode)\r\n | where ErrorCode !contains \"usererror\"\r\n | summarize CountPrev = dcount(TaskId)  by ErrorCode\r\n | as PT\r\n | extend PercentagePrev = round(100.0 * CountPrev / toscalar(PT | summarize sum(CountPrev)), 3)\r\n ) on ErrorCode\r\n | extend PercentageChange = todouble(PercentageNow-PercentagePrev)\r\n | project ErrorCode,CountPrev,CountNow,PercentagePrev,PercentageNow,PercentageChange\r\n | where ErrorCode == \"Success\"\r\n| sort by CountNow desc\r\n| extend Value = tostring(PercentageNow) \r\n| extend Health = case(PercentageNow > 99 , \"Healthy\" , case(PercentageNow < 90, \"Unhealthy\" ,\"Degraded\" ))\r\n| extend ValueContext = tostring(PercentageChange)\r\n| extend Trend = case(PercentageChange > 0 , \"Up\", case( PercentageChange == 0 , \"Neutral\", \"Down\"))\r\n| extend Description = \"Restore stats without user error\"\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-26T04:03:27.854Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-27T04:03:27.854Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "CountPrev",
+        "type": "long"
+      },
+      {
+        "name": "CountNow",
+        "type": "long"
+      },
+      {
+        "name": "PercentagePrev",
+        "type": "real"
+      },
+      {
+        "name": "PercentageNow",
+        "type": "real"
+      },
+      {
+        "name": "PercentageChange",
+        "type": "real"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "ValueContext",
+        "type": "string"
+      },
+      {
+        "name": "Trend",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "9db5b2ae-55a1-4736-afec-5e68833b7086",
+    "name": "Protection Stats",
+    "groupId": "a3ffef06-3496-4a43-85f4-de12478dd3f8",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "DataSummary",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let st = queryFrom;\r\nlet end = queryTo;\r\nlet prevstart = queryFrom-(end-st);\r\nlet cNames = \r\nWBEBackupStatsAll\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where TIMESTAMP between (st .. end)\r\n| distinct ContainerName;\r\nWBEProtectionStatsAll\r\n| where TIMESTAMP between (st .. end)\r\n| where DatasourceType contains \"SAPHana\"\r\n| where SubscriptionId == local_subscriptionId\r\n| where ContainerName in (cNames)\r\n| extend ErrorCode = iff(ErrorCode contains \"usererror\", ErrorCode = \"UserError\", ErrorCode = ErrorCode)\r\n| where ErrorCode !contains \"usererror\"\r\n| summarize CountNow = dcount(TaskId)  by ErrorCode\r\n| as CT\r\n| extend PercentageNow = round(100.0 * CountNow / toscalar(CT | summarize sum(CountNow)), 3)\r\n| project ErrorCode,CountNow,PercentageNow\r\n| join kind=leftouter \r\n(\r\n WBEProtectionStatsAll\r\n | where TIMESTAMP between (prevstart .. st ) \r\n | where DatasourceType contains \"SAPHana\"\r\n | where SubscriptionId == local_subscriptionId\r\n| where ContainerName in (cNames)\r\n | extend ErrorCode = iff(ErrorCode contains \"usererror\", ErrorCode = \"UserError\", ErrorCode = ErrorCode)\r\n | where ErrorCode !contains \"usererror\"\r\n | summarize CountPrev = dcount(TaskId)  by ErrorCode\r\n | as PT\r\n | extend PercentagePrev = round(100.0 * CountPrev / toscalar(PT | summarize sum(CountPrev)), 3)\r\n ) on ErrorCode\r\n | extend PercentageChange = todouble(PercentageNow-PercentagePrev)\r\n | project ErrorCode,CountPrev,CountNow,PercentagePrev,PercentageNow,PercentageChange\r\n | where ErrorCode == \"Success\"\r\n| sort by CountNow desc\r\n| extend Value = tostring(PercentageNow) \r\n| extend Health = case(PercentageNow > 99 , \"Healthy\" , case(PercentageNow < 90, \"Unhealthy\" ,\"Degraded\" ))\r\n| extend ValueContext = tostring(PercentageChange)\r\n| extend Trend = case(PercentageChange > 0 , \"Up\", case( PercentageChange == 0 , \"Neutral\", \"Down\"))\r\n| extend Description = \"Protection stats without user error\"\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-20T05:09:19.718Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-27T05:09:19.718Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "CountPrev",
+        "type": "long"
+      },
+      {
+        "name": "CountNow",
+        "type": "long"
+      },
+      {
+        "name": "PercentagePrev",
+        "type": "real"
+      },
+      {
+        "name": "PercentageNow",
+        "type": "real"
+      },
+      {
+        "name": "PercentageChange",
+        "type": "real"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "ValueContext",
+        "type": "string"
+      },
+      {
+        "name": "Trend",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "49afa547-df02-41c3-903d-e96b088f2040",
+    "name": "Registration Stats",
+    "groupId": "1d0a3b40-8b9b-45fe-b394-947f0361927b",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "DataSummary",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let st = queryFrom;\r\nlet end = queryTo;\r\nlet prevstart = queryFrom-(end-st);\r\nlet cNames = \r\nWBEBackupStatsAll\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where TIMESTAMP between (st .. end)\r\n| distinct ContainerName;\r\nFabricSvcRegistrationStatsAll\r\n| where TIMESTAMP between (st .. end)\r\n| where SubscriptionId == local_subscriptionId\r\n| where ContainerName in (cNames)\r\n| extend ErrorCode = iff(ErrorCode contains \"usererror\", ErrorCode = \"UserError\", ErrorCode = ErrorCode)\r\n| where ErrorCode !contains \"usererror\"\r\n| summarize CountNow = dcount(TaskId)  by ErrorCode\r\n| as CT\r\n| extend PercentageNow = round(100.0 * CountNow / toscalar(CT | summarize sum(CountNow)), 3)\r\n| project ErrorCode,CountNow,PercentageNow\r\n| join kind=leftouter \r\n(\r\nFabricSvcRegistrationStatsAll\r\n | where TIMESTAMP between (prevstart .. st ) \r\n | where SubscriptionId == local_subscriptionId\r\n| where ContainerName in (cNames)\r\n | extend ErrorCode = iff(ErrorCode contains \"usererror\", ErrorCode = \"UserError\", ErrorCode = ErrorCode)\r\n | where ErrorCode !contains \"usererror\"\r\n | summarize CountPrev = dcount(TaskId)  by ErrorCode\r\n | as PT\r\n | extend PercentagePrev = round(100.0 * CountPrev / toscalar(PT | summarize sum(CountPrev)), 3)\r\n ) on ErrorCode\r\n | extend PercentageChange = todouble(PercentageNow-PercentagePrev)\r\n | project ErrorCode,CountPrev,CountNow,PercentagePrev,PercentageNow,PercentageChange\r\n | where ErrorCode == \"Success\"\r\n| sort by CountNow desc\r\n| extend Value = tostring(PercentageNow) \r\n| extend Health = case(PercentageNow > 99 , \"Healthy\" , case(PercentageNow < 90, \"Unhealthy\" ,\"Degraded\" ))\r\n| extend ValueContext = tostring(PercentageChange)\r\n| extend Trend = case(PercentageChange > 0 or isempty( PercentageChange), \"Up\", case( PercentageChange == 0  , \"Neutral\", \"Down\"))\r\n| extend Description = \"Registration stats without user error\"\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-20T05:09:19.718Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-27T05:09:19.718Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "CountPrev",
+        "type": "long"
+      },
+      {
+        "name": "CountNow",
+        "type": "long"
+      },
+      {
+        "name": "PercentagePrev",
+        "type": "real"
+      },
+      {
+        "name": "PercentageNow",
+        "type": "real"
+      },
+      {
+        "name": "PercentageChange",
+        "type": "real"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "ValueContext",
+        "type": "string"
+      },
+      {
+        "name": "Trend",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "aea5feef-757b-4947-a6ee-e39568090643",
+    "name": "hdbnsutil tool mode value",
+    "groupId": "bbdd53ff-f7b5-4573-8cfa-be04cc4621a9",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let taskids=\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFrom..queryTo)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| distinct TaskId;\r\nWBETraceLogAll\r\n| where TaskId in (taskids)\r\n| where Message == \"[HANAPlugin PrBk]: hdbnsutilparsed value is \"\r\n| parse Properties with \"{hsrTopology = \" currentTopology \"}\"\r\n| extend d = parse_json(currentTopology)\r\n| extend mode = d.mode\r\n| extend topology = d.currentTopology\r\n| extend isSystemOnline = d.isSystemOnline\r\n| extend isSystemOnline = case(isSystemOnline  == 0, \"true\",case(isSystemOnline == 1, \"false\", \"unknown\"))\r\n| extend Health = case(mode contains \"primary\" , \"Healthy\", case( mode contains \"sync\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = \"mode\"\r\n| parse ContainerName with \"Compute;\" * \";\" Content\r\n| extend GroupBy = Content //strcat(Content, \" : \",BackupType)\r\n| extend Content = tostring(mode)\r\n| extend StartTime = TimeStamp\r\n| project TimeStamp,mode,topology,isSystemOnline,TaskId,Health,Content,GroupBy,StartTime\r\n| summarize arg_max(TimeStamp,TimeStamp,mode,topology,isSystemOnline,Health,Content,GroupBy,StartTime) by TaskId\r\n| project-away TimeStamp1,TimeStamp\r\n| union\r\n(\r\nWBETraceLogAll\r\n| where TaskId in (alltaskids)\r\n| where Message == \"[HANAPlugin] : Successfully set the HSRTopology.\"\r\n| parse Properties with \"{HSRTopolgy = \" currentTopology \"}{key = HSRTopology}\"\r\n| extend d = parse_json(currentTopology)\r\n| extend timeOfCreation = d.timeOfCreation\r\n| extend activeNodeOSName = d.activeNodeOSName\r\n| extend topology = d\r\n| extend topologyUpdatedByNode = d.topologyUpdatedByNode\r\n| parse ContainerName with \"Compute;\" * \";\" Content\r\n| extend GroupBy = \"Replica View\"\r\n| extend Content = tostring(activeNodeOSName)\r\n| extend StartTime = TimeStamp\r\n| project TimeStamp,timeOfCreation,activeNodeOSName,topology,TaskId,topologyUpdatedByNode,GroupBy,StartTime,Content\r\n| summarize arg_min(TimeStamp,StartTime,GroupBy,Content,topologyUpdatedByNode,topology) by TaskId\r\n)",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-20T05:50:39.964Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-27T05:50:39.964Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "alltaskids",
+        "description": "",
+        "type": "array",
+        "default": "[\"baff9215-b6b3-4f5a-b550-32dd22d8ee2e\",\"ff6ec815-4c0c-42ab-ba48-22e64f77180b\"]",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "mode",
+        "type": "dynamic"
+      },
+      {
+        "name": "topology",
+        "type": "dynamic"
+      },
+      {
+        "name": "isSystemOnline",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "TimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "topologyUpdatedByNode",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "8cdac9a4-9a4a-492d-894d-01f1150b6d66",
+    "name": "get all backup task id queries",
+    "groupId": "cdaeb9a5-4905-4303-805e-b1457e3ab43d",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFrom..queryTo)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| distinct TaskId",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-20T07:34:50.671Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-27T07:34:50.671Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TaskId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "54be891e-bb84-4f2c-a6fe-6fbf395026d5",
+    "name": "active node tracking for Log Backups",
+    "groupId": "c52fa17f-0e2f-40b9-9b9c-6daf9be053cd",
+    "majorVersion": 3,
+    "minorVersion": 11,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let taskids=\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFrom..queryTo)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where BackupType != \"Log\"\r\n| distinct TaskId;\r\nWBETraceLogAll\r\n| where TaskId in (taskids)\r\n| summarize EndTime=max(TimeStamp) by TaskId\r\n| join kind=inner \r\n(\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFrom..queryTo)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where BackupType != \"Log\"\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = todatetime(d.PitEndTime)\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n//| extend StartTime = case(BackupType contains \"Log\" , min_of(PitStartTime,CoordCreatedTime),CoordCreatedTime )\r\n| extend EventId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| extend StartTime = min_of(PitEndTime,CoordCreatedTime)\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = strcat(\"Extension POV: non log Backup Health: \",DatasourceName)\r\n| extend Tooltip = EventId\r\n| extend FilterCategory = BackupType\r\n| parse ContainerName with \"Compute;\" * \";\" Content\r\n| extend GroupBy = Content//strcat(Content,\" : \",BackupType)\r\n| extend Content = strcat(BackupType, \" : \",ErrorCode)\r\n| project EventId,EventName,StartTime,Health,Tooltip,Content,TaskId,GroupBy,FilterCategory\r\n) on $left.TaskId == $right.TaskId\r\n| project-away TaskId1\r\n| union\r\n(\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFrom..queryTo)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where BackupType == \"Log\"\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = todatetime(d.PitEndTime)\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n| extend StartTime = case(BackupType contains \"Log\" , min_of(CoordCreatedTime,CoordCreatedTime),CoordCreatedTime )\r\n| extend EventId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| extend EndTime = PitEndTime//TimeStamp\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = \"Extension POV: Log Backup Health\"\r\n| extend Tooltip = EventId\r\n| extend FilterCategory = BackupType\r\n| parse ContainerName with \"Compute;\" * \";\" Content\r\n| extend GroupBy = Content //strcat(Content, \" : \",BackupType)\r\n| extend Content = strcat(BackupType,\" : \",ErrorCode)\r\n| project StartTime,EndTime,Health,Content,GroupBy,TaskId,FilterCategory\r\n)",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-25T21:41:02.396Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-26T21:41:02.396Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "96b00d42-dea4-4aca-9f0a-b20fb92ff346",
+    "name": "Backup Timelines from extension POV",
+    "groupId": "f96c4288-1a3b-4b8d-9c5e-4cf4b33cdcd4",
+    "majorVersion": 4,
+    "minorVersion": 4,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "CoBeTimeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let taskids=\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where BackupType != \"Log\"\r\n| distinct TaskId;\r\nWBETraceLogAll\r\n| where TaskId in (taskids)\r\n| summarize EndTime=max(TimeStamp) by TaskId\r\n| join kind=inner \r\n(\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where BackupType != \"Log\"\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = todatetime(d.PitEndTime)\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n//| extend StartTime = case(BackupType contains \"Log\" , min_of(PitStartTime,CoordCreatedTime),CoordCreatedTime )\r\n| extend EventId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| extend StartTime = min_of(PitEndTime,CoordCreatedTime)\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = strcat(\"Extension POV: non log Backup Health: \",DatasourceName)\r\n| extend Tooltip = EventId\r\n| extend FilterCategory = \"Extension\"\r\n| project EventId,EventName,StartTime,Health,Tooltip,FilterCategory,TaskId\r\n) on $left.TaskId == $right.TaskId\r\n| project-away TaskId,TaskId1\r\n| union\r\n(\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where BackupType == \"Log\"\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = d.PitEndTime\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n| extend StartTime = case(BackupType contains \"Log\" , min_of(CoordCreatedTime,CoordCreatedTime),CoordCreatedTime )\r\n| extend EventId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| extend EndTime = TimeStamp\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = strcat(\"Coordinator POV: Log Backup Health: \",DatasourceName)\r\n| extend Tooltip = EventId\r\n| extend FilterCategory = \"Extension\"\r\n| project EventId,EventName,StartTime,EndTime,Health,Tooltip,FilterCategory\r\n)\r\n| union\r\n(\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = todatetime(d.PitEndTime)\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n| extend StartTime = case(BackupType contains \"Log\" , CoordCreatedTime, PitEndTime)\r\n| extend EventId = strcat_delim(\"_\",BackupType,hanaBackupId,TaskId)\r\n| extend EndTime = PitEndTime\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = strcat(\"SAPHana POV: Backup Health\",DatasourceName)\r\n| extend Tooltip = EventId\r\n| extend FilterCategory = \"SAPHana\"\r\n| extend ParentId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| where isnotempty( StartTime)\r\n| project EventId,EventName,StartTime,EndTime,Health,Tooltip,FilterCategory,TaskId,ParentId\r\n)\r\n| union\r\n(\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = todatetime(d.PitEndTime)\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n| extend StartTime = todatetime(d.SubmitTime)\r\n| extend EventId = strcat_delim(\"_\",BackupType,hanaBackupId,TaskId,\"CoordinatorWaitInQueue\")\r\n| extend EndTime = todatetime(d.FirstStartTime)\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = strcat(\"Coordinator Queue Waiting POV: Backup Health: \",DatasourceName)\r\n| extend Tooltip = EventId\r\n| extend FilterCategory = \"Coordinator Queue Wait\"\r\n| extend ParentId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| where isnotempty( StartTime)\r\n| project EventId,EventName,StartTime,EndTime,Health,Tooltip,FilterCategory,TaskId,ParentId\r\n)\r\n| union\r\n(\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = todatetime(d.PitEndTime)\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n| extend StartTime = todatetime(d.CreatedTime)\r\n| extend EventId = strcat_delim(\"_\",BackupType,hanaBackupId,TaskId,\"CoordinatorWaitBetweenCreationAndSubmission\")\r\n| extend EndTime = todatetime(d.SubmitTime)\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = strcat(\"Task creation and submission diff POV: Backup Health: \",DatasourceName)\r\n| extend Tooltip = EventId\r\n| extend FilterCategory = \"Task creation and submission time diff\"\r\n| extend ParentId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| where isnotempty( StartTime)\r\n| project EventId,EventName,StartTime,EndTime,Health,Tooltip,FilterCategory,TaskId,ParentId\r\n)\r\n| union\r\n(\r\nWBETraceLogAll\r\n| where TaskId in (local_taskids)\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where Message == \"[HANAPlugin Bkp]: Stamping PIT metadata.\"\r\n| parse Properties with \"{Medatada = \" PitMetadata \"}{storageContainerInfo =\" *\r\n| extend PitMetadata = parse_json(PitMetadata)\r\n| extend FileList = PitMetadata.BackupSet.Catalog.FILE_LIST\r\n| extend HanaService = PitMetadata.BackupSet.Catalog.DB_OBJECT_ID\r\n| extend StartTime = todatetime(PitMetadata.BackupSet.Catalog.UTC_START_TIME)\r\n| summarize arg_max(TimeStamp,FileList,HanaService,StartTime) by TaskId\r\n| join kind=inner \r\n(\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where BackupType == \"Log\"\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = todatetime(d.PitEndTime)\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n//| extend StartTime = case(BackupType contains \"Log\" , PitStartTime, PitEndTime)\r\n| extend EventId = strcat_delim(\"_\",BackupType,hanaBackupId,TaskId,\"Service\")\r\n| extend EndTime = PitEndTime\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = strcat(\"Service POV: log Backup Health\",DatasourceName)\r\n| extend Tooltip = EventId\r\n| extend FilterCategory = \"Service\"\r\n| extend ParentId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| project EventId,EventName,EndTime,Health,Tooltip,FilterCategory,TaskId,ParentId\r\n) on $left.TaskId == $right.TaskId\r\n| extend EventName = strcat(HanaService,EventName)\r\n| extend Tooltip = tostring(FileList)\r\n| project-away TaskId,TaskId1,FileList,HanaService\r\n)",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-25T09:51:44.704Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-26T09:51:44.704Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryFromC",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-11-25T09:51:44.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryToC",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-11-26T09:51:44.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_taskids",
+        "description": "",
+        "type": "array",
+        "default": "[\"ff2fd2a5-ee1b-475b-b997-cf27144181af\",\"78274778-d4e0-4d5c-aece-c26510b827d0\"]",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "ParentId",
+        "type": "string"
+      },
+      {
+        "name": "TimeStamp",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "eda9e80e-17da-4fc3-a4aa-5b1fc6e4f432",
+    "name": "get log backup Task id queries",
+    "groupId": "69e7a05d-2b03-45e7-ac35-461dfd949a5a",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WBEBackupStatsAll\r\n| where TIMESTAMP between (queryFrom..queryTo)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where BackupType == \"Log\"\r\n| distinct TaskId",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-25T19:07:13.811Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-26T19:07:13.811Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TaskId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "0cf37aff-e86a-45e5-b5b2-05ed77f90ace",
+    "name": "Backup Chaining query",
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 4,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where ErrorCode == \"Success\"\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| where ChildOf contains \",\"\r\n| mv-expand ChildOf =split(ChildOf, \",\") to typeof(string) \r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = d.PitEndTime\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n| extend StartTime = case(BackupType contains \"Log\" , min_of(PitStartTime,CoordCreatedTime),CoordCreatedTime )\r\n| extend EventId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| extend EndTime = TimeStamp\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = \"Extension POV up Health\"\r\n| extend Type = \"Edge\"\r\n| extend Name = \"\"\r\n| extend Id = strcat(ChildOf,\" -> \",PitId)\r\n| extend Category = \"two childof\"\r\n| extend StartId = tostring(ChildOf)\r\n| extend EndId = tostring(PitId)\r\n| project Type,Name,Id,Health,Category,StartId,EndId\r\n| union \r\n(\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where ErrorCode == \"Success\"\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| where ChildOf !contains \",\"\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = d.PitEndTime\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n| extend StartTime = case(BackupType contains \"Log\" , min_of(PitStartTime,CoordCreatedTime),CoordCreatedTime )\r\n| extend EventId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| extend EndTime = TimeStamp\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = \"Extension POV up Health\"\r\n| extend Type = \"Edge\"\r\n| extend Name = \"\"\r\n| extend Id = strcat(ChildOf,\" -> \",PitId)\r\n| extend Category = \"one childof\"\r\n| extend StartId = tostring(ChildOf)\r\n| extend EndId = tostring(PitId)\r\n| project Type,Name,Id,Health,Category,StartId,EndId\r\n)\r\n| union \r\n(\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where ErrorCode == \"Success\"\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| where isnotempty( ParentOf)\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = d.PitEndTime\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n| extend StartTime = case(BackupType contains \"Log\" , min_of(PitStartTime,CoordCreatedTime),CoordCreatedTime )\r\n| extend EventId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| extend EndTime = TimeStamp\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = \"Extension POV up Health\"\r\n| extend Type = \"Edge\"\r\n| extend Name = \"\"\r\n| extend Id = strcat(PitId,\" -> \",ParentOf)\r\n| extend Category = \"one parentof\"\r\n| extend StartId = tostring(PitId)\r\n| extend EndId = tostring(ParentOf)\r\n| project Type,Name,Id,Health,Category,StartId,EndId\r\n)\r\n| union \r\n(\r\n//node\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = todatetime(d.PitStartTime)\r\n| extend PitEndTime = d.PitEndTime\r\n| extend hanaBackupId = d.BackupId\r\n| extend CoordCreatedTime= todatetime(d.CreatedTime)\r\n| extend StartTime = case(BackupType contains \"Log\" , min_of(PitStartTime,CoordCreatedTime),CoordCreatedTime )\r\n| extend EventId = strcat_delim(\"_\",ContainerName,DatasourceName,IsAdhoc,BackupType,hanaBackupId,TaskId)\r\n| extend EndTime = TimeStamp\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend EventName = \"Extension POV up Health\"\r\n| extend Type = \"Node\"\r\n| extend Name = strcat_delim(\"_\",PitId,hanaBackupId,MachineName,DatasourceName)\r\n| extend Id = tostring(PitId)\r\n| extend Category = BackupType\r\n| extend Tooltip = tostring(PitEndTime)\r\n| project Type,Name,Id,Health,Category,Properties,TaskId,Tooltip \r\n)",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-10-28T19:19:30.090Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-27T19:19:30.090Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryFromC",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-10-28T19:19:30.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryToC",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-11-27T19:19:30.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "d8b32b42-39b2-46ef-a9eb-1d9ca37f9ec5",
+    "name": "Recovery bird eye view",
+    "groupId": "82391ce6-8c80-41cf-995f-56e3d4b104a1",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let dsIds = \r\nWBEBackupStatsAll\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where TIMESTAMP >  ago(90d)\r\n| distinct DatasourceId;\r\nWBERecoveryStatsAll\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where DatasourceType contains \"SAPHana\"\r\n| where SubscriptionId == local_subscriptionId\r\n| where DatasourceId  in (dsIds)\r\n| extend d = parse_json(Properties)\r\n| extend EndTime = datetime_add('millisecond',DurationInMS,StartTime)\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend FilterCategory = RecoveryType\r\n| extend GroupBy = strcat(DatasourceName, \" -> \",  MachineName)\r\n| extend Content = strcat(RecoveryType,\" : \",ErrorCode)\r\n| project StartTime,EndTime,Health,Content,GroupBy,TaskId,FilterCategory,RestoreToPitId,RestoreToTime",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-20T05:50:39.964Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-27T05:50:39.964Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "RestoreToPitId",
+        "type": "long"
+      },
+      {
+        "name": "RestoreToTime",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "c4ec62dd-4993-44b6-b0f6-7c4b7193be63",
+    "name": "Pit view for pit ids",
+    "groupId": "3b2866c6-8c2b-4713-916d-fcf2d90e7613",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let taskids=\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| distinct TaskId;\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = d.PitStartTime\r\n| extend PitEndTime = d.PitEndTime\r\n| extend hanaBackupId = d.BackupId\r\n| project TimeStamp, DatasourceId,DatasourceName, PitStartTime, PitEndTime, PitId,hanaBackupId, BackupType,ChildOf, ParentOf, IsAdhoc, ExpiryTime, ErrorCode, DatasourceType, TaskId, ContainerName, DeploymentName,ProcessVersion,Properties\r\n| join kind=leftouter \r\n(\r\nWBETraceLogAll\r\n| where TIMESTAMP between (datetime_add('day',-1,queryFromC)..datetime_add('day',1,queryToC))\r\n| where TaskId  in (taskids)\r\n| where ComponentId contains \"plugin\"\r\n| where Message == \"[HANAPlugin Bkp]: Stamping PIT metadata.\"\r\n| parse Properties with \"{Medatada = \" metadata \"}{storageContainerInfo =\" storageContainers \"}\"\r\n| extend metadata = parse_json(metadata)\r\n| extend Service = metadata.BackupSet.Catalog.DB_OBJECT_ID\r\n| extend hanaBackupId =  metadata.BackupSet.Catalog.BACKUP_ID\r\n| extend UTC_START_TIME = metadata.BackupSet.Catalog.UTC_START_TIME\r\n| extend UTC_END_TIME = metadata.BackupSet.Catalog.UTC_END_TIME\r\n| project metadata,storageContainers,TaskId,ContainerName,Service,UTC_START_TIME,UTC_END_TIME\r\n) on $left.TaskId == $right.TaskId and $left.ContainerName == $right.ContainerName\r\n| join kind=leftouter \r\n(\r\nWBETraceLogAll\r\n| where TIMESTAMP between (datetime_add('day',-1,queryFromC)..datetime_add('day',1,queryToC))\r\n| where TaskId  in (taskids)\r\n| where Message == \"BackupTask : Initializing BackupTask.\"\r\n| parse Properties with \"{TaskRequestBody = \" request \"}{Parameters = \" *\r\n| extend request = parse_json(request)\r\n| extend hanabackupid = request.BackupId\r\n| extend isCordTriggered = request.IsCoordinatorTriggeredBackup\r\n| summarize arg_min(TimeStamp,hanabackupid,ContainerName,isCordTriggered) by TaskId\r\n) on $left.TaskId == $right.TaskId and $left.ContainerName == $right.ContainerName\r\n//| extend hanaBackupId = case(isempty(hanaBackupId ), hanabackupid, hanaBackupId )\r\n| join kind= leftouter \r\n(\r\nWBETraceLogAll\r\n| where TIMESTAMP between (datetime_add('day',-1,queryFromC)..datetime_add('day',1,queryToC))\r\n| where TaskId  in (taskids)\r\n| where ComponentId contains \"plugin\"\r\n| where Message == \"[HanaPlugin Bkp]: Got catalog backup id for parent backup\"\r\n| parse Properties with \"{CatalogJobId = \" catalogBackupId \"}{ParentBackupId = \" parentBackupId \"}\"\r\n| project TimeStamp,catalogBackupId,parentBackupId,TaskId,ContainerName\r\n) on $left.TaskId == $right.TaskId and $left.ContainerName == $right.ContainerName \r\n| extend hanaBackupId = case(hanaBackupId contains \"adhoc\", parentBackupId,hanaBackupId)\r\n| extend hanaBackupId = case(hanaBackupId contains \"Full\", parentBackupId,hanaBackupId)\r\n| extend hanaBackupId = case(hanaBackupId contains \"Incremental\", parentBackupId,hanaBackupId)\r\n| extend hanaBackupIdTime = unixtime_milliseconds_todatetime(tolong(hanaBackupId))\r\n| where isnotempty( PitId) and isnotempty( PitEndTime)\r\n| extend StartTime = case(BackupType contains \"log\", todatetime(PitStartTime),todatetime(PitEndTime))\r\n| extend PiTRelationShip = strcat(\"[\",ChildOf,\"]->\",\"(\",PitId,\")->[\",ParentOf,\"]\")\r\n| extend Content = tostring(PitId)\r\n| extend EndTime = todatetime(PitEndTime)\r\n| parse ContainerName with \"Compute;\" * \";\" machine\r\n| extend Tooltip = strcat(hanaBackupId,\":[\",UTC_START_TIME,\"->\",UTC_END_TIME,\"] by \",machine,\" Task ID :\",TaskId)\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend FilterCategory = hanaBackupId\r\n| extend GroupBy = DatasourceName\r\n| project TimeStamp,StartTime,EndTime,Content,Health,Tooltip,FilterCategory,GroupBy,PiTRelationShip\r\n| sort by TimeStamp asc \r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-29T08:28:46.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-30T08:28:46.386Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "3012136",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryFromC",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-11-29T08:28:46.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryToC",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-11-29T08:28:46.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "PiTRelationShip",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "8868ba78-3f4b-4623-85af-1a9095f68562",
+    "name": "view by service machine and ds",
+    "groupId": "861bd20d-af8e-4340-9af7-ed5c7b1a6e58",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "\r\nlet taskids=\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| distinct TaskId;\r\nWBEBackupStatsAll\r\n| where TIMESTAMP between (queryFromC..queryToC)\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| extend d = parse_json(Properties)\r\n| extend ChildOf = d.ParentPits\r\n| extend ParentOf = d.ChildrenPits\r\n| extend IsAdhoc = d.IsAdhoc\r\n| extend ExpiryTime = d.PitExpiryTime\r\n| extend PitStartTime = d.PitStartTime\r\n| extend PitEndTime = d.PitEndTime\r\n| extend hanaBackupId = d.BackupId\r\n| project TimeStamp, DatasourceId,DatasourceName, PitStartTime, PitEndTime, PitId,hanaBackupId, BackupType,ChildOf, ParentOf, IsAdhoc, ExpiryTime, ErrorCode, DatasourceType, TaskId, ContainerName, DeploymentName,ProcessVersion,Properties\r\n| join kind=leftouter \r\n(\r\nWBETraceLogAll\r\n| where TIMESTAMP between (datetime_add('day',-1,queryFromC)..datetime_add('day',1,queryToC))\r\n| where TaskId  in (taskids)\r\n| where ComponentId contains \"plugin\"\r\n| where Message == \"[HANAPlugin Bkp]: Stamping PIT metadata.\"\r\n| parse Properties with \"{Medatada = \" metadata \"}{storageContainerInfo =\" storageContainers \"}\"\r\n| extend metadata = parse_json(metadata)\r\n| extend Service = metadata.BackupSet.Catalog.DB_OBJECT_ID\r\n| extend hanaBackupId =  metadata.BackupSet.Catalog.BACKUP_ID\r\n| extend UTC_START_TIME = metadata.BackupSet.Catalog.UTC_START_TIME\r\n| extend UTC_END_TIME = metadata.BackupSet.Catalog.UTC_END_TIME\r\n| extend FirstLsn = metadata.BackupSet.Catalog.FirstLsn\r\n| extend LastLsn = metadata.BackupSet.Catalog.LastLsn\r\n| project metadata,storageContainers,TaskId,ContainerName,Service,UTC_START_TIME,UTC_END_TIME,FirstLsn,LastLsn\r\n) on $left.TaskId == $right.TaskId and $left.ContainerName == $right.ContainerName\r\n| join kind=leftouter \r\n(\r\nWBETraceLogAll\r\n| where TIMESTAMP between (datetime_add('day',-1,queryFromC)..datetime_add('day',1,queryToC))\r\n| where TaskId  in (taskids)\r\n| where Message == \"BackupTask : Initializing BackupTask.\"\r\n| parse Properties with \"{TaskRequestBody = \" request \"}{Parameters = \" *\r\n| extend request = parse_json(request)\r\n| extend hanabackupid = request.BackupId\r\n| extend isCordTriggered = request.IsCoordinatorTriggeredBackup\r\n| summarize arg_min(TimeStamp,hanabackupid,ContainerName,isCordTriggered) by TaskId\r\n) on $left.TaskId == $right.TaskId and $left.ContainerName == $right.ContainerName\r\n//| extend hanaBackupId = case(isempty(hanaBackupId ), hanabackupid, hanaBackupId )\r\n| join kind= leftouter \r\n(\r\nWBETraceLogAll\r\n| where TIMESTAMP between (datetime_add('day',-1,queryFromC)..datetime_add('day',1,queryToC))\r\n| where TaskId  in (taskids)\r\n| where ComponentId contains \"plugin\"\r\n| where Message == \"[HanaPlugin Bkp]: Got catalog backup id for parent backup\"\r\n| parse Properties with \"{CatalogJobId = \" catalogBackupId \"}{ParentBackupId = \" parentBackupId \"}\"\r\n| project TimeStamp,catalogBackupId,parentBackupId,TaskId,ContainerName\r\n) on $left.TaskId == $right.TaskId and $left.ContainerName == $right.ContainerName \r\n| extend hanaBackupId = case(hanaBackupId contains \"adhoc\", parentBackupId,hanaBackupId)\r\n| extend hanaBackupId = case(hanaBackupId contains \"Full\", parentBackupId,hanaBackupId)\r\n| extend hanaBackupId = case(hanaBackupId contains \"Incremental\", parentBackupId,hanaBackupId)\r\n| extend hanaBackupIdTime = unixtime_milliseconds_todatetime(tolong(hanaBackupId))\r\n| extend StartTime = todatetime(UTC_START_TIME)\r\n| extend StartTime = case(isempty( StartTime), TimeStamp ,StartTime)\r\n| extend LsnMapping = strcat(\"[\",PitId,\"]->\",\"(\",hanaBackupId,\"):[\",FirstLsn,\"->\",LastLsn ,\"]\")\r\n| extend Content = tostring(PitId)\r\n| extend EndTime = todatetime(UTC_END_TIME)\r\n| parse ContainerName with \"Compute;\" * \";\" machine\r\n| extend Tooltip = strcat(PitId,\":[\",PitStartTime,\"->\",PitEndTime,\"] by \",machine,\" Task ID :\",TaskId)\r\n| extend Health = case(ErrorCode contains \"Success\" , \"Healthy\", case( ErrorCode contains \"user\" , \"Degraded\",\"Unhealthy\" ) )\r\n| extend FilterCategory = hanaBackupId\r\n| extend GroupBy = strcat(machine,\"[\",DatasourceName,\"] : \",Service)\r\n| project TimeStamp,StartTime,EndTime,Content,Health,Tooltip,FilterCategory,GroupBy,IsAdhoc,isCordTriggered,LsnMapping,BackupType\r\n| sort by TimeStamp asc ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-29T08:48:37.706Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-30T08:48:37.706Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryFromC",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-11-29T08:48:37.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryToC",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-11-29T08:48:37.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "IsAdhoc",
+        "type": "dynamic"
+      },
+      {
+        "name": "isCordTriggered",
+        "type": "dynamic"
+      },
+      {
+        "name": "LsnMapping",
+        "type": "string"
+      },
+      {
+        "name": "BackupType",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "de9419fa-cb2e-4409-9628-89cec3f6a835",
+    "name": "get machines where recovery is done from hsr ds",
+    "groupId": "7be30722-3911-4653-a72e-7c85f59c2298",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let dsIds = \r\nWBEBackupStatsAll\r\n| where SubscriptionId == local_subscriptionId\r\n| where LogicalContainerId == local_logicalContainerId\r\n| where TIMESTAMP >  ago(90d)\r\n| distinct DatasourceId;\r\nWBERecoveryStatsAll\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where DatasourceType contains \"SAPHana\"\r\n| where SubscriptionId == local_subscriptionId\r\n| where DatasourceId  in (dsIds)\r\n| distinct ContainerName;",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-27T11:39:54.945Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-28T11:39:54.945Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_logicalContainerId",
+        "description": "",
+        "type": "long",
+        "default": "334252965392396",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ContainerName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  },
+  {
+    "id": "544cfa79-5891-4996-94a6-31b5b7f3108b",
+    "name": "get component restore timings",
+    "groupId": "d27825e5-ece5-4bbc-a4b4-c9a938eccae3",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "CoBeTimeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let restoreComponentPitMapping = \r\nWBETraceLogAll\r\n| where TIMESTAMP between (queryFromC .. queryToC)\r\n| where ContainerName in (local_containerNames)\r\n| where ComponentId contains \"plugin\"\r\n| where Message == \"[HANAPlugin Res]: Restoring pit component\"\r\n| parse Properties with \"{Pit id = \" PitID \"}{Pit end time =\" * \"}{Ebid requested = \" EBID \"}{Component to restore = \" componentToRestore \"}{Restore path = \" restorePath \"}\"\r\n| project TimeStamp,TaskId,PitID,EBID,componentToRestore,restorePath,ContainerName\r\n| sort by TimeStamp asc ;\r\nlet restoreComponentStats =\r\nWBETraceLogAll\r\n| where TIMESTAMP between (queryFromC .. queryToC)\r\n| where ContainerName in (local_containerNames)\r\n| where ComponentId contains \"plugin\"| where Message == \"[HANAPlugin Res]: Completed restore of component.\"\r\n| parse Properties with \"{component restored = \" componentRestored \"}{component restored destination = \" componentRestoredDestination \"}{restore size (bytes) = \" restoreSize \"}{ext backup id = \" EBID \"}\" temp \"}{RestoreSize/TotalReadTime (MBps) = \" ReadMBps \"}{RestoreSize/TotalWriteTime (MBps) = \" WriteMBps \"}\"\r\n| parse Properties with \"{component restored = \" componentRestored1 \"}{component restored destination = \" componentRestoredDestination1 \"}{restore size (bytes) = \" restoreSize1 \"}{ext backup id = \" EBID1 \"}{Total read time in MS = \" ReadTimeInMs \"}{Total write time in MS = \" WriteTimeInMS \"}\"\r\n| parse WriteTimeInMS with WriteTimeInMS1 \"}\" *\r\n| extend WriteTimeInMS = case( isempty( WriteTimeInMS1), WriteTimeInMS, WriteTimeInMS1)\r\n| extend componentRestored = case(isempty( componentRestored), componentRestored1,componentRestored)\r\n| extend  componentRestoredDestination = case(isempty( componentRestoredDestination), componentRestoredDestination1,componentRestoredDestination)\r\n| extend restoreSizeInMb = case(isempty( restoreSize), (tolong(restoreSize1)/(1024.0*1024)), (tolong(restoreSize)/(1024.0*1024)))\r\n| extend ReadMBps = tolong((restoreSizeInMb*1000.0)/(tolong(ReadTimeInMs)*1.0))\r\n| extend  WriteMBps = tolong((restoreSizeInMb*1000.0)/(tolong(WriteTimeInMS)*1.0)) \r\n| project TimeStamp,PreciseTimeStamp,FileName,LineNumber,Message,Properties,Exception,Level,ComponentId,ContainerName,ThreadId,TaskId,restoreSizeInMb,EBID1,ReadMBps,WriteMBps,temp,componentRestored1,componentRestoredDestination1\r\n| sort by TimeStamp asc;\r\nrestoreComponentPitMapping\r\n| join kind=leftouter \r\nrestoreComponentStats\r\non $left.TaskId == $right.TaskId and $left.componentToRestore == $right.componentRestored1 and $left.ContainerName == $right.ContainerName\r\n| project TimeStamp,TimeStamp1,PitID,EBID1,componentToRestore,restorePath,ReadMBps,WriteMBps,restoreSizeInMb,Level,TaskId,ContainerName\r\n| join kind=leftouter \r\n(\r\nWBETraceLogAll\r\n| where TIMESTAMP between (queryFromC .. queryToC)\r\n| where ContainerName in (local_containerNames)\r\n| where FileName == \"PitCacheHelper.cs\"\r\n| where ComponentId contains \"plugin\"\r\n| where Message contains \"cache hit\" or Message contains \"cache miss\"\r\n| parse Properties with \"{ExternalBackupId = \" EBID \"}{PitType = \" PitType \"}\"\r\n| extend cacheHit = case(Message contains \"hit\", \"true\", \"false\")\r\n| project TimeStamp,EBID,PitType,cacheHit,TaskId,ContainerName\r\n| summarize CacheHitCount=countif(cacheHit == \"true\"), Total=count() by EBID,TaskId,ContainerName\r\n| extend CacheHitPercentage = CacheHitCount*100.0/Total\r\n) on $left.EBID1 == $right.EBID and $left.TaskId == $right.TaskId and $left.ContainerName == $right.ContainerName\r\n| project-away TaskId1,EBID,CacheHitCount,Total,ContainerName1\r\n| project-rename PitRestoreStartTime = TimeStamp, PitRestoreEndTime = TimeStamp1,EBID= EBID1\r\n| extend CacheHitPercentage = case(isempty( CacheHitPercentage), 0.0,CacheHitPercentage)\r\n| extend StartTime = PitRestoreStartTime\r\n| extend EndTime = PitRestoreEndTime\r\n| extend Health = case(CacheHitPercentage > 90, \"Healthy\", \"Neutral\")\r\n| parse componentToRestore with *\"/backint\" service\r\n| extend Content = strcat_delim(\"_\",PitID,EBID,service)\r\n| extend EventName =  case(componentToRestore contains \"log_backup_0_0_0_0\", \"Catalog Restore\", \" Service Component Restore\" )\r\n| extend EventId = strcat_delim(\"_\",TaskId,EventName,componentToRestore)\r\n| extend Tooltip = Content\r\n| extend FilterCategory = \"Component Restore\"\r\n| extend ParentId = TaskId\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-10-29T11:43:47.047Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-28T11:43:47.047Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "default": "e7935c6e-082c-4bcf-8d6c-315f3c15f625",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_containerNames",
+        "description": "",
+        "type": "array",
+        "default": "[\"Compute;OUS-LP71-P-USW2-RSG-DB;p71hdb02\"]",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryFromC",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-10-29T11:43:47.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryToC",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-11-28T11:43:47.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PitRestoreStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "PitRestoreEndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "PitID",
+        "type": "string"
+      },
+      {
+        "name": "EBID",
+        "type": "string"
+      },
+      {
+        "name": "componentToRestore",
+        "type": "string"
+      },
+      {
+        "name": "restorePath",
+        "type": "string"
+      },
+      {
+        "name": "ReadMBps",
+        "type": "long"
+      },
+      {
+        "name": "WriteMBps",
+        "type": "long"
+      },
+      {
+        "name": "restoreSizeInMb",
+        "type": "real"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerName",
+        "type": "string"
+      },
+      {
+        "name": "CacheHitPercentage",
+        "type": "real"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "service",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "ParentId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Recovery Services Vaults"
+  }
+]

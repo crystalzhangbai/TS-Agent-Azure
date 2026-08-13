@@ -1,0 +1,221 @@
+[
+  {
+    "groupId": "c1ccd91e-0798-4a0a-bbdf-ed75bf65b6e7",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "906eb1ca-2486-417b-8c64-3d9d42ddd20c",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_tipNodeSessionId",
+        "externalSourceName": "tipNodeSessionId",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"Cumulus Tip Node Session\"",
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "AutopilotDeployment",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "globalFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "globalTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_tipNodeSessionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "_startTime",
+        "type": "datetime"
+      },
+      {
+        "name": "_endTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "3ee7532e-9e73-448a-acfe-110b7d3d304d",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "Other relevant ASI links"
+    ],
+    "widgetType": "Markdown",
+    "widgetTitle": "Other relevant ASI links",
+    "queryId": "e27ba5fc-af3f-4afa-a41f-373beccae3e6",
+    "inputMappings": [
+      {
+        "source": "Query_AllData",
+        "groupId": "c1ccd91e-0798-4a0a-bbdf-ed75bf65b6e7",
+        "majorVersion": 3,
+        "minorVersion": 1,
+        "internalDestinationName": "row",
+        "externalSourceName": "(All Data)",
+        "required": false,
+        "rowSelectionCriteria": "allRows"
+      }
+    ],
+    "name": "Generate Node View Links",
+    "cluster": "",
+    "database": "",
+    "type": "Single",
+    "params": [
+      {
+        "name": "row",
+        "type": "array",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "f7120805-4893-453b-ac52-f43bedd92f7b",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "GARSLog",
+      "GARSLog"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "GARSLog",
+    "queryId": "c545670e-ba76-4cbf-8f40-d942728254a5",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_tipNodeSessionId",
+        "externalSourceName": "tipNodeSessionId",
+        "required": false
+      }
+    ],
+    "name": "GARSLog",
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "AutopilotDeployment",
+    "type": "Table",
+    "params": [
+      {
+        "name": "_tipNodeSessionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "LogType",
+        "type": "string"
+      },
+      {
+        "name": "LogTitle",
+        "type": "string"
+      },
+      {
+        "name": "LogMessage",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "08656476-c5c0-41a6-85fe-cf25b00f8584",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "ServiceManagerSysLog"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "dc2aa3e2-d40e-419b-8a29-4136ea1725aa",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_tipNodeSessionId",
+        "externalSourceName": "tipNodeSessionId",
+        "required": false
+      }
+    ],
+    "name": "ServiceManagerSysLog",
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "AutopilotDeployment",
+    "type": "Table",
+    "params": [
+      {
+        "name": "_tipNodeSessionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "LogType",
+        "type": "string"
+      },
+      {
+        "name": "LogTitle",
+        "type": "string"
+      },
+      {
+        "name": "LogMessage",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

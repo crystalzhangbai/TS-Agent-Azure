@@ -1,0 +1,1020 @@
+[
+  {
+    "id": "1dfcca45-c6ae-4df8-8fdb-387d24fe0003",
+    "name": "Retrieve Resource \"Correlation or Operation Id\"",
+    "groupId": "23340d88-3cd2-46a1-b604-faa07ffc0cb6",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "https://egpublic.westus.kusto.windows.net",
+    "database": "eg",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let vmOps = IaasVmOperations \r\n| where EgId =~ local_EgId\r\n| summarize arg_max(PreciseTimeStamp, *) by EgId\r\n| extend Source = \"CRP\";\r\nlet traceOps = TraceOperations() \r\n| where EgId =~ local_EgId\r\n| summarize arg_max(PreciseTimeStamp, *) by EgId\r\n| extend Source = \"Traces\";\r\nunion vmOps, traceOps\r\n| take 1",
+    "params": [
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_PreciseTimeStamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_SubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_ResourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_Region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_Result",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_FailureSignature",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_Source",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_EgId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "EgId",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "EgUrl",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "E2EDurationInSeconds_long",
+        "type": "long"
+      },
+      {
+        "name": "E2EDurationInSeconds_real",
+        "type": "real"
+      },
+      {
+        "name": "ControlPathDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "DataPathDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "NotificationPathDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "ServiceHealCount",
+        "type": "long"
+      },
+      {
+        "name": "FailureSignature",
+        "type": "string"
+      },
+      {
+        "name": "UsesManagedOsDisk",
+        "type": "bool"
+      },
+      {
+        "name": "ResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "OsType",
+        "type": "string"
+      },
+      {
+        "name": "IsGeneralizedImage",
+        "type": "bool"
+      },
+      {
+        "name": "ImagePublisher",
+        "type": "string"
+      },
+      {
+        "name": "ImageOffer",
+        "type": "string"
+      },
+      {
+        "name": "ImageSku",
+        "type": "string"
+      },
+      {
+        "name": "ImageVersion",
+        "type": "string"
+      },
+      {
+        "name": "OsBlobUri",
+        "type": "string"
+      },
+      {
+        "name": "OsDiskStorageAccountType",
+        "type": "string"
+      },
+      {
+        "name": "VmSize",
+        "type": "string"
+      },
+      {
+        "name": "ConcurrentVmBootCount",
+        "type": "long"
+      },
+      {
+        "name": "DrivenByNodeService",
+        "type": "bool"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationId",
+        "type": "string"
+      },
+      {
+        "name": "CrpOperationId",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "VmBootDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "ProvisioningDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "StorageEndPoint",
+        "type": "string"
+      },
+      {
+        "name": "PrefetchErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "PrefetchSizeInKb",
+        "type": "long"
+      },
+      {
+        "name": "TenantId",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "CrpVmId",
+        "type": "string"
+      },
+      {
+        "name": "VIP",
+        "type": "string"
+      },
+      {
+        "name": "HostOs",
+        "type": "string"
+      },
+      {
+        "name": "TipNodeSessionId",
+        "type": "string"
+      },
+      {
+        "name": "ComponentVersions",
+        "type": "string"
+      },
+      {
+        "name": "IsEphemeralVm",
+        "type": "bool"
+      },
+      {
+        "name": "IsApDriveActive",
+        "type": "bool"
+      },
+      {
+        "name": "ProvisioningRecoveryCount",
+        "type": "long"
+      },
+      {
+        "name": "ClientApplicationId",
+        "type": "string"
+      },
+      {
+        "name": "UserAgent",
+        "type": "string"
+      },
+      {
+        "name": "PercentageIOToApDrive",
+        "type": "long"
+      },
+      {
+        "name": "PreprovisioningStatus",
+        "type": "string"
+      },
+      {
+        "name": "DAG",
+        "type": "string"
+      },
+      {
+        "name": "Forest",
+        "type": "string"
+      },
+      {
+        "name": "Operation",
+        "type": "string"
+      },
+      {
+        "name": "Object",
+        "type": "string"
+      },
+      {
+        "name": "TotalCount",
+        "type": "long"
+      },
+      {
+        "name": "SuccessCount",
+        "type": "long"
+      },
+      {
+        "name": "Retries",
+        "type": "long"
+      },
+      {
+        "name": "AverageDuration",
+        "type": "real"
+      },
+      {
+        "name": "AverageSize",
+        "type": "real"
+      },
+      {
+        "name": "AverageDelay",
+        "type": "real"
+      },
+      {
+        "name": "TotalSize",
+        "type": "long"
+      },
+      {
+        "name": "TotalRowsRead",
+        "type": "long"
+      },
+      {
+        "name": "TotalRowsSent",
+        "type": "long"
+      },
+      {
+        "name": "cvBase",
+        "type": "string"
+      },
+      {
+        "name": "VmBootXioLatencyHistogramJson",
+        "type": "string"
+      },
+      {
+        "name": "ProvisioningXioLatencyHistogramJson",
+        "type": "string"
+      },
+      {
+        "name": "ProximityPlacementGroup",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "AzSMCluster",
+        "type": "string"
+      },
+      {
+        "name": "CirrusSchedule",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "JobId",
+        "type": "string"
+      },
+      {
+        "name": "VmssReferenceUri",
+        "type": "string"
+      },
+      {
+        "name": "PrefetchDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "DataPathExtendedPropertiesJson",
+        "type": "string"
+      },
+      {
+        "name": "FailureCategory",
+        "type": "string"
+      },
+      {
+        "name": "CrpResult",
+        "type": "string"
+      },
+      {
+        "name": "CrpOperationName",
+        "type": "string"
+      },
+      {
+        "name": "EdgeLocation",
+        "type": "string"
+      },
+      {
+        "name": "TraceId",
+        "type": "string"
+      },
+      {
+        "name": "GalleryImage",
+        "type": "string"
+      },
+      {
+        "name": "ReusingSavedStatePreprovisionedVM",
+        "type": "string"
+      },
+      {
+        "name": "RcaDetails",
+        "type": "string"
+      },
+      {
+        "name": "__IsTrusted__",
+        "type": "string"
+      },
+      {
+        "name": "EgName",
+        "type": "string"
+      },
+      {
+        "name": "Source",
+        "type": "string"
+      },
+      {
+        "name": "EgResult",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "Environment",
+        "type": "string"
+      },
+      {
+        "name": "ServiceRequestId",
+        "type": "string"
+      },
+      {
+        "name": "RootTraceId",
+        "type": "string"
+      },
+      {
+        "name": "TraceInfo",
+        "type": "string"
+      },
+      {
+        "name": "ContainerGroupName",
+        "type": "string"
+      },
+      {
+        "name": "CustomProperties",
+        "type": "string"
+      },
+      {
+        "name": "OperationResult",
+        "type": "string"
+      },
+      {
+        "name": "ClientRequestId",
+        "type": "string"
+      },
+      {
+        "name": "ServerRequestId",
+        "type": "string"
+      },
+      {
+        "name": "Labels",
+        "type": "string"
+      },
+      {
+        "name": "BusinessTransactionName",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      },
+      {
+        "name": "SubOperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationResultType",
+        "type": "int"
+      },
+      {
+        "name": "EgResultSignature",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "ResourceType",
+        "type": "string"
+      },
+      {
+        "name": "ResourceProvider",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Execution Graph"
+  },
+  {
+    "id": "05b10048-0e7a-45e1-9bfd-8ddec143994d",
+    "name": "Lookup up EG",
+    "groupId": "e7ebecdb-3240-46d5-922c-face38b67a37",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "https://egpublic.westus.kusto.windows.net",
+    "database": "eg",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let crp = IaasVmOperations \r\n| where EgId == queryCorrelationOrOperationId\r\n| extend SourceTable = \"CRP\"\r\n| take 1;\r\nlet arm = UserOperations \r\n| where EgId =~ queryCorrelationOrOperationId\r\n| extend SourceTable = \"ARM\"\r\n| take 1;\r\nunion arm, crp\r\n| take 1",
+    "params": [
+      {
+        "name": "queryCorrelationOrOperationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "EgId",
+        "type": "string"
+      },
+      {
+        "name": "EgUrl",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "E2EDurationInSec",
+        "type": "long"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "FailureSignature",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ClientApplicationId",
+        "type": "string"
+      },
+      {
+        "name": "UserAgent",
+        "type": "string"
+      },
+      {
+        "name": "Scenario",
+        "type": "string"
+      },
+      {
+        "name": "ResourceSummary",
+        "type": "string"
+      },
+      {
+        "name": "ComponentVersions",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationId",
+        "type": "string"
+      },
+      {
+        "name": "TemplateHash",
+        "type": "string"
+      },
+      {
+        "name": "ResourceSummaryHashCode",
+        "type": "long"
+      },
+      {
+        "name": "IsTemplateDeployment",
+        "type": "bool"
+      },
+      {
+        "name": "CirrusSchedule",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "JobId",
+        "type": "string"
+      },
+      {
+        "name": "VmssReferenceUri",
+        "type": "string"
+      },
+      {
+        "name": "ArmResult",
+        "type": "string"
+      },
+      {
+        "name": "TraceId",
+        "type": "string"
+      },
+      {
+        "name": "RequestParameters",
+        "type": "string"
+      },
+      {
+        "name": "SourceTable",
+        "type": "string"
+      },
+      {
+        "name": "E2EDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "ControlPathDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "DataPathDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "NotificationPathDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "ServiceHealCount",
+        "type": "long"
+      },
+      {
+        "name": "UsesManagedOsDisk",
+        "type": "bool"
+      },
+      {
+        "name": "OsType",
+        "type": "string"
+      },
+      {
+        "name": "IsGeneralizedImage",
+        "type": "bool"
+      },
+      {
+        "name": "ImagePublisher",
+        "type": "string"
+      },
+      {
+        "name": "ImageOffer",
+        "type": "string"
+      },
+      {
+        "name": "ImageSku",
+        "type": "string"
+      },
+      {
+        "name": "ImageVersion",
+        "type": "string"
+      },
+      {
+        "name": "OsBlobUri",
+        "type": "string"
+      },
+      {
+        "name": "OsDiskStorageAccountType",
+        "type": "string"
+      },
+      {
+        "name": "VmSize",
+        "type": "string"
+      },
+      {
+        "name": "ConcurrentVmBootCount",
+        "type": "long"
+      },
+      {
+        "name": "DrivenByNodeService",
+        "type": "bool"
+      },
+      {
+        "name": "CrpOperationId",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "VmBootDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "ProvisioningDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "StorageEndPoint",
+        "type": "string"
+      },
+      {
+        "name": "PrefetchErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "PrefetchSizeInKb",
+        "type": "long"
+      },
+      {
+        "name": "TenantId",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "CrpVmId",
+        "type": "string"
+      },
+      {
+        "name": "VIP",
+        "type": "string"
+      },
+      {
+        "name": "HostOs",
+        "type": "string"
+      },
+      {
+        "name": "TipNodeSessionId",
+        "type": "string"
+      },
+      {
+        "name": "IsEphemeralVm",
+        "type": "bool"
+      },
+      {
+        "name": "IsApDriveActive",
+        "type": "bool"
+      },
+      {
+        "name": "ProvisioningRecoveryCount",
+        "type": "long"
+      },
+      {
+        "name": "PercentageIOToApDrive",
+        "type": "long"
+      },
+      {
+        "name": "PreprovisioningStatus",
+        "type": "string"
+      },
+      {
+        "name": "DAG",
+        "type": "string"
+      },
+      {
+        "name": "Forest",
+        "type": "string"
+      },
+      {
+        "name": "Operation",
+        "type": "string"
+      },
+      {
+        "name": "Object",
+        "type": "string"
+      },
+      {
+        "name": "TotalCount",
+        "type": "long"
+      },
+      {
+        "name": "SuccessCount",
+        "type": "long"
+      },
+      {
+        "name": "Retries",
+        "type": "long"
+      },
+      {
+        "name": "AverageDuration",
+        "type": "real"
+      },
+      {
+        "name": "AverageSize",
+        "type": "real"
+      },
+      {
+        "name": "AverageDelay",
+        "type": "real"
+      },
+      {
+        "name": "TotalSize",
+        "type": "long"
+      },
+      {
+        "name": "TotalRowsRead",
+        "type": "long"
+      },
+      {
+        "name": "TotalRowsSent",
+        "type": "long"
+      },
+      {
+        "name": "cvBase",
+        "type": "string"
+      },
+      {
+        "name": "VmBootXioLatencyHistogramJson",
+        "type": "string"
+      },
+      {
+        "name": "ProvisioningXioLatencyHistogramJson",
+        "type": "string"
+      },
+      {
+        "name": "ProximityPlacementGroup",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "AzSMCluster",
+        "type": "string"
+      },
+      {
+        "name": "PrefetchDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "DataPathExtendedPropertiesJson",
+        "type": "string"
+      },
+      {
+        "name": "FailureCategory",
+        "type": "string"
+      },
+      {
+        "name": "CrpResult",
+        "type": "string"
+      },
+      {
+        "name": "CrpOperationName",
+        "type": "string"
+      },
+      {
+        "name": "EdgeLocation",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Execution Graph"
+  }
+]

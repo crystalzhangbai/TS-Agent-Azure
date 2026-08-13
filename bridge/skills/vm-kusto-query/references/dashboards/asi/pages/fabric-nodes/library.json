@@ -1,0 +1,131 @@
+{
+  "service": "Fabric",
+  "page": "Nodes",
+  "pageId": "2d496d84-a208-40cb-b7f0-818779499400",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "4c4199d9-0e81-4506-9482-112e6fc3d949",
+          "name": "Node Containers",
+          "groupId": "a73b1565-89be-4672-b788-e1a45fb03c2e",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "cc0937c4-b4f7-4913-9013-cfc204b93b3b",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where nodeId == queryNodeId\n| summarize StartTime = min(PreciseTimeStamp), EndTime = arg_max(PreciseTimeStamp, *) by containerId\n| project StartTime, EndTime, Content = containerId\n| order by StartTime asc",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.183Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

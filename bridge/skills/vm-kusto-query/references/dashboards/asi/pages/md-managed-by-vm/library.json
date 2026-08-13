@@ -1,0 +1,646 @@
+{
+  "service": "Managed Disk",
+  "page": "Managed by VM",
+  "pageId": "5aa2d614-e641-467e-9fac-0fe47ae9d1de",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "3eafca83-7f20-4995-8c52-a138316867d5",
+          "name": "Retrieve Resource \"Managed by VM\"",
+          "groupId": "193c4a83-5654-4be6-bb7e-67e39a5a837b",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_cluster",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_containerid",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_nodeid",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_Region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_roleInstanceName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_tenantname",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_vmid",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "cluster",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "vmid",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "creationTime",
+              "type": "datetime"
+            },
+            {
+              "name": "additionalContainerProperties",
+              "type": "string"
+            },
+            {
+              "name": "containerType",
+              "type": "string"
+            },
+            {
+              "name": "billingType",
+              "type": "string"
+            },
+            {
+              "name": "priority",
+              "type": "string"
+            },
+            {
+              "name": "tenantOwners",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "Dummy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_cluster",
+              "externalSourceName": "cluster",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_containerid",
+              "externalSourceName": "containerid",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeid",
+              "externalSourceName": "nodeid",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_Region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_roleInstanceName",
+              "externalSourceName": "roleInstanceName",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_tenantname",
+              "externalSourceName": "tenantname",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_vmid",
+              "externalSourceName": "vmid",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "// print cluster = local_Tenant, tenantName = local_tenantName, containerId = local_containerId, nodeId = local_nodeId, vmid = local_virtualMachineUniqueId, roleInstanceName = \r\n// | extend vmid = iff(isnotempty(vmid), vmid, \"nodata\")\r\ncluster('azcsupfollower.kusto.windows.net').database('AzureCM').LogContainerSnapshot\r\n| where PreciseTimeStamp between ((globalFrom - 6h) .. (globalTo + 6h))\r\n| where containerId == local_containerid and roleInstanceName == local_roleInstanceName\r\n| where isnotempty(roleInstanceName)\r\n| top 1 by PreciseTimeStamp\r\n| project cluster = Tenant, tenantName, containerId, nodeId, vmid=virtualMachineUniqueId, roleInstanceName, subscriptionId, creationTime = todatetime(creationTime), additionalContainerProperties, containerType, billingType, priority, tenantOwners, Region, RegionFriendlyName\r\n| extend Dummy = \"***\"",
+          "panelPath": []
+        }
+      ]
+    },
+    "Disks from CRP BI": {
+      "panelPath": [
+        "Disks from CRP BI"
+      ],
+      "queries": [
+        {
+          "id": "26cac939-a0fe-48e9-a292-ab27f15a071c",
+          "name": "VMManagedDisksAllocationInfo",
+          "groupId": "4bc50b54-44ac-4363-aef7-8d8879066508",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "Azcrpbifollower",
+          "database": "bi_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Disks from CRP BI",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryVMId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "CrpDiskId",
+              "type": "string"
+            },
+            {
+              "name": "SnapshotTime",
+              "type": "datetime"
+            },
+            {
+              "name": "applicationName",
+              "type": "string"
+            },
+            {
+              "name": "BackupId",
+              "type": "string"
+            },
+            {
+              "name": "bIServiceBuildVersion",
+              "type": "string"
+            },
+            {
+              "name": "bIServiceInstanceInfo",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "PartitionId",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "int"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuildNumber",
+              "type": "string"
+            },
+            {
+              "name": "serviceName",
+              "type": "string"
+            },
+            {
+              "name": "serviceType",
+              "type": "string"
+            },
+            {
+              "name": "Tid",
+              "type": "int"
+            },
+            {
+              "name": "Key",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilitySetName",
+              "type": "string"
+            },
+            {
+              "name": "VMId",
+              "type": "string"
+            },
+            {
+              "name": "DiskName",
+              "type": "string"
+            },
+            {
+              "name": "BlobLocation",
+              "type": "string"
+            },
+            {
+              "name": "PseudoSubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "CsmResourceId",
+              "type": "string"
+            },
+            {
+              "name": "LastCommittedModelHash",
+              "type": "string"
+            },
+            {
+              "name": "SystemKeyName",
+              "type": "string"
+            },
+            {
+              "name": "DsasSecretId",
+              "type": "string"
+            },
+            {
+              "name": "LeaseId",
+              "type": "string"
+            },
+            {
+              "name": "LeaseAcquired",
+              "type": "bool"
+            },
+            {
+              "name": "BillingCode",
+              "type": "string"
+            },
+            {
+              "name": "CachingType",
+              "type": "string"
+            },
+            {
+              "name": "LastKnownGoodBlobSizeInBytes",
+              "type": "long"
+            },
+            {
+              "name": "BillingValidationValidated",
+              "type": "bool"
+            },
+            {
+              "name": "BillingValidationTagInVhdTagGuid",
+              "type": "string"
+            },
+            {
+              "name": "BillingValidationTagInVhdPartNumber",
+              "type": "string"
+            },
+            {
+              "name": "BillingValidationPurchaseInfoFromCSMPartNumber",
+              "type": "string"
+            },
+            {
+              "name": "BillingValidationPurchaseInfoFromCSMOrderNumber",
+              "type": "string"
+            },
+            {
+              "name": "DiskEncryptionKeyKmsObjectUrl",
+              "type": "string"
+            },
+            {
+              "name": "DiskEncryptionKeySourceVaultVaultId",
+              "type": "string"
+            },
+            {
+              "name": "KeyEncryptionKeyKmsObjectUrl",
+              "type": "string"
+            },
+            {
+              "name": "KeyEncryptionKeySourceVaultVaultId",
+              "type": "string"
+            },
+            {
+              "name": "IsMigrated",
+              "type": "bool"
+            },
+            {
+              "name": "LastGoalSeekingCompletionTime",
+              "type": "datetime"
+            },
+            {
+              "name": "State",
+              "type": "string"
+            },
+            {
+              "name": "Error",
+              "type": "string"
+            },
+            {
+              "name": "Lens_IngestionTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Lens_Originator",
+              "type": "string"
+            },
+            {
+              "name": "Lens_JobId",
+              "type": "string"
+            },
+            {
+              "name": "Lens_SessionId",
+              "type": "string"
+            },
+            {
+              "name": "Lens_BatchId",
+              "type": "string"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "LastModifiedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "StorageAccountType",
+              "type": "string"
+            },
+            {
+              "name": "BillingValidationTagInVhdPublicPartNumber",
+              "type": "string"
+            },
+            {
+              "name": "LastGoalSeekingActivityId",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "BackupTime",
+              "type": "datetime"
+            },
+            {
+              "name": "CommitSequenceNumber",
+              "type": "long"
+            },
+            {
+              "name": "LeasingOnNode",
+              "type": "string"
+            },
+            {
+              "name": "AttachDetachPath",
+              "type": "string"
+            },
+            {
+              "name": "CrpDiskId1",
+              "type": "string"
+            },
+            {
+              "name": "DisksId",
+              "type": "string"
+            },
+            {
+              "name": "diskResoureArray",
+              "type": "dynamic"
+            },
+            {
+              "name": "diskCsmSubId",
+              "type": "string"
+            },
+            {
+              "name": "diskCsmResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "diskCsmResourceName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "193c4a83-5654-4be6-bb7e-67e39a5a837b",
+              "majorVersion": 1,
+              "minorVersion": 1,
+              "internalDestinationName": "queryVMId",
+              "externalSourceName": "vmid",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "let crpDisks = VMManagedDisksAllocationInfo\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where VMId == queryVMId\r\n| summarize SnapshotTime = arg_max(PreciseTimeStamp, *) by CrpDiskId = DiskId;\r\nlet crpDiskIds = crpDisks | project CrpDiskId;\r\nlet disksBi  = cluster(\"DisksBi\").database(\"DisksBi\").Disk\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where CrpDiskId in (crpDiskIds)\r\n| distinct CrpDiskId, DisksId;\r\ncrpDisks | join kind= fullouter disksBi on CrpDiskId\r\n| extend diskResoureArray = split(CsmResourceId, \"/\")\r\n| extend diskCsmSubId = tolower(diskResoureArray[2])\r\n| extend diskCsmResourceGroup = tolower(diskResoureArray[4])\r\n| extend diskCsmResourceName = tolower(diskResoureArray[8])",
+          "panelPath": [
+            "Disks from CRP BI"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.035Z",
+    "totalPanels": 2,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

@@ -1,0 +1,89 @@
+[
+  {
+    "id": "1e69e554-0e98-4c4a-8981-1f332c349341",
+    "name": "Retrieve Resource \"operationID\"",
+    "groupId": "57892650-e915-4288-a3d0-fdbbc8fb01f0",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncQoSEvents\r\n| where operationID == local_operationID\r\n| summarize min(PreciseTimeStamp) by correlationID, operationID, serviceBuild, RPSector, RPTenant, resourceGroupName, resourceName, subscriptionID\r\n| take 1",
+    "params": [
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_operationID",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "correlationID",
+        "type": "string"
+      },
+      {
+        "name": "operationID",
+        "type": "string"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionID",
+        "type": "string"
+      },
+      {
+        "name": "min_PreciseTimeStamp",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  }
+]

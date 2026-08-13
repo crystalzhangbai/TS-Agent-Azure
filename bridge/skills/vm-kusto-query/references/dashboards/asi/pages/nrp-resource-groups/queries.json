@@ -1,0 +1,990 @@
+[
+  {
+    "id": "0f507fe0-289f-49a3-9963-d13675ced029",
+    "name": "Retrieve Resource \"Resource Groups\"",
+    "groupId": "2f0b0344-6a26-4484-a624-c184ef9550a1",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "range index from 1 to 1 step 1\r\n| project subscriptionId = local_subscriptionId, resourceGroupName = local_resourceGroupName",
+    "params": [
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_resourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "b6ae030f-5776-48d0-852d-57cfccfeca39",
+    "name": "Subscription VNets",
+    "groupId": "dd2c6e81-999d-478f-aa9f-38048ea852d3",
+    "majorVersion": 3,
+    "minorVersion": 5,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n//| where timestamp between (queryFrom .. queryTo)\r\n| where type == \"microsoft.network/virtualnetworks\" and subscriptionId =~ querySubscriptionId\r\n| where isempty(queryOptionalResourceGroup) or resourceGroup =~ queryOptionalResourceGroup\r\n| summarize arg_max(timestamp, name, properties, tags, resourceGroup, deleted) by id\r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| extend addressPrefixes = array_strcat(properties.addressSpace.addressPrefixes, \", \")\r\n| project-away properties\r\n| order by name asc\r\n",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "addressPrefixes",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "69bb9b9d-aae8-4bc8-bfce-95619bc6b64b",
+    "name": "Subscription Subnets",
+    "groupId": "293d05f4-39d9-4145-b6e7-04545c410981",
+    "majorVersion": 3,
+    "minorVersion": 3,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where type == \"microsoft.network/virtualnetworks\" and subscriptionId =~ querySubscriptionId \r\n| where isempty(queryOptionalResourceGroupName) or resourceGroup =~ queryOptionalResourceGroupName\r\n| extend virtualNetworkName = name\r\n| summarize arg_max(timestamp, properties, resourceGroup, deleted) by virtualNetworkName, id, deleted\r\n| mv-expand Subnet = properties.subnets\r\n| project Subnet, Name = virtualNetworkName, virtualNetworkName, subnetName = tostring(Subnet.name), key = id, PreciseTimeStamp = timestamp, resourceGroup, deleted\r\n| extend networkSecurityGroupId = tostring(Subnet.properties.networkSecurityGroup.id)\r\n| extend routeTableId = tostring(Subnet.properties.routeTable.id)\r\n| parse networkSecurityGroupId with \"/subscriptions/\" nsgSubscriptionId \"/resourceGroups/\" nsgResourceGroupName \"/providers/Microsoft.Network/networkSecurityGroups/\" networkSecurityGroupName \r\n| parse routeTableId with \"/subscriptions/\" rtSubscriptionId \"/resourceGroups/\" rtResourceGroupName \"/providers/Microsoft.Network/routeTables/\" routeTableName\r\n| extend privateEndpointId = tostring(Subnet.properties.privateEndpoints[0].id)\r\n| extend hasPrivateEndpoints = tobool(iif(isempty(privateEndpointId), false, true))\r\n| project PreciseTimeStamp,\r\n    name = tostring(Subnet.name), \r\n    subscriptionId = querySubscriptionId,\r\n    resourceGroupName = resourceGroup,\r\n    deleted, \r\n    virtualNetworkName,\r\n    vnetResourceId = key,\r\n    reconciliationState = tostring(Subnet.reconciliationState), \r\n    lastModifiedTime = todatetime(Subnet.lastModifiedTime),\r\n    createdTime = todatetime(Subnet.createdTime),\r\n    provisioningState = tostring(Subnet.properties.provisioningState),\r\n    addressPrefixes = array_strcat(Subnet.properties.addressPrefixes, \", \"),\r\n    isSqlGTEnabledNow = tobool(Subnet.properties.isSqlGTEnabledNow),\r\n    isStorageGTEnabledNow = tobool(Subnet.properties.isStorageGTEnabledNow),\r\n    isSqlGTEnabledEver = tobool(Subnet.properties.isSqlGTEnabledEver),\r\n    isStorageGTEnabledEver = tobool(Subnet.properties.isStorageGTEnabledEver),\r\n    isAddressPrefixesSet = tobool(Subnet.properties.isAddressPrefixesSet),\r\n    networkSecurityGroupId,\r\n    networkSecurityGroupName,\r\n    routeTableId,\r\n    routeTableName,\r\n    privateEndpointNetworkPolicies = tostring(Subnet.properties.privateEndpointNetworkPolicies),\r\n    privateLinkServiceNetworkPolicies = tostring(Subnet.properties.privateLinkServiceNetworkPolicies),\r\n    subnetTrafficTag = tolong(Subnet.properties.subnetTrafficTag),\r\n    ipAddressOwnerDict = Subnet.properties.ipAddressOwnerDict,\r\n    rtSubscriptionId,\r\n    rtResourceGroupName,\r\n    nsgSubscriptionId,\r\n    nsgResourceGroupName,\r\n    privateEndpointId,\r\n    hasPrivateEndpoints\r\n| order by virtualNetworkName asc, name asc \r\n",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "virtualNetworkName",
+        "type": "string"
+      },
+      {
+        "name": "vnetResourceId",
+        "type": "string"
+      },
+      {
+        "name": "reconciliationState",
+        "type": "string"
+      },
+      {
+        "name": "lastModifiedTime",
+        "type": "datetime"
+      },
+      {
+        "name": "createdTime",
+        "type": "datetime"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "addressPrefixes",
+        "type": "string"
+      },
+      {
+        "name": "isSqlGTEnabledNow",
+        "type": "bool"
+      },
+      {
+        "name": "isStorageGTEnabledNow",
+        "type": "bool"
+      },
+      {
+        "name": "isSqlGTEnabledEver",
+        "type": "bool"
+      },
+      {
+        "name": "isStorageGTEnabledEver",
+        "type": "bool"
+      },
+      {
+        "name": "isAddressPrefixesSet",
+        "type": "bool"
+      },
+      {
+        "name": "networkSecurityGroupId",
+        "type": "string"
+      },
+      {
+        "name": "networkSecurityGroupName",
+        "type": "string"
+      },
+      {
+        "name": "routeTableId",
+        "type": "string"
+      },
+      {
+        "name": "routeTableName",
+        "type": "string"
+      },
+      {
+        "name": "privateEndpointNetworkPolicies",
+        "type": "string"
+      },
+      {
+        "name": "privateLinkServiceNetworkPolicies",
+        "type": "string"
+      },
+      {
+        "name": "subnetTrafficTag",
+        "type": "long"
+      },
+      {
+        "name": "ipAddressOwnerDict",
+        "type": "dynamic"
+      },
+      {
+        "name": "rtSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "rtResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "nsgSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "privateEndpointId",
+        "type": "string"
+      },
+      {
+        "name": "hasPrivateEndpoints",
+        "type": "bool"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "0bd231bf-b4d1-40c1-8e29-0c173b4dc91f",
+    "name": "Subscription NSGs",
+    "groupId": "df58cb7f-a08b-4610-8ae9-5e4b4a1a5e86",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where type == \"microsoft.network/networksecuritygroups\" and subscriptionId =~ querySubscriptionId\r\n| where isempty(queryOptionalResourceGroupName) or resourceGroup =~ queryOptionalResourceGroupName\r\n| where not(deleted) and isnotempty(properties)\r\n| summarize arg_max(timestamp, properties, tags, name, location) by id\r\n| extend Name = name\r\n| extend ArmRegionName = location\r\n| extend NumberOfSecurityRules = array_length(properties.securityRules) + array_length(properties.defaultSecurityRules)\r\n| parse id with \"/subscriptions/\" nsgSubscriptionId \"/resourceGroups/\" nsgResourceGroupName \"/providers/Microsoft.Network/networkSecurityGroups/\" nsgName \r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| project-away properties, name\r\n| order by nsgResourceGroupName asc, nsgName asc\r\n",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "ArmRegionName",
+        "type": "string"
+      },
+      {
+        "name": "NumberOfSecurityRules",
+        "type": "long"
+      },
+      {
+        "name": "nsgSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "nsgResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "nsgName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "d0752242-bc1b-465a-a825-51a5fa62fac1",
+    "name": "Subscription Firewalls",
+    "groupId": "1292fc9d-7db0-4d5f-bde5-3475d5cce0c0",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where type == \"microsoft.network/azurefirewalls\" and subscriptionId =~ querySubscriptionId\r\n| where isempty(queryOptionalResourceGroupName) or resourceGroup =~ queryOptionalResourceGroupName\r\n| where not(deleted) and isnotempty(properties)\r\n| summarize arg_max(timestamp, properties, tags, name, location) by id\r\n| extend Name = name\r\n| parse id with \"/subscriptions/\" fwSub \"/resourceGroups/\" fwRg \"/providers/Microsoft.Network/azureFirewalls/\" fwName\r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| extend skuName = tostring(properties.sku.name)\r\n| extend skuTier = tostring(properties.sku.tier)\r\n| extend privateIPAddress = tostring(properties.ipConfigurations[0].properties.privateIPAddress)\r\n| extend privateIPAllocationMethod = tostring(properties.ipConfigurations[0].properties.privateIPAllocationMethod)\r\n| extend publicIPAddress = tostring(properties.ipConfigurations[0].properties.publicIPAddress.id)\r\n| extend firewallPolicy = tostring(properties.firewallPolicy.id)\r\n| project-away properties, name\r\n| order by fwRg asc, fwName asc\r\n",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "fwSub",
+        "type": "string"
+      },
+      {
+        "name": "fwRg",
+        "type": "string"
+      },
+      {
+        "name": "fwName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "skuName",
+        "type": "string"
+      },
+      {
+        "name": "skuTier",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "privateIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "firewallPolicy",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "7cc30d4e-1c7a-4059-a9a1-ade1565b5422",
+    "name": "NRP Public IPs by Sub and RG",
+    "groupId": "7242b729-88ba-4f42-9ecb-f0234953b32a",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where type == \"microsoft.network/publicipaddresses\" and subscriptionId =~ querySubscriptionId\r\n| where isempty(queryOptionalResourceGroup) or resourceGroup =~ queryOptionalResourceGroup\r\n| where isnotempty(properties) and not(deleted)\r\n| summarize arg_max(timestamp, name, properties, tags, resourceGroup) by id\r\n| extend ipAddress = tostring(properties.ipAddress)\r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| extend publicIPAddressVersion = tostring(properties.publicIPAddressVersion)\r\n| extend publicIPAllocationMethod = tostring(properties.publicIPAllocationMethod)\r\n| extend idleTimeoutInMinutes = tostring(properties.idleTimeoutInMinutes)\r\n| order by name asc\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryOptionalResourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "ipAddress",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddressVersion",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAllocationMethod",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ab6c060f-9931-4bb9-9a8c-04b5df97c23e",
+    "name": "NRP Sub and RG Load Balancers",
+    "groupId": "d55023ab-ae2a-407b-be15-e4326b451adb",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where type == \"microsoft.network/loadbalancers\" and subscriptionId =~ querySubscriptionId\r\n| where isempty(queryOptionalResourceGroupName) or resourceGroup =~ queryOptionalResourceGroupName\r\n| where not(deleted) and isnotempty(properties)\r\n| summarize arg_max(timestamp, properties, tags, name, location, type) by id\r\n| parse id with \"/subscriptions/\" lbSub \"/resourceGroups/\" lbRg \"/providers/Microsoft.Network/loadBalancers/\" lbName\r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| extend frontendIPConfigurations = array_length(properties.frontendIPConfigurations)\r\n| extend inboundNatRules = array_length(properties.inboundNatRules)\r\n| extend outboundRules = array_length(properties.outboundRules)\r\n| extend inboundNatPools = array_length(properties.inboundNatPools)\r\n| project-away properties\r\n| order by lbRg asc, lbName asc ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-08-31T22:25:58.968Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-09-01T22:25:58.968Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "lbSub",
+        "type": "string"
+      },
+      {
+        "name": "lbRg",
+        "type": "string"
+      },
+      {
+        "name": "lbName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatRules",
+        "type": "long"
+      },
+      {
+        "name": "outboundRules",
+        "type": "long"
+      },
+      {
+        "name": "inboundNatPools",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "1c1acae3-2db5-420d-8ef6-2529674e04fb",
+    "name": "Sub or RG Route Tables",
+    "groupId": "2e263133-a25d-41e2-a507-6b973a8aa040",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where subscriptionId =~ querySubscriptionId and type == \"microsoft.network/routetables\"\r\n| where isempty(queryOptionalResourceGroupName) or resourceGroup =~ queryOptionalResourceGroupName\r\n| where not(deleted) and isnotempty(properties)\r\n| summarize arg_max(timestamp, properties, tags, name, location) by id\r\n| extend Name = name\r\n| parse id with \"/subscriptions/\" rtSub \"/resourceGroups/\" rtRg \"/providers/Microsoft.Network/routeTables/\" rtName\r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| extend subnets = array_length(properties.subnets)\r\n| extend routes = array_length(properties.routes)\r\n| extend disableBgpRoutePropagation = tobool(properties.disableBgpRoutePropagation)\r\n| project-away properties, name\r\n| order by rtRg asc, rtName asc ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-09-15T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-09-23T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "rtSub",
+        "type": "string"
+      },
+      {
+        "name": "rtRg",
+        "type": "string"
+      },
+      {
+        "name": "rtName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "subnets",
+        "type": "long"
+      },
+      {
+        "name": "routes",
+        "type": "long"
+      },
+      {
+        "name": "disableBgpRoutePropagation",
+        "type": "bool"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "17c836e3-af60-4c51-865d-945415f41936",
+    "name": "NRP Sub and RG Private Endpoints",
+    "groupId": "eb4a7e5e-d29e-47eb-b172-16fdc7b28c52",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where type == \"microsoft.network/privateendpoints\" and subscriptionId =~ querySubscriptionId\r\n| where isempty(queryOptionalResourceGroupName) or resourceGroup =~ queryOptionalResourceGroupName\r\n| where not(deleted) and isnotempty(properties)\r\n| summarize arg_max(timestamp, properties, tags, name, location, type) by id\r\n| parse id with \"/subscriptions/\" peSub \"/resourceGroups/\" peRg \"/providers/Microsoft.Network/privateEndpoints/\" peName\r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| extend customNetworkInterfaceName = tostring(properties.customNetworkInterfaceName)\r\n| extend subnet = tostring(properties.subnet.id)\r\n| parse subnet with \"/subscriptions/\" subSub \"/resourceGroups/\" subRg \"/providers/Microsoft.Network/virtualNetworks/\" subVnet \"/subnets/\" subName\r\n| extend ipConfigurations = array_length(properties.ipConfigurations)\r\n| extend networkInterfaces = array_length(properties.networkInterfaces)\r\n| extend privateLinkServiceConnections = array_length(properties.privateLinkServiceConnections)\r\n| extend plsConnectionState = tostring(properties.privateLinkServiceConnections[0].properties.privateLinkServiceConnectionState.status)\r\n| extend manualPrivateLinkServiceConnections = array_length(properties.manualPrivateLinkServiceConnections)\r\n| extend customDnsConfigs = array_length(properties.customDnsConfigs)\r\n| project-away properties\r\n| order by peRg asc, peName asc \r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-10-17T02:50:49.731Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-10-18T02:50:49.731Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryOptionalResourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "peSub",
+        "type": "string"
+      },
+      {
+        "name": "peRg",
+        "type": "string"
+      },
+      {
+        "name": "peName",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "customNetworkInterfaceName",
+        "type": "string"
+      },
+      {
+        "name": "subnet",
+        "type": "string"
+      },
+      {
+        "name": "subSub",
+        "type": "string"
+      },
+      {
+        "name": "subRg",
+        "type": "string"
+      },
+      {
+        "name": "subVnet",
+        "type": "string"
+      },
+      {
+        "name": "subName",
+        "type": "string"
+      },
+      {
+        "name": "ipConfigurations",
+        "type": "long"
+      },
+      {
+        "name": "networkInterfaces",
+        "type": "long"
+      },
+      {
+        "name": "privateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "plsConnectionState",
+        "type": "string"
+      },
+      {
+        "name": "manualPrivateLinkServiceConnections",
+        "type": "long"
+      },
+      {
+        "name": "customDnsConfigs",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

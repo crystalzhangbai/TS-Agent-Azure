@@ -1,0 +1,2792 @@
+[
+  {
+    "groupId": "32f3e03e-9378-4fcb-ae51-47c110471bd3",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Region View",
+      "PutVMScaleSet operation failures"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PutVMScaleSet operation failures",
+    "queryId": "0b1161c7-a9c0-49fa-a7c8-11a521ed8e8b",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssFailuresPerRegion",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "UserErrors",
+        "type": "long"
+      },
+      {
+        "name": "ServerSideErrors",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d6e6c14c-a11b-4e3b-859f-8ee243deaef6",
+    "majorVersion": 1,
+    "minorVersion": 5,
+    "panelPath": [
+      "Region View",
+      "Put Vmss top 5 errors "
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Put Vmss top 5 errors ",
+    "queryId": "6132e2dd-e35c-4bf7-bae6-6abad28072f2",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssFailurePerRegion",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1e0673cd-46d4-46ec-aa90-b311b32db7ea",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Region View",
+      "Top 10 impacted subscriptions with error codes"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Top 10 impacted subscriptions with error codes",
+    "queryId": "d95cde37-5973-4c7d-853e-382cb662a7be",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssFailuresTopSubs",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "29183540-a0cf-4c0e-82e4-e1c707bf8f41",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Region View",
+      "PutVmss sub lock duration (ms) by region"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PutVmss sub lock duration (ms) by region",
+    "queryId": "7f3ad12f-dcbc-424c-ae45-fd1423eea091",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssSubLockPerRegion",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubLockDuration",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "e8b13859-4d39-4a46-a9a4-8fa48e9bc4f7",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Region View",
+      "PutVmss transaction stats (KB) by region"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PutVmss transaction stats (KB) by region",
+    "queryId": "bed00279-257e-4b59-9d5d-474c66bce046",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssTransactionStatsPerRegion",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "readSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "addSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "updateSizeKb",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "29dbd6f3-b58e-4811-976f-63851acac2f8",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [
+      "Region View",
+      "PutVmss P50 latency (ms) by region"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PutVmss P50 latency (ms) by region",
+    "queryId": "d0a73ccc-e14d-4413-bb04-c893c489c8ce",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssLatencyPerRegion",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_50",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1f836b3e-54e4-46c4-b6a5-13369220ad9a",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Region View",
+      "Put Vmss Latency (P90 ms) by region "
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put Vmss Latency (P90 ms) by region ",
+    "queryId": "89ccb467-981b-497a-b157-e9c2371bc1c4",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssP90Latency",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_90",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8a0e3c26-4dea-40b4-ad1d-e1b7582e574d",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Region View",
+      "PutVmss sub lock duration for Peregrine vmss downscale"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PutVmss sub lock duration for Peregrine vmss downscale",
+    "queryId": "a3468fd7-22a1-44f5-aed2-72a066b9ccf9",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssSubLockPeregrineVmssScaleDown",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "sum_LockDuration",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "56ed9a1f-c41b-4284-bdbd-1bf6489d84ab",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Region View",
+      "Top 20 Put Vmss Compute-only updates per region"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Top 20 Put Vmss Compute-only updates per region",
+    "queryId": "3f3ef448-0f72-44e4-93a6-abf06e0b5cbc",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "TopPutVmssCouPerRegion",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Resource",
+        "type": "string"
+      },
+      {
+        "name": "slice",
+        "type": "long"
+      },
+      {
+        "name": "totalPutVmssOps",
+        "type": "long"
+      },
+      {
+        "name": "computeOnlyOps",
+        "type": "long"
+      },
+      {
+        "name": "computeOnlyPc",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "f29fdace-1cbd-4b7e-ae22-71e145fbc993",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Region View",
+      "PUT Vmss Compute-only updates per region"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PUT Vmss Compute-only updates per region",
+    "queryId": "0e27c3d4-f7f3-47dc-be3d-d3b81fe9bce2",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "ComputeOnlyUpdatesPerRegion",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "computeOnlyOps",
+        "type": "long"
+      },
+      {
+        "name": "putVmssOPCount",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a8bb0661-f97d-4da9-819b-fc310d78bab3",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Put Vmss operation failures"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put Vmss operation failures",
+    "queryId": "930d895f-6082-47f3-a867-846a525ff428",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssFailuresPerSub",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "IsUserError",
+        "type": "long"
+      },
+      {
+        "name": "ServerError",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "da4dd96e-75a5-4bcc-ad47-9f49c22bd4e8",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Put Vmss subscription lock duration (ms) per 5 mins"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put Vmss subscription lock duration (ms) per 5 mins",
+    "queryId": "dda8c2f6-21d0-4971-93af-caeb6fecad4c",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssSubLockPerSub",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubLockDuration",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "df4585c1-c3a5-4e34-ae6c-6077d2ae3f01",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Put Vmss sub lock duration ms (COU vs non-COU) per 5 mins"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put Vmss sub lock duration ms (COU vs non-COU) per 5 mins",
+    "queryId": "d6d57cbf-bb96-4c41-b636-0b04370c4759",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssLockDurationCouVsNonCOU",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Duration",
+        "type": "long"
+      },
+      {
+        "name": "lockDurationNoBgTaskOps",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9e294da8-2314-4d73-817b-023f827500c5",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Put Vmss sub lock duration ms (COU vs non-COU) per 5 mins"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put Vmss sub lock duration ms (COU vs non-COU) per 5 mins",
+    "queryId": "a1c2e920-d871-47fa-aecb-62f65aca9574",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceGroup",
+        "externalSourceName": "Resource Group",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceName",
+        "externalSourceName": "Resource Name",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssSubLockCouVsNonCouPerRes",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Duration",
+        "type": "long"
+      },
+      {
+        "name": "couLockDuration",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a2fa70a3-5b40-41d6-b1cc-10654d89ae38",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Put Vmss latency (ms)"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put Vmss latency (ms)",
+    "queryId": "a049a02b-fa37-4388-a57f-f07343a4c863",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssLatencyPerSub",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_99",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "721e630d-fa1c-411e-847b-76b2b809ac13",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Put Vmss Compute only updates"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put Vmss Compute only updates",
+    "queryId": "5687716e-da41-49e8-971c-2813fef63060",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "CoUPerSubscription",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "computeOnlyUpdates",
+        "type": "long"
+      },
+      {
+        "name": "vmssUpdatedWhenComputeOnlyUpdates",
+        "type": "long"
+      },
+      {
+        "name": "totalPutVmssOperations",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "4145d20c-eee8-4122-8cc2-c594441df705",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Put Vmss sub lock for Peregrine scale down"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put Vmss sub lock for Peregrine scale down",
+    "queryId": "fe5eec40-8fd6-4392-a8b3-16a902f110b2",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssSubLockPeregrineScaleDownPerSub",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "sum_LockDuration",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7473c229-f375-47d5-a40f-582b0667ab2b",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Put Vmss transaction stats (KB) per 5 mins"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put Vmss transaction stats (KB) per 5 mins",
+    "queryId": "70d9f7d9-70c8-4007-ab31-d606de689233",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssTransactionStatsPerSub",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "readSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "addSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "updateSizeKb",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "18ad69aa-0956-4bac-8a68-3edce3a86dd3",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Put Vmss resource type read stats"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put Vmss resource type read stats",
+    "queryId": "cab62d71-a470-4719-9214-e54a59c30982",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssResourceTypeReadStats",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AvgNicReadCount",
+        "type": "real"
+      },
+      {
+        "name": "AvgVMReadCount",
+        "type": "real"
+      },
+      {
+        "name": "AvgTenantReadCount",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "e375f265-d38a-49ca-97ad-09f15a6e2a7c",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "PutVmss Subnet read stats"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PutVmss Subnet read stats",
+    "queryId": "f8ffcc82-1671-4b40-874c-4151f8eddc86",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssSubnetReadStats",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AvgSubnetReadCount",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b2a39fbb-5b3e-4618-b653-3b168d0549aa",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "PutVmss Ipconfigurations reads"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PutVmss Ipconfigurations reads",
+    "queryId": "0dd9c2a4-f32f-40d7-ab41-7c41df4747a9",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssIpConfigsPerSubRead",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AvgIpConfigurationsReadCount",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2b2a1c10-7a92-4ad6-8232-d00a6192eba8",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "Subscription View",
+      "Action categories during PutVmss operation for existing resources"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Action categories during PutVmss operation for existing resources",
+    "queryId": "cdd1e4ca-3300-4d0e-943e-49bd3052e08c",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "sub",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssActionsPerSub",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "sub",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "PutVmssOps",
+        "type": "long"
+      },
+      {
+        "name": "ComputeOnlyUpdates",
+        "type": "long"
+      },
+      {
+        "name": "ScaleUpOps",
+        "type": "long"
+      },
+      {
+        "name": "ScaleDownOps",
+        "type": "long"
+      },
+      {
+        "name": "NetworkProfileUpdateOps",
+        "type": "long"
+      },
+      {
+        "name": "VmsMovedAcrossUpdateGroups",
+        "type": "long"
+      },
+      {
+        "name": "TagsChanged",
+        "type": "long"
+      },
+      {
+        "name": "TenantsChanged",
+        "type": "long"
+      },
+      {
+        "name": "EmptyUpdateGroupCountMismatch",
+        "type": "long"
+      },
+      {
+        "name": "FailedProvisioningState",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "6e073814-cfaf-4452-85c9-35361d381613",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "panelPath": [
+      "Subscription View",
+      "Top 5 error stacks"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Top 5 error stacks",
+    "queryId": "8792484c-f05d-4b6d-b099-53527da1a1fb",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssFailureErrorCodes",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "28c8f91a-e8fa-4e57-b902-1453f440b02e",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Top 15 VMSS resources undergoing updates"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Top 15 VMSS resources undergoing updates",
+    "queryId": "e2cc0d73-6c64-41cd-9d33-6516997aebb0",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "TopVmssResourcesPerSub",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      },
+      {
+        "name": "CountOfOperations",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "c8263e92-8207-450b-9e83-012058b21d08",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "Batch manager resource lock acquisition failures"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Batch manager resource lock acquisition failures",
+    "queryId": "5dace380-1e81-4bb5-bd78-edde00e25544",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "BatchManagerResourceLockingTransactionAquisitionFailurePerSub",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "48ab4fc4-a1f6-4906-a32f-e5f52b811fb5",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Subscription View",
+      "BatchManager transaction job dequeue times (ms)"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "BatchManager transaction job dequeue times (ms)",
+    "queryId": "f24d841b-c638-4d91-a8e8-8a06289f3074",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "BatchManagerDequeueJobTimesPerSub",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "percentile_durationMs_50",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8655cfb9-d954-411e-a89a-f0a26b565e17",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VMSS View",
+      "PutVmss errors"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PutVmss errors",
+    "queryId": "5cd84760-f719-4509-b529-e476f53d2b4e",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceGroup",
+        "externalSourceName": "Resource Group",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceName",
+        "externalSourceName": "Resource Name",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssFailuresPerVmss",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "IsUserError",
+        "type": "long"
+      },
+      {
+        "name": "ServerError",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "3c9b21f6-932b-41b4-9fc3-831c8d74603c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VMSS View",
+      "PutVmss subscription lock ms (per 5min)"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PutVmss subscription lock ms (per 5min)",
+    "queryId": "3971755a-d04b-4905-8a46-0a919c10d3b7",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceGroup",
+        "externalSourceName": "Resource Group",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceName",
+        "externalSourceName": "Resource Name",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssSubLockPerResource",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubLockDuration",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d85b115a-d8b5-4aa8-b04c-f9f848a025ae",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VMSS View",
+      "PutVmss sub lock COU vs Non-COU ms (per 5min)"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "PutVmss sub lock COU vs Non-COU ms (per 5min)",
+    "queryId": "1d6b5cf1-cbdf-4cde-a3d2-9e9194ef3aec",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceGroup",
+        "externalSourceName": "Resource Group",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceName",
+        "externalSourceName": "Resource Name",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssSubLockCouVsNonCouPerRes",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Duration",
+        "type": "long"
+      },
+      {
+        "name": "couLockDuration",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "6a22ddde-8606-4d6c-be76-4d3ed6d096fe",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VMSS View",
+      "Action categories during Put Vmss for existing resource"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Action categories during Put Vmss for existing resource",
+    "queryId": "f8990d96-fcaa-4da6-8f9a-f143e87abecc",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "location",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceGroup",
+        "externalSourceName": "Resource Group",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceName",
+        "externalSourceName": "Resource Name",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "PutVmssActionsPerResource",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "location",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "PutVmssOps",
+        "type": "long"
+      },
+      {
+        "name": "ComputeOnlyUpdates",
+        "type": "long"
+      },
+      {
+        "name": "ScaleUpOps",
+        "type": "long"
+      },
+      {
+        "name": "ScaleDownOps",
+        "type": "long"
+      },
+      {
+        "name": "NetworkProfileUpdateOps",
+        "type": "long"
+      },
+      {
+        "name": "TagsChanged",
+        "type": "long"
+      },
+      {
+        "name": "TenantsChanged",
+        "type": "long"
+      },
+      {
+        "name": "EmptyUpdateGroupCountMismatch",
+        "type": "long"
+      },
+      {
+        "name": "FailedProvisioningState",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  }
+]

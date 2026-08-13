@@ -1,0 +1,409 @@
+{
+  "service": "DRP",
+  "page": "Operation Id",
+  "pageId": "cd239384-29a5-4542-83fb-9b4bf5c0fcb5",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "b9cf73f4-5eb9-44a3-a9ee-5f10e6b06cb6",
+          "name": "Retrieve Resource \"Operation Id\"",
+          "groupId": "0da3ec49-2867-440f-a194-7e4f3efb63bc",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "disks",
+          "database": "Disks",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "resultType",
+              "type": "long"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "requestEntity",
+              "type": "string"
+            },
+            {
+              "name": "internalCorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "e2eInMin",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "DiskManagerApiQoSEvent\r\n| where PreciseTimeStamp between (globalFrom .. globalTo)\r\n| where operationId =~ local_operationId\r\n| extend startTime = datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| project startTime, endTime = PreciseTimeStamp, operationName, operationId, clientRequestId, correlationId, resourceName, resultCode, resultType, errorDetails, exceptionType, httpStatusCode,requestEntity, internalCorrelationId, e2eInMin = e2EDurationInMilliseconds/1000/60\r\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "DiskManagerContextActivityEvent ": {
+      "panelPath": [
+        "DiskManagerContextActivityEvent "
+      ],
+      "queries": [
+        {
+          "id": "fc26362d-50b6-461c-a0ce-5a000403e269",
+          "name": "Query DiskManagerContextActivityEvent",
+          "groupId": "f446f848-c0dc-455d-9a9c-88fced98fbda",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "Disks",
+          "database": "Disks",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "DiskManagerContextActivityEvent ",
+          "params": [
+            {
+              "name": "queryStartTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryEndTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "callerName",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "0da3ec49-2867-440f-a194-7e4f3efb63bc",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryStartTime",
+              "externalSourceName": "startTime",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "0da3ec49-2867-440f-a194-7e4f3efb63bc",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryEndTime",
+              "externalSourceName": "endTime",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "0da3ec49-2867-440f-a194-7e4f3efb63bc",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "DiskManagerContextActivityEvent\r\n| where PreciseTimeStamp  between ((queryStartTime-1h) .. (queryEndTime+1h))\r\n| where activityId == queryOperationId\r\n| project PreciseTimeStamp, callerName, message\r\n| order by PreciseTimeStamp asc ",
+          "panelPath": [
+            "DiskManagerContextActivityEvent "
+          ]
+        },
+        {
+          "id": "b9cf73f4-5eb9-44a3-a9ee-5f10e6b06cb6",
+          "name": "Retrieve Resource \"Operation Id\"",
+          "groupId": "0da3ec49-2867-440f-a194-7e4f3efb63bc",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "disks",
+          "database": "Disks",
+          "type": "ResourceGet",
+          "widgetType": "Table",
+          "widgetTitle": "DiskManagerContextActivityEvent ",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "resultType",
+              "type": "long"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "requestEntity",
+              "type": "string"
+            },
+            {
+              "name": "internalCorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "e2eInMin",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "DiskManagerApiQoSEvent\r\n| where PreciseTimeStamp between (globalFrom .. globalTo)\r\n| where operationId =~ local_operationId\r\n| extend startTime = datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| project startTime, endTime = PreciseTimeStamp, operationName, operationId, clientRequestId, correlationId, resourceName, resultCode, resultType, errorDetails, exceptionType, httpStatusCode,requestEntity, internalCorrelationId, e2eInMin = e2EDurationInMilliseconds/1000/60\r\n",
+          "panelPath": [
+            "DiskManagerContextActivityEvent "
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:43:25.590Z",
+    "totalPanels": 2,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 3
+  }
+}

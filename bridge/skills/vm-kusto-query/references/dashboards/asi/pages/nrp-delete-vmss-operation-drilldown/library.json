@@ -1,0 +1,863 @@
+{
+  "service": "NRP",
+  "page": "DELETE VMScaleSet operation drilldown",
+  "pageId": "05fe9992-104e-4a11-9476-a747b95538cd",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Region level > Latency": {
+      "panelPath": [
+        "Region level",
+        "Latency"
+      ],
+      "queries": [
+        {
+          "id": "7d41601f-1883-4157-8e16-8b2a89d41cfe",
+          "name": "Latency",
+          "groupId": "4646a889-185c-49a1-95d2-35c7aaac66eb",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Latency",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "percentile_DurationInMillisecond_50",
+              "type": "long"
+            },
+            {
+              "name": "percentile_DurationInMillisecond_90",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false
+            }
+          ],
+          "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where OperationName =~ \"DeleteVmScaleSetOperation\"\r\n| summarize percentiles(DurationInMillisecond, 50, 90 ) by bin(PreciseTimeStamp, 10m)\r\n| render timechart ",
+          "panelPath": [
+            "Region level",
+            "Latency"
+          ]
+        }
+      ]
+    },
+    "Region level > Sub lock duration": {
+      "panelPath": [
+        "Region level",
+        "Sub lock duration"
+      ],
+      "queries": [
+        {
+          "id": "914d5a86-5990-4d3d-b9fb-dde13af6fb28",
+          "name": "DeleteVmssSubLockRegion",
+          "groupId": "ef77bea6-b54a-4fbb-9bab-5397128bc5ac",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Sub lock duration",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "sum_LockDuration",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let location = region;\r\nlet startTime = queryFrom;\r\nlet endTime = queryTo;\r\nlet regex=\"Operation (.+) \\\\((.+)\\\\) released lock (.+) after (\\\\d+) ms\";\r\nlet dvmss=WriteOperationResponseEtwEvent\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where Region == location\r\n| where OperationName in (\"DeleteVMScaleSetOperation\")\r\n| where HttpStatusCode == \"Accepted\"\r\n| distinct OperationId;\r\n//dvmss;\r\nlet subLock=FrontendOperationEtwEvent\r\n| where Region == location\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where OperationName in (\"DeleteVMScaleSetOperation\")\r\n| where EventCode == \"LockReleased\"\r\n| extend cou = OperationId in (dvmss)\r\n| extend LockName=extract(regex, 3, Message)\r\n| extend LockDuration=toint(extract(regex, 4, Message))\r\n| where LockName == SubscriptionId\r\n| summarize sum(LockDuration) by bin(PreciseTimeStamp, 5m)\r\n| render timechart;\r\nsubLock;\r\n",
+          "panelPath": [
+            "Region level",
+            "Sub lock duration"
+          ]
+        }
+      ]
+    },
+    "Region level > Success rate": {
+      "panelPath": [
+        "Region level",
+        "Success rate"
+      ],
+      "queries": [
+        {
+          "id": "3e25f6b7-d106-433a-a0eb-547b19144958",
+          "name": "DeleteVmssSuccess",
+          "groupId": "be26271c-3472-44b8-a7fe-e51b057e371b",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Success rate",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            },
+            {
+              "name": "sum_isSuccess",
+              "type": "long"
+            },
+            {
+              "name": "sum_fail",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false
+            }
+          ],
+          "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Region == region\r\n| where OperationName =~ \"DeleteVmScaleSetOperation\"\r\n| extend isSuccess = iff(HttpStatusCode  == \"Accepted\", 1, 0)\r\n| extend fail = iff(HttpStatusCode  != \"Accepted\", 1, 0)\r\n| summarize count(), sum(isSuccess), sum(fail) by bin(PreciseTimeStamp, 10m)\r\n| render timechart ",
+          "panelPath": [
+            "Region level",
+            "Success rate"
+          ]
+        }
+      ]
+    },
+    "Region level > Top Subscriptions": {
+      "panelPath": [
+        "Region level",
+        "Top Subscriptions"
+      ],
+      "queries": [
+        {
+          "id": "ac284dd7-d9a0-4d89-a05a-48d6a0a7c905",
+          "name": "DeleteVmssTopSubs",
+          "groupId": "f519a384-82ae-4987-8819-7c82651e0d87",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Top Subscriptions",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let location = region;\r\nlet startTime = queryFrom;\r\nlet endTime = queryTo;\r\nlet dvmss=WriteOperationResponseEtwEvent\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where Region == location\r\n| where OperationName in (\"DeleteVMScaleSetOperation\")\r\n| where ResourceName !startswith \"pps-vm\"\r\n| where HttpStatusCode == \"Accepted\"\r\n| summarize count() by SubscriptionId\r\n| order by count_ desc \r\n| take 10;\r\ndvmss;",
+          "panelPath": [
+            "Region level",
+            "Top Subscriptions"
+          ]
+        }
+      ]
+    },
+    "Region level > Transaction stats (KB)": {
+      "panelPath": [
+        "Region level",
+        "Transaction stats (KB)"
+      ],
+      "queries": [
+        {
+          "id": "9eb5bec5-41aa-4eae-96c4-c589927f6a8a",
+          "name": "DeleteVmssTransactionStatsRegion",
+          "groupId": "7bf9f09b-576c-4d6d-84b8-76e8eca58448",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Transaction stats (KB)",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "readSizeKb",
+              "type": "long"
+            },
+            {
+              "name": "addSizeKb",
+              "type": "long"
+            },
+            {
+              "name": "updateSizeKb",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false
+            }
+          ],
+          "kustoQuery": "KvsTransactionEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where OperationName in (\"DeleteVMScaleSetOperation\")\r\n| project PreciseTimeStamp, ReadCount, ReadSize, AddCount, AddSize, ReadDuration, CommitDuration, UpdateCount, UpdateSize, OperationId\r\n| summarize readSizeKb = sum(ReadSize)/1000, addSizeKb = sum(AddSize)/1000, updateSizeKb = sum(UpdateSize)/1000 by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+          "panelPath": [
+            "Region level",
+            "Transaction stats (KB)"
+          ]
+        }
+      ]
+    },
+    "Sub level > Delete VMSS Ip configurations reads": {
+      "panelPath": [
+        "Sub level",
+        "Delete VMSS Ip configurations reads"
+      ],
+      "queries": [
+        {
+          "id": "4ef4f898-3014-4567-8771-b3ffc48be9af",
+          "name": "DeleteVmssIpConfigReads",
+          "groupId": "f90eba6a-fa00-4710-b96f-66b017b65518",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Delete VMSS Ip configurations reads",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "AvgIpConfigurationsReadCount",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "Subscription",
+              "required": false
+            }
+          ],
+          "kustoQuery": "KvsTransactionEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"DeleteVMScaleSetOperation\")\r\n| project PreciseTimeStamp, ReadCount, ReadSize, AddCount, AddSize, TypeBasedReadCount, UpdateCount, UpdateSize, OperationId\r\n| where ReadCount > 0\r\n| extend IpConfigurationsReadCount = toint(extract(@\"ipConfigurations : (\\d+);\", 1, TypeBasedReadCount))\r\n| summarize AvgIpConfigurationsReadCount = round(todouble(sum(IpConfigurationsReadCount)) / dcount(OperationId),2) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+          "panelPath": [
+            "Sub level",
+            "Delete VMSS Ip configurations reads"
+          ]
+        }
+      ]
+    },
+    "Sub level > Delete VMSS Subnet reads": {
+      "panelPath": [
+        "Sub level",
+        "Delete VMSS Subnet reads"
+      ],
+      "queries": [
+        {
+          "id": "8555c662-d350-48cf-a81c-e076639fcab0",
+          "name": "DeleteVmssSubnetReadsSub",
+          "groupId": "e370cf3d-a7f6-4a0e-96a1-501c7189a84e",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Delete VMSS Subnet reads",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "AvgSubnetReadCount",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "Subscription",
+              "required": false
+            }
+          ],
+          "kustoQuery": "KvsTransactionEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"DeleteVMScaleSetOperation\")\r\n| project PreciseTimeStamp, ReadCount, ReadSize, AddCount, AddSize, TypeBasedReadCount, UpdateCount, UpdateSize, OperationId\r\n| where ReadCount > 0\r\n| extend IpConfigurationsReadCount = toint(extract(@\"ipConfigurations : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend SubnetReadCount = toint(extract(@\"subnets : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend VnetReadCount = toint(extract(@\"virtualNetworks : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend vmssReadCount = toint(extract(@\"virtualMachineScaleSets : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend nicReadCount = toint(extract(@\"networkInterfaces : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend tenantReadCount = toint(extract(@\"tenants : (\\d+);\", 1, TypeBasedReadCount))\r\n| extend vmReadCount = toint(extract(@\"virtualMachines : (\\d+);\", 1, TypeBasedReadCount))\r\n| summarize //AvgVnetReadCount = round(todouble(sum(VnetReadCount)) / dcount(OperationId),2),\r\n            //AvgNicReadCount = round(todouble(sum(nicReadCount)) / dcount(OperationId),2), \r\n            //AvgIpConfigurationsReadCount = round(todouble(sum(IpConfigurationsReadCount)) / dcount(OperationId),2),\r\n            AvgSubnetReadCount = round(todouble(sum(SubnetReadCount)) / dcount(OperationId),2)  by bin(PreciseTimeStamp, 5m)\r\n            //AvgVMReadCount = round(todouble(sum(vmReadCount)) / dcount(OperationId),2),\r\n            //AvgTenantReadCount = round(todouble(sum(tenantReadCount)) / dcount(OperationId),2) by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+          "panelPath": [
+            "Sub level",
+            "Delete VMSS Subnet reads"
+          ]
+        }
+      ]
+    },
+    "Sub level > Sub lock duration": {
+      "panelPath": [
+        "Sub level",
+        "Sub lock duration"
+      ],
+      "queries": [
+        {
+          "id": "104ebfb7-2885-49ca-bb40-a4ff1dbe6c1d",
+          "name": "DeleteVmssSubLockSub",
+          "groupId": "9714a06e-0df0-4115-b3ac-2a0f475723d4",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Sub lock duration",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "sum_LockDuration",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "Subscription",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let location = region;\r\nlet startTime = queryFrom;\r\nlet endTime = queryTo;\r\nlet subIds = subId;\r\nlet regex=\"Operation (.+) \\\\((.+)\\\\) released lock (.+) after (\\\\d+) ms\";\r\nlet dvmss=WriteOperationResponseEtwEvent\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where Region == location\r\n| where SubscriptionId in (subIds)\r\n| where OperationName in (\"DeleteVMScaleSetOperation\")\r\n| where HttpStatusCode == \"Accepted\"\r\n| distinct OperationId;\r\n//dvmss;\r\nlet subLock=FrontendOperationEtwEvent\r\n| where Region == location\r\n| where SubscriptionId in (subIds)\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where OperationName in (\"DeleteVMScaleSetOperation\")\r\n| where EventCode == \"LockReleased\"\r\n| extend cou = OperationId in (dvmss)\r\n| extend LockName=extract(regex, 3, Message)\r\n| extend LockDuration=toint(extract(regex, 4, Message))\r\n| where LockName == SubscriptionId\r\n| summarize sum(LockDuration) by bin(PreciseTimeStamp, 1d)\r\n| render timechart;\r\nsubLock;\r\n",
+          "panelPath": [
+            "Sub level",
+            "Sub lock duration"
+          ]
+        }
+      ]
+    },
+    "Sub level > Transaction stats (KB)": {
+      "panelPath": [
+        "Sub level",
+        "Transaction stats (KB)"
+      ],
+      "queries": [
+        {
+          "id": "8ab92b9b-2197-46b4-ab73-f8bd69478b4c",
+          "name": "DeleteVmssTransactionStatsSub",
+          "groupId": "812150f0-a08e-47cd-9c87-d0e34f7f5106",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Transaction stats (KB)",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "readSizeKb",
+              "type": "long"
+            },
+            {
+              "name": "addSizeKb",
+              "type": "long"
+            },
+            {
+              "name": "updateSizeKb",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "Subscription",
+              "required": false
+            }
+          ],
+          "kustoQuery": "KvsTransactionEtwEvent\r\n| where PreciseTimeStamp between (queryFrom ..queryTo)\r\n| where Region == region\r\n| where SubscriptionId == subId\r\n| where OperationName in (\"DeleteVMScaleSetOperation\")\r\n| project PreciseTimeStamp, ReadCount, ReadSize, AddCount, AddSize, ReadDuration, CommitDuration, UpdateCount, UpdateSize, OperationId\r\n| summarize readSizeKb = sum(ReadSize)/1000, addSizeKb = sum(AddSize)/1000, updateSizeKb = sum(UpdateSize)/1000 by bin(PreciseTimeStamp, 5m)\r\n| render timechart ",
+          "panelPath": [
+            "Sub level",
+            "Transaction stats (KB)"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:54.079Z",
+    "totalPanels": 9,
+    "totalUniqueQueries": 9,
+    "totalWidgetRefs": 9
+  }
+}

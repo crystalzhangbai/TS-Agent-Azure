@@ -1,0 +1,3095 @@
+{
+  "service": "CRP",
+  "page": "Debug Allocations",
+  "pageId": "2f9b8686-188f-43af-822e-ac85a5129602",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "7829bcf7-eddc-4bcd-acbc-552933ee224d",
+          "name": "Get Allocation from AllocatorAllocationResult",
+          "groupId": "7404b608-11e6-4f7a-afd8-7d2ff350c7d5",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "AzureAllocator",
+          "type": "Single",
+          "widgetType": "Container",
+          "widgetTitle": "Debug Allocations {{allocationId}}",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "allocatorVersion",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "allocationRequestType",
+              "type": "string"
+            },
+            {
+              "name": "isSucceeded",
+              "type": "bool"
+            },
+            {
+              "name": "isScoreRequest",
+              "type": "bool"
+            },
+            {
+              "name": "containersRequested",
+              "type": "long"
+            },
+            {
+              "name": "containersAllocated",
+              "type": "long"
+            },
+            {
+              "name": "containersToSuspend",
+              "type": "long"
+            },
+            {
+              "name": "fdCount",
+              "type": "long"
+            },
+            {
+              "name": "udCount",
+              "type": "long"
+            },
+            {
+              "name": "totalTime",
+              "type": "long"
+            },
+            {
+              "name": "inventoryTranslationTime",
+              "type": "long"
+            },
+            {
+              "name": "documentVerificationTime",
+              "type": "long"
+            },
+            {
+              "name": "relaxationPolicyEvaluationTime",
+              "type": "long"
+            },
+            {
+              "name": "requestBuilderTime",
+              "type": "long"
+            },
+            {
+              "name": "requestPreparationTime",
+              "type": "long"
+            },
+            {
+              "name": "containerAllocationTime",
+              "type": "long"
+            },
+            {
+              "name": "allocableVmLimitCheckTime",
+              "type": "long"
+            },
+            {
+              "name": "serviceAllocationWorkflowTime",
+              "type": "long"
+            },
+            {
+              "name": "resultBuilderTime",
+              "type": "long"
+            },
+            {
+              "name": "serviceRuleEvaluationJournaledResolveTime",
+              "type": "long"
+            },
+            {
+              "name": "serviceRuleEvaluationTime",
+              "type": "long"
+            },
+            {
+              "name": "serviceRuleTotalTime",
+              "type": "long"
+            },
+            {
+              "name": "preAllocationLimitCheckDataSnapshotTime",
+              "type": "long"
+            },
+            {
+              "name": "postAllocationLimitCheckDataSnapshotTime",
+              "type": "long"
+            },
+            {
+              "name": "preAllocationNodeLimitCheckDataSnapshotTime",
+              "type": "long"
+            },
+            {
+              "name": "preAllocationUtilLimitCheckDataSnapshotTime",
+              "type": "long"
+            },
+            {
+              "name": "allocationResultStatisticsTime",
+              "type": "long"
+            },
+            {
+              "name": "loggingTime",
+              "type": "long"
+            },
+            {
+              "name": "allocationScore",
+              "type": "real"
+            },
+            {
+              "name": "allocatorInstanceIdentity",
+              "type": "string"
+            },
+            {
+              "name": "allocationRetryNumber",
+              "type": "long"
+            },
+            {
+              "name": "allocationFault",
+              "type": "string"
+            },
+            {
+              "name": "priority",
+              "type": "long"
+            },
+            {
+              "name": "numberOfBatches",
+              "type": "long"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "postAllocationInventoryUpdateTime",
+              "type": "long"
+            },
+            {
+              "name": "auxiliaryAllocationId",
+              "type": "string"
+            },
+            {
+              "name": "migrationType",
+              "type": "string"
+            },
+            {
+              "name": "migrationId",
+              "type": "string"
+            },
+            {
+              "name": "__IsTrusted__",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorAllocationResult\r\n| where allocationId == queryAllocationId",
+          "panelPath": []
+        }
+      ]
+    },
+    "AzAllocator > Allocation Request Traits > Allocation Request Traits": {
+      "panelPath": [
+        "AzAllocator",
+        "Allocation Request Traits",
+        "Allocation Request Traits"
+      ],
+      "queries": [
+        {
+          "id": "b1add2a2-92e5-4738-8b33-ae57c5175f6d",
+          "name": "Get Allocation Request Trait",
+          "groupId": "c42e6719-5c3d-46db-94df-6bc1e366c9f0",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Allocation Request Traits",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "SourceTable",
+              "type": "string"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "union withsource=SourceTable AllocatorServiceRequestTrait, AllocatorContainerRequestTrait\r\n| where allocationId == queryAllocationId\r\n| project SourceTable, containerRequestId, name, value\r\n| order by SourceTable, name ",
+          "panelPath": [
+            "AzAllocator",
+            "Allocation Request Traits",
+            "Allocation Request Traits"
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Cluster Selection > ActiveClusterSelectionRules ": {
+      "panelPath": [
+        "AzAllocator",
+        "Cluster Selection",
+        "ActiveClusterSelectionRules "
+      ],
+      "queries": [
+        {
+          "id": "1fc408db-ef88-4b2e-ae4b-ab2271780dd2",
+          "name": "Query AllocatorActiveClusterSelectionRules",
+          "groupId": "63169e1a-c501-47ea-962f-bb4adb5433cf",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ActiveClusterSelectionRules ",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "ruleName",
+              "type": "string"
+            },
+            {
+              "name": "isValidatorRule",
+              "type": "bool"
+            },
+            {
+              "name": "allocationRetryNumber",
+              "type": "long"
+            },
+            {
+              "name": "batchNumber",
+              "type": "long"
+            },
+            {
+              "name": "containerAllocationWorkflowStep",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "ruleRank",
+              "type": "long"
+            },
+            {
+              "name": "__IsTrusted__",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorActiveClusterSelectionRules\r\n| where allocationId == queryAllocationId\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "AzAllocator",
+            "Cluster Selection",
+            "ActiveClusterSelectionRules "
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Cluster Selection > Cluster Select Results": {
+      "panelPath": [
+        "AzAllocator",
+        "Cluster Selection",
+        "Cluster Select Results"
+      ],
+      "queries": [
+        {
+          "id": "a30fb0ef-4994-4cbc-8b15-a945a9debb54",
+          "name": "Cluster Select Results",
+          "groupId": "7e84fd1e-0608-4c00-8c3d-211d6aabd0b4",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Cluster Select Results",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "isSucceeded",
+              "type": "bool"
+            },
+            {
+              "name": "allocationFault",
+              "type": "string"
+            },
+            {
+              "name": "selectedClusters",
+              "type": "string"
+            },
+            {
+              "name": "selectedClustersCount",
+              "type": "long"
+            },
+            {
+              "name": "isNonSpannedMultiInstanceAllocation",
+              "type": "bool"
+            },
+            {
+              "name": "candidateClustersCount",
+              "type": "long"
+            },
+            {
+              "name": "validClustersCount",
+              "type": "long"
+            },
+            {
+              "name": "validClusterListId",
+              "type": "string"
+            },
+            {
+              "name": "validatorCachesResolveTime",
+              "type": "long"
+            },
+            {
+              "name": "preferenceCachesResolveTime",
+              "type": "long"
+            },
+            {
+              "name": "clusterFilterTime",
+              "type": "long"
+            },
+            {
+              "name": "clusterLimitCheckTime",
+              "type": "long"
+            },
+            {
+              "name": "clusterSortTime",
+              "type": "long"
+            },
+            {
+              "name": "totalTime",
+              "type": "long"
+            },
+            {
+              "name": "allocationRetryNumber",
+              "type": "long"
+            },
+            {
+              "name": "batchNumber",
+              "type": "long"
+            },
+            {
+              "name": "containerAllocationWorkflowStep",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "selectedNodeCountToEvaluate",
+              "type": "long"
+            },
+            {
+              "name": "fragmentedClustersSkippedInTruncation",
+              "type": "string"
+            },
+            {
+              "name": "__IsTrusted__",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorClusterSelectionResult\r\n| where allocationId == queryAllocationId\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "AzAllocator",
+            "Cluster Selection",
+            "Cluster Select Results"
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Cluster Selection > Rejected Clusters from AllocatorRejectedClusterInfo": {
+      "panelPath": [
+        "AzAllocator",
+        "Cluster Selection",
+        "Rejected Clusters from AllocatorRejectedClusterInfo"
+      ],
+      "queries": [
+        {
+          "id": "14dff800-e3a2-4fea-91c3-a82bbfbf3148",
+          "name": "Get Rejected Clusters",
+          "groupId": "8c3f6085-ce07-4449-9b99-be1b54a9a6cb",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Rejected Clusters from AllocatorRejectedClusterInfo",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "rejectedClusterListId",
+              "type": "string"
+            },
+            {
+              "name": "reason",
+              "type": "string"
+            },
+            {
+              "name": "rejectedClusters",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorRejectedClusterInfo\r\n| where allocationId == queryAllocationId\r\n| project PreciseTimeStamp, allocationId, containerRequestId, rejectedClusterListId, reason\r\n| join kind=inner (\r\n    AllocatorClusterListToClusterMap\r\n    | project allocationId, rejectedClusterListId = clusterListId, rejectedClusters = clusterNames)\r\n    on rejectedClusterListId, allocationId\r\n| project-away rejectedClusterListId1, allocationId1\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "AzAllocator",
+            "Cluster Selection",
+            "Rejected Clusters from AllocatorRejectedClusterInfo"
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Container Steps & Reuse > AllocatorContainerReuseStep ": {
+      "panelPath": [
+        "AzAllocator",
+        "Container Steps & Reuse",
+        "AllocatorContainerReuseStep "
+      ],
+      "queries": [
+        {
+          "id": "92fa276b-5195-4084-a685-bf6c99d08b5f",
+          "name": "Query AllocatorContainerReuseStep",
+          "groupId": "61880c19-4f22-4538-99ef-69959d5e3afb",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "AllocatorContainerReuseStep ",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "containerWorkflowStep",
+              "type": "string"
+            },
+            {
+              "name": "healthPreference",
+              "type": "string"
+            },
+            {
+              "name": "isSucceeded",
+              "type": "bool"
+            },
+            {
+              "name": "containerToReuseId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "reuseableContainerCount",
+              "type": "long"
+            },
+            {
+              "name": "totalTime",
+              "type": "long"
+            },
+            {
+              "name": "allocationRetryNumber",
+              "type": "long"
+            },
+            {
+              "name": "batchNumber",
+              "type": "long"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "__IsTrusted__",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorContainerReuseStep\r\n| where allocationId == queryAllocationId",
+          "panelPath": [
+            "AzAllocator",
+            "Container Steps & Reuse",
+            "AllocatorContainerReuseStep "
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Container Steps & Reuse > Container Results": {
+      "panelPath": [
+        "AzAllocator",
+        "Container Steps & Reuse",
+        "Container Results"
+      ],
+      "queries": [
+        {
+          "id": "404e9940-f552-4768-b5e4-c248f793acda",
+          "name": "Query Allocator Container Result",
+          "groupId": "6c926b5d-5970-481b-9ab4-fe29e25acc27",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Container Results",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "containerIndex",
+              "type": "long"
+            },
+            {
+              "name": "isSucceeded",
+              "type": "bool"
+            },
+            {
+              "name": "resultType",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "containersToSuspend",
+              "type": "long"
+            },
+            {
+              "name": "totalTime",
+              "type": "long"
+            },
+            {
+              "name": "loggingTime",
+              "type": "long"
+            },
+            {
+              "name": "comment",
+              "type": "string"
+            },
+            {
+              "name": "allocationRetryNumber",
+              "type": "long"
+            },
+            {
+              "name": "batchNumber",
+              "type": "long"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "colocationStatus",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "sendCommittedContainersBeforeModification",
+              "type": "bool"
+            },
+            {
+              "name": "storageT2SpinesWithinColocationBoundaries",
+              "type": "string"
+            },
+            {
+              "name": "placementTraitsForAppManager",
+              "type": "string"
+            },
+            {
+              "name": "__IsTrusted__",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorContainerResult\r\n| where allocationId == queryAllocationId\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "AzAllocator",
+            "Container Steps & Reuse",
+            "Container Results"
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Container Steps & Reuse > Container Reuse Rejection Reason": {
+      "panelPath": [
+        "AzAllocator",
+        "Container Steps & Reuse",
+        "Container Reuse Rejection Reason"
+      ],
+      "queries": [
+        {
+          "id": "7cf4568e-238e-4736-8cba-df9eeda25748",
+          "name": "Query AllocatorContainerReuseRejectionReason",
+          "groupId": "6c45dac3-282a-4aaa-94a1-b905b63ae0b3",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Container Reuse Rejection Reason",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "containerWorkflowStep",
+              "type": "string"
+            },
+            {
+              "name": "rejectedContainerId",
+              "type": "string"
+            },
+            {
+              "name": "ruleName",
+              "type": "string"
+            },
+            {
+              "name": "reason",
+              "type": "string"
+            },
+            {
+              "name": "allocationRetryNumber",
+              "type": "long"
+            },
+            {
+              "name": "batchNumber",
+              "type": "long"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "__IsTrusted__",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorContainerReuseRejectionReason\r\n| where allocationId == queryAllocationId",
+          "panelPath": [
+            "AzAllocator",
+            "Container Steps & Reuse",
+            "Container Reuse Rejection Reason"
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Limit Checks > AllocatorClusterSelectionNodeLimitCheckInfo": {
+      "panelPath": [
+        "AzAllocator",
+        "Limit Checks",
+        "AllocatorClusterSelectionNodeLimitCheckInfo"
+      ],
+      "queries": [
+        {
+          "id": "579f347e-5255-4c33-9e79-25904b578e88",
+          "name": "Query AllocatorClusterSelectionNodeLimitCheckInfo",
+          "groupId": "dab37b8f-f77d-49ca-aad5-bf73f7cee26d",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "AllocatorClusterSelectionNodeLimitCheckInfo",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "clusterName",
+              "type": "string"
+            },
+            {
+              "name": "scope",
+              "type": "string"
+            },
+            {
+              "name": "isScaleUp",
+              "type": "bool"
+            },
+            {
+              "name": "henCountToReserve",
+              "type": "long"
+            },
+            {
+              "name": "henReturnedByContainersToBeDeleted",
+              "type": "long"
+            },
+            {
+              "name": "adjustedHenCount",
+              "type": "long"
+            },
+            {
+              "name": "flightingNodeLimit",
+              "type": "long"
+            },
+            {
+              "name": "adjustedFlightingNodeCount",
+              "type": "long"
+            },
+            {
+              "name": "allocationRetryNumber",
+              "type": "long"
+            },
+            {
+              "name": "batchNumber",
+              "type": "long"
+            },
+            {
+              "name": "canUseReservedSlot",
+              "type": "bool"
+            },
+            {
+              "name": "containerAllocationWorkflowStep",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorClusterSelectionNodeLimitCheckInfo\r\n| where allocationId == queryAllocationId\r\n| project PreciseTimeStamp, containerRequestId, clusterName, scope, isScaleUp, henCountToReserve, henReturnedByContainersToBeDeleted, adjustedHenCount, flightingNodeLimit, adjustedFlightingNodeCount, allocationRetryNumber, batchNumber, canUseReservedSlot, containerAllocationWorkflowStep\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "AzAllocator",
+            "Limit Checks",
+            "AllocatorClusterSelectionNodeLimitCheckInfo"
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Limit Checks > AllocatorClusterSelectionUtilLimitCheckInfo": {
+      "panelPath": [
+        "AzAllocator",
+        "Limit Checks",
+        "AllocatorClusterSelectionUtilLimitCheckInfo"
+      ],
+      "queries": [
+        {
+          "id": "b157992c-eb94-43b7-8c3f-4e012db146df",
+          "name": "Query AllocatorClusterSelectionUtilLimitCheckInfo",
+          "groupId": "bf21a3df-ad4a-48ca-9451-11a1b732580c",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "AllocatorClusterSelectionUtilLimitCheckInfo",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "clusterName",
+              "type": "string"
+            },
+            {
+              "name": "scope",
+              "type": "string"
+            },
+            {
+              "name": "isScaleUp",
+              "type": "bool"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "resourceReturnedByContainersToBeDeleted",
+              "type": "real"
+            },
+            {
+              "name": "resourceTotal",
+              "type": "real"
+            },
+            {
+              "name": "adjustedResourceUsed",
+              "type": "real"
+            },
+            {
+              "name": "allocationRetryNumber",
+              "type": "long"
+            },
+            {
+              "name": "batchNumber",
+              "type": "long"
+            },
+            {
+              "name": "canUseReservedSlot",
+              "type": "bool"
+            },
+            {
+              "name": "containerAllocationWorkflowStep",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorClusterSelectionUtilLimitCheckInfo\r\n| where allocationId == queryAllocationId\r\n| project PreciseTimeStamp, Cluster, containerRequestId, clusterName, scope, isScaleUp, resourceName = resurceName, resourceReturnedByContainersToBeDeleted, resourceTotal,adjustedResourceUsed, allocationRetryNumber, batchNumber, canUseReservedSlot, containerAllocationWorkflowStep\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "AzAllocator",
+            "Limit Checks",
+            "AllocatorClusterSelectionUtilLimitCheckInfo"
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Limit Checks > VmLimitCheckInfo": {
+      "panelPath": [
+        "AzAllocator",
+        "Limit Checks",
+        "VmLimitCheckInfo"
+      ],
+      "queries": [
+        {
+          "id": "f4ac25de-1da0-4ddf-a29f-a2be8dcb5e1d",
+          "name": "Query AllocatorVmLimitCheckInfo",
+          "groupId": "42e679a9-e2cf-4ca9-b785-ebefaec4df5e",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "VmLimitCheckInfo",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "isSucceeded",
+              "type": "bool"
+            },
+            {
+              "name": "isEnforced",
+              "type": "bool"
+            },
+            {
+              "name": "numContainersMinusReused",
+              "type": "long"
+            },
+            {
+              "name": "containersMinusReusedJson",
+              "type": "string"
+            },
+            {
+              "name": "result",
+              "type": "string"
+            },
+            {
+              "name": "allocationRetryNumber",
+              "type": "long"
+            },
+            {
+              "name": "batchNumber",
+              "type": "long"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "limitCheckSkipReason",
+              "type": "string"
+            },
+            {
+              "name": "capacityReservationPayload",
+              "type": "string"
+            },
+            {
+              "name": "perVmTypeCheckDetails",
+              "type": "string"
+            },
+            {
+              "name": "limitCheckBypassDetails",
+              "type": "string"
+            },
+            {
+              "name": "__IsTrusted__",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorVmLimitCheckInfo\r\n| where allocationId == queryAllocationId",
+          "panelPath": [
+            "AzAllocator",
+            "Limit Checks",
+            "VmLimitCheckInfo"
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Node Selection > Rejected Node Lists": {
+      "panelPath": [
+        "AzAllocator",
+        "Node Selection",
+        "Rejected Node Lists"
+      ],
+      "queries": [
+        {
+          "id": "7e196c0c-8a69-4bca-92ef-75bb7cd9b47b",
+          "name": "Get Rejected Node Lists",
+          "groupId": "edebb61d-ef18-497b-9cef-5a454d2e0120",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "ruleName",
+              "type": "string"
+            },
+            {
+              "name": "reason",
+              "type": "string"
+            },
+            {
+              "name": "nodeCount",
+              "type": "long"
+            },
+            {
+              "name": "rejectedNodeListId",
+              "type": "string"
+            },
+            {
+              "name": "nodeIds",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorRejectedNodeInfo\r\n| where allocationId == queryAllocationId\r\n| project PreciseTimeStamp, allocationId, ruleName, reason, nodeCount, rejectedNodeListId\r\n| join kind = leftouter (\r\n    AllocatorRejectedNodeList\r\n    | where allocationId == queryAllocationId\r\n    | project allocationId, rejectedNodeListId, nodeIds\r\n) on allocationId, rejectedNodeListId\r\n| project-away allocationId1, rejectedNodeListId1\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "AzAllocator",
+            "Node Selection",
+            "Rejected Node Lists"
+          ]
+        }
+      ]
+    },
+    "AzAllocator > Node Selection > Rejected Nodes": {
+      "panelPath": [
+        "AzAllocator",
+        "Node Selection",
+        "Rejected Nodes"
+      ],
+      "queries": [
+        {
+          "id": "01ba0c72-0d19-4c76-81fd-4bb3998e9ab6",
+          "name": "Get Rejected Nodes",
+          "groupId": "a27b5c1e-ea2f-4db9-bd8c-eec83b85eae8",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "bag",
+              "type": "dynamic"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "machinePoolName1",
+              "type": "string"
+            },
+            {
+              "name": "nodeInUtilityMP",
+              "type": "bool"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorNodeRejectionReasons(queryAllocationId)",
+          "panelPath": [
+            "AzAllocator",
+            "Node Selection",
+            "Rejected Nodes"
+          ]
+        }
+      ]
+    },
+    "Capacity": {
+      "panelPath": [
+        "Capacity"
+      ],
+      "queries": [
+        {
+          "id": "eee63e53-a6f2-480f-be7f-9af62e65b902",
+          "name": "Get Request VM Size",
+          "groupId": "d8a8f061-36d3-46ed-ba57-4d94c53b0fb6",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "value",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorContainerRequestTrait\r\n| where allocationId == queryAllocationId\r\n| where name == \"OfferingName\"\r\n| top 1 by PreciseTimeStamp asc\r\n| project value\r\n",
+          "panelPath": [
+            "Capacity"
+          ]
+        }
+      ]
+    },
+    "Capacity > Capacity from AllocatorMonitoringLogAllocableVMCount": {
+      "panelPath": [
+        "Capacity",
+        "Capacity from AllocatorMonitoringLogAllocableVMCount"
+      ],
+      "queries": [
+        {
+          "id": "fdef21ff-67b2-4f88-a140-1fb8419c979f",
+          "name": "Query AllocatorMonitoringLogAllocableVMCount",
+          "groupId": "db94d6bc-643f-497e-882b-d2c6f0184469",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Capacity from AllocatorMonitoringLogAllocableVMCount",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryVMSize",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryCluster",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "priority",
+              "type": "string"
+            },
+            {
+              "name": "deploymentType",
+              "type": "string"
+            },
+            {
+              "name": "vmCount",
+              "type": "long"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "componentFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "componentTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "node_input",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryVMSize",
+              "externalSourceName": "VM Size",
+              "required": true,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "7404b608-11e6-4f7a-afd8-7d2ff350c7d5",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCluster",
+              "externalSourceName": "Cluster",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorMonitoringLogAllocableVMCount\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where partitionType == \"Cluster\"\r\n| where vmType =~ queryVMSize\r\n| where Cluster =~ queryCluster\r\n| order by PreciseTimeStamp asc\r\n| project PreciseTimeStamp, Cluster, priority, deploymentType, vmCount, Tenant = partitionName",
+          "panelPath": [
+            "Capacity",
+            "Capacity from AllocatorMonitoringLogAllocableVMCount"
+          ]
+        }
+      ]
+    },
+    "CRP": {
+      "panelPath": [
+        "CRP"
+      ],
+      "queries": [
+        {
+          "id": "689a9ca7-5133-4cae-8df9-8c245ef1fcb9",
+          "name": "Query Operation from ApiQosEvent",
+          "groupId": "cb9f636a-f199-40cc-9528-f54422bf63c4",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "e2EDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "resultType",
+              "type": "long"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "wFAppName",
+              "type": "string"
+            },
+            {
+              "name": "partitionId",
+              "type": "string"
+            },
+            {
+              "name": "replicaId",
+              "type": "long"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "clientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "clientPrincipalName",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "labels",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "goalSeekingActivityId",
+              "type": "string"
+            },
+            {
+              "name": "requestEntity",
+              "type": "string"
+            },
+            {
+              "name": "clientRoles",
+              "type": "string"
+            },
+            {
+              "name": "internalCorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "datastoreType",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "__IsTrusted__",
+              "type": "string"
+            },
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "7404b608-11e6-4f7a-afd8-7d2ff350c7d5",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "activityId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ApiQosEvent\r\n//| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where operationId == queryOperationId\r\n| extend startTime = datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| extend endTime = PreciseTimeStamp",
+          "panelPath": [
+            "CRP"
+          ]
+        }
+      ]
+    },
+    "CRP > Allocation": {
+      "panelPath": [
+        "CRP",
+        "Allocation"
+      ],
+      "queries": [
+        {
+          "id": "b1e5d596-c275-4493-89b7-db1bf8e7af7e",
+          "name": "CRP Allocation Request ",
+          "groupId": "b76bf1d1-c2e2-48b8-bf05-86424c6104f1",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "MultiRow",
+          "widgetType": "Card",
+          "widgetTitle": "Allocation",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ComputeAllocationActivity\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where activityId == queryOperationId\r\n| where activityName in (\"AllocateStarted\", \"StampOrdering\", \"OverallComputeAllocation\")\r\n| summarize arg_max(PreciseTimeStamp, activitySuccess, resultDetails, extraInfo) by activityName \r\n| extend value = case(activityName == \"AllocateStarted\", parse_json(extraInfo), resultDetails)\r\n| extend name = case (activityName == \"AllocateStarted\", \"Allocation Request\", \r\n    activityName == \"StampOrdering\", \"Stamp Ordering Result\", \r\n    activityName == \"OverallComputeAllocation\", \"Allocation Result\", \r\n    \"\")\r\n| where isnotempty(name)    \r\n| where isnotempty(name)    \r\n| project name, value\r\n| evaluate pivot(name, take_any(value)) \r\n",
+          "panelPath": [
+            "CRP",
+            "Allocation"
+          ]
+        }
+      ]
+    },
+    "CRP > Allocations from this Operation": {
+      "panelPath": [
+        "CRP",
+        "Allocations from this Operation"
+      ],
+      "queries": [
+        {
+          "id": "d681dbc2-6b56-4263-9433-5bd4adc9bbbb",
+          "name": "Query Allocations from AllocatorAllocationResult",
+          "groupId": "3e652cc6-5bf6-4595-a294-bf0c212d0977",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azureallocator.westcentralus",
+          "database": "azureallocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Allocations from this Operation",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryActivityId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "allocationRequestType",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "isSucceeded",
+              "type": "bool"
+            },
+            {
+              "name": "containersRequested",
+              "type": "long"
+            },
+            {
+              "name": "containersAllocated",
+              "type": "long"
+            },
+            {
+              "name": "containersToSuspend",
+              "type": "long"
+            },
+            {
+              "name": "totalTime",
+              "type": "long"
+            },
+            {
+              "name": "allocationFault",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "7404b608-11e6-4f7a-afd8-7d2ff350c7d5",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryActivityId",
+              "externalSourceName": "activityId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AllocatorAllocationResult\r\n| where activityId == \"e4fe13ce-e85d-4a4e-9ade-1bca96c51cb5\"\r\n| project PreciseTimeStamp, Cluster, allocationId, allocationRequestType, tenantName, isSucceeded, containersRequested, containersAllocated, containersToSuspend, totalTime, allocationFault\r\n| order by PreciseTimeStamp asc\r\n\r\n",
+          "panelPath": [
+            "CRP",
+            "Allocations from this Operation"
+          ]
+        }
+      ]
+    },
+    "CRP > Cluster Filtering in ComputeAllocationActivity > Cluster Filtering in ComputeAllocationActivity": {
+      "panelPath": [
+        "CRP",
+        "Cluster Filtering in ComputeAllocationActivity",
+        "Cluster Filtering in ComputeAllocationActivity"
+      ],
+      "queries": [
+        {
+          "id": "25aca6c8-1139-4224-be6b-170324872d55",
+          "name": "Stamp Filtering in ComputeAllocationActivity",
+          "groupId": "073fbf0f-c6b0-421f-b730-e966cbb0217b",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Cluster Filtering in ComputeAllocationActivity",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "cluster_list",
+              "type": "dynamic"
+            },
+            {
+              "name": "number_of_cluster",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "AllocationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ComputeAllocationActivity\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where activityId == queryOperationId\r\n| order by PreciseTimeStamp asc\r\n| where isnotempty( computeStamp) and isnotempty(errorCode)\r\n| where activitySuccess == bool(False)\r\n| summarize cluster_list = make_set(computeStamp) by errorCode\r\n| extend number_of_cluster =  array_length(cluster_list)",
+          "panelPath": [
+            "CRP",
+            "Cluster Filtering in ComputeAllocationActivity",
+            "Cluster Filtering in ComputeAllocationActivity"
+          ]
+        }
+      ]
+    },
+    "CRP > Details Logs": {
+      "panelPath": [
+        "CRP",
+        "Details Logs"
+      ],
+      "queries": [
+        {
+          "id": "f7b4a760-50db-4973-82e7-73735400ec30",
+          "name": "Query Allocation Activity",
+          "groupId": "da5202e0-b069-423c-8ad4-3056da30ae9a",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryActivityId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "overallAllocationSuccess",
+              "type": "bool"
+            },
+            {
+              "name": "activitySuccess",
+              "type": "bool"
+            },
+            {
+              "name": "activityName",
+              "type": "string"
+            },
+            {
+              "name": "computeStamp",
+              "type": "string"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "extraInfo",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "7404b608-11e6-4f7a-afd8-7d2ff350c7d5",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryActivityId",
+              "externalSourceName": "activityId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ComputeAllocationActivity\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where activityId == queryActivityId\r\n| extend Message = resultDetails\r\n| project PreciseTimeStamp, overallAllocationSuccess, activitySuccess, activityName, computeStamp, errorCode, \r\n    Message, activityId, subscriptionId, tenantName, extraInfo\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "CRP",
+            "Details Logs"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:18:20.061Z",
+    "totalPanels": 20,
+    "totalUniqueQueries": 20,
+    "totalWidgetRefs": 20
+  }
+}

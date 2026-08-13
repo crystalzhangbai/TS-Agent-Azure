@@ -1,0 +1,440 @@
+[
+  {
+    "id": "fdb7f2a9-58d3-4ad8-88b3-9054e6235bdc",
+    "name": "Count of Tenants Already Deleted",
+    "groupId": "5d17d44e-f73b-43c2-918b-1bb3acbd67d7",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let f1=FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where EventCode == \"TenantAlreadyDeleted\"\r\n| where Message startswith \"New LogicalTimestampResource was added for tenant \"\r\n| summarize count();\r\nlet f2=FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where EventCode == \"TenantAlreadyDeleted\"\r\n| extend newTs = Message startswith \"LogicalTimestampResource already exists for a deleted tenant\" // if already exists, could be equal to exisiing saved value or greater. See table 3 for how many greater\r\n| summarize make_set(OperationId);\r\nlet f3=FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where OperationId in (f2)\r\n| where Message endswith \" - allow operation to proceed\"\r\n| where Message contains \"is less than current \"\r\n| parse Message with \"Latest logical timestamp \"tsSavedInkvs\" for tenant \"tenant\" is less than current \"incomingTs\" - allow operation to proceed\"\r\n| project Message, tsSavedInkvs, incomingTs\r\n| summarize count() by incomingTimestampGreaterThanExisting = (toint(tsSavedInkvs) < toint(incomingTs)), incomingTimestampEqualToExisting = (toint(tsSavedInkvs) == toint(incomingTs))\r\n| union f1\r\n| extend logicalTimestamp = iff (incomingTimestampEqualToExisting, \"incomingTimestampEqualToExisting\", iff (incomingTimestampGreaterThanExisting, \"incomingTimestampGreaterThanExisting\", \"timestampDoesntExistSoCreatedNewOne\"))\r\n| project logicalTimestamp, count_\r\n;f3",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-10T12:54:55.821Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-11T12:54:55.821Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscription",
+        "description": "",
+        "type": "string",
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "logicalTimestamp",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "830e58f4-c9d3-433a-8a24-b1e82c5b0c58",
+    "name": "Errors for Tenants Already Deleted",
+    "groupId": "a669a7f7-4369-4a35-8bbb-594e775a2454",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "// Errors returned when tenant already deleted\r\nlet f1=FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where EventCode == \"TenantAlreadyDeleted\"\r\n| summarize make_set(OperationId);\r\nQosEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where Success != true\r\n| where OperationId in (f1)\r\n| project TIMESTAMP, ErrorCode, ErrorDetails, OperationId, CorrelationRequestId, Region, BackgroundTaskQos",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-10T13:30:57.305Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-11T13:30:57.305Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscription",
+        "description": "",
+        "type": "string",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "BackgroundTaskQos",
+        "type": "bool"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "a7f2d402-8516-4408-8d2f-3e8de9d3406a",
+    "name": "Already Deleted Tenants Sync Time",
+    "groupId": "48be16c4-bf36-4a77-b28a-5580d8d755d6",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let f1=FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where EventCode == \"TenantAlreadyDeleted\"\r\n| take 10000\r\n| summarize make_set(OperationId);\r\nlet tenantAlreadyDeleted = QosEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where BackgroundTaskQos != true\r\n| where Success == true\r\n| where OperationId in (f1)\r\n| extend behavior = \"newBehavior\"\r\n| summarize dcount(OperationId),  max(DurationInMilliseconds), avg(DurationInMilliseconds), percentiles(DurationInMilliseconds, 50, 75, 90, 99.9) by behavior;\r\nlet f2=FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where Message endswith \"already deleted.\"\r\n| take 10000\r\n| summarize make_set(OperationId);\r\nlet existingBehavior = QosEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where BackgroundTaskQos != true\r\n| where Success == true\r\n| where OperationId in (f2)\r\n| extend behavior = \"existingBehavior\"\r\n| summarize dcount(OperationId), max(DurationInMilliseconds), avg(DurationInMilliseconds), percentiles(DurationInMilliseconds, 50, 75, 90, 99.9) by behavior\r\n| union tenantAlreadyDeleted\r\n;\r\nexistingBehavior",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-16T14:57:52.089Z",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-17T14:57:52.089Z",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscription",
+        "description": "",
+        "type": "string",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "behavior",
+        "type": "string"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "max_DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "avg_DurationInMilliseconds",
+        "type": "real"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_99_9",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "5e3a928e-5dfe-426a-aeb3-6c7945b37884",
+    "name": "ExistingVsNewDeleteTenantPerf",
+    "groupId": "fb2694e4-efa8-4d0d-8c51-7097c31d5f51",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let f1=FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where EventCode == \"BackgroundTaskRequestValidationEnd\"\r\n| take 10000\r\n| summarize make_set(OperationId);\r\nlet bgTaskWithValidation = QosEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where BackgroundTaskQos == true\r\n| where Success == true\r\n| where OperationId in (f1)\r\n| extend behavior = \"newBehavior\"\r\n| summarize dcount(OperationId), max(SynchronousDurationInMilliseconds), avg(SynchronousDurationInMilliseconds), percentiles(SynchronousDurationInMilliseconds, 50, 75, 90, 99.9) by behavior;\r\nlet existingBehavior = QosEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where BackgroundTaskQos == true\r\n| where Success == true\r\n| where OperationId !in (f1)\r\n| project OperationId, SynchronousDurationInMilliseconds\r\n| take 10000\r\n| extend behavior = \"existingBehavior\"\r\n| summarize dcount(OperationId), max(SynchronousDurationInMilliseconds), avg(SynchronousDurationInMilliseconds), percentiles(SynchronousDurationInMilliseconds, 50, 75, 90, 99.9) by behavior\r\n| union bgTaskWithValidation\r\n;\r\nexistingBehavior",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-08T14:56:20.341Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-09T14:56:20.341Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "default": "uscentraleuap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscription",
+        "description": "",
+        "type": "string",
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "behavior",
+        "type": "string"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "max_SynchronousDurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "avg_SynchronousDurationInMilliseconds",
+        "type": "real"
+      },
+      {
+        "name": "percentile_SynchronousDurationInMilliseconds_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_SynchronousDurationInMilliseconds_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_SynchronousDurationInMilliseconds_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_SynchronousDurationInMilliseconds_99_9",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "3a6c1158-6dbe-4ef9-b94a-6841335521c7",
+    "name": "delete tenant perf improvement enabled",
+    "groupId": "788e53a7-4537-4f46-8818-71b332abc9f8",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let f1=FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where OperationName == \"DeleteTenantOperation\"\r\n| where SliceNum(SourceAssemblyFileVersion) < 10\r\n| where EventCode == \"BackgroundTaskRequestValidationEnd\"\r\n| summarize by Region, ReleaseBuild=ReleaseBuild(SourceAssemblyFileVersion, IgnoreBuild=true);\r\nf1",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-08T14:56:20.341Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-09T14:56:20.341Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "ReleaseBuild",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

@@ -1,0 +1,596 @@
+{
+  "service": "Network Manager",
+  "page": "TDPR",
+  "pageId": "7514835d-0b05-4a2a-bd20-38c95620c25c",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "c97274e0-034e-4d22-8401-512013af91ef",
+          "name": "Retrieve Resource \"TDPR\"",
+          "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_PreciseTimeStamp",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_Tenant",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_ContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_MacAddress",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "MacAddress",
+              "type": "string"
+            },
+            {
+              "name": "interfaceId",
+              "type": "string"
+            },
+            {
+              "name": "programmingDelayInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_PreciseTimeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_Tenant",
+              "externalSourceName": "Tenant",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_ContainerId",
+              "externalSourceName": "ContainerId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_MacAddress",
+              "externalSourceName": "MacAddress",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let startTime = datetime_add('hour', -24, local_PreciseTimeStamp);\r\nlet endTime = datetime_add('hour', 1, local_PreciseTimeStamp);\r\nDCMNMAgentProgrammingDurationEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Tenant == local_Tenant\r\n| where nodeId == local_nodeId\r\n| extend ContainerId = local_ContainerId\r\n| extend MacAddress = local_MacAddress\r\n| where interfaceId contains ContainerId and interfaceId contains MacAddress\r\n| project PreciseTimeStamp, Tenant, RoleInstance, nodeId, ContainerId, MacAddress, interfaceId, programmingDelayInSeconds, message\r\n| top 1 by PreciseTimeStamp desc ",
+          "panelPath": []
+        },
+        {
+          "id": "97c83965-c437-4f27-97e4-b6a76993cc90",
+          "name": "TDPR_NMAgentProgrammingDuration",
+          "groupId": "a3c3d479-a957-4077-bb52-22ebc244e3b5",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_PreciseTimeStamp",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_Tenant",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_ContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_MacAddress",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "MacAddress",
+              "type": "string"
+            },
+            {
+              "name": "interfaceId",
+              "type": "string"
+            },
+            {
+              "name": "programmingDelayInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_PreciseTimeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_Tenant",
+              "externalSourceName": "Tenant",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_ContainerId",
+              "externalSourceName": "ContainerId",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_MacAddress",
+              "externalSourceName": "MacAddress",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let startTime = datetime_add('hour', -24, local_PreciseTimeStamp);\r\nlet endTime = datetime_add('hour', 1, local_PreciseTimeStamp);\r\nDCMNMAgentProgrammingDurationEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Tenant == local_Tenant\r\n| where nodeId == local_nodeId\r\n| extend ContainerId = local_ContainerId\r\n| extend MacAddress = local_MacAddress\r\n| where interfaceId contains ContainerId and interfaceId contains MacAddress\r\n| project PreciseTimeStamp, Tenant, RoleInstance, nodeId, ContainerId, MacAddress, interfaceId, programmingDelayInSeconds, message\r\n| top 100 by PreciseTimeStamp desc",
+          "panelPath": []
+        },
+        {
+          "id": "b8f78857-7dd3-43f5-96e9-54f1cd0ae143",
+          "name": "TDPR_DCMNMQOSInfoEtw",
+          "groupId": "56f39772-e517-4e24-8dc9-dcf20813724f",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_PreciseTimeStamp",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_Tenant",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_ContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "operation",
+              "type": "string"
+            },
+            {
+              "name": "success",
+              "type": "bool"
+            },
+            {
+              "name": "additionalMessage",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "duration",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_PreciseTimeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_Tenant",
+              "externalSourceName": "Tenant",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_ContainerId",
+              "externalSourceName": "ContainerId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let startTime = datetime_add('hour', -2, local_PreciseTimeStamp);\r\nlet endTime = datetime_add('hour', 2, local_PreciseTimeStamp);\r\nlet target = cluster(\"azurecm\").database(\"AzureCM\").DCMNMQOSInfoEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Tenant == local_Tenant\r\n| where operation == 'BatchUpdateNetworkResource-Allocation'\r\n| where additionalMessage contains \"Tenant Name\"\r\n| where additionalMessage has local_ContainerId\r\n| top 1 by PreciseTimeStamp desc\r\n| extend TenantName = extract(@'Tenant Name: ([a-z0-9\\-]+)', 1, additionalMessage)\r\n| extend NetworkServiceInstanceId = extract(@'NetworkServiceInstanceId: ([a-z0-9\\-]+)', 1, additionalMessage)\r\n| project TenantName, NetworkServiceInstanceId;\r\nlet TenantName = target | distinct TenantName;\r\nlet NetworkServiceInstanceId = target | distinct NetworkServiceInstanceId;\r\ncluster(\"azurecm\").database(\"AzureCM\").DCMNMQOSInfoEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Tenant == local_Tenant\r\n| where additionalMessage has local_ContainerId \r\n    or additionalMessage has_any (TenantName)\r\n    or additionalMessage has_any (NetworkServiceInstanceId)\r\n    or message has_any (NetworkServiceInstanceId)\r\n| project PreciseTimeStamp, Region, Tenant, operation, success, additionalMessage, message, duration\r\n| top 100 by PreciseTimeStamp desc ",
+          "panelPath": []
+        },
+        {
+          "id": "07716aa8-4927-4405-9b6d-b8d03ddb7b07",
+          "name": "TDPR_DCMNMRegionalNetworkConfigurationQoS",
+          "groupId": "39c36eec-a22f-49e6-bd6c-54ffb0c6f357",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_PreciseTimeStamp",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_Tenant",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_ContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "SequenceEvent",
+              "type": "string"
+            },
+            {
+              "name": "Configuration",
+              "type": "string"
+            },
+            {
+              "name": "ConfigurationType",
+              "type": "string"
+            },
+            {
+              "name": "ConfigurationId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_PreciseTimeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_Tenant",
+              "externalSourceName": "Tenant",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_ContainerId",
+              "externalSourceName": "ContainerId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let startTime = datetime_add('hour', -5, local_PreciseTimeStamp);\r\nlet endTime = datetime_add('hour', 5, local_PreciseTimeStamp);\r\nlet target = cluster(\"azurecm\").database(\"AzureCM\").DCMNMQOSInfoEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Tenant == local_Tenant\r\n| where operation == 'BatchUpdateNetworkResource-Allocation'\r\n| where additionalMessage contains \"Tenant Name\"\r\n| where additionalMessage has local_ContainerId\r\n| top 1 by PreciseTimeStamp desc\r\n| extend TenantName = extract(@'Tenant Name: ([a-z0-9\\-]+)', 1, additionalMessage)\r\n| extend NetworkServiceInstanceId = extract(@'NetworkServiceInstanceId: ([a-z0-9\\-]+)', 1, additionalMessage)\r\n| project TenantName, NetworkServiceInstanceId;\r\nlet TenantName = target | distinct TenantName;\r\nlet NetworkServiceInstanceId = target | distinct NetworkServiceInstanceId;\r\nDCMNMRegionalNetworkConfigurationQoSEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Tenant == local_Tenant\r\n| where Configuration has_any (TenantName) \r\n    or Configuration has_any (NetworkServiceInstanceId)\r\n    or Configuration contains local_ContainerId \r\n| project PreciseTimeStamp, SequenceEvent, Configuration, ConfigurationType, ConfigurationId\r\n| top 1000 by PreciseTimeStamp asc",
+          "panelPath": []
+        },
+        {
+          "id": "80171644-836e-4796-92dc-a827151809c2",
+          "name": "TDPR_DCMNMRegionalNetworkConfigurationFailure",
+          "groupId": "c4f6285b-d8a8-48e4-bf67-5582ce3a5426",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_PreciseTimeStamp",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_Tenant",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_ContainerId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "ConfigurationType",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_PreciseTimeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_Tenant",
+              "externalSourceName": "Tenant",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e8d8eebf-24ba-4d0c-864e-fadd03e91cbc",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "local_ContainerId",
+              "externalSourceName": "ContainerId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let startTime = datetime_add('hour', -5, local_PreciseTimeStamp);\r\nlet endTime = datetime_add('hour', 5, local_PreciseTimeStamp);\r\nlet target = cluster(\"azurecm\").database(\"AzureCM\").DCMNMQOSInfoEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Tenant == local_Tenant\r\n| where operation == 'BatchUpdateNetworkResource-Allocation'\r\n| where additionalMessage contains \"Tenant Name\"\r\n| where additionalMessage has local_ContainerId\r\n| top 1 by PreciseTimeStamp desc\r\n| extend TenantName = extract(@'Tenant Name: ([a-z0-9\\-]+)', 1, additionalMessage)\r\n| extend NetworkServiceInstanceId = extract(@'NetworkServiceInstanceId: ([a-z0-9\\-]+)', 1, additionalMessage)\r\n| project TenantName, NetworkServiceInstanceId;\r\nlet TenantName = target | distinct TenantName;\r\nlet NetworkServiceInstanceId = target | distinct NetworkServiceInstanceId;\r\nDCMNMRegionalNetworkConfigurationFailureEtwTable\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Tenant == local_Tenant\r\n| where * contains local_ContainerId\r\n    or Message has_any (TenantName)\r\n    or Message has_any (NetworkServiceInstanceId)\r\n| top 1000 by PreciseTimeStamp asc\r\n| project PreciseTimeStamp, Region, Tenant, ConfigurationType, Message",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:12:40.211Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 5,
+    "totalWidgetRefs": 5
+  }
+}

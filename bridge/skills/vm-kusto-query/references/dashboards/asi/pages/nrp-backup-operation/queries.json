@@ -1,0 +1,215 @@
+[
+  {
+    "id": "77979f49-c1a5-4c7a-bb8d-835f62b51a82",
+    "name": "Backup Scheduled",
+    "groupId": "d46c704b-89b1-465c-a5ef-77b1a4a8dbea",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let totalBackUpTriggered = (QosEtwEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    | where Region == region and OperationName == 'BackupOperation'\r\n    | where SourceAssemblyFileVersion contains \"release/\"\r\n    | extend sliceNumber=SliceNum(SourceAssemblyFileVersion)\r\n    | where sliceNumber >= 0 and sliceNumber <= 9\r\n    | summarize totalBackupInitiated=count(), min(TIMESTAMP), max(TIMESTAMP) by Region, SourceAssemblyFileVersion, PartitionId, bin(PreciseTimeStamp, 5h));\r\nlet totalFailedBackUpPersliceRegion = (QosEtwEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    | where Region == region and OperationName == 'BackupOperation'\r\n    | where UserError == 0 and Success == 0 and isnotempty(ErrorDetails)\r\n    | where SourceAssemblyFileVersion contains \"release/\"\r\n    | extend sliceNumber=SliceNum(SourceAssemblyFileVersion)\r\n    | where sliceNumber >= 0 and sliceNumber <= 9\r\n    | summarize totalBackUpOperationFailedCount=count(), make_set(ErrorCode), arg_max(PreciseTimeStamp, ErrorDetails), make_set(StackTrace) by Region, SourceAssemblyFileVersion, PartitionId, bin(PreciseTimeStamp, 5h));\r\nlet backup_fails=totalBackUpTriggered \r\n    | join kind= leftouter totalFailedBackUpPersliceRegion on Region, PartitionId\r\n    | extend totalFailedPercent = toreal(totalBackUpOperationFailedCount)/totalBackupInitiated\r\n    | project Region, SourceAssemblyFileVersion, PartitionId, totalBackUpOperationFailedCount =iff(isnull(totalBackUpOperationFailedCount), 0, totalBackUpOperationFailedCount), \r\n        totalBackupInitiated, totalFailedPercent = iff(isnull(totalFailedPercent), real(0), totalFailedPercent) , min_TIMESTAMP, max_TIMESTAMP, \r\n        ErrorCode_Details = ExceptionMessageHash( set_ErrorCode, ErrorDetails);\r\nbackup_fails\r\n| order by ErrorCode_Details asc;",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-27T02:10:57.891Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-28T02:10:57.891Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SourceAssemblyFileVersion",
+        "type": "string"
+      },
+      {
+        "name": "PartitionId",
+        "type": "string"
+      },
+      {
+        "name": "totalBackUpOperationFailedCount",
+        "type": "long"
+      },
+      {
+        "name": "totalBackupInitiated",
+        "type": "long"
+      },
+      {
+        "name": "totalFailedPercent",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "ErrorCode_Details",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "0e283347-c562-4d1a-9ca0-3700574e4f73",
+    "name": "Backup Top Error",
+    "groupId": "83f8af59-26f7-4693-808f-e4416b8c7487",
+    "majorVersion": 4,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let totalFailedBackUpPersliceRegion = (QosEtwEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    | where  OperationName == 'BackupOperation'\r\n    | where UserError == 0 and Success == 0 and isnotempty(ErrorDetails)\r\n    | where SourceAssemblyFileVersion contains \"release/\"\r\n    | extend sliceNumber=SliceNum(SourceAssemblyFileVersion)\r\n    | where sliceNumber >= 0 and sliceNumber <= 9\r\n    | summarize failedErrorCount=count(),make_set(Region),  arg_max(PreciseTimeStamp, ErrorCode_Details= ExceptionMessageHash( ErrorCode, ErrorDetails)) by  StackTrace);\r\ntotalFailedBackUpPersliceRegion\r\n| order by failedErrorCount;",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-27T02:37:36.517Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-28T02:37:36.517Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StackTrace",
+        "type": "string"
+      },
+      {
+        "name": "failedErrorCount",
+        "type": "long"
+      },
+      {
+        "name": "set_Region",
+        "type": "dynamic"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "ErrorCode_Details",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "84d1f23b-9c81-456e-8dbf-19270721cdaf",
+    "name": "Not scheduled backup",
+    "groupId": "a68b1c32-6c7b-4847-849a-02d18961f0ca",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let datetimediff = datetime_diff('hour', endTime, startTime);\r\nlet totalBackupInitiated_threshold=datetimediff*2 *0.2;\r\nlet totalBackUpTriggered = (QosEtwEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    | where OperationName == 'BackupOperation'\r\n    | where SourceAssemblyFileVersion contains \"release/\"\r\n    | extend sliceNumber=SliceNum(SourceAssemblyFileVersion)\r\n    | where sliceNumber >= 0 and sliceNumber <= 9\r\n    | summarize totalBackupInitiated=count(), min(PreciseTimeStamp), max(PreciseTimeStamp) by Region, PartitionId\r\n    | where totalBackupInitiated <= totalBackupInitiated_threshold);\r\ntotalBackUpTriggered\r\n| order by totalBackupInitiated asc",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-27T02:36:45.703Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-28T02:36:45.703Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "PartitionId",
+        "type": "string"
+      },
+      {
+        "name": "totalBackupInitiated",
+        "type": "long"
+      },
+      {
+        "name": "min_PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "max_PreciseTimeStamp",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

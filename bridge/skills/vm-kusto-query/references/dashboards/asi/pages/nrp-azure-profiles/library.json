@@ -1,0 +1,186 @@
+{
+  "service": "NRP",
+  "page": "AzureProfiles",
+  "pageId": "6632432e-c8b8-494f-9012-9ac7d7c8be58",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Profiles": {
+      "panelPath": [
+        "Profiles"
+      ],
+      "queries": [
+        {
+          "id": "ea121e77-8cd8-4466-a893-e8190be7f7a7",
+          "name": "azureprofiles",
+          "groupId": "d6560c10-5855-405c-8cd8-8294eb6fb41b",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Profiles",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "subscription",
+              "type": "guid",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TraceStartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "TraceEndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ProfileTrigger",
+              "type": "string"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "NRPRoleIntance",
+              "type": "string"
+            },
+            {
+              "name": "Link",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscription",
+              "externalSourceName": "subscription",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let regionToTenant = (QosEtwEvent\r\n| where PreciseTimeStamp > ago(1h)\r\n| where Region == region\r\n| parse Tenant with tenant \".\" *\r\n| summarize by tenant);\r\nlet subtoRoleInstance = (QosEtwEvent\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where Region == region\r\n| where SubscriptionId == subscription\r\n| summarize by RoleInstance\r\n| extend roleModified = replace_string(RoleInstance, \".\", \"_IN_\")\r\n| summarize by roleModified\r\n);\r\ncluster('azureprofilerfollower.westus2.kusto.windows.net').database('azureprofiler').\r\nIdentifiers | where Timestamp between (startTime .. endTime)\r\n| where RoleInstance contains \"NRP\"\r\n| parse Tenant with tenant1 \".\" *\r\n| extend tenant = tolower(iff(tenant1 == \"\", Tenant, tenant1))\r\n| where tenant in (regionToTenant)\r\n| where RoleInstance in (subtoRoleInstance)\r\n| extend Link = strcat(\"<a href='\", ViewerUrl, \"'>AzureProfileLink</a>\")\r\n| extend NRPRoleIntance = replace_string(RoleInstance, \"_IN_\", \".\")\r\n| extend ProfileTrigger = iff(Topic contains \"fabric__Monitoring\", \"DailyProfile\", iff (isempty(Fuse), \"UnknownTrigger\", Fuse))\r\n| project TraceStartTime, TraceEndTime,ProfileTrigger,Status,NRPRoleIntance, Link\r\n| order by TraceStartTime asc",
+          "panelPath": [
+            "Profiles"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:54.188Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

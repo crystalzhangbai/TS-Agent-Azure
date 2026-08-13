@@ -1,0 +1,161 @@
+[
+  {
+    "groupId": "6755015e-44ea-4d3c-b65a-ffbfe2c78255",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "panelPath": [
+      "Drill into resources by Subscription",
+      "FrontEndQoS"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "FrontEndQoS",
+    "queryId": "2051bf13-cbaf-47f1-b499-0822cbad94bf",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "AIB FrontEndQOS Failures",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "callCount",
+        "type": "real"
+      },
+      {
+        "name": "clientFailures",
+        "type": "long"
+      },
+      {
+        "name": "serverFailures",
+        "type": "long"
+      },
+      {
+        "name": "successRate",
+        "type": "real"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "29149a21-a0ae-43ba-a51c-bb60a03bba3c",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [
+      "Drill into resources by Subscription",
+      "AsyncQoSEvents"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "AsyncQoSEvents",
+    "queryId": "f739f964-a1e3-4831-a146-34158b977a1d",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "compound_widget",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subID",
+        "externalSourceName": "subID",
+        "required": false
+      }
+    ],
+    "name": "AsyncQoSEvents Subscription Component Query",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "subID",
+        "type": "guid",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "callCount",
+        "type": "real"
+      },
+      {
+        "name": "clientFailures",
+        "type": "long"
+      },
+      {
+        "name": "serverFailures",
+        "type": "long"
+      },
+      {
+        "name": "successRate",
+        "type": "real"
+      },
+      {
+        "name": "failedSubs",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  }
+]

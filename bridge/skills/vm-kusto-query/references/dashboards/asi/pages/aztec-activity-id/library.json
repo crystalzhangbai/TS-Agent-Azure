@@ -1,0 +1,467 @@
+{
+  "service": "Aztec",
+  "page": "ActivityId",
+  "pageId": "1b496e40-a874-44b2-a6da-dcb341da276d",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "ba3795b5-8099-42ec-951d-a6e176cff230",
+          "name": "Retrieve Resource \"ActivityId\"",
+          "groupId": "5386897f-4602-4246-954b-9c16f1e89cf3",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_ActivityId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "ClientType",
+              "type": "string"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "RelatedActivityId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_ActivityId",
+              "externalSourceName": "ActivityId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "CommonWebOperationStart\r\n| where ActivityId =~ local_ActivityId\r\n| take 1\r\n| extend ActivityId=local_ActivityId\r\n| project AvailabilityZone, ClientType, CloudName, DataCenterName, Region, Tenant, ActivityId, RelatedActivityId\r\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "CommonWebOperationEnd > CommonWebOperationEnd": {
+      "panelPath": [
+        "CommonWebOperationEnd",
+        "CommonWebOperationEnd"
+      ],
+      "queries": [
+        {
+          "id": "f2d1912e-22fc-4a40-a0d4-27506f636b21",
+          "name": "ActivityId CommonWebOperationEnd",
+          "groupId": "36457b06-3c3d-43ed-b96d-102194c5fae4",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "CommonWebOperationEnd",
+          "params": [
+            {
+              "name": "local_ActivityId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "HttpMethod",
+              "type": "string"
+            },
+            {
+              "name": "Url",
+              "type": "string"
+            },
+            {
+              "name": "HttpStatusCode",
+              "type": "string"
+            },
+            {
+              "name": "Result",
+              "type": "string"
+            },
+            {
+              "name": "Exception",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "5386897f-4602-4246-954b-9c16f1e89cf3",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "local_ActivityId",
+              "externalSourceName": "ActivityId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false
+            }
+          ],
+          "kustoQuery": "CommonWebOperationEnd\r\n| where PreciseTimeStamp between ((local_startDate - 6h) .. (local_endDate + 6h))\r\n| where ActivityId =~ local_ActivityId\r\n| project PreciseTimeStamp,HttpMethod,Url,HttpStatusCode,Result,Exception\r\n| order by PreciseTimeStamp desc",
+          "panelPath": [
+            "CommonWebOperationEnd",
+            "CommonWebOperationEnd"
+          ]
+        }
+      ]
+    },
+    "CommonWebOperationStart > CommonWebOperationStart": {
+      "panelPath": [
+        "CommonWebOperationStart",
+        "CommonWebOperationStart"
+      ],
+      "queries": [
+        {
+          "id": "86522f18-d133-4e08-9fc6-a1d1fab18bf7",
+          "name": "ActivityId CommonWebOperationStart",
+          "groupId": "0dd76fb7-8482-42af-a7c5-aa6457dc57c9",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "CommonWebOperationStart",
+          "params": [
+            {
+              "name": "local_ActivityId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "HttpMethod",
+              "type": "string"
+            },
+            {
+              "name": "Url",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "5386897f-4602-4246-954b-9c16f1e89cf3",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "local_ActivityId",
+              "externalSourceName": "ActivityId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false
+            }
+          ],
+          "kustoQuery": "CommonWebOperationStart\r\n| where PreciseTimeStamp between ((local_startDate - 6h) .. (local_endDate + 6h))\r\n| where ActivityId =~ local_ActivityId\r\n| project PreciseTimeStamp,HttpMethod,Url\r\n| order by PreciseTimeStamp desc",
+          "panelPath": [
+            "CommonWebOperationStart",
+            "CommonWebOperationStart"
+          ]
+        }
+      ]
+    },
+    "GatewayServiceTraceEvent > GatewayServiceTraceEvent": {
+      "panelPath": [
+        "GatewayServiceTraceEvent",
+        "GatewayServiceTraceEvent"
+      ],
+      "queries": [
+        {
+          "id": "f94f43c4-54b2-4368-8d2c-d1f60c52eede",
+          "name": "ActivityId GatewayServiceTraceEvent",
+          "groupId": "4aed43d3-31d1-4fa9-927d-a242f0ea7e1d",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "GatewayServiceTraceEvent",
+          "params": [
+            {
+              "name": "local_ActivityId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "5386897f-4602-4246-954b-9c16f1e89cf3",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "local_ActivityId",
+              "externalSourceName": "ActivityId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false
+            }
+          ],
+          "kustoQuery": "GatewayServiceTraceEvent\r\n| where PreciseTimeStamp between ((local_startDate - 6h) .. (local_endDate + 6h))\r\n| where ActivityId =~ local_ActivityId\r\n| project PreciseTimeStamp,level,message\r\n| order by PreciseTimeStamp desc",
+          "panelPath": [
+            "GatewayServiceTraceEvent",
+            "GatewayServiceTraceEvent"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:27.727Z",
+    "totalPanels": 4,
+    "totalUniqueQueries": 4,
+    "totalWidgetRefs": 4
+  }
+}

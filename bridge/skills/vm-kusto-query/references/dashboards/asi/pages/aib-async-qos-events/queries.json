@@ -1,0 +1,132 @@
+[
+  {
+    "id": "84225de8-09d4-4c88-b0b1-fc5f62411b06",
+    "name": "AsyncQoSEvents Search by operationName",
+    "groupId": "28af80db-b9c2-4328-b441-f2d67a8c90d3",
+    "majorVersion": 8,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncQoSEvents\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where operationName == Operation\r\n| where Result == \"\" or result == Result\r\n| where iff(resultTypeFilter != \"\", resultType == resultTypeFilter, true)\r\n| project PreciseTimeStamp, correlationID, operationID, level, result, resultType, serviceBuild, errorDetails, subscriptionID\r\n| where iff(subscription != \"\", subscriptionID == subscription, true)\r\n| take 1000",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-03-09T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-03-10T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "Operation",
+        "description": "AIB Operation",
+        "type": "string",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "PostRunTemplateHandler.POST",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "Result",
+        "description": "",
+        "type": "string",
+        "default": "Failed",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscription",
+        "description": "",
+        "type": "guid",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resultTypeFilter",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "correlationID",
+        "type": "string"
+      },
+      {
+        "name": "operationID",
+        "type": "string"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      },
+      {
+        "name": "result",
+        "type": "string"
+      },
+      {
+        "name": "resultType",
+        "type": "long"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionID",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  }
+]

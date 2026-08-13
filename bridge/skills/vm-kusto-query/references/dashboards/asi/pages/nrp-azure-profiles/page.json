@@ -1,0 +1,205 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "6632432e-c8b8-494f-9012-9ac7d7c8be58",
+  "description": "Page to view azure profiles given subid, region and time range",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "eba51c1f-101c-41e8-b961-e34de577d8a3",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "Profile",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "834cb513-fec1-41f2-96a2-fd8c84c9050a",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "f50c8c5e-e76c-436b-8b79-7e20a1f91cd8",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Table",
+                "id": "61774529-4824-4ddc-87de-cd55fe1dcfbd",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Profiles",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "5a0f99e5-25bc-4b5f-a670-f8b6b072b203",
+                    "idForPopups": "5a0f99e5-25bc-4b5f-a670-f8b6b072b203",
+                    "groupId": "d6560c10-5855-405c-8cd8-8294eb6fb41b",
+                    "majorVersion": 1,
+                    "minorVersion": 1,
+                    "serviceId": "NRP",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "startTime",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "endTime",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "region",
+                        "externalSourceName": "region",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "subscription",
+                        "externalSourceName": "subscription",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 6,
+  "basedOnVersionId": "ceb016a5-ade7-4643-a095-f769a3738697",
+  "groupId": "6976343c-1d1a-42b1-99e1-caad0d2f9f4c",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "subscription",
+      "description": "",
+      "type": "guid",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "default": "db29339e-6b06-445f-9d3d-2f88f1ae5cc9",
+      "optional": false,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "region",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "default": "useast",
+      "optional": false,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "NRP",
+      "groupId": "d6560c10-5855-405c-8cd8-8294eb6fb41b",
+      "entityType": "Query"
+    }
+  ],
+  "serviceId": "NRP",
+  "deleted": false,
+  "name": "AzureProfiles",
+  "_ts": 1715793593,
+  "databaseSavedTimestamp": "2024-05-15T17:19:53+00:00",
+  "_etag": "\"0d0038b1-0000-0800-0000-6644eeb90000\"",
+  "createdAt": "2024-05-15T17:19:53.1608829+00:00",
+  "createdBy": "sravanan@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "sravanan@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2024-05-15T17:19:53.1608829+00:00",
+  "tags": []
+}

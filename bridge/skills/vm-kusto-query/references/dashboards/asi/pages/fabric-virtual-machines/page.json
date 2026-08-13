@@ -1,0 +1,600 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "48f42423-3259-48b6-bf46-e8672812c359",
+  "description": "",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "0b9085fe-f5e4-4070-9a47-78e289c3a126",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "",
+      "gridColumns": 12
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "40e5430e-175f-4c8d-8d95-04efbd839435",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": ""
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "74da75ea-feee-4b45-8536-78b6c55f40d1",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12
+            },
+            "children": [
+              {
+                "type": "Card",
+                "id": "ff64e782-3e14-4f5d-8571-c1babb96d37d",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "VM - {{virtualMachineUniqueId}}",
+                  "gridColumns": 12
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "virtualMachineUniqueId",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "virtualMachineUniqueId",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "virtualMachineUniqueId",
+                    "uuid": "5fe544e0-b14e-448b-83ff-8b13527f8ba6",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "VM Host Analyzer",
+                    "props": {
+                      "pageServiceId": "Azure Host"
+                    },
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "2798d421-0ec3-496f-8755-dd80e21154da",
+                    "linkText": "{{virtualMachineUniqueId}}",
+                    "pageId": "a78e0476-326d-4ac5-9d7c-21908d345b0a",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                        "majorVersion": 1,
+                        "minorVersion": 2,
+                        "internalDestinationName": "containerId",
+                        "externalSourceName": "containerId",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                        "majorVersion": 1,
+                        "minorVersion": 2,
+                        "internalDestinationName": "nodeId",
+                        "externalSourceName": "nodeId",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                        "majorVersion": 1,
+                        "minorVersion": 2,
+                        "internalDestinationName": "virtualMachineUniqueId",
+                        "externalSourceName": "virtualMachineUniqueId",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "roleInstanceName",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "roleInstanceName",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "roleInstanceName",
+                    "uuid": "d58e55ff-50dc-4326-840b-00d9f3db0803",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "ContainerId",
+                    "props": {},
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "68a2f22e-c7c2-41f5-af16-b2de4a688598",
+                    "linkText": "{{containerId}}",
+                    "pageId": "6a0b1a9e-3a67-4ab2-9e07-eed522829921",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                        "majorVersion": 1,
+                        "minorVersion": 2,
+                        "internalDestinationName": "containerId",
+                        "externalSourceName": "containerId",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                        "majorVersion": 1,
+                        "minorVersion": 2,
+                        "internalDestinationName": "nodeId",
+                        "externalSourceName": "nodeId",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "subscriptionId",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "subscriptionId",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "subscriptionId",
+                    "uuid": "6c3be335-9e95-46cc-8c24-381f82b00453",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Tenant",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "Tenant",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "Tenant",
+                    "uuid": "a0e14ff4-914a-4f1c-8da1-dde6499dd82d",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "containerType",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "containerType",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "containerType",
+                    "uuid": "20967edd-9afa-41ab-83c2-2a21ff4f77d0",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "nodeId",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "nodeId",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "nodeId",
+                    "uuid": "b499fb74-e21e-4584-82d6-36bcca2e1bb9",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "tenantName",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "tenantName",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "tenantName",
+                    "uuid": "b35e0fcd-8d7b-4648-9675-457e77f0ccb3",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "updateDomain",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "updateDomain",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "updateDomain",
+                    "uuid": "5c95e38a-990d-4283-8724-3484fa176209",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "availabilitySetName",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                      "majorVersion": 1,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "availabilitySetName",
+                      "required": false,
+                      "rowSelectionCriteria": "default"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "availabilitySetName",
+                    "uuid": "97d6d42e-1566-4299-91cb-da0d06a514b7",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      },
+      {
+        "type": "Row",
+        "id": "a9792a7f-92d3-437e-a72d-3db167443d5e",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": ""
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "be16f904-44e3-401e-9c2c-5cf421619484",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12
+            },
+            "children": [
+              {
+                "type": "Timeline",
+                "id": "c4727731-08f1-4dbd-a793-36572d96bbef",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": ""
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "e09ce321-bbf7-4d87-92a6-62da2fea16c2",
+                    "idForPopups": "e09ce321-bbf7-4d87-92a6-62da2fea16c2",
+                    "groupId": "4b22f6a0-6b46-4a99-8f32-f5399bcb4b2b",
+                    "majorVersion": 1,
+                    "minorVersion": 0,
+                    "serviceId": "Fabric",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryVmId",
+                        "externalSourceName": "virtualMachineUniqueId",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  },
+                  {
+                    "id": "14cfa789-5134-4f6c-b517-de2a2ad4708c",
+                    "idForPopups": "14cfa789-5134-4f6c-b517-de2a2ad4708c",
+                    "groupId": "159ffb85-2b5c-4882-a82d-8b438f6ce158",
+                    "majorVersion": 3,
+                    "minorVersion": 0,
+                    "serviceId": "Fabric",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryVmOrContainerId",
+                        "externalSourceName": "virtualMachineUniqueId",
+                        "required": false
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+                        "majorVersion": 1,
+                        "minorVersion": 2,
+                        "internalDestinationName": "queryTenantName",
+                        "externalSourceName": "tenantName",
+                        "required": false,
+                        "rowSelectionCriteria": "default"
+                      },
+                      {
+                        "source": "global_time_selector",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "global_startTime",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "global_time_selector",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "global_endTime",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [
+      {
+        "id": "03e3a482-1fe2-47f5-82a8-5fefa843f233",
+        "idForPopups": "03e3a482-1fe2-47f5-82a8-5fefa843f233",
+        "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "serviceId": "Fabric",
+        "allowMultipleSelection": false,
+        "inputMappings": [
+          {
+            "source": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_subscriptionId",
+            "externalSourceName": "subscriptionId",
+            "required": false
+          },
+          {
+            "source": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_virtualMachineUniqueId",
+            "externalSourceName": "virtualMachineUniqueId",
+            "required": false
+          }
+        ],
+        "aggregationRule": {
+          "type": "Append"
+        }
+      }
+    ],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 1,
+  "basedOnVersionId": "7bad4845-2bc6-4d54-921a-a680b28164f6",
+  "groupId": "7bad4845-2bc6-4d54-921a-a680b28164f6",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "subscriptionId",
+      "description": "",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {},
+      "displayConditions": []
+    },
+    {
+      "name": "virtualMachineUniqueId",
+      "description": "",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {},
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "Fabric",
+      "groupId": "28db032d-d444-43c1-9009-c8293cbebfa6",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Fabric",
+      "groupId": "4b22f6a0-6b46-4a99-8f32-f5399bcb4b2b",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Fabric",
+      "groupId": "159ffb85-2b5c-4882-a82d-8b438f6ce158",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Fabric",
+      "id": "a78e0476-326d-4ac5-9d7c-21908d345b0a",
+      "groupId": "a78e0476-326d-4ac5-9d7c-21908d345b0a",
+      "entityType": "Page"
+    },
+    {
+      "serviceId": "Fabric",
+      "id": "6a0b1a9e-3a67-4ab2-9e07-eed522829921",
+      "groupId": "6a0b1a9e-3a67-4ab2-9e07-eed522829921",
+      "entityType": "Page"
+    }
+  ],
+  "serviceId": "Fabric",
+  "deleted": false,
+  "name": "Virtual Machines",
+  "_ts": 1673579446,
+  "databaseSavedTimestamp": "2023-01-13T03:10:46+00:00",
+  "_etag": "\"90009530-0000-1a00-0000-63c0cbb60000\"",
+  "createdAt": "2023-01-13T03:10:46.3535178+00:00",
+  "createdBy": "christis@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "christis@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2023-01-13T03:10:46.3535178+00:00",
+  "tags": []
+}

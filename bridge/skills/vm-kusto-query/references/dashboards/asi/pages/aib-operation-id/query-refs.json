@@ -1,0 +1,100 @@
+[
+  {
+    "groupId": "57892650-e915-4288-a3d0-fdbbc8fb01f0",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "9e3c46a1-7a18-4674-acbb-9aeca971e735",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_operationID",
+        "externalSourceName": "operationID",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Retrieve Resource \"operationID\"",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "globalFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "globalTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_operationID",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "correlationID",
+        "type": "string"
+      },
+      {
+        "name": "operationID",
+        "type": "string"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionID",
+        "type": "string"
+      },
+      {
+        "name": "min_PreciseTimeStamp",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  }
+]

@@ -1,0 +1,2631 @@
+[
+  {
+    "groupId": "bc1b9418-2a79-48ba-a602-d7c5f12efa8d",
+    "majorVersion": 7,
+    "minorVersion": 0,
+    "panelPath": [
+      "LongRunningOperations",
+      "GridViewByOperationName"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "GridViewByOperationName",
+    "queryId": "1396c502-2dfc-4ab6-ae91-6842f2e4e65b",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "operationName_query_",
+        "externalSourceName": "operationName_query",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region_query_",
+        "externalSourceName": "region_query",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "duration_threshold",
+        "externalSourceName": "min_OperationDurationThreshold_hr",
+        "required": false
+      },
+      {
+        "source": "node_input",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "lookback_days",
+        "externalSourceName": "lookback_days",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "apply_knownOperations",
+        "externalSourceName": "apply_knownOperations",
+        "required": false
+      }
+    ],
+    "name": "operationDurationGrid",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "duration_threshold",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "lookback_days",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "TeamName",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHours",
+        "type": "timespan"
+      },
+      {
+        "name": "retry_err_Count",
+        "type": "long"
+      },
+      {
+        "name": "user_err_Count",
+        "type": "long"
+      },
+      {
+        "name": "err_Count",
+        "type": "long"
+      },
+      {
+        "name": "max_CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "02.0hr",
+        "type": "long"
+      },
+      {
+        "name": "03.0hr",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "LongRunningOperations",
+    "queryId": "4d02aef9-11ab-400b-8ee4-de9e9c55d1fa",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "operationName_query_",
+        "externalSourceName": "operationName_query",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region_query_",
+        "externalSourceName": "region_query",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "min_OpertionDurationTHreshold_hr",
+        "externalSourceName": "min_OperationDurationThreshold_hr",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "apply_knownOperations",
+        "externalSourceName": "apply_knownOperations",
+        "required": false
+      }
+    ],
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "LongRunningOperations",
+    "via": "selectedProperty",
+    "propertyName": "Region",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "LongRunningOperations",
+    "via": "selectedProperty",
+    "propertyName": "OperationNames",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "LongRunningOperations",
+    "via": "selectedProperty",
+    "propertyName": "max_DurationInHrs",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "LongRunningOperations",
+    "via": "selectedProperty",
+    "propertyName": "correl_Log_Duration",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "LongRunningOperations",
+    "via": "selectedProperty",
+    "propertyName": "TimeRange",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "LongRunningOperations",
+    "via": "selectedProperty",
+    "propertyName": "CorrelationRequestId",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "LongRunningOperations",
+    "via": "selectedProperty",
+    "propertyName": "SubscriptionId",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "LongRunningOperations",
+    "via": "selectedProperty",
+    "propertyName": "SubscriptionName",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "CorrelationRequestId",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "max_DurationInHrs",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "querylink_kusto",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "sum_DurationInHrs",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "OperationNames",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "op_dict",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "sum_opid_Duration",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "min_TIMESTAMP",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "max_TIMESTAMP",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "correl_Log_Duration",
+    "name": "LongRunningOperations",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "operationName_query_",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "region_query_",
+        "type": "enum",
+        "optional": false
+      },
+      {
+        "name": "min_OpertionDurationTHreshold_hr",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "apply_knownOperations",
+        "type": "bool",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "max_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "max_OperationName",
+        "type": "string"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      },
+      {
+        "name": "sum_DurationInHrs",
+        "type": "real"
+      },
+      {
+        "name": "OperationNames",
+        "type": "dynamic"
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionName",
+        "type": "string"
+      },
+      {
+        "name": "correl_Log_Duration",
+        "type": "real"
+      },
+      {
+        "name": "TimeRange",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a38c1bb4-ed38-43ce-8d0f-981a3da86035",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations",
+      "OperationNames"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "OperationNames",
+    "queryId": "c5cd00ec-8a19-4cfe-88ce-befd908f5013",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+        "majorVersion": 4,
+        "minorVersion": 1,
+        "internalDestinationName": "op_dict",
+        "externalSourceName": "op_dict",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "expand",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a38c1bb4-ed38-43ce-8d0f-981a3da86035",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations",
+      "OperationNames"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "OperationNames",
+    "via": "selectedProperty",
+    "propertyName": "OperationName",
+    "name": "expand",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a38c1bb4-ed38-43ce-8d0f-981a3da86035",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations",
+      "OperationNames"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "OperationNames",
+    "via": "selectedProperty",
+    "propertyName": "dcount_OperationId",
+    "name": "expand",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a38c1bb4-ed38-43ce-8d0f-981a3da86035",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations",
+      "OperationNames"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "OperationNames",
+    "via": "selectedProperty",
+    "propertyName": "sum_opid_Duration",
+    "name": "expand",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "op_dict",
+        "type": "dynamic",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "sum_opid_Duration",
+        "type": "real"
+      },
+      {
+        "name": "querylink_kusto",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2e857c52-8492-4e39-a152-06ec499bd43f",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "LongRunningOperations",
+      "LongRunningOperations",
+      "OperationId_Timings"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "OperationId_Timings",
+    "queryId": "c561eacd-9830-48e3-8b09-6afee2d67e06",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+        "majorVersion": 4,
+        "minorVersion": 1,
+        "internalDestinationName": "correlationRequestId",
+        "externalSourceName": "CorrelationRequestId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "opidTimings",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "correlationRequestId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "mint",
+        "type": "datetime"
+      },
+      {
+        "name": "maxt",
+        "type": "datetime"
+      },
+      {
+        "name": "duration_hrs",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  }
+]

@@ -1,0 +1,322 @@
+{
+  "service": "Network Manager",
+  "page": "MerlinTimeline",
+  "pageId": "48744ea0-204b-44eb-8627-c4671ab1a955",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "9a8183c5-730b-42cc-8158-10385a2f19f7",
+          "name": "Retrieve Resource \"MerlinTimeline\"",
+          "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_Tenant",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_containerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_interfaceId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_vmUniqueId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "interfaceId",
+              "type": "string"
+            },
+            {
+              "name": "vmUniqueId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_Tenant",
+              "externalSourceName": "Tenant",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_containerId",
+              "externalSourceName": "containerId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_interfaceId",
+              "externalSourceName": "interfaceId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_vmUniqueId",
+              "externalSourceName": "vmUniqueId",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let cluster = coalesce(local_Tenant, 'xxcv');\r\nlet s_containerId = coalesce(local_containerId, 'xxcv');\r\nlet s_interfaceId = coalesce(local_interfaceId, 'xxcv');\r\nlet vmUniqueId = coalesce(local_vmUniqueId, 'xxcv');\r\nNetworkServiceManagerEvents\r\n| where PreciseTimeStamp  between (startTime .. endTime)\r\n| where Tenant =~ cluster\r\n| where TaskName == 'LogMerlinInterfaceStateMachineCreated'\r\n| where Message has_any (s_interfaceId, vmUniqueId, s_containerId)\r\n| top 1 by PreciseTimeStamp asc\r\n| parse Message with * 'containerId=\"' containerId:string '\"' * 'merlinNetworkInterfaceInstanceId=\"' interfaceId:string '\"' * \r\n| project PreciseTimeStamp, Tenant, containerId, interfaceId, vmUniqueId = local_vmUniqueId",
+          "panelPath": []
+        },
+        {
+          "id": "331f4ffe-363d-4b27-b7bc-6f15556abf7a",
+          "name": "MerlinTimelineFull",
+          "groupId": "661bba94-692f-44ee-ab18-583072a7a24b",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Merlin Timeline",
+          "params": [
+            {
+              "name": "cluster",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "query_containerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "interfaceId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "vmUniqueId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "query_BeginTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "query_EndTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Event",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "cluster",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "interfaceId",
+              "externalSourceName": "interfaceId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "vmUniqueId",
+              "externalSourceName": "vmUniqueId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "query_BeginTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "query_EndTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "query_containerId",
+              "externalSourceName": "containerId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "let q_vmUniqueId = coalesce(tostring(toguid(vmUniqueId)), 'xcvv12f');\r\nNetworkServiceManagerEvents\r\n| where PreciseTimeStamp between (query_BeginTime .. query_EndTime)\r\n| where Tenant =~ cluster and TaskName !in ('LogMerlinNotificationReceived','NicInstanceManagerEvent','SwiftUpdates')\r\n| where Message has_any (interfaceId, q_vmUniqueId, query_containerId)\r\n| project PreciseTimeStamp, Event=strcat('NsmEvt: ', TaskName), Message\r\n| union (\r\nDCMNMQOSInfoEtwTable\r\n| where PreciseTimeStamp between (query_BeginTime .. query_EndTime)\r\n| where Tenant =~ cluster and operation in ('BatchUpdateNetworkResource-Allocation', 'BatchUpdateNetworkResource-Release')\r\n| where additionalMessage has query_containerId\r\n| project PreciseTimeStamp, Event=strcat('NsmQos: ', operation), Message=strcat(additionalMessage, @\"success=\", success, \" message=\", message)\r\n)\r\n| union (\r\n// NM programming\r\ncluster('aznwsdn').database('aznwmds').InterfaceProgramEndFiveMinuteTable\r\n| where TIMESTAMP between (query_BeginTime .. query_EndTime)\r\n| where Cluster =~ cluster\r\n| where ContainerId == query_containerId\r\n| where Detail == 'Unblock Port Event' or Detail has 'DHCP'\r\n| project PreciseTimeStamp = FirstTimeStamp, Event=\"NMAgent\", Message = strcat_delim(\", \", LastTimeStamp, MACAddress, Detail)\r\n)\r\n| union (\r\nLogRoleInstanceSnapshot\r\n| where PreciseTimeStamp between (query_BeginTime .. query_EndTime)\r\n| where Tenant =~ cluster\r\n| where containerId == query_containerId\r\n| summarize arg_min(PreciseTimeStamp, *) by roleInstanceName, creationTime, containerId, isExpectedToRun, provisioningState, roleState\r\n| project PreciseTimeStamp, Event=strcat(\"RoleInstance: \", roleInstanceName),\r\n    Message=strcat(\"creation \", creationTime, \" isExpectedToRun \", isExpectedToRun, \" provisioningState \", provisioningState, \" roleState \", roleState)\r\n)\r\n| top 1000 by PreciseTimeStamp asc",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:12:40.221Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

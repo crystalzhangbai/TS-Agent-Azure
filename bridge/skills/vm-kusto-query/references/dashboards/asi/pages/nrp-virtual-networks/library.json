@@ -1,0 +1,598 @@
+{
+  "service": "NRP",
+  "page": "Virtual Networks",
+  "pageId": "ae48197f-cb31-4c15-8d92-147c5d7c9b4e",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "7a4fea92-e0e2-46ef-a503-d7d643864fa6",
+          "name": "Retrieve Resource \"Virtual Networks\"",
+          "groupId": "e6cdaf92-167b-46bf-b723-e899f16ca43a",
+          "majorVersion": 5,
+          "minorVersion": 6,
+          "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+          "database": "AzureResourceGraph",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_name",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_resourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_timestamp",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "deleted",
+              "type": "bool"
+            },
+            {
+              "name": "id",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "type",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "kind",
+              "type": "string"
+            },
+            {
+              "name": "location",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "managedBy",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "sku",
+              "type": "dynamic"
+            },
+            {
+              "name": "plan",
+              "type": "dynamic"
+            },
+            {
+              "name": "properties",
+              "type": "dynamic"
+            },
+            {
+              "name": "tags",
+              "type": "dynamic"
+            },
+            {
+              "name": "timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "subResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "aliases",
+              "type": "dynamic"
+            },
+            {
+              "name": "source",
+              "type": "string"
+            },
+            {
+              "name": "rowId",
+              "type": "string"
+            },
+            {
+              "name": "storeUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "routingType",
+              "type": "int"
+            },
+            {
+              "name": "partial",
+              "type": "bool"
+            },
+            {
+              "name": "identity",
+              "type": "dynamic"
+            },
+            {
+              "name": "zones",
+              "type": "dynamic"
+            },
+            {
+              "name": "scopeType",
+              "type": "int"
+            },
+            {
+              "name": "scopeId",
+              "type": "string"
+            },
+            {
+              "name": "extendedLocation",
+              "type": "dynamic"
+            },
+            {
+              "name": "systemData",
+              "type": "dynamic"
+            },
+            {
+              "name": "rowSize",
+              "type": "long"
+            },
+            {
+              "name": "JSON",
+              "type": "dynamic"
+            },
+            {
+              "name": "subnets",
+              "type": "long"
+            },
+            {
+              "name": "virtualNetworkPeerings",
+              "type": "dynamic"
+            },
+            {
+              "name": "addressPrefixes",
+              "type": "dynamic"
+            },
+            {
+              "name": "resourceGuid",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_name",
+              "externalSourceName": "name",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_resourceGroupName",
+              "externalSourceName": "resourceGroupName",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_timestamp",
+              "externalSourceName": "timestamp",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let vnetResourceId = strcat(\r\n    \"/subscriptions/\", local_subscriptionId, \r\n    \"/resourceGroups/\", local_resourceGroupName, \r\n    \"/providers/Microsoft.Network/virtualNetworks/\", local_name);\r\ncluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where type == \"microsoft.network/virtualnetworks\" and id =~ vnetResourceId and not(deleted) \r\n| top 1 by timestamp desc\r\n| extend JSON = parse_json(properties)\r\n| extend subnets = array_length(properties.subnets)\r\n| extend virtualNetworkPeerings = properties.virtualNetworkPeerings\r\n| extend addressPrefixes = properties.addressSpace.addressPrefixes\r\n| extend resourceGuid = properties.resourceGuid\r\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "Peerings > VNet Peerings": {
+      "panelPath": [
+        "Peerings",
+        "VNet Peerings"
+      ],
+      "queries": [
+        {
+          "id": "edcf079c-616d-4c83-a58c-444a176fc223",
+          "name": "Virtual Network Peerings",
+          "groupId": "ed206d47-ae9c-49b3-bd85-8b4a94a14c76",
+          "majorVersion": 4,
+          "minorVersion": 0,
+          "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+          "database": "AzureResourceGraph",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VNet Peerings",
+          "params": [
+            {
+              "name": "queryId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "id",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "provisioningState",
+              "type": "string"
+            },
+            {
+              "name": "peeringState",
+              "type": "string"
+            },
+            {
+              "name": "peeringSyncLevel",
+              "type": "string"
+            },
+            {
+              "name": "remoteVirtualNetworkSub",
+              "type": "string"
+            },
+            {
+              "name": "remoteVirtualNetworkRG",
+              "type": "string"
+            },
+            {
+              "name": "remoteVirtualNetworkName",
+              "type": "string"
+            },
+            {
+              "name": "allowVirtualNetworkAccess",
+              "type": "string"
+            },
+            {
+              "name": "allowForwardedTraffic",
+              "type": "string"
+            },
+            {
+              "name": "allowGatewayTransit",
+              "type": "string"
+            },
+            {
+              "name": "useRemoteGateways",
+              "type": "string"
+            },
+            {
+              "name": "doNotVerifyRemoteGateways",
+              "type": "string"
+            },
+            {
+              "name": "remoteVirtualNetworkGreKey",
+              "type": "string"
+            },
+            {
+              "name": "remoteVirtualNetworkRegionID",
+              "type": "string"
+            },
+            {
+              "name": "remoteAddressSpaceAddressPrefixes",
+              "type": "string"
+            },
+            {
+              "name": "remoteVirtualNetworkAddressSpaceAddressPrefixes",
+              "type": "string"
+            },
+            {
+              "name": "remotePeeringUsesGateways",
+              "type": "string"
+            },
+            {
+              "name": "remoteVirtualNetworkResourceGuid",
+              "type": "string"
+            },
+            {
+              "name": "remoteVirtualNetworkLocation",
+              "type": "string"
+            },
+            {
+              "name": "remoteGatewayPublicIPAddresses",
+              "type": "string"
+            },
+            {
+              "name": "routeServiceVips",
+              "type": "string"
+            },
+            {
+              "name": "vnetPeering",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e6cdaf92-167b-46bf-b723-e899f16ca43a",
+              "majorVersion": 5,
+              "minorVersion": 6,
+              "internalDestinationName": "queryId",
+              "externalSourceName": "id",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "let vnetResourceId = queryId;\r\ncluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where type == \"microsoft.network/virtualnetworks\" and id =~ vnetResourceId and not(deleted) \r\n| take 1\r\n| extend vnetPeerings = properties.virtualNetworkPeerings\r\n| mv-expand vnetPeering = vnetPeerings\r\n| project vnetPeering\r\n| extend properties = vnetPeering.properties\r\n| extend remoteVirtualNetworkId = tostring(properties.remoteVirtualNetwork.id)\r\n| project \r\n    id = tostring(vnetPeering.id),\r\n    name = tostring(vnetPeering.name),\r\n    provisioningState = tostring(properties.provisioningState),\r\n    peeringState = tostring(properties.peeringState),\r\n    peeringSyncLevel = tostring(properties.peeringSyncLevel),\r\n    remoteVirtualNetworkSub = tostring(split(remoteVirtualNetworkId, \"/\")[2]),\r\n    remoteVirtualNetworkRG = tostring(split(remoteVirtualNetworkId, \"/\")[4]),\r\n    remoteVirtualNetworkName = tostring(split(remoteVirtualNetworkId, \"/\")[8]),\r\n    allowVirtualNetworkAccess = tostring(properties.allowVirtualNetworkAccess),\r\n    allowForwardedTraffic = tostring(properties.allowForwardedTraffic),\r\n    allowGatewayTransit = tostring(properties.allowGatewayTransit),\r\n    useRemoteGateways = tostring(properties.useRemoteGateways),\r\n    doNotVerifyRemoteGateways = tostring(properties.doNotVerifyRemoteGateways),\r\n    remoteVirtualNetworkGreKey = tostring(properties.remoteVirtualNetworkGreKey),\r\n    remoteVirtualNetworkRegionID = tostring(properties.remoteVirtualNetworkRegionID),\r\n    remoteAddressSpaceAddressPrefixes = array_strcat(properties.remoteAddressSpace.addressPrefixes, \", \"),\r\n    remoteVirtualNetworkAddressSpaceAddressPrefixes = array_strcat(properties.remoteVirtualNetworkAddressSpace.addressPrefixes, \", \"),\r\n    remotePeeringUsesGateways = tostring(properties.remotePeeringUsesGateways),\r\n    remoteVirtualNetworkResourceGuid = tostring(properties.remoteVirtualNetworkResourceGuid),\r\n    remoteVirtualNetworkLocation = tostring(properties.remoteVirtualNetworkLocation),\r\n    remoteGatewayPublicIPAddresses = tostring(properties.remoteGatewayPublicIPAddresses),\r\n    routeServiceVips = tostring(properties.routeServiceVips),\r\n    vnetPeering\r\n",
+          "panelPath": [
+            "Peerings",
+            "VNet Peerings"
+          ]
+        }
+      ]
+    },
+    "Subnets > Subnets": {
+      "panelPath": [
+        "Subnets",
+        "Subnets"
+      ],
+      "queries": [
+        {
+          "id": "6dc7af02-bd23-4fa4-a638-395dedaad6c3",
+          "name": "Virtual Network Subnets",
+          "groupId": "321488e8-4ae7-420f-adb6-765e7fd2283a",
+          "majorVersion": 5,
+          "minorVersion": 3,
+          "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+          "database": "AzureResourceGraph",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Subnets",
+          "params": [
+            {
+              "name": "queryVNetResourceId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "subSubId",
+              "type": "string"
+            },
+            {
+              "name": "subRg",
+              "type": "string"
+            },
+            {
+              "name": "vnetResourceId",
+              "type": "string"
+            },
+            {
+              "name": "reconciliationState",
+              "type": "string"
+            },
+            {
+              "name": "lastModifiedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "createdTime",
+              "type": "datetime"
+            },
+            {
+              "name": "provisioningState",
+              "type": "string"
+            },
+            {
+              "name": "addressPrefixes",
+              "type": "dynamic"
+            },
+            {
+              "name": "isSqlGTEnabledNow",
+              "type": "bool"
+            },
+            {
+              "name": "isStorageGTEnabledNow",
+              "type": "bool"
+            },
+            {
+              "name": "isSqlGTEnabledEver",
+              "type": "bool"
+            },
+            {
+              "name": "isStorageGTEnabledEver",
+              "type": "bool"
+            },
+            {
+              "name": "isAddressPrefixesSet",
+              "type": "bool"
+            },
+            {
+              "name": "networkSecurityGroupId",
+              "type": "string"
+            },
+            {
+              "name": "networkSecurityGroupName",
+              "type": "string"
+            },
+            {
+              "name": "nsgSubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "nsgResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "routeTableId",
+              "type": "string"
+            },
+            {
+              "name": "routeTableName",
+              "type": "string"
+            },
+            {
+              "name": "rtSubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "rtResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "privateEndpointNetworkPolicies",
+              "type": "string"
+            },
+            {
+              "name": "privateLinkServiceNetworkPolicies",
+              "type": "string"
+            },
+            {
+              "name": "subnetTrafficTag",
+              "type": "long"
+            },
+            {
+              "name": "ipAddressOwnerDict",
+              "type": "dynamic"
+            },
+            {
+              "name": "privateEndpointId",
+              "type": "string"
+            },
+            {
+              "name": "hasPrivateEndpoints",
+              "type": "bool"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e6cdaf92-167b-46bf-b723-e899f16ca43a",
+              "majorVersion": 5,
+              "minorVersion": 6,
+              "internalDestinationName": "queryVNetResourceId",
+              "externalSourceName": "id",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "let vnetResourceId = queryVNetResourceId;\r\ncluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where type == \"microsoft.network/virtualnetworks\" and id =~ vnetResourceId and not(deleted) and isnotempty(properties)\r\n| top 1 by timestamp desc\r\n| mv-expand Subnet = properties.subnets\r\n| parse Subnet.id with \"/subscriptions/\" subSubId \"/resourceGroups/\" subRg \"/providers/Microsoft.Network/virtualNetworks/\" subVnet \"/subnets/\" *\r\n| extend networkSecurityGroupId = tostring(Subnet.properties.networkSecurityGroup.id)\r\n| parse networkSecurityGroupId with \"/subscriptions/\" nsgSubscriptionId \"/resourceGroups/\" nsgResourceGroupName \"/providers/Microsoft.Network/networkSecurityGroups/\" networkSecurityGroupName \r\n| extend routeTableId = tostring(Subnet.properties.routeTable.id)\r\n| parse routeTableId with \"/subscriptions/\" rtSubscriptionId \"/resourceGroups/\" rtResourceGroupName \"/providers/Microsoft.Network/routeTables/\" routeTableName\r\n| extend privateEndpointId = tostring(Subnet.properties.privateEndpoints[0].id)\r\n| extend hasPrivateEndpoints = tobool(iif(isempty(privateEndpointId), false, true))\r\n| project \r\n    PreciseTimeStamp = timestamp,\r\n    name = tostring(Subnet.name), \r\n    subSubId, \r\n    subRg, \r\n    vnetResourceId = id,\r\n    reconciliationState = tostring(Subnet.reconciliationState), \r\n    lastModifiedTime = todatetime(Subnet.lastModifiedTime),\r\n    createdTime = todatetime(Subnet.createdTime),\r\n    provisioningState = tostring(Subnet.properties.provisioningState),\r\n    addressPrefixes = coalesce(Subnet.properties.addressPrefixes, Subnet.properties.addressPrefix),\r\n    isSqlGTEnabledNow = tobool(Subnet.properties.isSqlGTEnabledNow),\r\n    isStorageGTEnabledNow = tobool(Subnet.properties.isStorageGTEnabledNow),\r\n    isSqlGTEnabledEver = tobool(Subnet.properties.isSqlGTEnabledEver),\r\n    isStorageGTEnabledEver = tobool(Subnet.properties.isStorageGTEnabledEver),\r\n    isAddressPrefixesSet = tobool(Subnet.properties.isAddressPrefixesSet),\r\n    networkSecurityGroupId,\r\n    networkSecurityGroupName,\r\n    nsgSubscriptionId,\r\n    nsgResourceGroupName,\r\n    routeTableId,\r\n    routeTableName,\r\n    rtSubscriptionId,\r\n    rtResourceGroupName,\r\n    privateEndpointNetworkPolicies = tostring(Subnet.properties.privateEndpointNetworkPolicies),\r\n    privateLinkServiceNetworkPolicies = tostring(Subnet.properties.privateLinkServiceNetworkPolicies),\r\n    subnetTrafficTag = tolong(Subnet.properties.subnetTrafficTag),\r\n    ipAddressOwnerDict = Subnet.properties.ipAddressOwnerDict,\r\n    privateEndpointId,\r\n    hasPrivateEndpoints\r\n    ",
+          "panelPath": [
+            "Subnets",
+            "Subnets"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:53.705Z",
+    "totalPanels": 3,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

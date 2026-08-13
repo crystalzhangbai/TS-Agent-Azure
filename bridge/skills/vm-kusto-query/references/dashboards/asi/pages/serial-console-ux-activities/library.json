@@ -1,0 +1,602 @@
+{
+  "service": "Azure Serial Console",
+  "page": "UX Activities",
+  "pageId": "aba301be-3cdb-441b-8634-8800e1bfecec",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "5b65f5a7-ea40-4e70-bd09-9c61c58db53f",
+          "name": "Connection by OS",
+          "groupId": "6f74280c-ee0f-4d27-8164-dd1764b3c808",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Connection by OS",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFrom14days",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo14days",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "os",
+              "type": "string"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom14days",
+              "externalSourceName": "componentFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo14days",
+              "externalSourceName": "componentTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "PortalActivity\r\n| where TIMESTAMP > queryFrom14days\r\n| where TIMESTAMP <= queryTo\r\n| where message contains \"PortalAction:startWSConnection\"\r\n| summarize count() by os, bin(TIMESTAMP, 1d)\r\n| render timechart ",
+          "panelPath": []
+        },
+        {
+          "id": "2e39e568-8571-4dd4-8b32-92c4750119e2",
+          "name": "Connection by resource type",
+          "groupId": "d6f53a63-a46d-4fc0-98bf-60d3ac0e0ea7",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Connection by resource type",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFrom14days",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo14days",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "resourceType",
+              "type": "string"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom14days",
+              "externalSourceName": "componentFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo14days",
+              "externalSourceName": "componentTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "PortalActivity\r\n| where TIMESTAMP > queryFrom14days\r\n| where TIMESTAMP <= queryTo\r\n| where message contains \"PortalAction:startWSConnection\"\r\n| summarize count() by resourceType, bin(TIMESTAMP, 1d)\r\n| render timechart ",
+          "panelPath": []
+        },
+        {
+          "id": "3fb5b446-55a5-44fc-bf98-44ddd700206e",
+          "name": "Power Options",
+          "groupId": "43028730-c477-4e32-9df1-efe875862190",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Power Options",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFrom14days",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo14days",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "Restart_VM",
+              "type": "long"
+            },
+            {
+              "name": "Reset_VM",
+              "type": "long"
+            },
+            {
+              "name": "Sys_Rq",
+              "type": "long"
+            },
+            {
+              "name": "NMI",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom14days",
+              "externalSourceName": "componentFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo14days",
+              "externalSourceName": "componentTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "PortalActivity\r\n| where TIMESTAMP > queryFrom14days\r\n| where TIMESTAMP <= queryTo14days\r\n| where message == \"PortalAction:restartVM\" or message contains \"CommandName: reset\" or message contains \"CommandName: nmi\" or message contains '\"SysRqCommand\":\"b\"'\r\n| summarize Restart_VM = countif(message == \"PortalAction:restartVM\"),\r\n    Reset_VM = countif(message contains \"CommandName: reset\"),\r\n    Sys_Rq = countif(message contains '\"SysRqCommand\":\"b\"'),\r\n    NMI = countif(message contains \"CommandName: nmi\")\r\n    by bin(TIMESTAMP, 1d)\r\n| render linechart",
+          "panelPath": []
+        },
+        {
+          "id": "4881146c-74dc-423b-8e0d-2315e1ef5ba9",
+          "name": "Portal Actions",
+          "groupId": "54d5c4b3-485f-47de-bfbf-909b4bd9e16c",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Portal Activities",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFrom14days",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo14days",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "Update_FontSize",
+              "type": "int"
+            },
+            {
+              "name": "Update_FontStyle",
+              "type": "int"
+            },
+            {
+              "name": "Click_Help_Link",
+              "type": "int"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom14days",
+              "externalSourceName": "componentFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo14days",
+              "externalSourceName": "componentTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "PortalActivity\r\n| where TIMESTAMP > queryFrom14days\r\n| where TIMESTAMP <= queryTo14days\r\n| where message == \"PortalAction:updateFontSize\" or message == \"PortalAction:updateFontStyle\" or message == \"PortalAction:helpLinkClick\"\r\n| summarize Update_FontSize = countif(message == \"PortalAction:updateFontSize\"),\r\n    Update_FontStyle = countif(message == \"PortalAction:updateFontStyle\"),\r\n    Click_Help_Link = countif(message == \"PortalAction:helpLinkClick\")\r\n    by bin(TIMESTAMP, 1d)\r\n| render timechart",
+          "panelPath": []
+        },
+        {
+          "id": "ce210203-db76-498a-8690-337f14d1e4a8",
+          "name": "Top 10 Tenants by Linux",
+          "groupId": "9bc0bc34-08be-4383-b16d-a0c185924847",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "CategoryChart",
+          "widgetType": "CategoryChart",
+          "widgetTitle": "Daily Top 10 Tenants by Linux",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFrom1day",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo1day",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "os",
+              "type": "string"
+            },
+            {
+              "name": "LinuxCount",
+              "type": "int"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom1day",
+              "externalSourceName": "componentFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo1day",
+              "externalSourceName": "componentTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "PortalActivity\r\n| where TIMESTAMP > queryFrom1day\r\n| where TIMESTAMP <= queryTo1day\r\n| where message contains \"PortalAction:startWSConnection\"\r\n| where os == \"Linux\"\r\n| summarize LinuxCount = count() by RPTenant, os\r\n| order by LinuxCount\r\n| limit 10\r\n| render barchart",
+          "panelPath": []
+        },
+        {
+          "id": "86a515a3-58fd-460d-bc15-99ff3d58ca3b",
+          "name": "Top 10 Tenants by Windows",
+          "groupId": "88ee8418-5ef7-4cae-a289-2ee04375cdaa",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "CategoryChart",
+          "widgetType": "CategoryChart",
+          "widgetTitle": "Daily Top 10 Tenant by Windows",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFrom1day",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo1day",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "os",
+              "type": "string"
+            },
+            {
+              "name": "WindowsCount",
+              "type": "int"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom1day",
+              "externalSourceName": "componentFrom",
+              "required": false
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo1day",
+              "externalSourceName": "componentTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "PortalActivity\r\n| where TIMESTAMP > queryFrom1day\r\n| where TIMESTAMP <= queryTo1day\r\n| where message contains \"PortalAction:startWSConnection\"\r\n| where os == \"Windows\"\r\n| summarize WindowsCount = count() by RPTenant, os\r\n| order by WindowsCount\r\n| limit 10\r\n| render barchart",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:59:23.040Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 6,
+    "totalWidgetRefs": 6
+  }
+}

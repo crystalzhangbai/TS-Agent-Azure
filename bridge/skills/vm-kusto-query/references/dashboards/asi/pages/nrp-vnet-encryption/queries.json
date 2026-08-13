@@ -1,0 +1,1049 @@
+[
+  {
+    "id": "113e9fb5-6a8c-468d-bfd0-65426aae2c77",
+    "name": "IfPutVnetWithEncryptionSucceeded",
+    "groupId": "9c25f47a-523b-47f8-99f9-18de550533cc",
+    "majorVersion": 1,
+    "minorVersion": 7,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let opidLst=WriteOperationResponseEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n// | where SubscriptionId != \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n| where OperationName == \"PutVirtualNetworkOperation\"\r\n| where Request contains ```\"encryption\":{\"enabled\":true,```\r\n| distinct OperationId;\r\nQosEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where OperationId in (opidLst)\r\n| summarize count() by Success, ErrorCode, Region\r\n",
+    "params": [
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "07d65296-c6f4-4939-9ec2-5835e1add321",
+    "name": "IfEncryptionRequiredInGetTenantCluster",
+    "groupId": "5d4d088d-498f-4754-8dda-8ca1b610059b",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let operationName = \"GetTenantClustersOperation\"; \r\nFrontendOperationEtwEvent \r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n// | where SubscriptionId != \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n| where OperationName == operationName \r\n| where Message contains \"encryptionRequired\" \r\n| parse Message with \"encryptionRequired: \" ifEncryptionRequired \r\n| project Region, TIMESTAMP, SubscriptionId, CorrelationRequestId, ifEncryptionRequired",
+    "params": [
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "ifEncryptionRequired",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "92733c13-b9c5-4b5b-8103-6523572c8752",
+    "name": "put vnet traffic",
+    "groupId": "7f129a3d-5443-4d58-ab3b-6ec1aac24952",
+    "majorVersion": 1,
+    "minorVersion": 5,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n    | where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n    // | where SubscriptionId != \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n    | where OperationName == \"PutVirtualNetworkOperation\"\r\n    | where Request contains ```\"encryption\":{\"enabled\":true,```\r\n    | summarize count() by bin(PreciseTimeStamp, 1h), Region",
+    "params": [
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "758d5f5e-176d-4add-8ea9-ec6cf364d936",
+    "name": "Avg Time Taken To Read VNet",
+    "groupId": "4b548353-caa2-4735-9c68-726460a8be9a",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let operationName = \"GetTenantClustersOperation\"; \r\nFrontendOperationEtwEvent \r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n// | where SubscriptionId != \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n| where OperationName == operationName \r\n| where Message contains \"Reading the vnet encryption status took\"\r\n| parse Message with \"Reading the vnet encryption status took \" readTime \" ms\"\r\n| extend readTime = toint(readTime)\r\n| summarize avgReadTime = avgif(readTime, readTime > 0) by bin(PreciseTimeStamp, 1h)\r\n\r\n",
+    "params": [
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "avgReadTime",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "a3533288-93d3-4e6a-b599-699e8eee0f21",
+    "name": "PeeringFailureDueToOldApi",
+    "groupId": "7a839eea-4d28-4f8c-a745-cc327528fd96",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let EncryptedRemoteVnet = \r\nFrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n// | where SubscriptionId != \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n| where OperationName == \"PutVirtualNetworkPeeringOperation\"\r\n| where Message contains \"has encryption status\" and Message contains \"with enforcenment policy\"\r\n| distinct OperationId;\r\nWriteOperationResponseEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where OperationName == \"PutVirtualNetworkPeeringOperation\"\r\n| where Response !contains \"remoteVirtualNetworkEncryption\"\r\n| where OperationId in (EncryptedRemoteVnet)\r\n| extend failedDueToOldApiVersion = todatetime(ApiVersion) < todatetime(\"2020-11-01\")\r\n| project PreciseTimeStamp, failedDueToOldApiVersion, ApiVersion, OperationId\r\n",
+    "params": [
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "failedDueToOldApiVersion",
+        "type": "bool"
+      },
+      {
+        "name": "ApiVersion",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "28f8b4b8-b06b-47aa-9cb8-8066780bd0ca",
+    "name": "Get Expected Nic Flag",
+    "groupId": "ef7eb284-5850-468d-a0a0-dd3da7a14ecd",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n// | where SubscriptionId != \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n| where OperationName == \"AllocateVirtualMachinesOperation\"\r\n| where Message contains \"vnet encryption enabled: \" and Message contains \"vm size capable of encryption: \"\r\n| parse Message with \"goal nic id: \" nicId \", vnet encryption enabled: \" encryptionStatus \", vm size capable of encryption: \" vmSizeCapability \", expected VnetEncryptionSupported flag: \" nicFlag\r\n| project TIMESTAMP, OperationId, nicId, encryptionStatus, vmSizeCapability, nicFlag\r\n",
+    "params": [
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "nicId",
+        "type": "string"
+      },
+      {
+        "name": "encryptionStatus",
+        "type": "string"
+      },
+      {
+        "name": "vmSizeCapability",
+        "type": "string"
+      },
+      {
+        "name": "nicFlag",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "a65fa8a3-88b5-4dde-9785-3e936b619bcf",
+    "name": "RunnerSucceed",
+    "groupId": "dfff75aa-36ea-4d3a-8ecd-8ef1469b26cb",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "RunnersDeployMetric\r\n| where (Timestamp > startTime and Timestamp < endTime)\r\n| where SubscriptionId == \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n| where (RunnerInstanceName contains \"NrpCreateVM\" and RunnerInstanceName contains \"encrypted\") or RunnerInstanceName contains \"encryption\"\r\n| project RunnerName, RunnerInstanceName, Timestamp, Metric, MetricName, Region, SubscriptionId\r\n| extend Region = tolower(Region)\r\n| summarize Failure = countif(Metric == 2), Pass = countif(Metric == 1) by RunnerInstanceName, Timestamp, Region\r\n| summarize PassRate = sum(Pass) * 1.0 / (sum(Pass)+sum(Failure)) by RunnerInstanceName, Region\r\n| project RunnerInstanceName, Region, PassRate\r\n| extend SuccessRate = round(PassRate, 4) * 100.0\r\n| project RunnerInstanceName, Region, SuccessRate",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "RunnerInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SuccessRate",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "5472aa59-6acb-45d3-982e-743634c11ed4",
+    "name": "runner sub ",
+    "groupId": "c2bb1a41-bdc2-489b-83aa-ef1694483eb9",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where SubscriptionId == \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n| where OperationName !contains \"get\" and OperationName !contains \"delete\"\r\n| where Success == 0 \r\n| where ErrorCode != \"RetryableError\" and ErrorCode != \"TaskCanceled\"\r\n| project Region, OperationName, ResourceGroup, CorrelationRequestId, OperationId, ErrorCode, ErrorDetails",
+    "params": [
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ddb66868-21c5-4f6c-bf58-eddcb841f91b",
+    "name": "runnerErrorInCRP",
+    "groupId": "3a50ce65-7ad0-4793-a8c6-379bf988e7b6",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "ApiQosEvent\r\n| where (TIMESTAMP > startTime and TIMESTAMP < endTime)\r\n| where subscriptionId == \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n| where (resourceGroupName contains \"NrpCreateVM\" and resourceGroupName contains \"encrypted\") or resourceGroupName contains \"encryption\"\r\n| where operationName !contains \"get\" and operationName !contains \"delete\"\r\n| where errorDetails != \"\"\r\n| project region, resourceGroupName, operationName, operationId, resultCode, errorDetails",
+    "params": [
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "operationId",
+        "type": "string"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "07900a6e-6c79-41c7-a39b-0ee3e98a902d",
+    "name": "ARM Incoming Requests",
+    "groupId": "6ebc46dd-db86-4b89-9053-5b4ba43f1219",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://armprod.kusto.windows.net",
+    "database": "ARMProd",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "HttpIncomingRequests\r\n| where (TIMESTAMP > startTime and TIMESTAMP < endTime)\r\n| where subscriptionId == \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n//| where (targetUri contains \"NrpCreateVM\" and targetUri contains \"encrypted\") or targetUri contains \"encryption\"\r\n| where operationName !contains \"get\" and operationName !contains \"delete\"\r\n| where durationInMilliseconds > 1\r\n| project correlationId, operationName, targetUri, durationInMilliseconds, httpStatusCode, targetResourceProvider",
+    "params": [
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "targetUri",
+        "type": "string"
+      },
+      {
+        "name": "durationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "httpStatusCode",
+        "type": "long"
+      },
+      {
+        "name": "targetResourceProvider",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "8c1469f3-27f5-45b0-a3e1-b9c36573a105",
+    "name": "RNM Get Expected Nic Flag",
+    "groupId": "54c1a653-38a7-447e-92f5-0a9029794922",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n// | where SubscriptionId != \"c51a6f0a-b599-46bc-8484-6cb32b0ac038\"\r\n| where OperationName == \"AllocateTenantNetworkResourcesOperation\"\r\n| where Message contains \"vnet encryption enabled: \" and Message contains \"vm size capable of encryption: \"\r\n| parse Message with \"goal nic id: \" nicId \", vnet encryption enabled: \" encryptionStatus \", vm size capable of encryption: \" vmSizeCapability \", expected VnetEncryptionSupported flag: \" nicFlag\r\n| project TIMESTAMP, OperationId, nicId, encryptionStatus, vmSizeCapability, nicFlag\r\n",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "nicId",
+        "type": "string"
+      },
+      {
+        "name": "encryptionStatus",
+        "type": "string"
+      },
+      {
+        "name": "vmSizeCapability",
+        "type": "string"
+      },
+      {
+        "name": "nicFlag",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "02c4342b-097e-42b7-b716-6840c6d447fb",
+    "name": "ValidateEncryptionBasedOnVMSizeOnly",
+    "groupId": "74447321-1c60-44ad-9210-5be7b478d0e3",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "DynamicSettingsMonitor_Update(region)\r\n| where setting_name == \"ValidateEncryptionBasedOnVMSizeOnly\"\r\n| summarize by SettingName, SliceNum, Region, setting_value, last_run",
+    "params": [
+      {
+        "name": "region",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "SettingName",
+        "type": "string"
+      },
+      {
+        "name": "SliceNum",
+        "type": "long"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "setting_value",
+        "type": "string"
+      },
+      {
+        "name": "last_run",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "32dc3023-d4e4-45a8-8769-94e12ee6561d",
+    "name": "SupportVNetEncryptionFeature",
+    "groupId": "dfb29fd5-d3f0-4dae-afd5-b3dc33a4c593",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "DynamicSettingsMonitor_Update(region)\r\n| where setting_name == \"SupportVNetEncryptionFeature\"\r\n| summarize by SettingName, SliceNum, Region, setting_value, last_run",
+    "params": [
+      {
+        "name": "region",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "SettingName",
+        "type": "string"
+      },
+      {
+        "name": "SliceNum",
+        "type": "long"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "setting_value",
+        "type": "string"
+      },
+      {
+        "name": "last_run",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "e73af401-8b49-408d-8e8c-f3ce1a9fcd9d",
+    "name": "SupportVNetEncryptionOnRNMStack ",
+    "groupId": "47063873-3945-4965-8c01-4a82c2762c3b",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "DynamicSettingsMonitor_Update(region)\r\n| where setting_name == \"SupportVNetEncryptionOnRNMStack\"\r\n| summarize by SettingName, SliceNum, Region, setting_value, last_run",
+    "params": [
+      {
+        "name": "region",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "SettingName",
+        "type": "string"
+      },
+      {
+        "name": "SliceNum",
+        "type": "long"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "setting_value",
+        "type": "string"
+      },
+      {
+        "name": "last_run",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "46d298b4-5b93-436e-99b8-877bde6b4550",
+    "name": "callOutsideSupportedRegions",
+    "groupId": "e8bbab21-875b-4c09-a207-ecdc987cc485",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let regions = dynamic([\"uswestcentral\", \"usnorth\", \"uscentraleuap\", \"useast2euap\", \"useast2\", \"uswest2\"]); \r\nQosEtwEvent \r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region !in (regions) \r\n| where OperationId in (\r\n( WriteOperationResponseEtwEvent \r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Region !in (regions) \r\n| where OperationName == \"PutVirtualNetworkOperation\" \r\n| where Request contains ```\"encryption\":{\"enabled\":true``` \r\n| project OperationId )\r\n) \r\n| summarize count() by bin(PreciseTimeStamp, 1h), Region, Success, ErrorCode, SourceAssemblyFileVersion, SubscriptionId",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "SourceAssemblyFileVersion",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "bbd6c577-3734-4ba1-a7e4-b0163823cf99",
+    "name": "clustersList",
+    "groupId": "50113174-b603-4328-9667-8f30dcb8e1c0",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let operationName = \"GetTenantClustersOperation\"; \r\nWriteOperationResponseEtwEvent\r\n| where PreciseTimeStamp between (startTime .. endTime)\r\n| where OperationName == operationName \r\n| where OperationId in (\r\n    (FrontendOperationEtwEvent \r\n        | where PreciseTimeStamp between (startTime .. endTime)\r\n        | where OperationName == operationName \r\n        | parse Message with \"encryptionRequired: \" ifEncryptionRequired \r\n        | where ifEncryptionRequired == \"True\"\r\n        | distinct OperationId)\r\n)\r\n| project Region, PreciseTimeStamp, SubscriptionId, OperationId, CorrelationRequestId, Response\r\n",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "Response",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "7da1f8b8-3c8a-4091-96da-6b1d5d032757",
+    "name": "ifFromARM",
+    "groupId": "efb4c35d-9c1a-4bc2-be70-2e163e898c53",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let opidLst=WriteOperationResponseEtwEvent\r\n| where (PreciseTimeStamp between (startTime .. endTime))\r\n| where OperationName == \"PutVirtualNetworkOperation\"\r\n| where Request contains ```\"encryption\":{\"enabled\":true,```\r\n| distinct OperationId;\r\nlet rgname = QosEtwEvent\r\n| where TIMESTAMP between (startTime .. endTime)\r\n| where OperationName contains \"preflight\"\r\n| distinct ResourceGroup;\r\nQosEtwEvent\r\n| where (PreciseTimeStamp between (startTime .. endTime))\r\n| where OperationId in (opidLst)\r\n| extend ifRequestFromARMTemplate = ResourceGroup in (rgname)\r\n| project Region, PreciseTimeStamp, SubscriptionId, ifRequestFromARMTemplate, ResourceGroup, CorrelationRequestId, OperationId, Success, ErrorCode",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ifRequestFromARMTemplate",
+        "type": "bool"
+      },
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

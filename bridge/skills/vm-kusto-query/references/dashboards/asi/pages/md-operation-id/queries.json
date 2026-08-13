@@ -1,0 +1,772 @@
+[
+  {
+    "id": "22420091-d562-43f9-a21e-0616e48ce5dc",
+    "name": "Retrieve Resource \"Operation Id\"",
+    "groupId": "872c20a9-c249-4217-889f-1b3ec149f4ef",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "disks",
+    "database": "Disks",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "DiskManagerApiQoSEvent\r\n//| where PreciseTimeStamp between (globalFrom .. globalTo)\r\n| where operationId =~ local_operationId\r\n| extend startTime = datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| project startTime, endTime = PreciseTimeStamp, operationName, operationId, clientRequestId, correlationId, resourceName, resultCode, resultType, errorDetails, exceptionType, httpStatusCode,requestEntity, internalCorrelationId, e2eInMin = e2EDurationInMilliseconds/1000/60, clientApplicationId\r\n",
+    "params": [
+      {
+        "name": "local_operationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "startTime",
+        "type": "datetime"
+      },
+      {
+        "name": "endTime",
+        "type": "datetime"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "operationId",
+        "type": "string"
+      },
+      {
+        "name": "clientRequestId",
+        "type": "string"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "resultType",
+        "type": "long"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      },
+      {
+        "name": "exceptionType",
+        "type": "string"
+      },
+      {
+        "name": "httpStatusCode",
+        "type": "long"
+      },
+      {
+        "name": "requestEntity",
+        "type": "string"
+      },
+      {
+        "name": "internalCorrelationId",
+        "type": "string"
+      },
+      {
+        "name": "e2eInMin",
+        "type": "long"
+      },
+      {
+        "name": "clientApplicationId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Managed Disk"
+  },
+  {
+    "id": "7cd189be-e3f9-44ec-825f-edd7c6bdce81",
+    "name": "Query DiskManagerContextActivityEvent",
+    "groupId": "72e2dce4-d214-4492-85f0-360dcd3a5fdd",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "Disks",
+    "database": "Disks",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "DiskManagerContextActivityEvent\r\n| where PreciseTimeStamp  between ((queryStartTime-1h) .. (queryEndTime+1h))\r\n| where activityId == queryOperationId\r\n| project PreciseTimeStamp, callerName, message, traceLevel\r\n| extend level = case(\r\n    traceLevel <= 2, 'error', \r\n    traceLevel <= 4, 'warn', \r\n    'info'\r\n)\r\n| order by PreciseTimeStamp asc ",
+    "params": [
+      {
+        "name": "queryStartTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryEndTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryOperationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "callerName",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "traceLevel",
+        "type": "long"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Managed Disk"
+  },
+  {
+    "id": "2ecbb9c7-986a-4813-96fc-3cf553bf9f26",
+    "name": "Target Disks from RequestEntity",
+    "groupId": "0c9dd974-2a81-4954-b83b-d49184cfd422",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "Disks",
+    "database": "Disks",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let crpDiskIds = toscalar(cluster(\"Disks\").database(\"Disks\").DiskManagerApiQoSEvent\r\n| where PreciseTimeStamp between ((queryFrom-1h) .. (queryTo+1h))\r\n| where operationId == queryOperationId\r\n| extend disks = extract_all('\"crpDiskId\": \"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})\"', requestEntity)\r\n| project disks);\r\ncluster(\"Disksbi\").database(\"DisksBi\").Disk \r\n| where PreciseTimeStamp between ((queryFrom-1h) .. (queryTo+1h))\r\n| where CrpDiskId in (crpDiskIds)\r\n| summarize arg_max(PreciseTimeStamp, *) by CrpDiskId",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-21T09:45:23.206Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-11-21T11:45:23.866Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryOperationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "CrpDiskId",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "MonitoringApplication",
+        "type": "string"
+      },
+      {
+        "name": "Node",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "BackupId",
+        "type": "string"
+      },
+      {
+        "name": "Key",
+        "type": "string"
+      },
+      {
+        "name": "DisksId",
+        "type": "string"
+      },
+      {
+        "name": "DisksName",
+        "type": "string"
+      },
+      {
+        "name": "DiskResourceType",
+        "type": "string"
+      },
+      {
+        "name": "IsARMResource",
+        "type": "string"
+      },
+      {
+        "name": "CreationData",
+        "type": "string"
+      },
+      {
+        "name": "OwnershipState",
+        "type": "string"
+      },
+      {
+        "name": "SASTokenExpirationTime",
+        "type": "datetime"
+      },
+      {
+        "name": "AccountType",
+        "type": "string"
+      },
+      {
+        "name": "BlobUrl",
+        "type": "string"
+      },
+      {
+        "name": "SyncLinkUrl",
+        "type": "string"
+      },
+      {
+        "name": "IsRegisteredWithArm",
+        "type": "string"
+      },
+      {
+        "name": "DiskSizeBytes",
+        "type": "long"
+      },
+      {
+        "name": "InitialCreationComplete",
+        "type": "string"
+      },
+      {
+        "name": "DisableBilling",
+        "type": "string"
+      },
+      {
+        "name": "BillingUriOverride",
+        "type": "string"
+      },
+      {
+        "name": "StorageAccountName",
+        "type": "string"
+      },
+      {
+        "name": "OwnerReferenceUriKey",
+        "type": "string"
+      },
+      {
+        "name": "LastModifiedTime",
+        "type": "datetime"
+      },
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "TotalOperationsPerSecond",
+        "type": "long"
+      },
+      {
+        "name": "TotalBytesPerSecond",
+        "type": "long"
+      },
+      {
+        "name": "EncryptionSettings",
+        "type": "string"
+      },
+      {
+        "name": "PhysicalZone",
+        "type": "string"
+      },
+      {
+        "name": "NetworkSpineId",
+        "type": "string"
+      },
+      {
+        "name": "HyperVGeneration",
+        "type": "string"
+      },
+      {
+        "name": "MaxShares",
+        "type": "long"
+      },
+      {
+        "name": "TotalOperationsPerSecondReadOnly",
+        "type": "long"
+      },
+      {
+        "name": "TotalBytesPerSecondReadOnly",
+        "type": "long"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "OwnerReferenceUri",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "DiskEncryptionSetId",
+        "type": "string"
+      },
+      {
+        "name": "TimeCreated",
+        "type": "datetime"
+      },
+      {
+        "name": "BatchId",
+        "type": "long"
+      },
+      {
+        "name": "DiskArmId",
+        "type": "string"
+      },
+      {
+        "name": "OwnerReferenceKey",
+        "type": "string"
+      },
+      {
+        "name": "OsType",
+        "type": "string"
+      },
+      {
+        "name": "DiskEncryptionSetKey",
+        "type": "string"
+      },
+      {
+        "name": "StorageAccountKey",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionKey",
+        "type": "string"
+      },
+      {
+        "name": "IncrementalSnapshotFamilyKey",
+        "type": "string"
+      },
+      {
+        "name": "UploadComplete",
+        "type": "string"
+      },
+      {
+        "name": "WriteSasPolicy",
+        "type": "string"
+      },
+      {
+        "name": "LastOwnershipUpdateTime",
+        "type": "datetime"
+      },
+      {
+        "name": "BackupTime",
+        "type": "datetime"
+      },
+      {
+        "name": "ToBeDeleted",
+        "type": "string"
+      },
+      {
+        "name": "GeoLocation",
+        "type": "string"
+      },
+      {
+        "name": "ExtendedLocation",
+        "type": "string"
+      },
+      {
+        "name": "ReadSasPolicy",
+        "type": "string"
+      },
+      {
+        "name": "AttachableSAS",
+        "type": "string"
+      },
+      {
+        "name": "BlobSnapshotUrl",
+        "type": "string"
+      },
+      {
+        "name": "IsHighBandwidth",
+        "type": "string"
+      },
+      {
+        "name": "Tier",
+        "type": "string"
+      },
+      {
+        "name": "LastTierChangeTime",
+        "type": "datetime"
+      },
+      {
+        "name": "UnknownUpdateProperties",
+        "type": "string"
+      },
+      {
+        "name": "OsState",
+        "type": "string"
+      },
+      {
+        "name": "DetachData",
+        "type": "string"
+      },
+      {
+        "name": "Error",
+        "type": "string"
+      },
+      {
+        "name": "EncryptionSettingsCollection",
+        "type": "string"
+      },
+      {
+        "name": "Bookmarks",
+        "type": "string"
+      },
+      {
+        "name": "ReservedOwnerUri",
+        "type": "string"
+      },
+      {
+        "name": "ReserveComplete",
+        "type": "string"
+      },
+      {
+        "name": "CommitComplete",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilitySetKnownStateKey",
+        "type": "string"
+      },
+      {
+        "name": "ActiveBlobKey",
+        "type": "string"
+      },
+      {
+        "name": "DiskEncryptionKeyVaultReferencekey",
+        "type": "string"
+      },
+      {
+        "name": "KekVaultReferenceKey",
+        "type": "string"
+      },
+      {
+        "name": "AssociatedXstoreEntitiesKey",
+        "type": "string"
+      },
+      {
+        "name": "DiskBookmarksKey",
+        "type": "string"
+      },
+      {
+        "name": "DiskAccessKey",
+        "type": "string"
+      },
+      {
+        "name": "SASPolicyId",
+        "type": "string"
+      },
+      {
+        "name": "ReadOnly",
+        "type": "string"
+      },
+      {
+        "name": "NetworkAccessPolicy",
+        "type": "string"
+      },
+      {
+        "name": "IncrementalSnapshotFamiliesByDiskListkey",
+        "type": "string"
+      },
+      {
+        "name": "PurchasePlanName",
+        "type": "string"
+      },
+      {
+        "name": "PurchasePlanProduct",
+        "type": "string"
+      },
+      {
+        "name": "PurchasePlanPublisher",
+        "type": "string"
+      },
+      {
+        "name": "PurchasePlanPromotionCode",
+        "type": "string"
+      },
+      {
+        "name": "BurstingEnabled",
+        "type": "string"
+      },
+      {
+        "name": "BurstingEnabledTime",
+        "type": "datetime"
+      },
+      {
+        "name": "SupportsHibernation",
+        "type": "string"
+      },
+      {
+        "name": "SupportedCapabilities",
+        "type": "string"
+      },
+      {
+        "name": "SecurityProfile",
+        "type": "string"
+      },
+      {
+        "name": "PurchasePlan",
+        "type": "string"
+      },
+      {
+        "name": "DataAccessAuthMode",
+        "type": "string"
+      },
+      {
+        "name": "PublicNetworkAccess",
+        "type": "string"
+      },
+      {
+        "name": "AllowUnalignedAttach",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityPolicy",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Managed Disk"
+  },
+  {
+    "id": "617eade0-7a51-40d6-874d-8c7f817ccfa5",
+    "name": "DiskRPResourceLifecycleEvent",
+    "groupId": "db5eef93-a49b-4a5a-be6a-f0ba17bf957c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "Disks",
+    "database": "Disks",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let ext_start = queryFrom-timespan(30m);\r\nlet ext_end = queryTo+timespan(30m);\r\nDiskRPResourceLifecycleEvent\r\n| where PreciseTimeStamp between(ext_start .. ext_end)\r\n| where activityId =~ operationId\r\n| project PreciseTimeStamp, subscriptionId, activityId, traceCode, message, callerName, resourceGroupName, resourceName, diskType, diskEvent, stage, state, hasActiveSASToken, storageAccountType, diskSizeBytes, blobUrl, storageAccountName, diskOwner, crpDiskId, importBlobUri, creationOption",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-10T23:59:31.529Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-02-11T23:59:31.529Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "operationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "activityId",
+        "type": "string"
+      },
+      {
+        "name": "traceCode",
+        "type": "long"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "callerName",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "diskType",
+        "type": "string"
+      },
+      {
+        "name": "diskEvent",
+        "type": "string"
+      },
+      {
+        "name": "stage",
+        "type": "string"
+      },
+      {
+        "name": "state",
+        "type": "string"
+      },
+      {
+        "name": "hasActiveSASToken",
+        "type": "string"
+      },
+      {
+        "name": "storageAccountType",
+        "type": "string"
+      },
+      {
+        "name": "diskSizeBytes",
+        "type": "long"
+      },
+      {
+        "name": "blobUrl",
+        "type": "string"
+      },
+      {
+        "name": "storageAccountName",
+        "type": "string"
+      },
+      {
+        "name": "diskOwner",
+        "type": "string"
+      },
+      {
+        "name": "crpDiskId",
+        "type": "string"
+      },
+      {
+        "name": "importBlobUri",
+        "type": "string"
+      },
+      {
+        "name": "creationOption",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Managed Disk"
+  }
+]

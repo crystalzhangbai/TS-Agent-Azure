@@ -1,0 +1,1999 @@
+{
+  "service": "ARM",
+  "page": "CoBe AzControlPlaneRegionInsights",
+  "pageId": "a5092c06-c01f-4d50-8a8a-75fd2be4774c",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Outage": {
+      "panelPath": [
+        "Outage"
+      ],
+      "queries": [
+        {
+          "id": "6fe450c6-584b-4a47-8d0c-d993de833a49",
+          "name": "AAD Outages",
+          "groupId": "fad4e743-f27f-436a-bb62-591ff4497831",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"azureactivedirectory\", \"azureactivedirectoryb2c\", \"azureactivedirectorydomainservices\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "5eaea20b-7f91-4b7e-931e-03d807752e4c",
+          "name": "ARM Outages",
+          "groupId": "677e366c-2e99-4881-8b36-7b43ceb11fcd",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"azureresourcemanager\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "77093990-3205-4d8a-b93b-e8459adc9409",
+          "name": "AzPolicy Outages",
+          "groupId": "c86a4d99-6ee0-402a-a418-8ecfa9cfde02",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"azurepolicy\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "aa0943e7-c90a-4414-96d4-5fb99b50c686",
+          "name": "CosmosDB Outages",
+          "groupId": "93ddb74e-125c-4aea-81e8-b6815821a985",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"azurecosmosdb\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "6675da7d-697a-490d-aec0-a101679c206e",
+          "name": "Virtual Machines Outages",
+          "groupId": "3d0ec5c3-45c0-4231-806d-5960873b5c57",
+          "majorVersion": 3,
+          "minorVersion": 1,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"virtualmachines\", \"virtualmachinescalesets\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "c71826d7-29b4-4772-85f5-017bb28e06c3",
+          "name": "Network Outages",
+          "groupId": "f405cfc5-da70-4cab-9a1b-ad68942e9551",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"virtualnetwork\", \"networkinfrastructure\", \"vpngateway\", \"expressroute\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "b6f34390-2ec4-490c-8b6e-baa9dc4fe5b0",
+          "name": "AKS Outages",
+          "groupId": "4647d104-0fe0-4040-8baf-645aef414ba1",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"azurekubernetesservice(aks)\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "945a3cd8-f26a-4eb6-9408-210cdaea976a",
+          "name": "Storage Outages",
+          "groupId": "bcbac7b0-2cca-4e18-8ef4-9427be758049",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"storage\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "6fec57db-58ca-4351-91da-a4ee9a8def15",
+          "name": "SQL Database Outages",
+          "groupId": "5846ba41-15ff-4a13-9fbf-6ca932eace1c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"sqldatabase\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "cdd0936e-4553-4e38-8000-c86b981d0634",
+          "name": "App Services Outages",
+          "groupId": "65053f4f-363b-4097-b403-c4510205271e",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"appservice\", \"appservice(linux)\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "ce6f861f-5863-42e5-98ad-b27085d636e6",
+          "name": "Container Instances Outages",
+          "groupId": "40729438-3e23-4ccf-9f91-0f8ab4af9bba",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"containerinstances\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "4e0f2082-eeed-4d72-a2de-1d11316a6d6e",
+          "name": "PostgreSQL Outages",
+          "groupId": "6d3c4b44-5f66-414e-8704-ee507129092c",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"azuredatabaseforpostgresql\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "3b58beff-f609-4c17-9a67-7c6163e9a038",
+          "name": "LogicApps Outages",
+          "groupId": "005e42cd-7955-41d2-a165-89c066e88e23",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"logicapps\"]);\r\nOutageTimeline(startTime,endTime,regionList,interestingResources)",
+          "panelPath": [
+            "Outage"
+          ]
+        },
+        {
+          "id": "1e708f64-24dd-468f-b7c8-d33b3d3cedd2",
+          "name": "Region Outages",
+          "groupId": "3589db7c-1b4b-44cc-9a05-859d99a914ff",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "https://icmcluster.kusto.windows.net",
+          "database": "IcMDataWarehouse",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Outage",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "IncidentId",
+              "type": "long"
+            },
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "ImpactedRegion",
+              "type": "string"
+            },
+            {
+              "name": "ImpactedService",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "int"
+            },
+            {
+              "name": "ImpactFlag",
+              "type": "dynamic"
+            },
+            {
+              "name": "CreateDate",
+              "type": "datetime"
+            },
+            {
+              "name": "ModifiedDate",
+              "type": "datetime"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let regionList = pack_array(tolower(replace_string(region, \" \", \"\")));\r\nlet interestingResources = \r\n            dynamic([\"virtualmachines\", \"sqldatabase\",\r\n            \"azureactivedirectory\", \"storage\", \"appservice(linux)\", \"appservice\",\r\n            \"logicapps\", \"applicationgateway\", \"azurearcenabledkubernetes\",\r\n            \"azuredatabaseforpostgresql\", \"azureactivedirectoryb2c\", \"vpngateway\",\r\n            \"expressroute\", \"azureresourcemanager\", \"virtualnetwork\",\r\n            \"azurekubernetesservice(aks)\", \"containerinstances\",\r\n            \"azurecosmosdb\", \"azureactivedirecotrydomainservices\",\r\n            \"azurepolicy\", \"networkinfrastructure\", \"virtualmachinescalesets\"]);\r\n    let outages =\r\n    database(\"Outage\").Outages\r\n    | where UpdatedTime between (startTime..endTime)\r\n    | extend IncidentId=ParentId\r\n    | order by IncidentId, UpdatedTime desc\r\n    | extend Index=row_number(1, prev(IncidentId)!=IncidentId)\r\n    | where Index ==1\r\n    | project-away Index\r\n    | where has_any_index( Json, regionList) != -1\r\n    | extend symptoms=parse_json(Json).Symptoms\r\n    | extend  Title=parse_json(Json)[\"Title\"],\r\n        Status=parse_json(Json)[\"CurrentStatus\"],\r\n        ImpactedService=parse_json(symptoms).ImpactedServices,\r\n        ImpactedRegion=parse_json(symptoms).ImpactedRegions,\r\n        ImpactedCloudNames=parse_json(symptoms).ImpactedCloudNames,\r\n        ImpactFlag=parse_json(Json).ImpactFlag\r\n    | where ImpactedCloudNames contains \"public\"\r\n    | where has_any_index( tostring(ImpactedService), interestingResources)!=-1;\r\n    let ids = outages | distinct IncidentId;\r\n   Incidents\r\n    | where ModifiedDate between (startTime..endTime)\r\n    | where IncidentId in (ids)\r\n    | order by IncidentId, ModifiedDate desc\r\n    | extend Index=row_number(1, prev(IncidentId)!=IncidentId)\r\n    | where Index == 1\r\n    | project-away Index\r\n    | project IncidentId, Title, Status, Severity, CreateDate, ModifiedDate\r\n    | join kind = rightouter (\r\n    outages\r\n    ) on IncidentId\r\n    | project IncidentId, Title=coalesce(Title1, Title), Status=coalesce(Status, Status1),\r\n        ImpactedRegion, ImpactedService, Severity, ImpactFlag, CreateDate, ModifiedDate\r\n    | where Severity <= 2\r\n    | mv-apply ImpactedRegion,ImpactedService to typeof(dynamic) on\r\n    (\r\n    extend regions =parse_json(ImpactedRegion)[\"RegionId\"], services=parse_json(ImpactedService)[\"ServiceId\"]\r\n    | summarize ImpactedRegion=strcat_array(make_list(regions), \", \"), ImpactedService=strcat_array(make_list(services), \", \") ,take_any(CreateDate, ModifiedDate) by IncidentId)\r\n    | extend level = iff(ImpactFlag==\"High\", \"error\", \"info\")\r\n    | order by CreateDate desc",
+          "panelPath": [
+            "Outage"
+          ]
+        }
+      ]
+    },
+    "Release": {
+      "panelPath": [
+        "Release"
+      ],
+      "queries": [
+        {
+          "id": "5908cb48-adf4-4ad5-aace-3b32bd5a9cde",
+          "name": "CRP Release",
+          "groupId": "4f62c72c-9536-4c51-96c7-0ae34894ae5f",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "aegisfollower.centralus.kusto.windows.net",
+          "database": "gandalf_tdpr",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Release",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Service",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "_CCEComponentDeployments\r\n    | where Component == \"CRP\"\r\n        and FirstDeploymentDetectedTime between (startTime..endTime)\r\n        and DeploymentUnitType == \"region\"\r\n    | summarize arg_max(RunTime, FirstDeploymentDetectedTime, LastDeploymentDetectedTime)\r\n        by Component, DeploymentUnitType, DeploymentUnit, ServiceBuild\r\n    | where DeploymentUnit == tolower(replace_string(region, ' ', \"\"))\r\n    | project\r\n        Service=Component,\r\n        Content=ServiceBuild,\r\n        StartTime=FirstDeploymentDetectedTime,\r\n        EndTime=LastDeploymentDetectedTime",
+          "panelPath": [
+            "Release"
+          ]
+        },
+        {
+          "id": "3830203c-0955-4022-9f3b-157fd6f1d2e0",
+          "name": "NRP Release",
+          "groupId": "b79cc5f4-40b6-4b85-8379-3369f45608fc",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "aegisfollower.centralus.kusto.windows.net",
+          "database": "gandalf_tdpr",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Release",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Service",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "_CCEComponentDeployments\r\n    | where Component == \"NRP\"\r\n        and FirstDeploymentDetectedTime between (startTime..endTime)\r\n        and DeploymentUnitType == \"region\"\r\n    | summarize arg_max(RunTime, FirstDeploymentDetectedTime, LastDeploymentDetectedTime)\r\n        by Component, DeploymentUnitType, DeploymentUnit, ServiceBuild\r\n    | where DeploymentUnit == tolower(replace_string(region, ' ', \"\")) and DeploymentUnit !contains \"validation\"\r\n    | project\r\n        Service=Component,\r\n        Content=ServiceBuild,\r\n        StartTime=FirstDeploymentDetectedTime,\r\n        EndTime=LastDeploymentDetectedTime",
+          "panelPath": [
+            "Release"
+          ]
+        },
+        {
+          "id": "ed2f1739-b20b-4366-9c11-4e2bf3708eaf",
+          "name": "AKS Release",
+          "groupId": "28453f02-2748-465e-b173-b10ac9b03435",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://aegisfollower.centralus.kusto.windows.net",
+          "database": "gandalf_tdpr",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Release",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Service",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "_CCEComponentDeployments\r\n    | where Component == \"AKSRP\"\r\n        and FirstDeploymentDetectedTime between (startTime..endTime)\r\n        and DeploymentUnitType == \"region\"\r\n    | summarize arg_max(RunTime, FirstDeploymentDetectedTime, LastDeploymentDetectedTime)\r\n        by Component, DeploymentUnitType, DeploymentUnit, ServiceBuild\r\n    | where DeploymentUnit == tolower(replace_string(region, ' ', \"\"))\r\n    | project\r\n        Service=Component,\r\n        Content=ServiceBuild,\r\n        StartTime=FirstDeploymentDetectedTime,\r\n        EndTime=LastDeploymentDetectedTime",
+          "panelPath": [
+            "Release"
+          ]
+        },
+        {
+          "id": "93a75182-4209-4392-ac96-53c0b96d02a5",
+          "name": "ARM Release",
+          "groupId": "bdb96781-9b03-47dc-a5f8-7f372494a441",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "gandalfcontrolplane.kusto.windows.net",
+          "database": "arm_analytics",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Release",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Service",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ARM_DeploymentEvent_Data(startTime=startTime, endTime=endTime)\r\n| where tolower(replace_string(RoleLocation, ' ', \"\")) == tolower(replace_string(region, ' ', \"\"))\r\n| project\r\n        Service=\"ARM\",\r\n        StartTime=DeploymentTime,\r\n        EndTime=DeploymentTime,\r\n        Content=strcat(Role, \" \",ReleaseVersion)",
+          "panelPath": [
+            "Release"
+          ]
+        },
+        {
+          "id": "af57a3ff-33a5-4966-8c9e-a6fa136a3805",
+          "name": "Release",
+          "groupId": "ce48ea6b-e8dd-40a7-bb5f-70f95a847471",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "gandalfcontrolplane.kusto.windows.net",
+          "database": "arm_analytics",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Release",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Service",
+              "type": "string"
+            },
+            {
+              "name": "ReleaseVersion",
+              "type": "string"
+            },
+            {
+              "name": "FirstDeploymentDetectedTime",
+              "type": "string"
+            },
+            {
+              "name": "LastDeploymentDetectedTime",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "region",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let arm = ARM_DeploymentEvent_Data(startTime=startTime, endTime=endTime)\r\n| where tolower(replace_string(RoleLocation, ' ', \"\")) == tolower(replace_string(region, ' ', \"\"))\r\n| project\r\n        Service=\"ARM\",\r\n        FirstDeploymentDetectedTime=tostring(DeploymentTime),\r\n        Role,\r\n        ReleaseVersion;\r\nlet crp = \r\n    cluster(\"https://aegisfollower.centralus.kusto.windows.net\").database(\"gandalf_tdpr\")._CCEComponentDeployments\r\n    | where Component == \"CRP\"\r\n        and FirstDeploymentDetectedTime between (startTime..endTime)\r\n        and DeploymentUnitType == \"region\"\r\n    | summarize arg_max(RunTime, FirstDeploymentDetectedTime, LastDeploymentDetectedTime)\r\n        by Component, DeploymentUnitType, DeploymentUnit, ServiceBuild\r\n    | where DeploymentUnit == tolower(replace_string(region, ' ', \"\"))\r\n    | project\r\n        Service=Component,\r\n        ReleaseVersion=ServiceBuild,\r\n        FirstDeploymentDetectedTime=tostring(FirstDeploymentDetectedTime),\r\n        LastDeploymentDetectedTime=tostring(LastDeploymentDetectedTime);\r\n    let nrp = \r\n    cluster(\"https://aegisfollower.centralus.kusto.windows.net\").database(\"gandalf_tdpr\")._CCEComponentDeployments\r\n    | where Component == \"NRP\"\r\n        and FirstDeploymentDetectedTime between (startTime..endTime)\r\n        and DeploymentUnitType == \"region\"\r\n    | summarize arg_max(RunTime, FirstDeploymentDetectedTime, LastDeploymentDetectedTime)\r\n        by Component, DeploymentUnitType, DeploymentUnit, ServiceBuild\r\n    | where DeploymentUnit == tolower(replace_string(region, ' ', \"\")) and DeploymentUnit !contains \"validation\"\r\n    | project\r\n        Service=Component,\r\n        ReleaseVersion=ServiceBuild,\r\n        FirstDeploymentDetectedTime=tostring(FirstDeploymentDetectedTime),\r\n        LastDeploymentDetectedTime=tostring(LastDeploymentDetectedTime);\r\nlet aks = \r\n    cluster(\"https://aegisfollower.centralus.kusto.windows.net\").database(\"gandalf_tdpr\")._CCEComponentDeployments\r\n    | where Component == \"AKSRP\"\r\n        and FirstDeploymentDetectedTime between (startTime..endTime)\r\n        and DeploymentUnitType == \"region\"\r\n    | summarize arg_max(RunTime, FirstDeploymentDetectedTime, LastDeploymentDetectedTime)\r\n        by Component, DeploymentUnitType, DeploymentUnit, ServiceBuild\r\n    | where DeploymentUnit == tolower(replace_string(region, ' ', \"\"))\r\n    | project\r\n        Service=Component,\r\n        ReleaseVersion=ServiceBuild,\r\n        FirstDeploymentDetectedTime=tostring(FirstDeploymentDetectedTime);\r\nunion crp, nrp, arm, aks",
+          "panelPath": [
+            "Release"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:23:48.064Z",
+    "totalPanels": 2,
+    "totalUniqueQueries": 19,
+    "totalWidgetRefs": 19
+  }
+}

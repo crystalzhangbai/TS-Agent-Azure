@@ -1,0 +1,300 @@
+[
+  {
+    "id": "a5053ee7-2a36-4a8c-930f-19938005c7c0",
+    "name": "Retrieve Resource \"Container\"",
+    "groupId": "c228e478-b82a-43b9-b046-44101c21e458",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "mycroft.westcentralus.kusto.windows.net",
+    "database": "Mycroft",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "MycroftContainerSnapshot\r\n| where ContainerId == local_ContainerId\r\n| top 1 by PreciseTimeStamp desc \r\n| extend JSON = parse_json(AdditionalContainerProperties)\r\n| project-away TIMESTAMP, Pid, Tid, ActivityId, Version, SourceNamespace, SourceMoniker, SourceVersion, \r\n    __AuthType__, __AuthIdentity__\r\n",
+    "params": [
+      {
+        "name": "local_ContainerId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CloudName",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Environment",
+        "type": "string"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "VirtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "ClusterName",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilitySetName",
+        "type": "string"
+      },
+      {
+        "name": "UpdateDomain",
+        "type": "long"
+      },
+      {
+        "name": "OsIncarnationId",
+        "type": "string"
+      },
+      {
+        "name": "DataDisksIncarnationId",
+        "type": "string"
+      },
+      {
+        "name": "BillingContext",
+        "type": "string"
+      },
+      {
+        "name": "PolicyName",
+        "type": "string"
+      },
+      {
+        "name": "RoleType",
+        "type": "string"
+      },
+      {
+        "name": "OsBaseImage",
+        "type": "string"
+      },
+      {
+        "name": "GuestAgentPackage",
+        "type": "string"
+      },
+      {
+        "name": "CreationTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Priority",
+        "type": "long"
+      },
+      {
+        "name": "AdditionalContainerProperties",
+        "type": "string"
+      },
+      {
+        "name": "ActualCoreUsage",
+        "type": "real"
+      },
+      {
+        "name": "DedicatedHostInfo",
+        "type": "string"
+      },
+      {
+        "name": "IsReusedContainer",
+        "type": "bool"
+      },
+      {
+        "name": "IsReusedContainerInNetwork",
+        "type": "bool"
+      },
+      {
+        "name": "JSON",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "Mycroft"
+  },
+  {
+    "id": "3823c73d-5df4-4598-99fb-ad48c9fff698",
+    "name": "Container Health Snapshot",
+    "groupId": "b84a5760-4a9a-4b10-9e9f-b61247bb39f5",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "mycroft.westcentralus.kusto.windows.net",
+    "database": "Mycroft",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "MycroftContainerHealthSnapshot\r\n| where ContainerId == queryContainerId\r\n| top 1000 by TIMESTAMP desc\r\n| project-reorder TIMESTAMP, RoleInstanceName, OsState, IsolationState, LifecycleState, ActualOperationalState, \r\n    FaultInfo, LifecycleStateChangeTime, ContainerId, NodeId, Tenant\r\n| project-away TIMESTAMP, Pid, Tid, ActivityId, Version, SourceNamespace, SourceMoniker, SourceVersion, \r\n    __AuthType__, __AuthIdentity__\r\n| extend NodeIdTrunc = strcat(substring(NodeId, 0, 8), '...')\r\n| extend ContainerIdTrunc = strcat(substring(ContainerId, 0, 8), '...')\r\n",
+    "params": [
+      {
+        "name": "queryContainerId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "OsState",
+        "type": "string"
+      },
+      {
+        "name": "IsolationState",
+        "type": "string"
+      },
+      {
+        "name": "LifecycleState",
+        "type": "string"
+      },
+      {
+        "name": "ActualOperationalState",
+        "type": "string"
+      },
+      {
+        "name": "FaultInfo",
+        "type": "string"
+      },
+      {
+        "name": "LifecycleStateChangeTime",
+        "type": "datetime"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CloudName",
+        "type": "string"
+      },
+      {
+        "name": "Environment",
+        "type": "string"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "VirtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "ClusterName",
+        "type": "string"
+      },
+      {
+        "name": "NodeIdTrunc",
+        "type": "string"
+      },
+      {
+        "name": "ContainerIdTrunc",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Mycroft"
+  },
+  {
+    "id": "0cc1394a-3c3c-473c-849f-57426a4d0e63",
+    "name": "Container LifecycleState Timeline",
+    "groupId": "8e465b74-28f2-45b3-a661-068e59677e3e",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "mycroft.westcentralus.kusto.windows.net",
+    "database": "Mycroft",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"mycroft.westcentralus\").database(\"Mycroft\").MycroftContainerHealthSnapshot\r\n| where ContainerId == queryContainerId\r\n| project LifecycleState, PreciseTimeStamp\r\n| order by PreciseTimeStamp asc\r\n| where \r\n    isnull(prev(PreciseTimeStamp)) or isnull(next(PreciseTimeStamp)) or \r\n    (LifecycleState != prev(LifecycleState) or LifecycleState != next(LifecycleState))\r\n| extend StartTime = PreciseTimeStamp\r\n| extend EndTime = next(PreciseTimeStamp)\r\n| where next(LifecycleState) == LifecycleState or isempty(next(LifecycleState))\r\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 1, StartTime), EndTime)\r\n| project StartTime, EndTime, Content = LifecycleState\r\n",
+    "params": [
+      {
+        "name": "queryContainerId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Mycroft"
+  }
+]

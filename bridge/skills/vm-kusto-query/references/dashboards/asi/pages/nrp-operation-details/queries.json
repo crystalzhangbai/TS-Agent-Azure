@@ -1,0 +1,78 @@
+[
+  {
+    "id": "bff82e4c-a3bb-4741-b2e8-4bc2014bdf9f",
+    "name": "nrp operation details",
+    "groupId": "e585d00c-09ea-4cc2-95e7-b4537eaa1bba",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let readTable = (FrontendReadOperationEtwEvent\r\n| where PreciseTimeStamp between (datetime_add('day', -1, timestamp) .. datetime_add('day', 1, timestamp))\r\n| where OperationId == operationId\r\n| where SubscriptionId == subscriptionId\r\n| project PreciseTimeStamp, Level, EventCode, Message, RoleInstance, SourceAssemblyFileVersion, Pid\r\n| order by PreciseTimeStamp asc);\r\nlet writeTable = (FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (datetime_add('day', -1, timestamp) .. datetime_add('day', 1, timestamp))\r\n| where OperationId == operationId\r\n| where SubscriptionId == subscriptionId\r\n| project PreciseTimeStamp, Level, EventCode, Message, RoleInstance, SourceAssemblyFileVersion, Pid\r\n| order by PreciseTimeStamp asc);\r\nreadTable\r\n| union writeTable",
+    "params": [
+      {
+        "name": "operationId",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "guid",
+        "default": "55ee457d-67b1-4316-a308-0d67fbca22b7",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "guid",
+        "default": "4d98f613-acf9-4706-bb55-9b6194efeeff",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "timestamp",
+        "description": "",
+        "type": "datetime",
+        "default": "2022-09-08 17:44:53.1455019",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "SourceAssemblyFileVersion",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

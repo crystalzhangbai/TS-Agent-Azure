@@ -1,0 +1,1231 @@
+[
+  {
+    "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+    "majorVersion": 3,
+    "minorVersion": 5,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "7902f564-fc5c-4ba5-9194-5c7a36a735cc",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_PreciseTimeStamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_TenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_publicIPAddress",
+        "externalSourceName": "publicIPAddress",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_Tenant",
+        "externalSourceName": "Tenant",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"VIP Search\"",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "nsmplus",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "local_PreciseTimeStamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_TenantName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_publicIPAddress",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_Tenant",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "IsSpanned",
+        "type": "string"
+      },
+      {
+        "name": "goalStateId",
+        "type": "string"
+      },
+      {
+        "name": "state",
+        "type": "string"
+      },
+      {
+        "name": "numOfTries",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "vipConfig",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddress",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7008ca46-a8d3-45ed-bbbd-b9362dbde811",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Requests received by NSM"
+    ],
+    "widgetType": "CoBeTimeline",
+    "widgetTitle": "Requests received by NSM",
+    "queryId": "a2dcab10-dd32-4b27-af7f-4e599ec40f22",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      }
+    ],
+    "name": "NsmQosOps",
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "CoBeTimeline",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "cd334ea4-8fb1-4026-bf40-4fa4e49cf5f1",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Resource Group Information"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "Resource Group Information",
+    "queryId": "dcf6c543-8962-458e-80a8-52c0ac3a1834",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryTenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      }
+    ],
+    "name": "GetResourceGroup",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Single",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "MonitoringApplication",
+        "type": "string"
+      },
+      {
+        "name": "Node",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "durationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "operationId",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "resultType",
+        "type": "long"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "wFAppName",
+        "type": "string"
+      },
+      {
+        "name": "partitionId",
+        "type": "string"
+      },
+      {
+        "name": "exceptionType",
+        "type": "string"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      },
+      {
+        "name": "vMId",
+        "type": "string"
+      },
+      {
+        "name": "isManaged",
+        "type": "string"
+      },
+      {
+        "name": "vMSize",
+        "type": "string"
+      },
+      {
+        "name": "oSType",
+        "type": "string"
+      },
+      {
+        "name": "oSDiskStorageAccountType",
+        "type": "string"
+      },
+      {
+        "name": "userVMImage",
+        "type": "string"
+      },
+      {
+        "name": "availabilitySet",
+        "type": "string"
+      },
+      {
+        "name": "fabricCluster",
+        "type": "string"
+      },
+      {
+        "name": "fabricTenantName",
+        "type": "string"
+      },
+      {
+        "name": "allocationAction",
+        "type": "string"
+      },
+      {
+        "name": "oSProvisionDurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "physicalAvailablityZone",
+        "type": "string"
+      },
+      {
+        "name": "preprovisionedVMReuse",
+        "type": "string"
+      },
+      {
+        "name": "proximityPlacementGroup",
+        "type": "string"
+      },
+      {
+        "name": "networkSpineIds",
+        "type": "string"
+      },
+      {
+        "name": "galleryImage",
+        "type": "string"
+      },
+      {
+        "name": "extraVMProperties",
+        "type": "string"
+      },
+      {
+        "name": "platformImage",
+        "type": "string"
+      },
+      {
+        "name": "availabilitySetKind",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "f43028e5-3b42-4a0b-baa6-5680b2d16b30",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "State Timelines"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "State Timelines",
+    "queryId": "6d17dff4-cbcd-44d4-8e15-8c0fe6a2fed8",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryPublicIpAddress",
+        "externalSourceName": "publicIPAddress",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTenant",
+        "externalSourceName": "Tenant",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "VIP State",
+    "cluster": "azurecm",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryPublicIpAddress",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryTenant",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "3d25cc76-b206-4ced-98a1-e78f025cb10a",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "RNM Requests"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "7af07288-34d1-4976-84fb-66dac2e59506",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryTenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "RNMRequest",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Table",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "OpName",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "ContinuationId",
+        "type": "string"
+      },
+      {
+        "name": "EventType",
+        "type": "string"
+      },
+      {
+        "name": "RnmPartitionId",
+        "type": "string"
+      },
+      {
+        "name": "UserIdentity",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "bbc08673-5bed-4598-afcf-fe6ae2df99d9",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "VIP Life Cycle"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "43ae8dfa-9628-4938-8151-28fe8f37320e",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryVip",
+        "externalSourceName": "publicIPAddress",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "VipLifeCycle",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Table",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryVip",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "ProviderGuid",
+        "type": "string"
+      },
+      {
+        "name": "EventId",
+        "type": "long"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "ActivityId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "ServicePartitionId",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ServiceId",
+        "type": "string"
+      },
+      {
+        "name": "ServiceInstanceId",
+        "type": "string"
+      },
+      {
+        "name": "ReservationId",
+        "type": "string"
+      },
+      {
+        "name": "VnetId",
+        "type": "string"
+      },
+      {
+        "name": "LifeCycleEventType",
+        "type": "string"
+      },
+      {
+        "name": "AssignedToMoniker",
+        "type": "string"
+      },
+      {
+        "name": "AssignmentContext",
+        "type": "string"
+      },
+      {
+        "name": "Resource",
+        "type": "string"
+      },
+      {
+        "name": "ResourceType",
+        "type": "string"
+      },
+      {
+        "name": "ResourceAllocationContext",
+        "type": "string"
+      },
+      {
+        "name": "AllocationContextResourceType",
+        "type": "string"
+      },
+      {
+        "name": "AllocationId",
+        "type": "string"
+      },
+      {
+        "name": "OwnerPartitionId",
+        "type": "string"
+      },
+      {
+        "name": "AllocatorPartitionId",
+        "type": "string"
+      },
+      {
+        "name": "FabricId",
+        "type": "string"
+      },
+      {
+        "name": "IPPrefix",
+        "type": "string"
+      },
+      {
+        "name": "IPPrefixAllocationId",
+        "type": "string"
+      },
+      {
+        "name": "RnmTimestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RnmPartitionId",
+        "type": "string"
+      },
+      {
+        "name": "RnmServiceInstance",
+        "type": "string"
+      },
+      {
+        "name": "OrigTS",
+        "type": "datetime"
+      },
+      {
+        "name": "TraceSource",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "4eb47c67-f5fa-4924-af82-ea068b5ea53f",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "RNM Vip Ownership"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "9dc5969c-0346-4f6c-b317-4f7d841eeeaa",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryVip",
+        "externalSourceName": "publicIPAddress",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "VipOwnershipSnapshot",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Table",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryVip",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "ProviderGuid",
+        "type": "string"
+      },
+      {
+        "name": "EventId",
+        "type": "long"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "ActivityId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "ServicePartitionUri",
+        "type": "string"
+      },
+      {
+        "name": "IPAddress",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ReservationId",
+        "type": "string"
+      },
+      {
+        "name": "ServiceId",
+        "type": "string"
+      },
+      {
+        "name": "AddressFamily",
+        "type": "string"
+      },
+      {
+        "name": "AssignmentContext",
+        "type": "string"
+      },
+      {
+        "name": "RnmTimestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RnmPartitionId",
+        "type": "string"
+      },
+      {
+        "name": "RnmServiceInstance",
+        "type": "string"
+      },
+      {
+        "name": "OrigTS",
+        "type": "datetime"
+      },
+      {
+        "name": "TraceSource",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "cc42c5cd-534f-446d-9ee8-1ed9bb9009f9",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "RNM Resource Release"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "bc1cd5f7-8016-45c0-8328-29e73c7f9e83",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryTenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      }
+    ],
+    "name": "RNM ResourceRelease",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Table",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RnmPartitionId",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "PendingComponent",
+        "type": "string"
+      },
+      {
+        "name": "serviceId",
+        "type": "string"
+      },
+      {
+        "name": "fabricId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b30f7e50-0018-4128-8a23-4db71fb664df",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Frontend Operation"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "750a2971-6775-4eee-9ab9-4f972bfe63cf",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryTenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      }
+    ],
+    "name": "Frontend",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "ClientOperationId",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "60e1e796-a1e2-4e8a-ad2e-91a8329ce25e",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "NsmPlus Vip Goal State"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "50f67634-8c2f-469b-b59d-f1b56f486101",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryVip",
+        "externalSourceName": "publicIPAddress",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "0c249246-3ceb-4fff-85b8-749581dd5045",
+        "majorVersion": 3,
+        "minorVersion": 5,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "Region",
+        "required": false
+      }
+    ],
+    "name": "NsmPlusVipGS",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "nsmplus",
+    "type": "Table",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryVip",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "vipConfiguration",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

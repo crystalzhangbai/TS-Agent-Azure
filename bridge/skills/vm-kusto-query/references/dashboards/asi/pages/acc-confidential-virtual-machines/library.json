@@ -1,0 +1,510 @@
+{
+  "service": "ACC",
+  "page": "Confidential Virtual Machines",
+  "pageId": "d2a4d01b-5b99-4032-bc46-c945864f7fbc",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "0ee3434b-5368-4704-a63e-680dbea7b1a2",
+          "name": "Retrieve Resource \"Virtual Machines\"",
+          "groupId": "e25948bb-6239-4665-b3ff-aacd7f163808",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_virtualMachineUniqueId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "containerType",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "updateDomain",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySetName",
+              "type": "string"
+            },
+            {
+              "name": "billingType",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceFamilyId",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "roleType",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "creationTime",
+              "type": "string"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "containerOsBaseImage",
+              "type": "string"
+            },
+            {
+              "name": "latchedOsFamily",
+              "type": "string"
+            },
+            {
+              "name": "latchedOsRelease",
+              "type": "string"
+            },
+            {
+              "name": "osReleaseUpgradeType",
+              "type": "string"
+            },
+            {
+              "name": "priority",
+              "type": "string"
+            },
+            {
+              "name": "hasDataPlaneSla",
+              "type": "string"
+            },
+            {
+              "name": "isEphemeralVM",
+              "type": "string"
+            },
+            {
+              "name": "osIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "tipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "provisioningIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "additionalContainerProperties",
+              "type": "string"
+            },
+            {
+              "name": "dataDisksIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "requiresSingularRootUpdateSet",
+              "type": "string"
+            },
+            {
+              "name": "volume1Media",
+              "type": "string"
+            },
+            {
+              "name": "IsProcessorSpeculationControlEnabled",
+              "type": "string"
+            },
+            {
+              "name": "requestedT1NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "requestedT2NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "isReusedContainer",
+              "type": "string"
+            },
+            {
+              "name": "preprovisionedOSImageName",
+              "type": "string"
+            },
+            {
+              "name": "currentOSImageName",
+              "type": "string"
+            },
+            {
+              "name": "guestAgentPackage",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "tenantOwners",
+              "type": "string"
+            },
+            {
+              "name": "features",
+              "type": "string"
+            },
+            {
+              "name": "isOversubscribable",
+              "type": "string"
+            },
+            {
+              "name": "actualCoreUsage",
+              "type": "string"
+            },
+            {
+              "name": "isWorkloadUserFacing",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostId",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostGroupId",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostContainerPlacementType",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_virtualMachineUniqueId",
+              "externalSourceName": "virtualMachineUniqueId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\n| where PreciseTimeStamp >= global_startTime and PreciseTimeStamp <= global_endTime\n| where virtualMachineUniqueId == local_virtualMachineUniqueId\n| summarize arg_max(PreciseTimeStamp, *) by virtualMachineUniqueId",
+          "panelPath": []
+        },
+        {
+          "id": "dcd8b0c5-b2a2-4820-a1bf-5f97e966b4ed",
+          "name": "VM Containers",
+          "groupId": "5c77124f-5eab-4456-9b68-f2b3f2eb962f",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryVmId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryVmId",
+              "externalSourceName": "virtualMachineUniqueId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where virtualMachineUniqueId == queryVmId\n| extend Resource = containerId\n| project PreciseTimeStamp, Resource\n| order by PreciseTimeStamp asc\n| extend PrevTime = prev(PreciseTimeStamp)\n| extend NextTime = next(PreciseTimeStamp)\n| extend Prev = prev(Resource)\n| extend Next = next(Resource)\n| where \nisnull(PrevTime) or \nisnull(NextTime) or \n(Resource != Prev or Resource != Next) \n| extend StartTime = PreciseTimeStamp\n| extend EndTime = next(PreciseTimeStamp)\n| summarize StartTime = arg_min(StartTime, *), EndTime = max(EndTime) by Resource\n| project StartTime, EndTime, Content = Resource\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 1, StartTime), EndTime)\n| extend Tooltip = strcat(\"Container: \", Content, \"<br/>\",\"FirstSeen: \", StartTime, \"<br/>\", \"EndTime: \", EndTime)",
+          "panelPath": []
+        },
+        {
+          "id": "e423c86f-9a4e-4fcd-aab3-655c833a16dc",
+          "name": "VMA",
+          "groupId": "8e8de514-5848-445f-862a-ac2b0fbe2b83",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "vmainsight",
+          "database": "vmadb",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryVmOrContainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryTenantName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "global_startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "global_endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Resource",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryVmOrContainerId",
+              "externalSourceName": "virtualMachineUniqueId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e25948bb-6239-4665-b3ff-aacd7f163808",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenantName",
+              "externalSourceName": "tenantName",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "global_startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "global_endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let queryIncludeCustomerInitiated = true;\nVMA\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where VmUniqueId == queryVmOrContainerId or ContainerId == queryVmOrContainerId\n| where isempty(queryTenantName) or TenantName == queryTenantName\n| where queryIncludeCustomerInitiated or RCAEngineCategory != 'CustomerInitiated'\n| order by PreciseTimeStamp asc\n| extend CustomerInitiated = tobool(strcmp(RCAEngineCategory, 'CustomerInitiated') == 0)\n| project StartTime, EndTime, DurationInSec = datetime_diff('second', EndTime, StartTime), CustomerInitiated,\nAvailabilityState, NodeIp, RCA, RCAEngineCategory, RCACSSCategory, RCALevel1, RCALevel2, RCALevel3, NodeId,\nDetail, DowntimeReasonHint, scaleSetName = Usage_VMScaleSetName, resourceGroupName = Usage_ResourceGroupName,\nRoleInstanceName = substring(RoleInstanceName, 1, strlen(RoleInstanceName)), ContainerId, vmId = VmUniqueId\n| summarize StartTime = arg_max(StartTime, *) by bin(StartTime, 1m)\n| extend Tooltip = strcat(\n    \"ContainerId: \", ContainerId, \n    \"<br/>VMId: \", vmId, \n    \"<br/>NodeId: \", NodeId, \n    \"<br/>RoleInstanceName: \" , RoleInstanceName, \n    \"<br/>Customer Initiated: \", CustomerInitiated,\n    \"<br/>RCA: \", RCA,\n    \"<br/>RCAEngineCategory: \", RCAEngineCategory,\n    \"<br/>RCACSSCategory: \", RCACSSCategory,\n    \"<br/>RCALevel1: \", RCALevel1,\n    \"<br/>RCALevel2: \", RCALevel2,\n    \"<br/>RCALevel3: \", RCALevel3\n    )\n| project StartTime, Content = RCALevel3, Resource = RCALevel3, Tooltip",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.327Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

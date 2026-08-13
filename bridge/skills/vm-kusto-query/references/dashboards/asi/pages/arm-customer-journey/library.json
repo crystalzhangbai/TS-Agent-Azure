@@ -1,0 +1,628 @@
+{
+  "service": "ARM",
+  "page": "Customer Journey",
+  "pageId": "67b6d7ac-7375-495e-97f8-9cab4c503683",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "668c1700-4bcb-4fc2-80d0-6995f0f6f0c1",
+          "name": "Retrieve Resource \"Customer Journey\"",
+          "groupId": "33e6b629-ed87-45f6-856c-8b88c3fffe50",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "apadata.westus.kusto.windows.net",
+          "database": "Sandbox",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "print subscriptionId=local_subscriptionId",
+          "panelPath": []
+        },
+        {
+          "id": "72e3610d-142b-4cae-a56c-52a617047e61",
+          "name": "new subscriptions",
+          "groupId": "e71f36fb-a506-4521-a66a-2542c91c7dd7",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "apadata.westus.kusto.windows.net",
+          "database": "sandbox",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "SubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "subscriptionguid",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionname",
+              "type": "string"
+            },
+            {
+              "name": "subscriptioncreateddate",
+              "type": "datetime"
+            },
+            {
+              "name": "paymentmethodtype",
+              "type": "string"
+            },
+            {
+              "name": "aibillingtype",
+              "type": "string"
+            },
+            {
+              "name": "aiorganizationname",
+              "type": "string"
+            },
+            {
+              "name": "aioffername",
+              "type": "string"
+            },
+            {
+              "name": "tpid",
+              "type": "int"
+            },
+            {
+              "name": "SegmentName",
+              "type": "string"
+            },
+            {
+              "name": "IndustryName",
+              "type": "string"
+            },
+            {
+              "name": "VerticalCategoryName",
+              "type": "string"
+            },
+            {
+              "name": "RegionName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "33e6b629-ed87-45f6-856c-8b88c3fffe50",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "SubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Hack21_NewSubscriptions\r\n| where subscriptionguid == SubscriptionId\r\n| project subscriptionguid, subscriptionname, subscriptioncreateddate, paymentmethodtype, aibillingtype, aiorganizationname, aioffername,tpid, SegmentName,IndustryName, VerticalCategoryName, RegionName",
+          "panelPath": []
+        },
+        {
+          "id": "9d6a55cd-1337-4cff-af8e-81ff09f6a1fd",
+          "name": "Retention",
+          "groupId": "a831aeb7-d637-43e5-8a27-a8c0f29e2fad",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "apadata.westus.kusto.windows.net",
+          "database": "Sandbox",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "SubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "33e6b629-ed87-45f6-856c-8b88c3fffe50",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "SubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Hack21_NewSubscriptions_Retention\r\n| where subscriptionId == SubscriptionId\r\n| project\r\n    StartTime = startofmonth(datetime(2021-09-01)),\r\n    EndTime = endofmonth(datetime(2021-09-01)),\r\n    Content = tostring(IsActiveAfter30Days),\r\n    Health = iff(IsActiveAfter30Days > 0, \"Healthy\", \"Unhealthy\")",
+          "panelPath": []
+        },
+        {
+          "id": "f4a0cac2-108a-41d9-a62a-c1e536dcb6a1",
+          "name": "Control Plane Request",
+          "groupId": "70d20637-c2f9-4ef5-bd7c-968adb4f6f12",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "apadata.westus.kusto.windows.net",
+          "database": "Sandbox",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "SubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "33e6b629-ed87-45f6-856c-8b88c3fffe50",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "SubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Hack21_HttpRequests\r\n| where subscriptionId == SubscriptionId\r\n| summarize count() by bin(PreciseTimeStamp, 1d)\r\n| project\r\n    StartTime = startofday(PreciseTimeStamp),\r\n    EndTime = endofday(PreciseTimeStamp),\r\n    Content = tostring(count_)",
+          "panelPath": []
+        },
+        {
+          "id": "7797e09d-c16d-4e4a-b796-2ce95a1d23b7",
+          "name": "Client Failures",
+          "groupId": "7bbf371b-5b1e-4da3-8d48-de27ca30e373",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "apadata.westus.kusto.windows.net",
+          "database": "Sandbox",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "SubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "TotalFailure",
+              "type": "long"
+            },
+            {
+              "name": "Details",
+              "type": "dynamic"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "33e6b629-ed87-45f6-856c-8b88c3fffe50",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "SubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Hack21_HttpRequests\r\n| where subscriptionId == SubscriptionId\r\n| where httpStatusCode >= 400 and httpStatusCode < 500\r\n| summarize count(), make_set(operationName) by bin(PreciseTimeStamp, 1d), httpStatusCode\r\n| extend errors = strcat(httpStatusCode, \":\", set_operationName)\r\n| summarize     \r\n    Content = tostring(make_set(httpStatusCode)),\r\n    TotalFailure = sum(count_),\r\n    Details = make_list(errors)\r\n    by PreciseTimeStamp\r\n| project \r\n    StartTime = startofday(PreciseTimeStamp),\r\n    EndTime = endofday(PreciseTimeStamp),\r\n    Content,\r\n    TotalFailure,\r\n    Details,\r\n    Health = \"Degraded\"",
+          "panelPath": []
+        },
+        {
+          "id": "2e13b1c5-1627-4022-bc6e-1f0eb822f246",
+          "name": "Server Failures",
+          "groupId": "247b4f5c-694c-40b4-9fd9-12298b595bbb",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "apadata.westus.kusto.windows.net",
+          "database": "Sandbox",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "SubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "33e6b629-ed87-45f6-856c-8b88c3fffe50",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "SubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Hack21_HttpRequests\r\n| where subscriptionId == SubscriptionId\r\n| where httpStatusCode >= 500\r\n| project\r\n    StartTime = PreciseTimeStamp,\r\n    EndTime = PreciseTimeStamp,\r\n    Content = strcat(authorizationAction, \":\", httpStatusCode)\r\n| union (\r\nHack21_WriteOperations\r\n| where subscriptionId == SubscriptionId\r\n| where operationStatus != \"Succeeded\"\r\n| project\r\n    StartTime = requestStartTime,\r\n    EndTime = requestStartTime,\r\n    Content = strcat(operationName, \":\", errorCode)\r\n)\r\n| extend Health = \"Unhealthy\"",
+          "panelPath": []
+        },
+        {
+          "id": "2116365c-397e-4208-b752-4c138734576d",
+          "name": "Write Operations",
+          "groupId": "77d90e70-2dae-4a56-9917-ace97b378a3b",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "apadata.westus.kusto.windows.net",
+          "database": "Sandbox",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "SubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "33e6b629-ed87-45f6-856c-8b88c3fffe50",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "SubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Hack21_WriteOperations\r\n| where subscriptionId == SubscriptionId\r\n| where operationName endswith \"write\"\r\n| order by requestStartTime asc\r\n| extend WindowId = row_window_session(requestStartTime, 1d, 8h)\r\n| summarize\r\n    StartTime = min(requestStartTime),\r\n    EndTime = max(requestStartTime),\r\n    Content = tostring(make_set(operationName)),\r\n    FaiureCount = countif(operationStatus != \"Succeeded\") by WindowId\r\n| project\r\n    StartTime,\r\n    EndTime,\r\n    Content,\r\n    Health = iff(FaiureCount == 0, \"Healthy\", \"Unhealthy\")",
+          "panelPath": []
+        },
+        {
+          "id": "07bcff3b-1530-45c5-bb5d-8424f29bc04c",
+          "name": "ARM - Doc Views",
+          "groupId": "fe2aeb8d-0591-46e8-8c75-dbf5e1c5d5a6",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "apadata.westus.kusto.windows.net",
+          "database": "Sandbox",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "SubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "SubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Hack21_DocViews\r\n| where subscriptionId == SubscriptionId\r\n| order by StartDateTime asc \r\n| extend WindowId = row_window_session(StartDateTime, 1d, 8h)\r\n| summarize \r\n    StartTime = min(StartDateTime),\r\n    EndTime = max(StartDateTime),\r\n    Content = tostring(make_list(Url))\r\n    by WindowId\r\n| where isnotempty(StartTime)    \r\n| project \r\n    StartTime,\r\n    EndTime,\r\n    Content,\r\n    Health = \"Neutral\"",
+          "panelPath": []
+        },
+        {
+          "id": "03574213-d648-4d8e-98c8-b5d108615022",
+          "name": "Portal Traffic",
+          "groupId": "55f944b6-ad0c-4f04-a5f0-cec305fb875c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "apadata.westus.kusto.windows.net",
+          "database": "Sandbox",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "TotalRequests",
+              "type": "long"
+            },
+            {
+              "name": "PortalRequests",
+              "type": "long"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "33e6b629-ed87-45f6-856c-8b88c3fffe50",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Hack21_HttpRequests\r\n| where subscriptionId == querySubscriptionId\r\n| extend Client = getClientName(clientApplicationId, userAgent)\r\n| summarize TotalRequests = count(), PortalRequests = countif(Client == \"Azure Portal\") by bin(PreciseTimeStamp, 1d)\r\n| where PortalRequests > 0\r\n| project \r\n    StartTime = startofday(PreciseTimeStamp),\r\n    EndTime = endofday(PreciseTimeStamp),\r\n    Content = strcat(tostring(toint(PortalRequests * 100.0 / TotalRequests)), \"%\"),\r\n    TotalRequests,\r\n    PortalRequests,\r\n    Health = \"Healthy\"",
+          "panelPath": []
+        },
+        {
+          "id": "803b2aa1-400c-4e46-9b0f-bf839f92c0dc",
+          "name": "Non-Portal Traffic",
+          "groupId": "6e4124b5-af6d-4306-a372-6be31197e10c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "apadata.westus.kusto.windows.net",
+          "database": "Sandbox",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "TotalRequests",
+              "type": "long"
+            },
+            {
+              "name": "NonPortalRequests",
+              "type": "long"
+            },
+            {
+              "name": "Clients",
+              "type": "dynamic"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "33e6b629-ed87-45f6-856c-8b88c3fffe50",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Hack21_HttpRequests\r\n| where subscriptionId == querySubscriptionId\r\n| extend Client = getClientName(clientApplicationId, userAgent)\r\n| summarize TotalRequests = count(), NonPortalRequests = countif(Client != \"Azure Portal\"), Clients =make_set(Client) by bin(PreciseTimeStamp, 1d)\r\n| where NonPortalRequests > 0\r\n| project \r\n    StartTime = startofday(PreciseTimeStamp),\r\n    EndTime = endofday(PreciseTimeStamp),\r\n    Content = strcat(tostring(toint(NonPortalRequests * 100.0 / TotalRequests)), \"%\"),\r\n    TotalRequests,\r\n    NonPortalRequests,\r\n    Clients,\r\n    Health = \"Neutral\"",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:23:51.864Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 10,
+    "totalWidgetRefs": 10
+  }
+}

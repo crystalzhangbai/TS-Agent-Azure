@@ -1,0 +1,1698 @@
+{
+  "service": "ACC CVM",
+  "page": "Confidential Virtual Machine",
+  "pageId": "4a384b8b-75f5-435f-9e4b-f514e13c8674",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "32522e82-4ad3-4d24-9e9f-0b0fc00bc572",
+          "name": "Retrieve Resource \"Confidential Virtual Machine\"",
+          "groupId": "55bbadb1-0a37-455a-9622-ad8dd1e21db9",
+          "majorVersion": 4,
+          "minorVersion": 5,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_SubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_ResourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_ResourceName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_VMId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "VMId",
+              "type": "string"
+            },
+            {
+              "name": "DeploymentId",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "ResultCode",
+              "type": "string"
+            },
+            {
+              "name": "ExceptionType",
+              "type": "string"
+            },
+            {
+              "name": "ErrorDetails",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "RequestBody",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_SubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_ResourceGroupName",
+              "externalSourceName": "ResourceGroupName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_ResourceName",
+              "externalSourceName": "ResourceName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_VMId",
+              "externalSourceName": "VMId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let vmDeploymentOperationId = toscalar(cluster('azcrp').database('crp_allprod').VMApiQosEvent\r\n| where vMId == local_VMId\r\n| where operationName == 'VirtualMachines.ResourceOperation.PUT' or operationName == 'VMExtensions.VMExtensionOperation.PUT'\r\n| distinct operationId);\r\ncluster('azcrp').database('crp_allprod').ApiQosEvent_nonGet\r\n| where operationName == 'VirtualMachines.ResourceOperation.PUT' or operationId == 'VMExtensions.VMExtensionOperation.PUT'\r\n| where subscriptionId =~ local_SubscriptionId and resourceGroupName =~ local_ResourceGroupName and resourceName =~ local_ResourceName\r\n| where operationId in (vmDeploymentOperationId)\r\n| project \r\n    SubscriptionId = local_SubscriptionId, \r\n    ResourceGroupName = local_ResourceGroupName, \r\n    ResourceName = local_ResourceName, \r\n    VMId = local_VMId, \r\n    DeploymentId = operationId,\r\n    CorrelationId = correlationId,\r\n    ResultCode = resultCode,\r\n    ExceptionType = exceptionType,\r\n    ErrorDetails = errorDetails,\r\n    Region = region,\r\n    RequestBody = requestEntity",
+          "panelPath": []
+        },
+        {
+          "id": "73ac394b-c506-4ccd-b857-dc4f2c04fe29",
+          "name": "CRP VM Events",
+          "groupId": "84a9c8fd-7577-491a-9761-168b323eadc2",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "VM Events",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroup",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryVmId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "ErrorDetails",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroup",
+              "externalSourceName": "ResourceGroupName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceName",
+              "externalSourceName": "ResourceName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "55bbadb1-0a37-455a-9622-ad8dd1e21db9",
+              "majorVersion": 4,
+              "minorVersion": 4,
+              "internalDestinationName": "queryVmId",
+              "externalSourceName": "VMId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ApiQosEvent_nonGet\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where subscriptionId =~ querySubscriptionId and resourceGroupName =~ queryResourceGroup and resourceName =~ queryResourceName\r\n| project StartTime = PreciseTimeStamp - (e2EDurationInMilliseconds * 1ms), EndTime = PreciseTimeStamp, correlationId, Content = operationName, Health = iff(isempty(resultCode), \"Healthy\", \"Error\"), CorrelationId = correlationId, ErrorDetails = errorDetails",
+          "panelPath": []
+        },
+        {
+          "id": "46ee819a-d573-4594-9701-8f28416835d4",
+          "name": "Container Events",
+          "groupId": "b6acb7f5-55f3-43fa-ae9a-0985e956d87a",
+          "majorVersion": 1,
+          "minorVersion": 5,
+          "cluster": "azcore.centralus",
+          "database": "AzureCP",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "VM Events",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryVmId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "55bbadb1-0a37-455a-9622-ad8dd1e21db9",
+              "majorVersion": 4,
+              "minorVersion": 4,
+              "internalDestinationName": "queryVmId",
+              "externalSourceName": "VMId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "MycroftContainerHealthSnapshot\r\n| where PreciseTimeStamp between ((queryFrom - 1d) .. (queryTo + 1d))\r\n| where isnotempty(queryVmId) and VirtualMachineUniqueId == queryVmId\r\n| sort by PreciseTimeStamp asc \r\n| extend StateChanged = ContainerState != prev(ContainerState)\r\n| where StateChanged\r\n| project \r\nStartTime = PreciseTimeStamp, \r\nEndTime = next(PreciseTimeStamp), \r\nContent = ContainerState, \r\nHealth = case(\r\n    ContainerState == \"ContainerStateUnknown\", \"Degraded\", \r\n    ContainerState == \"ContainerStateStopped\", \"Degraded\", \r\n    ContainerState == \"ContainerStateDestroyed\", \"Error\", \r\n    \"Healthy\"\r\n)",
+          "panelPath": []
+        },
+        {
+          "id": "345d8dd4-9e1d-4cff-aa42-fdb3c3ced7b7",
+          "name": "VM Containers",
+          "groupId": "fee1744e-7895-45dd-8860-6fc4ec837e83",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus",
+          "database": "AzureCP",
+          "type": "Table",
+          "widgetType": "TabPane",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryVmId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "FirstSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "LastSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "ClusterName",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "Sku",
+              "type": "string"
+            },
+            {
+              "name": "TipNodeSessionId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "55bbadb1-0a37-455a-9622-ad8dd1e21db9",
+              "majorVersion": 4,
+              "minorVersion": 4,
+              "internalDestinationName": "queryVmId",
+              "externalSourceName": "VMId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "MycroftContainerSnapshot\r\n| where PreciseTimeStamp between ((queryFrom - 1d) .. (queryTo + 1d))\r\n| where isnotempty(queryVmId) and VirtualMachineUniqueId == queryVmId\r\n| summarize arg_max(PreciseTimeStamp, *) by ContainerId\r\n| project FirstSeen = CreationTime, LastSeen = PreciseTimeStamp, ContainerId, ClusterName, NodeId, Sku = PolicyName, TipNodeSessionId",
+          "panelPath": []
+        },
+        {
+          "id": "676047c2-804e-44f9-a3e7-ecdda6982583",
+          "name": "Execution Graph",
+          "groupId": "5f10acd3-bf48-4f23-bf7f-ced203ca3b8a",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "executiongraph",
+          "database": "eg",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryVmId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "EgUrl",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "E2EDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "Result",
+              "type": "string"
+            },
+            {
+              "name": "FailureCategory",
+              "type": "string"
+            },
+            {
+              "name": "FailureSignature",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "55bbadb1-0a37-455a-9622-ad8dd1e21db9",
+              "majorVersion": 4,
+              "minorVersion": 4,
+              "internalDestinationName": "queryVmId",
+              "externalSourceName": "VMId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "IaasVmOperations\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where CrpVmId == queryVmId\r\n| project Timestamp = StartTime, EgUrl, OperationName, E2EDurationInSeconds, Result, FailureCategory, FailureSignature\r\n| sort by Timestamp asc",
+          "panelPath": []
+        }
+      ]
+    },
+    "Counters": {
+      "panelPath": [
+        "Counters"
+      ],
+      "queries": [
+        {
+          "id": "71be1124-f8a8-47bc-84af-34929df2b1b7",
+          "name": "VM Performance Counters",
+          "groupId": "737e5dbc-2122-49e1-b2dc-afe711f1a0cc",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Counters",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryVmId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "AverageCPU",
+              "type": "real"
+            },
+            {
+              "name": "MaxCPU",
+              "type": "real"
+            },
+            {
+              "name": "AvgPhysicalMem",
+              "type": "real"
+            },
+            {
+              "name": "MaxPhysicalMem",
+              "type": "real"
+            },
+            {
+              "name": "MinMemPressure",
+              "type": "real"
+            },
+            {
+              "name": "AvgMemPressure",
+              "type": "real"
+            },
+            {
+              "name": "MaxMemPressure",
+              "type": "real"
+            },
+            {
+              "name": "AvgNetworkIn",
+              "type": "real"
+            },
+            {
+              "name": "MaxNetworkIn",
+              "type": "real"
+            },
+            {
+              "name": "AvgNetworkOut",
+              "type": "real"
+            },
+            {
+              "name": "MaxNetworkOut",
+              "type": "real"
+            },
+            {
+              "name": "MinDiskIORead",
+              "type": "real"
+            },
+            {
+              "name": "AvgDiskIORead",
+              "type": "real"
+            },
+            {
+              "name": "MaxDiskIORead",
+              "type": "real"
+            },
+            {
+              "name": "MinDiskIOWrite",
+              "type": "real"
+            },
+            {
+              "name": "AvgDiskIOWrite",
+              "type": "real"
+            },
+            {
+              "name": "MaxDiskIOWrite",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "55bbadb1-0a37-455a-9622-ad8dd1e21db9",
+              "majorVersion": 4,
+              "minorVersion": 4,
+              "internalDestinationName": "queryVmId",
+              "externalSourceName": "VMId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let totalHours = datetime_diff('hour', queryFrom, queryTo);\r\nlet bucket = case(\r\n    totalHours < 48, 5m,\r\n    totalHours < 1000, 10m,\r\n    totalHours < 1500, 20m,\r\n    30m\r\n);\r\nlet containerids = VmHealthRawStateEtwTable \r\n    | where isnotempty(queryVmId)\r\n    | where PreciseTimeStamp >= queryFrom and (isnull(queryTo) or PreciseTimeStamp <= queryTo)\r\n    | where VirtualMachineUniqueId == queryVmId\r\n    | summarize by ContainerId;\r\nVmCounterFiveMinuteRoleInstanceCentralBondTable \r\n| where isnotempty(queryVmId)\r\n| where PreciseTimeStamp >= queryFrom and (isnull(queryTo) or PreciseTimeStamp <= queryTo)\r\n| where VmId in(containerids)\r\n| project PreciseTimeStamp, CounterName, SampleCount, AverageCounterValue, MinCounterValue, MaxCounterValue\r\n| extend Counter = case (\r\n    CounterName == 'Percentage CPU', 'Percentage CPU',\r\n    CounterName endswith 'Current Pressure', 'Current Memory Pressure',\r\n    CounterName endswith 'Physical Memory', 'Physical Memory GB',\r\n    CounterName == 'Network In', 'Network In MB/sec',\r\n    CounterName == 'Network Out', 'Network Out MB/sec',\r\n    CounterName == 'Disk Read Bytes/sec', 'Disk Read MB/sec',\r\n    CounterName == 'Disk Write Bytes/sec', 'Disk Write MB/sec',\r\n    '')\r\n| where isnotempty(Counter)\r\n| summarize \r\n    AverageCPU = round(avgif(AverageCounterValue, Counter == 'Percentage CPU')), \r\n    MaxCPU = round(maxif(MaxCounterValue, Counter == 'Percentage CPU')), \r\n    AvgPhysicalMem = round(avgif(AverageCounterValue, Counter == 'Physical Memory GB') / 1024), \r\n    MaxPhysicalMem = round(maxif(MaxCounterValue, Counter == 'Physical Memory GB') / 1024),\r\n    MinMemPressure = round(minif(MinCounterValue, Counter == 'Current Memory Pressure')), \r\n    AvgMemPressure = round(avgif(AverageCounterValue, Counter == 'Current Memory Pressure')), \r\n    MaxMemPressure = round(maxif(MaxCounterValue, Counter == 'Current Memory Pressure')), \r\n    AvgNetworkIn = round(avgif(AverageCounterValue, Counter == 'Network In MB/sec') / (1024 * 1024), 2),\r\n    MaxNetworkIn = round(maxif(MaxCounterValue, Counter == 'Network In MB/sec') / (1024 * 1024), 2),\r\n    AvgNetworkOut = round(avgif(AverageCounterValue, Counter == 'Network Out MB/sec') / (1024 * 1024), 2),\r\n    MaxNetworkOut = round(maxif(MaxCounterValue, Counter == 'Network Out MB/sec') / (1024 * 1024), 2),\r\n    MinDiskIORead = round(minif(MinCounterValue, Counter == 'Disk Read MB/sec') / (1024 * 1024), 2), \r\n    AvgDiskIORead = round(avgif(AverageCounterValue, Counter == 'Disk Read MB/sec') / (1024 * 1024), 2), \r\n    MaxDiskIORead = round(maxif(MaxCounterValue, Counter == 'Disk Read MB/sec') / (1024 * 1024), 2), \r\n    MinDiskIOWrite = round(minif(MinCounterValue, Counter == 'Disk Write MB/sec') / (1024 * 1024), 2), \r\n    AvgDiskIOWrite = round(avgif(AverageCounterValue, Counter == 'Disk Write MB/sec') / (1024 * 1024), 2), \r\n    MaxDiskIOWrite = round(maxif(MaxCounterValue, Counter == 'Disk Write MB/sec') / (1024 * 1024), 2)\r\n    by bin(PreciseTimeStamp, bucket)\r\n| extend AverageCPU = iff(isnan(AverageCPU), 0.0, AverageCPU)\r\n| extend AvgPhysicalMem = iff(isnan(AvgPhysicalMem), 0.0, AvgPhysicalMem)\r\n| extend AvgMemPressure = iff(isnan(AvgMemPressure), 0.0, AvgMemPressure)\r\n| extend AvgNetworkIn = iff(isnan(AvgNetworkIn), 0.0, AvgNetworkIn)\r\n| extend AvgNetworkOut = iff(isnan(AvgNetworkOut), 0.0, AvgNetworkOut)\r\n| extend AvgDiskIORead = iff(isnan(AvgDiskIORead), 0.0, AvgDiskIORead)\r\n| extend AvgDiskIOWrite = iff(isnan(AvgDiskIOWrite), 0.0, AvgDiskIOWrite)\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "Counters"
+          ]
+        }
+      ]
+    },
+    "CRP Event Logs": {
+      "panelPath": [
+        "CRP Event Logs"
+      ],
+      "queries": [
+        {
+          "id": "02dac154-9f44-47b7-9800-3f51ea765b3f",
+          "name": "CRP VM Event Logs",
+          "groupId": "12b14906-698c-47a0-92ab-373e280c35e6",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "CRP Event Logs",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroup",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "OperaptionId",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "HttpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "ResultCode",
+              "type": "string"
+            },
+            {
+              "name": "ExceptionType",
+              "type": "string"
+            },
+            {
+              "name": "ErrorDetails",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroup",
+              "externalSourceName": "ResourceGroupName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceName",
+              "externalSourceName": "ResourceName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ApiQosEvent_nonGet\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where subscriptionId =~ querySubscriptionId and resourceGroupName =~ queryResourceGroup and resourceName =~ queryResourceName\r\n| project \r\n    PreciseTimeStamp, \r\n    SubscriptionId = subscriptionId, \r\n    ResourceGroupName = resourceGroupName,\r\n    ResourceName = resourceName,\r\n    OperationName = operationName, \r\n    OperaptionId = operationId, \r\n    CorrelationId = correlationId, \r\n    HttpStatusCode = httpStatusCode,\r\n    ResultCode = resultCode,\r\n    ExceptionType = exceptionType,\r\n    ErrorDetails = errorDetails\r\n| sort by PreciseTimeStamp asc",
+          "panelPath": [
+            "CRP Event Logs"
+          ]
+        },
+        {
+          "id": "6d6ea217-0adb-4ea2-b4ff-cf553ab540f5",
+          "name": "VMSS VM ApiQosEvent",
+          "groupId": "b4c7c837-77e3-4b55-8cbb-bea098ee5e1e",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "CRP Event Logs",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "ResourceName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "resultType",
+              "type": "long"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "suspectComponent",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "partitionId",
+              "type": "string"
+            },
+            {
+              "name": "replicaId",
+              "type": "long"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySet",
+              "type": "string"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            },
+            {
+              "name": "oSProvisionDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "vMScaleSetName",
+              "type": "string"
+            },
+            {
+              "name": "reliableProvisioningState",
+              "type": "string"
+            },
+            {
+              "name": "oSIsoGeneratingComponent",
+              "type": "string"
+            },
+            {
+              "name": "extensionStates",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "extraVmssVMProperties",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "SubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "ResourceGroupName",
+              "externalSourceName": "ResourceGroupName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "ResourceName",
+              "externalSourceName": "ResourceName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VmssVMApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where subscriptionId =~ SubscriptionId\r\n| where operationName == \"VirtualMachineScaleSets.ResourceOperation.PUT\"\r\n| where resourceGroupName =~ ResourceGroupName\r\n| where resourceName =~ ResourceName",
+          "panelPath": [
+            "CRP Event Logs"
+          ]
+        }
+      ]
+    },
+    "CRP VMSS VM Event Logs": {
+      "panelPath": [
+        "CRP VMSS VM Event Logs"
+      ],
+      "queries": [
+        {
+          "id": "aaa44bda-bc6d-476d-8a06-f74c775006fc",
+          "name": "VMSS VM ApiQosEvent",
+          "groupId": "b4c7c837-77e3-4b55-8cbb-bea098ee5e1e",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "CRP VMSS VM Event Logs",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "resultType",
+              "type": "long"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "suspectComponent",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "partitionId",
+              "type": "string"
+            },
+            {
+              "name": "replicaId",
+              "type": "long"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySet",
+              "type": "string"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            },
+            {
+              "name": "oSProvisionDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "vMScaleSetName",
+              "type": "string"
+            },
+            {
+              "name": "reliableProvisioningState",
+              "type": "string"
+            },
+            {
+              "name": "oSIsoGeneratingComponent",
+              "type": "string"
+            },
+            {
+              "name": "extensionStates",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "extraVmssVMProperties",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "componentFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "componentTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroupName",
+              "externalSourceName": "ResourceGroupName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceName",
+              "externalSourceName": "ResourceName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VmssVMApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where subscriptionId =~ querySubscriptionId\r\n| where operationName == \"VirtualMachineScaleSets.ResourceOperation.PUT\"\r\n| where resourceGroupName =~ queryResourceGroupName\r\n| where resourceName =~ queryResourceName",
+          "panelPath": [
+            "CRP VMSS VM Event Logs"
+          ]
+        }
+      ]
+    },
+    "Disk Manager Events": {
+      "panelPath": [
+        "Disk Manager Events"
+      ],
+      "queries": [
+        {
+          "id": "0e8467f4-ba08-42bf-84ee-c5e8124ccdb8",
+          "name": "Disk Manager Events",
+          "groupId": "f6b132fe-da48-4526-98a1-c126fd0ca88a",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "disks",
+          "database": "Disks",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Disk Manager Events",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryCorrelationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "E2EDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "HttpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "ResultCode",
+              "type": "string"
+            },
+            {
+              "name": "ExceptionType",
+              "type": "string"
+            },
+            {
+              "name": "ErrorDetails",
+              "type": "string"
+            },
+            {
+              "name": "RequestBody",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "55bbadb1-0a37-455a-9622-ad8dd1e21db9",
+              "majorVersion": 4,
+              "minorVersion": 4,
+              "internalDestinationName": "queryCorrelationId",
+              "externalSourceName": "CorrelationId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "DiskManagerApiQoSEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where correlationId == queryCorrelationId\r\n| project \r\n    PreciseTimeStamp, \r\n    CorrelationId = correlationId, \r\n    OperationName = operationName, \r\n    OperationId = operationId, \r\n    ResourceGroupName = tolower(resourceGroupName), \r\n    ResourceName = tolower(resourceName),\r\n    E2EDurationInMilliseconds = e2EDurationInMilliseconds,\r\n    HttpStatusCode = httpStatusCode,\r\n    ResultCode = resultCode,\r\n    ExceptionType = exceptionType,\r\n    ErrorDetails = errorDetails,\r\n    RequestBody = requestEntity\r\n| sort by PreciseTimeStamp asc ",
+          "panelPath": [
+            "Disk Manager Events"
+          ]
+        }
+      ]
+    },
+    "IGVM Agent Logs": {
+      "panelPath": [
+        "IGVM Agent Logs"
+      ],
+      "queries": [
+        {
+          "id": "d05a1d90-c830-4ac3-a278-624f454e7108",
+          "name": "IGVM Agent Logs",
+          "groupId": "b6a50c43-6fee-4516-8680-b289de80d55c",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "https://azcore.centralus.kusto.windows.net/",
+          "database": "acccvmtmgeneva",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "IGVM Agent Logs",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainers",
+              "type": "array",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "Timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "az_node_id",
+              "type": "string"
+            },
+            {
+              "name": "vm_unique_id",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "fee1744e-7895-45dd-8860-6fc4ec837e83",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "queryContainers",
+              "externalSourceName": "ContainerId",
+              "required": false,
+              "rowSelectionCriteria": "allRows",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "Log\r\n| where env_time between (queryFrom .. queryTo)\r\n| where tagId in~ (queryContainers)\r\n| sort by seq_number asc \r\n| project Level, Timestamp = env_time, RoleInstance, az_node_id, vm_unique_id, ContainerId = tagId, Message = body\r\n",
+          "panelPath": [
+            "IGVM Agent Logs"
+          ]
+        }
+      ]
+    },
+    "Windows Event Logs": {
+      "panelPath": [
+        "Windows Event Logs"
+      ],
+      "queries": [
+        {
+          "id": "fb1f05ac-6dbe-4cba-82eb-0e86abe349ae",
+          "name": "Windows Event Table",
+          "groupId": "aab7eacc-0a81-4322-b371-2580f9742ef5",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Windows Event Logs",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryContainers",
+              "type": "array",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "TimeCreated",
+              "type": "string"
+            },
+            {
+              "name": "Channel",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "fee1744e-7895-45dd-8860-6fc4ec837e83",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "queryContainers",
+              "externalSourceName": "ContainerId",
+              "required": false,
+              "rowSelectionCriteria": "allRows",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('azcore.centralus').database('Fa').WindowsEventTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Description has_any (queryContainers)\r\n| extend ext_containerId = extract(@\"[[:alnum:]]{8}-[[:alnum:]]{4}-[[:alnum:]]{4}-[[:alnum:]]{4}-[[:alnum:]]{12}\", 0, Description)\r\n| where ext_containerId in(queryContainers)\r\n| sort by ContainerId = ext_containerId, TimeCreated asc \r\n| project Level, TimeCreated, Channel, NodeId, Cluster, ContainerId = ext_containerId, Description",
+          "panelPath": [
+            "Windows Event Logs"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.316Z",
+    "totalPanels": 7,
+    "totalUniqueQueries": 12,
+    "totalWidgetRefs": 12
+  }
+}

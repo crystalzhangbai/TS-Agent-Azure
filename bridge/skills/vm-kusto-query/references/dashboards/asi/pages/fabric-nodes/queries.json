@@ -1,0 +1,38 @@
+[
+  {
+    "id": "4c4199d9-0e81-4506-9482-112e6fc3d949",
+    "name": "Node Containers",
+    "groupId": "a73b1565-89be-4672-b788-e1a45fb03c2e",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azurecm",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "kustoQuery": "LogContainerSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where nodeId == queryNodeId\n| summarize StartTime = min(PreciseTimeStamp), EndTime = arg_max(PreciseTimeStamp, *) by containerId\n| project StartTime, EndTime, Content = containerId\n| order by StartTime asc",
+    "params": [
+      {
+        "name": "queryNodeId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Fabric"
+  }
+]

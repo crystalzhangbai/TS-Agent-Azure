@@ -1,0 +1,199 @@
+[
+  {
+    "id": "fb937b49-0735-468e-8a39-a0bf11e3562c",
+    "name": "Detailed Fabric Setting History in 24 Hours",
+    "groupId": "c8c48ccb-c2e8-4e59-93e8-c755360f8b6c",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "acckusto.southcentralus.kusto.windows.net",
+    "database": "ACCTEST",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let Clusters = cluster('acckusto.southcentralus').database(\"ACCTEST\").getAllAccClusters \r\n| project Tenant=Cluster;\r\ncluster('azcore.centralus').database(\"Fc\").TMMgmtFabricSettingEtwTable\r\n| where LastModifiedTime > ago(1d)  and LastModifiedBy startswith \"AME\"\r\n| where Tenant in (Clusters)\r\n| serialize\r\n| sort by PreciseTimeStamp\r\n| where Value != prev(Value, 1)\r\n| project PreciseTimeStamp, LastModifiedTime, Tenant, LastModifiedBy, Name, PreviousValue, Value\r\n",
+    "params": [],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "LastModifiedTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "LastModifiedBy",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "PreviousValue",
+        "type": "string"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      }
+    ],
+    "serviceId": "ACC CVM"
+  },
+  {
+    "id": "52334778-8f23-425c-96cc-4ab2f34c6df8",
+    "name": "Fabric Setting History in last 7 days",
+    "groupId": "0b0b30ef-50d7-4f7d-a2fe-f262fce59ce9",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "acckusto.southcentralus.kusto.windows.net",
+    "database": "ACCTEST",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let Clusters = cluster('acckusto.southcentralus').database(\"ACCTEST\").getAllAccClusters \r\n| project Tenant=Cluster;\r\ncluster('azcore.centralus').database(\"Fc\").TMMgmtFabricSettingEtwTable\r\n| where LastModifiedTime > ago(7d)  and LastModifiedBy startswith \"AME\"\r\n| where Tenant in (Clusters)\r\n| serialize\r\n| sort by PreciseTimeStamp\r\n| where Value != prev(Value, 1)\r\n| project PreciseTimeStamp, LastModifiedTime, Tenant, LastModifiedBy, Name, PreviousValue, Value",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-11-06T18:17:55.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-11-09T18:17:55.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "LastModifiedTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "LastModifiedBy",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "PreviousValue",
+        "type": "string"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      }
+    ],
+    "serviceId": "ACC CVM"
+  },
+  {
+    "id": "a7d77cfa-1c39-4d32-9f9b-40633392a3eb",
+    "name": "Fabric Setting History Search",
+    "groupId": "a79ba405-7276-463b-b802-00ce896f5599",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "acckusto.southcentralus.kusto.windows.net",
+    "database": "ACCTEST",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('azcore.centralus').database(\"Fc\").TMMgmtFabricSettingEtwTable\r\n| where LastModifiedTime > queryFrom and LastModifiedTime < queryTo and LastModifiedBy startswith \"AME\"\r\n| where Tenant in~ (Clusters)\r\n| serialize\r\n| sort by PreciseTimeStamp\r\n| where Value != prev(Value, 1)\r\n| project PreciseTimeStamp, LastModifiedTime, Tenant, LastModifiedBy, Name, PreviousValue, Value\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-11-07T18:17:55.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-11-07T18:17:57.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "Clusters",
+        "description": "",
+        "type": "array",
+        "default": "[]",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "LastModifiedTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "LastModifiedBy",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "PreviousValue",
+        "type": "string"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      }
+    ],
+    "serviceId": "ACC CVM"
+  }
+]

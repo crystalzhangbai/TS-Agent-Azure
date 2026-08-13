@@ -1,0 +1,367 @@
+{
+  "service": "Aztec",
+  "page": "Walmart Dashboard",
+  "pageId": "81beafe5-3418-445c-9b51-4bb013f157e4",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Overview > Failure Trend": {
+      "panelPath": [
+        "Overview",
+        "Failure Trend"
+      ],
+      "queries": [
+        {
+          "id": "6df309d3-234b-4a26-84ce-ae5128139667",
+          "name": "Exceptions",
+          "groupId": "d5adabee-1a17-4c32-887a-cb53d99c0caf",
+          "majorVersion": 3,
+          "minorVersion": 2,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Failure Trend",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let SubscriptionFilter = iff(local_subscriptionId!= \"\", true, false);\r\nlet A = cluster('azcrpeus.kusto.windows.net').database('CommonDims').Dim_Subscription\r\n| where  FriendlySubscriptionName contains \"walmart\" or TPName contains \"walmart\"\r\n| where SubscriptionGuid == local_subscriptionId\r\n| project SubscriptionGuid;\r\nlet B =  cluster('azcrpeus.kusto.windows.net').database('CommonDims').Dim_Subscription\r\n| where  FriendlySubscriptionName contains \"walmart\" or TPName contains \"walmart\"\r\n| project SubscriptionGuid;\r\nlet funcA = view(){\r\n        A\r\n    };\r\nlet funcB= view(){\r\n        B\r\n    };\r\nlet walmartSubs = union (funcA() | where SubscriptionFilter), (funcB() | where not(SubscriptionFilter));\r\nlet fabricatorImpactedOperations = \r\n cluster('azcrp.kusto.windows.net').database('crp_allprod').VMApiQosEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    and MonitoringApplication !contains 'Validation' and resultType == 2\r\n                and fabricCluster has '-prod-'\r\n                and resultCode in ('AllocationFailed','InternalExecutionError')\r\n                |project fabricCluster,operationId,fabricTenantName\r\n                |join kind=inner \r\n                (\r\n                    cluster('accp.centralus.kusto.windows.net').database('AZSM').AzSMQoSEvents\r\n                    |where PreciseTimeStamp between(startTime..endTime)  and result != 'Success' and operation in ('SaveTenantGoalStateAsync','DeleteTenantAsync','StopTenantAsync')\r\n                    and exceptionType == 'System.ServiceModel.FaultException`1[Microsoft.Windows.Azure.Fabric.Cfx.Contracts.Faults.ServiceUnavailableFault]'\r\n                    |project Cluster,tenantName\r\n                ) on $left.fabricCluster==$right.Cluster and $left.fabricTenantName== $right.tenantName\r\n                |distinct operationId;\r\nlet overallwithoutExceptionQos = cluster('azcrp.kusto.windows.net').database('crp_allprod').VMApiQosEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    and MonitoringApplication !contains 'Validation'\r\n                 and resultType == 2\r\n                and isnotempty(fabricCluster)\r\n    | where subscriptionId in (walmartSubs)\r\n              |extend isAzSM = fabricCluster has '-prod-'\r\n              |extend isFabricatorDown=operationId in (fabricatorImpactedOperations)\r\n              |parse MonitoringApplication with * 'CRP-' Region '_Monitoring'\r\n              |where isnotempty(Region)\r\n              |parse errorDetails with * 'One or more errors occurred. ---> ' Exception ':' *;\r\nlet overallQos = AzSMErrorClassification(overallwithoutExceptionQos);\r\nlet userVisibleQos = overallQos | where operationName !startswith 'Subscriptions.'\r\n    and      operationName !startswith 'FabricCallback' and operationName != 'AsyncOperationCallbackOperation' and\r\n              operationName !startswith 'VMMeteringData' and operationName != 'VMScaleSetCleanupInternalOperation' and\r\n              operationName !startswith 'Backup.' and operationName  !contains 'VMConsole' and\r\n              operationName !startswith 'GeoConfig' and operationName !startswith 'KvsData' and \r\n              operationName !startswith 'SystemInfo' and \r\n              operationName != 'RestorePoints.RetrieveSasUris.POST' and            // used only by the Backup service \r\n              operationName != 'RestorePointCollections.ResourceOperation.GET' and //\r\n              operationName != 'RestorePoints.RestorePointOperation.GET' and       //\r\n              operationName !startswith 'CustomerSupport' and operationName !startswith 'Configuration' and\r\n              operationName != 'VirtualMachineScaleSets.migrationInfo.GET';\r\nlet userVisibleQosExceptions = userVisibleQos | project PreciseTimeStamp, Region,isAzSM,resultCode,exceptionType,exceptionDetails,errorDetails, Category='User Visible',isComputeManagerIssue, fabricCluster, fabricTenantName, operationName, operationId, resultType;\r\nuserVisibleQosExceptions\r\n| where isComputeManagerIssue == true\r\n| project PreciseTimeStamp, Region, resultCode, exceptionType, errorDetails =substring(errorDetails, 0, 2500), fabricCluster, fabricTenantName, operationId, operationName\r\n| summarize count() by  bin (PreciseTimeStamp, 1hr), exceptionType\r\n| render linechart",
+          "panelPath": [
+            "Overview",
+            "Failure Trend"
+          ]
+        }
+      ]
+    },
+    "Role Instance / VM > Role Instance / VM": {
+      "panelPath": [
+        "Role Instance / VM",
+        "Role Instance / VM"
+      ],
+      "queries": [
+        {
+          "id": "b869c63a-59e8-4bdc-bfb4-87853694a89c",
+          "name": "VMSnapshot",
+          "groupId": "65ec7d75-a2b0-4284-8594-c9afe1a2ade1",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Role Instance / VM",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "LastSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let SubscriptionFilter = iff(local_subscriptionId!= \"\", true, false);\r\nlet A = cluster('azcrpeus.kusto.windows.net').database('CommonDims').Dim_Subscription\r\n| where  FriendlySubscriptionName contains \"walmart\" or TPName contains \"walmart\"\r\n| where SubscriptionGuid == local_subscriptionId\r\n| project SubscriptionGuid;\r\nlet B =  cluster('azcrpeus.kusto.windows.net').database('CommonDims').Dim_Subscription\r\n| where  FriendlySubscriptionName contains \"walmart\" or TPName contains \"walmart\"\r\n| project SubscriptionGuid;\r\nlet funcA = view(){\r\n        A\r\n    };\r\nlet funcB= view(){\r\n        B\r\n    };\r\nlet walmartSubscriptions = union (funcA() | where SubscriptionFilter), (funcB() | where not(SubscriptionFilter));\r\nLogContainerSnapshot\r\n| where PreciseTimeStamp between (startTime..endTime)\r\n| where subscriptionId in (walmartSubscriptions)\r\n| summarize max(PreciseTimeStamp) by roleInstanceName, containerId, availabilitySetName,virtualMachineUniqueId, tenantName, Tenant, Region\r\n| extend LastSeen=max_PreciseTimeStamp\r\n| project LastSeen,roleInstanceName, containerId,virtualMachineUniqueId,tenantName, Tenant, Region\r\n| order by LastSeen desc\r\n",
+          "panelPath": [
+            "Role Instance / VM",
+            "Role Instance / VM"
+          ]
+        }
+      ]
+    },
+    "VMApiQosEvent > VMApiQOsEvent (Failures in selected time period)": {
+      "panelPath": [
+        "VMApiQosEvent",
+        "VMApiQOsEvent (Failures in selected time period)"
+      ],
+      "queries": [
+        {
+          "id": "54fad7b5-91d2-48c7-974b-6872c76009d9",
+          "name": "VMApiQosEvent",
+          "groupId": "29d0cbfa-5c67-4f08-b503-fc6a13918fc2",
+          "majorVersion": 5,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VMApiQOsEvent (Failures in selected time period)",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "max_PreciseTimeStamp",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "\r\nlet ppsProdSubscriptions = PPS_Source_VM_Subscriptions_In_Prod();\r\nlet ppsCanarySubscription = PPS_Source_VM_Subscriptions_In_Canary();let SubscriptionFilter = iff(local_subscriptionId!= \"\", true, false);\r\nlet A = cluster('azcrpeus.kusto.windows.net').database('CommonDims').Dim_Subscription\r\n| where  FriendlySubscriptionName contains \"walmart\" or TPName contains \"walmart\"\r\n| where SubscriptionGuid == local_subscriptionId\r\n| project SubscriptionGuid;\r\nlet B =  cluster('azcrpeus.kusto.windows.net').database('CommonDims').Dim_Subscription\r\n| where  FriendlySubscriptionName contains \"walmart\" or TPName contains \"walmart\"\r\n| project SubscriptionGuid;\r\nlet funcA = view(){\r\n        A\r\n    };\r\nlet funcB= view(){\r\n        B\r\n    };\r\nlet walmartSubs = union (funcA() | where SubscriptionFilter), (funcB() | where not(SubscriptionFilter));\r\nlet fabricatorImpactedOperations = \r\n cluster('azcrp.kusto.windows.net').database('crp_allprod').VMApiQosEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    and MonitoringApplication !contains 'Validation' and resultType == 2\r\n                and fabricCluster has '-prod-'\r\n                and resultCode in ('AllocationFailed','InternalExecutionError')\r\n                |project fabricCluster,operationId,fabricTenantName\r\n                |join kind=inner \r\n                (\r\n                    cluster('azurecm.kusto.windows.net').database('AzureCM').AzSMQoSEvents\r\n                    |where PreciseTimeStamp between(startTime..endTime)  and result != 'Success' and operation in ('SaveTenantGoalStateAsync','DeleteTenantAsync','StopTenantAsync')\r\n                    and exceptionType == 'System.ServiceModel.FaultException`1[Microsoft.Windows.Azure.Fabric.Cfx.Contracts.Faults.ServiceUnavailableFault]'\r\n                    |project Cluster,tenantName\r\n                ) on $left.fabricCluster==$right.Cluster and $left.fabricTenantName== $right.tenantName\r\n                |distinct operationId;\r\nlet overallwithoutExceptionQos = cluster('azcrp.kusto.windows.net').database('crp_allprod').VMApiQosEvent\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    and MonitoringApplication !contains 'Validation'\r\n                 and resultType == 2\r\n                and isnotempty(fabricCluster)\r\n    | where subscriptionId !in~ (ppsProdSubscriptions) and subscriptionId !in~ (ppsCanarySubscription) and subscriptionId in (walmartSubs)\r\n              |extend isAzSM = fabricCluster has '-prod-'\r\n              |extend isFabricatorDown=operationId in (fabricatorImpactedOperations)\r\n              |parse MonitoringApplication with * 'CRP-' Region '_Monitoring'\r\n              |where isnotempty(Region)\r\n              |parse errorDetails with * 'One or more errors occurred. ---> ' Exception ':' *;\r\nlet overallQos = AzSMErrorClassification(overallwithoutExceptionQos);\r\nlet userVisibleQos = overallQos | where operationName !startswith 'Subscriptions.'\r\n    and      operationName !startswith 'FabricCallback' and operationName != 'AsyncOperationCallbackOperation' and\r\n              operationName !startswith 'VMMeteringData' and operationName != 'VMScaleSetCleanupInternalOperation' and\r\n              operationName !startswith 'Backup.' and operationName  !contains 'VMConsole' and\r\n              operationName !startswith 'GeoConfig' and operationName !startswith 'KvsData' and \r\n              operationName !startswith 'SystemInfo' and \r\n              operationName != 'RestorePoints.RetrieveSasUris.POST' and            // used only by the Backup service \r\n              operationName != 'RestorePointCollections.ResourceOperation.GET' and //\r\n              operationName != 'RestorePoints.RestorePointOperation.GET' and       //\r\n              operationName !startswith 'CustomerSupport' and operationName !startswith 'Configuration' and\r\n              operationName != 'VirtualMachineScaleSets.migrationInfo.GET';\r\nlet userVisibleQosExceptions = userVisibleQos | project PreciseTimeStamp, Region,isAzSM,resultCode,exceptionType,exceptionDetails,errorDetails, Category='User Visible',isComputeManagerIssue, fabricCluster, fabricTenantName, operationName, operationId, resultType;\r\nuserVisibleQosExceptions\r\n| where isComputeManagerIssue == true\r\n| summarize max(PreciseTimeStamp) by Region, resultCode, exceptionType, errorDetails =substring(errorDetails, 0, 2500), fabricCluster, fabricTenantName, operationId, operationName\r\n",
+          "panelPath": [
+            "VMApiQosEvent",
+            "VMApiQOsEvent (Failures in selected time period)"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:29.141Z",
+    "totalPanels": 3,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

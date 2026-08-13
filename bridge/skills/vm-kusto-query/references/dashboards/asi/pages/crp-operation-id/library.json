@@ -1,0 +1,2979 @@
+{
+  "service": "CRP",
+  "page": "OperationId",
+  "pageId": "7fba9fc0-b1af-4274-8195-415f1545770d",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "ee3b11f2-1ea5-4668-bcac-39bbb551e3ce",
+          "name": "Retrieve Resource \"Operation Id\"",
+          "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+          "majorVersion": 5,
+          "minorVersion": 1,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "Operation Name: {{operationName}}, OperationId {{operationId}} ",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "clientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "clientPrincipalName",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "e2EDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "jarvisContextActivityLink",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "goalSeekingActivityId",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "partitionId",
+              "type": "string"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "requestEntityDynamic",
+              "type": "dynamic"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "resultType",
+              "type": "string"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "e2eMin",
+              "type": "real"
+            },
+            {
+              "name": "opStartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "opEndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "jarvisQueryTimeOffset",
+              "type": "real"
+            },
+            {
+              "name": "jarvisQueryTime",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let operationStartTime = datetime_add(\"day\", -1, local_startDate);\r\nlet operationEndTime = datetime_add(\"day\", 1, local_endDate);\r\nApiQosEvent\r\n//| where PreciseTimeStamp between (operationStartTime..operationEndTime)\r\n| where operationId =~ local_operationId\r\n| extend backup_region = region\r\n| invoke QosToContext()\r\n| extend requestEntityDynamic = parse_json(requestEntity)\r\n| extend resultType = case(resultType == 0, \"Success\", \r\n                       resultType == 1, \"Client Failure\", \r\n                       resultType == 2, \"Server Failure\",\r\n                       \"Unknown\")\r\n| extend startTime = datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| extend opStartTime = floor(startTime, 1m)\r\n| extend endTime = PreciseTimeStamp\r\n| extend opEndTime = floor(PreciseTimeStamp, 1m) + 1m\r\n| extend e2eMin = ceiling((e2EDurationInMilliseconds/1000/60.0))\r\n| extend jarvisQueryTimeOffset = -(e2eMin + 1)\r\n| extend jarvisQueryTime = strcat(format_datetime(PreciseTimeStamp, 'yyyy-MM-dd') , 'T', format_datetime(datetime_add(\"minute\", 1, PreciseTimeStamp), 'hh:mm'), \"Z\")\r\n| project MonitoringApplication\r\n  , Node\r\n  , apiVersion\r\n  , clientApplicationId\r\n  , clientPrincipalName\r\n  , correlationId\r\n  , durationInMilliseconds\r\n  , e2EDurationInMilliseconds\r\n  , errorDetails\r\n  , exceptionType\r\n  , jarvisContextActivityLink\r\n  , httpStatusCode\r\n  , goalSeekingActivityId\r\n  , operationId\r\n  , operationName\r\n  , partitionId\r\n  , PreciseTimeStamp\r\n  , region = backup_region\r\n  , requestEntityDynamic\r\n  , resourceGroupName\r\n  , resourceName\r\n  , resultType \r\n  , resultCode\r\n  , serviceBuild\r\n  , subscriptionId\r\n  , userAgent\r\n  , startTime\r\n  , endTime\r\n  , e2eMin\r\n  , opStartTime\r\n  , opEndTime\r\n  , jarvisQueryTimeOffset\r\n  , jarvisQueryTime\r\n  ",
+          "panelPath": []
+        },
+        {
+          "id": "256bbad5-74ab-4316-90d3-bf6d749ef747",
+          "name": "CSS Insight for NetworkingInternalOperation",
+          "groupId": "deaeb97f-01fb-4162-baac-feb0e9886618",
+          "majorVersion": 1,
+          "minorVersion": 13,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "IssueDetector",
+          "widgetType": "IssueDetector",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Severity",
+              "type": "string"
+            },
+            {
+              "name": "Uri",
+              "type": "string"
+            },
+            {
+              "name": "UriText",
+              "type": "string"
+            },
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let FRIC_RELEASE_TIME_LIMIT = 15; \r\nlet CONTAINER_DESTROY_TIME_LIMIT = 15m;\r\nlet resultSet = materialize(cluster('Azcrp').database('crp_allprod').ApiQosEvent_nonGet\r\n| where PreciseTimeStamp between(startTime..endTime)\r\n| where operationId == queryOperationId\r\n| where resultCode == 'NetworkingInternalOperationError'\r\n| extend StartTime = datetime_add(\"Millisecond\", -e2EDurationInMilliseconds, PreciseTimeStamp) // Start of CRP operation\r\n| extend extractedTenantName = iif(errorDetails has 'serviceId: ', substring(errorDetails, indexof(errorDetails, 'serviceId: ') + strlen('serviceId: '), 36), '')\r\n| extend isCleanupPendingInTM = iff(errorDetails has \"IsCleanupPendingInTM: True\", true, false)\r\n| extend isCloudNet = not(isCleanupPendingInTM) // Cleanup Pending in TM = false\r\n| extend extractedRoleInstanceName = tostring(split(split(errorDetails, 'Name: ', 1)[0], ' ', 0)[0])\r\n| extend isNotNrpInternalException = iif(errorDetails !has 'NrpInternalException: TenantManager did not finish deleting resources serviceId', true, false)\r\n| join kind = leftouter // Unfortunately i dont know if we have a way to pass in the role instance name here, cannot rely on the one passed by the insight as the VM with the FRIC issues could be a diffent one.\r\n(\r\n    cluster('azcsupfollower.kusto.windows.net').database('AzureCM').RnmOperationEvents\r\n    | where PreciseTimeStamp between(startTime..endTime)\r\n    | where message has \"State: Released\" // we just need one row where the state is released - this will return for all VMs in that tenant, we need to verify the roleInstanceName below. \r\n    | extend isReleasedPreciseTimeStamp = PreciseTimeStamp\r\n    | project isReleasedPreciseTimeStamp, message, tenantName\r\n) on $left.extractedTenantName == $right.tenantName\r\n| extend timeToRelease =   abs(datetime_diff(\"minute\", isReleasedPreciseTimeStamp, startTime))\r\n| extend isReleasedTimely = iff (message has extractedRoleInstanceName and (timeToRelease < FRIC_RELEASE_TIME_LIMIT), true, false)\r\n| extend isCloudNet = isReleasedTimely // isReleasedTimely == true if we released in less than FRIC_RELEASE_TIME_LIMIT minutes\r\n| join kind = leftouter // all roles inside that tenant, we will filter it out later see below\r\n(\r\n  cluster('azcsupfollower.kusto.windows.net').database('AzureCM').LogContainerHealthSnapshot\r\n  | where PreciseTimeStamp between(startTime..endTime)\r\n  | where containerLifecycleState in~ (\"ToBeDestroyedOnNode\", \"Destroyed\")\r\n  | summarize minPreciseTimeStamp = min(PreciseTimeStamp), maxPreciseTimeStamp = max(PreciseTimeStamp) by tenantName, containerId, roleInstanceName\r\n) on $left.extractedTenantName == $right.tenantName\r\n| extend timetoDestroy = maxPreciseTimeStamp - minPreciseTimeStamp\r\n| extend isContainerDestroyedTimely = iff (timetoDestroy < CONTAINER_DESTROY_TIME_LIMIT, true, false)\r\n| extend isRdos = not(isContainerDestroyedTimely) and not(isempty(timetoDestroy)) and extractedRoleInstanceName has roleInstanceName\r\n| extend cloudnetFRICReleasedIn = iff(isempty(timeToRelease), \"NA\", tostring(timeToRelease))\r\n| extend computerManagerFRICReleasedIn = iff(isempty(timeToRelease), \"NA\", tostring(timeToRelease)), \" \", extractedRoleInstanceName, \" tenantName: \", extractedTenantName\r\n| extend rdosGuidance = strcat(\"Container has been in ToBeDestroyedOnNode state for \", tostring(timetoDestroy), \", **roleInstanceName: \", roleInstanceName, \"**, **containerId: **\", containerId, \"**. Please see Steps 3 and 4 of TSG: https://aka.ms/CCSupNetworkingInternalError\")\r\n| extend cloudnetGuidance = strcat(\"Suspected Regional Network Manager (RNM) issue. Please collaborate with the Networking POD and refer to the 'Which IcM team should I engage?' section in TSG https://aka.ms/CCSupNetworkingInternalError. IsPendingInTM is false and FRIC released in :\", cloudnetFRICReleasedIn)\r\n| extend computeManagerGuidance = strcat(\"FRIC release notification took a long time or isCleanupPendingInTM = true, refer to Step 2 in TSG: https://aka.ms/CCSupNetworkingInternalError FRIC release time (s):**\", computerManagerFRICReleasedIn, \"**\")\r\n| extend generalGuidance = \"Found NetworkingInternalOperationError that was something other than a NrpInternalException. Refer to the TSG: https://aka.ms/CCSupNetworkingInternalError.\"\r\n| extend recommendedAction = iif(isNotNrpInternalException, generalGuidance, iff(isRdos, rdosGuidance, iff(isCloudNet, cloudnetGuidance, computeManagerGuidance)))\r\n| project recommendedAction, startTime, isRdos, isCloudNet, timetoDestroy, timeToRelease, containerId, extractedRoleInstanceName, roleInstanceName, extractedTenantName, isContainerDestroyedTimely, errorDetails);\r\nlet emptyRoleInstanceResult = resultSet | where roleInstanceName == \"\" | project recommendedAction; \r\nlet notEmptyRoleInstanceResult = resultSet | where extractedRoleInstanceName has roleInstanceName | project recommendedAction;\r\nlet countofEmptyRoleInstanceResult = toscalar(emptyRoleInstanceResult | count);\r\nlet finalResult = iff (toscalar(emptyRoleInstanceResult | count) > 0 , toscalar(emptyRoleInstanceResult), toscalar(notEmptyRoleInstanceResult));\r\nlet extractedTenantName =  toscalar(resultSet | project extractedTenantName); \r\nprint finalResult \r\n| project Severity = 'Error', \r\n  Uri = strcat('https://azureserviceinsights.trafficmanager.net/view/services/Aztec/pages/Tenants?tenantName=', extractedTenantName,\r\n    '&globalFrom=',startTime ,'&globalTo=', endTime), \r\n    UriText = strcat('Check Tenant ', extractedTenantName, ' in ASI'), \r\n  Title =  \"CSS Insight for NetworkingInternalOperation\",\r\n  Description  = print_0  \r\n| where Description != \"\"",
+          "panelPath": []
+        },
+        {
+          "id": "c1bb8904-0f08-4dab-b76b-8a800f26332d",
+          "name": "CSS Insight for WaitForOngoingAllocation",
+          "groupId": "f16f8e0c-75cf-4e3b-b954-677881027bf2",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "Azcrp",
+          "database": "crp_allprod",
+          "type": "IssueDetector",
+          "widgetType": "IssueDetector",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Description",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let UPDATE_TENANT_TIME_LIMIT = 30m; \r\nlet operationDetails = VMApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where operationId == queryOperationId\r\n| where resultCode == \"InternalExecutionError\"\r\n| where exceptionType == \"Microsoft.Windows.Azure.GCM.FabricInterface.OutOfTimeBudgetException\"\r\n| where errorDetails contains \"WaitforOngoingAllocation\"\r\n| where isnotempty(fabricTenantName)\r\n| top 1 by PreciseTimeStamp desc;\r\nlet targetTenantName  = toscalar(operationDetails | project fabricTenantName);\r\noperationDetails | project tenantName = fabricTenantName \r\n| join kind = leftouter \r\n(\r\n   cluster('accp.centralus.kusto.windows.net').database('AZSM').AzSMTenantEvents\r\n   | where PreciseTimeStamp between ((queryFrom-45d) .. queryTo)\r\n   | where tenantName =~ targetTenantName\r\n   | where message has \"Update is still in progress for UpdateTenant, tenant with id\"\r\n   | summarize latestUpdateTenantProgressEventDateTime = max(PreciseTimeStamp) by tenantName, message\r\n) on tenantName  \r\n| project-away tenantName1, message\r\n| join kind = leftouter  \r\n(\r\n   cluster('azcsupfollower.kusto.windows.net').database('AzureCM').AzSMTenantEvents\r\n   | where PreciseTimeStamp between ((queryFrom-45d) .. queryTo)\r\n   | where tenantName =~ targetTenantName\r\n   | where message has \"Tenant updated successfully!\"\r\n   | summarize latestUpdateTenantCompletedEventDateTime = max(PreciseTimeStamp) by tenantName, message\r\n) on tenantName  \r\n| project-away tenantName1, message\r\n| extend updateTenantDuration = latestUpdateTenantCompletedEventDateTime - latestUpdateTenantProgressEventDateTime\r\n| extend isUpdateTenantOverTheLimit = iff (updateTenantDuration  > UPDATE_TENANT_TIME_LIMIT, true, false)\r\n| extend isUpdateTenantCompleted = iff (latestUpdateTenantCompletedEventDateTime > latestUpdateTenantProgressEventDateTime, true, false) \r\n| extend recommendation = case (\r\n        isUpdateTenantCompleted and isUpdateTenantOverTheLimit, \"UpdateTenant took a long time to complete, need RCA , CX can retry\", \r\n        isUpdateTenantCompleted == false, \"Updatetenant not progressing need mitigation\", \r\n        \"All OK. CX can retry\")\r\n| project Description =  recommendation, Severity = \"Warning\"\r\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "Allocation Activity > Allocation Activity > Compute Allocation Activity": {
+      "panelPath": [
+        "Allocation Activity",
+        "Allocation Activity",
+        "Compute Allocation Activity"
+      ],
+      "queries": [
+        {
+          "id": "fd66a309-0c3a-49d0-b899-1cc8c26321c0",
+          "name": "Compute Allocation Activity - ActivityId",
+          "groupId": "1bb7fb0b-1895-4aab-8aad-a64dfd489391",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Compute Allocation Activity",
+          "params": [
+            {
+              "name": "queryActivityId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryOperationTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "overallAllocationSuccess",
+              "type": "bool"
+            },
+            {
+              "name": "activitySuccess",
+              "type": "bool"
+            },
+            {
+              "name": "activityName",
+              "type": "string"
+            },
+            {
+              "name": "computeStamp",
+              "type": "string"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "extraInfo",
+              "type": "string"
+            },
+            {
+              "name": "errorType",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryActivityId",
+              "externalSourceName": "wigActivityId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationTime",
+              "externalSourceName": "wigTimestamp",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let queryFrom = datetime_add(\"day\", -1, queryOperationTime);\r\nlet queryTo = datetime_add(\"day\", 1, queryOperationTime);\r\nComputeAllocationActivity\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where activityId == queryActivityId\r\n| extend Message = resultDetails\r\n| project PreciseTimeStamp, overallAllocationSuccess, activitySuccess, activityName, computeStamp, errorCode, \r\n    Message, activityId, subscriptionId, tenantName, extraInfo, errorType\r\n| order by PreciseTimeStamp desc\r\n",
+          "panelPath": [
+            "Allocation Activity",
+            "Allocation Activity",
+            "Compute Allocation Activity"
+          ]
+        }
+      ]
+    },
+    "ApiQosEvent > ApiQosEvent > ApiQosEvent - operationId {{operationId}}": {
+      "panelPath": [
+        "ApiQosEvent",
+        "ApiQosEvent",
+        "ApiQosEvent - operationId {{operationId}}"
+      ],
+      "queries": [
+        {
+          "id": "23a4abfa-0aa2-4366-a131-2499710e513c",
+          "name": "ExecutionGraph",
+          "groupId": "073070e6-35b2-4506-9209-91406858a626",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "egpublic.westus.kusto.windows.net",
+          "database": "eg",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "ApiQosEvent - operationId {{operationId}}",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "SourceTable",
+              "type": "string"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "EgId",
+              "type": "string"
+            },
+            {
+              "name": "EgUrl",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "E2EDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "ControlPathDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "DataPathDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "NotificationPathDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "Result",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "ServiceHealCount",
+              "type": "long"
+            },
+            {
+              "name": "FailureSignature",
+              "type": "string"
+            },
+            {
+              "name": "UsesManagedOsDisk",
+              "type": "bool"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "OsType",
+              "type": "string"
+            },
+            {
+              "name": "IsGeneralizedImage",
+              "type": "bool"
+            },
+            {
+              "name": "ImagePublisher",
+              "type": "string"
+            },
+            {
+              "name": "ImageOffer",
+              "type": "string"
+            },
+            {
+              "name": "ImageSku",
+              "type": "string"
+            },
+            {
+              "name": "ImageVersion",
+              "type": "string"
+            },
+            {
+              "name": "OsBlobUri",
+              "type": "string"
+            },
+            {
+              "name": "OsDiskStorageAccountType",
+              "type": "string"
+            },
+            {
+              "name": "VmSize",
+              "type": "string"
+            },
+            {
+              "name": "ConcurrentVmBootCount",
+              "type": "long"
+            },
+            {
+              "name": "DrivenByNodeService",
+              "type": "bool"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "CrpOperationId",
+              "type": "string"
+            },
+            {
+              "name": "TenantName",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "VmBootDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "ProvisioningDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "StorageEndPoint",
+              "type": "string"
+            },
+            {
+              "name": "PrefetchErrorCode",
+              "type": "string"
+            },
+            {
+              "name": "PrefetchSizeInKb",
+              "type": "long"
+            },
+            {
+              "name": "TenantId",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "CrpVmId",
+              "type": "string"
+            },
+            {
+              "name": "VIP",
+              "type": "string"
+            },
+            {
+              "name": "HostOs",
+              "type": "string"
+            },
+            {
+              "name": "TipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "ComponentVersions",
+              "type": "string"
+            },
+            {
+              "name": "IsEphemeralVm",
+              "type": "bool"
+            },
+            {
+              "name": "IsApDriveActive",
+              "type": "bool"
+            },
+            {
+              "name": "ProvisioningRecoveryCount",
+              "type": "long"
+            },
+            {
+              "name": "ClientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "UserAgent",
+              "type": "string"
+            },
+            {
+              "name": "PercentageIOToApDrive",
+              "type": "long"
+            },
+            {
+              "name": "PreprovisioningStatus",
+              "type": "string"
+            },
+            {
+              "name": "DAG",
+              "type": "string"
+            },
+            {
+              "name": "Forest",
+              "type": "string"
+            },
+            {
+              "name": "Operation",
+              "type": "string"
+            },
+            {
+              "name": "Object",
+              "type": "string"
+            },
+            {
+              "name": "TotalCount",
+              "type": "long"
+            },
+            {
+              "name": "SuccessCount",
+              "type": "long"
+            },
+            {
+              "name": "Retries",
+              "type": "long"
+            },
+            {
+              "name": "AverageDuration",
+              "type": "real"
+            },
+            {
+              "name": "AverageSize",
+              "type": "real"
+            },
+            {
+              "name": "AverageDelay",
+              "type": "real"
+            },
+            {
+              "name": "TotalSize",
+              "type": "long"
+            },
+            {
+              "name": "TotalRowsRead",
+              "type": "long"
+            },
+            {
+              "name": "TotalRowsSent",
+              "type": "long"
+            },
+            {
+              "name": "cvBase",
+              "type": "string"
+            },
+            {
+              "name": "VmBootXioLatencyHistogramJson",
+              "type": "string"
+            },
+            {
+              "name": "ProvisioningXioLatencyHistogramJson",
+              "type": "string"
+            },
+            {
+              "name": "ProximityPlacementGroup",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "AzSMCluster",
+              "type": "string"
+            },
+            {
+              "name": "CirrusSchedule",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "JobId",
+              "type": "string"
+            },
+            {
+              "name": "VmssReferenceUri",
+              "type": "string"
+            },
+            {
+              "name": "PrefetchDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "DataPathExtendedPropertiesJson",
+              "type": "string"
+            },
+            {
+              "name": "FailureCategory",
+              "type": "string"
+            },
+            {
+              "name": "CrpResult",
+              "type": "string"
+            },
+            {
+              "name": "CrpOperationName",
+              "type": "string"
+            },
+            {
+              "name": "EdgeLocation",
+              "type": "string"
+            },
+            {
+              "name": "TraceId",
+              "type": "string"
+            },
+            {
+              "name": "GalleryImage",
+              "type": "string"
+            },
+            {
+              "name": "ReusingSavedStatePreprovisionedVM",
+              "type": "string"
+            },
+            {
+              "name": "E2EDurationInSec",
+              "type": "long"
+            },
+            {
+              "name": "Scenario",
+              "type": "string"
+            },
+            {
+              "name": "ResourceSummary",
+              "type": "string"
+            },
+            {
+              "name": "TemplateHash",
+              "type": "string"
+            },
+            {
+              "name": "ResourceSummaryHashCode",
+              "type": "long"
+            },
+            {
+              "name": "IsTemplateDeployment",
+              "type": "bool"
+            },
+            {
+              "name": "ArmResult",
+              "type": "string"
+            },
+            {
+              "name": "RequestParameters",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "union withsource=SourceTable  IaasVmOperations, UserOperations\r\n| where EgId == queryOperationId\r\n| take 1\r\n",
+          "panelPath": [
+            "ApiQosEvent",
+            "ApiQosEvent",
+            "ApiQosEvent - operationId {{operationId}}"
+          ]
+        }
+      ]
+    },
+    "ComponentQosEvent > ComponentQosEvent": {
+      "panelPath": [
+        "ComponentQosEvent",
+        "ComponentQosEvent"
+      ],
+      "queries": [
+        {
+          "id": "8431945a-2cd4-4a69-8e02-2720f5d4246b",
+          "name": "API QoS",
+          "groupId": "9de02be6-327c-4aee-b3ca-48d36ef2fab0",
+          "majorVersion": 1,
+          "minorVersion": 6,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "crp_allprod",
+          "type": "CoBeTimeline",
+          "widgetType": "CoBeTimeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "timeStamp",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "EventId",
+              "type": "string"
+            },
+            {
+              "name": "ParentId",
+              "type": "string"
+            },
+            {
+              "name": "EventName",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "DurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "Properties",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "timeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let startDatetime = datetime_add('hour', -12, timeStamp);\nlet endDatetime = datetime_add('hour', 12, timeStamp);\nCRPAPIQoS(operationId, startDatetime, endDatetime)\n// adding the following to try and make the timeline less noisy.\n| where EventName !in (\n    'Fabric:GetTenantInformation',\n    'Fabric:GetRoleInstanceContainerProvisioningDetails'\n)",
+          "panelPath": [
+            "ComponentQosEvent",
+            "ComponentQosEvent"
+          ]
+        }
+      ]
+    },
+    "ComponentQosEvent > ComponentQosEvent > ComponentQoSEvent": {
+      "panelPath": [
+        "ComponentQosEvent",
+        "ComponentQosEvent",
+        "ComponentQoSEvent"
+      ],
+      "queries": [
+        {
+          "id": "592e1223-3b08-4dc9-aa06-32cfa1c79332",
+          "name": "FilterGets",
+          "groupId": "bfe9a901-bda4-4ca4-87d1-a704f803677a",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "Azcrp",
+          "database": "crp_allprod",
+          "type": "Filter",
+          "widgetType": "Table",
+          "widgetTitle": "ComponentQoSEvent",
+          "params": [],
+          "schema": [
+            {
+              "name": "Value",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "datatable (Value:string, Description:string)\r\n[\r\n    \"FilterGets\", \"Exclude Get Operations (default)\",\r\n    \"All\", \"All (Including Get Operations)\"\r\n]\r\n",
+          "panelPath": [
+            "ComponentQosEvent",
+            "ComponentQosEvent",
+            "ComponentQoSEvent"
+          ]
+        },
+        {
+          "id": "e8e0d33f-2322-4d19-bc48-2986ef260513",
+          "name": "Query ComponentQoSEvent",
+          "groupId": "f12f4739-9cd0-47c9-8d44-49b05ad18d3c",
+          "majorVersion": 1,
+          "minorVersion": 10,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ComponentQoSEvent",
+          "params": [
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryBegin",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryEnd",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFilter",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "stackFrame",
+              "type": "string"
+            },
+            {
+              "name": "durationInMs",
+              "type": "real"
+            },
+            {
+              "name": "operationResult",
+              "type": "string"
+            },
+            {
+              "name": "resultDetails",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "serverRequestId",
+              "type": "string"
+            },
+            {
+              "name": "componentName",
+              "type": "string"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "contextInCsv",
+              "type": "string"
+            },
+            {
+              "name": "callLogicalId",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            },
+            {
+              "name": "requestLink",
+              "type": "string"
+            },
+            {
+              "name": "hasLink",
+              "type": "bool"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryBegin",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryEnd",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "bfe9a901-bda4-4ca4-87d1-a704f803677a",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFilter",
+              "externalSourceName": "Value",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let adjustedStart = datetime_add('hour', -6, queryBegin);\r\nlet adjustedEnd = datetime_add('hour', 6, queryEnd);\r\nComponentQoSEvent\r\n| where PreciseTimeStamp between (adjustedStart .. adjustedEnd)\r\n| where activityId =~ queryOperationId\r\n| invoke ComponentQosEventExecutionStack(filterOutGets=(queryFilter != \"All\"))\r\n| extend level = iif(operationResult == \"Success\", \"info\", iif(operationResult == \"UnexpectedFailure\", \"error\", \"warning\"))\r\n| extend requestLink = iif(((componentName == \"DiskRP\") and isnotempty(serverRequestId)), \r\n    strcat(\"azureserviceinsights.trafficmanager.net/view/services/Managed%20Disk/pages/Operation%20Id?\", \"globalFrom=\", datetime_add('hour', -1, startTime), \"&globalTo=\", datetime_add('hour', +1, endTime), \"&operationId=\", serverRequestId), \r\n    \"\")\r\n| extend requestLink = iif(((componentName == \"NRP\") and isnotempty(serverRequestId)), \r\n    strcat(\"azureserviceinsights.trafficmanager.net/view/services/NRP/pages/Operation%20Id?\", \"globalFrom=\", datetime_add('hour', -1, startTime), \"&globalTo=\", datetime_add('hour', +1, endTime), \"&operationId=\", serverRequestId), \r\n    requestLink)\r\n| extend hasLink = isnotempty(requestLink)\r\n| order by startTime asc \r\n",
+          "panelPath": [
+            "ComponentQosEvent",
+            "ComponentQosEvent",
+            "ComponentQoSEvent"
+          ]
+        }
+      ]
+    },
+    "ContextActivity > ContextActivity > ContextActivity - operationId {{operationId}}": {
+      "panelPath": [
+        "ContextActivity",
+        "ContextActivity",
+        "ContextActivity - operationId {{operationId}}"
+      ],
+      "queries": [
+        {
+          "id": "5ba98126-8536-428b-ab3d-733ad35c9809",
+          "name": "OperationId ContextActivity",
+          "groupId": "d0abd9ae-22a0-42da-a4e3-96e0e63fbfa1",
+          "majorVersion": 4,
+          "minorVersion": 4,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ContextActivity - operationId {{operationId}}",
+          "params": [
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFilter",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryOpStartTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOpEndTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "traceLevel",
+              "type": "long"
+            },
+            {
+              "name": "callerName",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "9df36dc2-1111-4157-93b1-ecdf726f698e",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFilter",
+              "externalSourceName": "Value",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "queryOpStartTime",
+              "externalSourceName": "opStartTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "queryOpEndTime",
+              "externalSourceName": "opEndTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ContextActivity\r\n| where PreciseTimeStamp between ((queryOpStartTime - 1h) .. (queryOpEndTime + 2h))\r\n| where activityId =~ local_operationId\r\n| where not(queryFilter == 'errors') or traceLevel < 8\r\n| project PreciseTimeStamp, traceLevel, callerName, message\r\n| extend level = case(\r\n    traceLevel == 4, 'warn', \r\n    traceLevel == 2, 'error', \r\n    'info'\r\n)\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "ContextActivity",
+            "ContextActivity",
+            "ContextActivity - operationId {{operationId}}"
+          ]
+        },
+        {
+          "id": "a907d419-1b55-46d7-a668-fd39e608a928",
+          "name": "Filter - All or Errors",
+          "groupId": "9df36dc2-1111-4157-93b1-ecdf726f698e",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "Azcrp",
+          "database": "crp_allprod",
+          "type": "Filter",
+          "widgetType": "Table",
+          "widgetTitle": "ContextActivity - operationId {{operationId}}",
+          "params": [],
+          "schema": [
+            {
+              "name": "Value",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "datatable (Value:string, Description:string)\r\n[\r\n    \"all\", \"All (default)\",\r\n    \"errors\", \"Errors only\"\r\n]\r\n",
+          "panelPath": [
+            "ContextActivity",
+            "ContextActivity",
+            "ContextActivity - operationId {{operationId}}"
+          ]
+        }
+      ]
+    },
+    "Execution Graph > Execution Graph": {
+      "panelPath": [
+        "Execution Graph",
+        "Execution Graph"
+      ],
+      "queries": [
+        {
+          "id": "05b10048-0e7a-45e1-9bfd-8ddec143994d",
+          "name": "Lookup up EG",
+          "groupId": "e7ebecdb-3240-46d5-922c-face38b67a37",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "https://egpublic.westus.kusto.windows.net",
+          "database": "eg",
+          "type": "Single",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryCorrelationOrOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "EgId",
+              "type": "string"
+            },
+            {
+              "name": "EgUrl",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "E2EDurationInSec",
+              "type": "long"
+            },
+            {
+              "name": "Result",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "FailureSignature",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "ClientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "UserAgent",
+              "type": "string"
+            },
+            {
+              "name": "Scenario",
+              "type": "string"
+            },
+            {
+              "name": "ResourceSummary",
+              "type": "string"
+            },
+            {
+              "name": "ComponentVersions",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationId",
+              "type": "string"
+            },
+            {
+              "name": "TemplateHash",
+              "type": "string"
+            },
+            {
+              "name": "ResourceSummaryHashCode",
+              "type": "long"
+            },
+            {
+              "name": "IsTemplateDeployment",
+              "type": "bool"
+            },
+            {
+              "name": "CirrusSchedule",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "JobId",
+              "type": "string"
+            },
+            {
+              "name": "VmssReferenceUri",
+              "type": "string"
+            },
+            {
+              "name": "ArmResult",
+              "type": "string"
+            },
+            {
+              "name": "TraceId",
+              "type": "string"
+            },
+            {
+              "name": "RequestParameters",
+              "type": "string"
+            },
+            {
+              "name": "SourceTable",
+              "type": "string"
+            },
+            {
+              "name": "E2EDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "ControlPathDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "DataPathDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "NotificationPathDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "ServiceHealCount",
+              "type": "long"
+            },
+            {
+              "name": "UsesManagedOsDisk",
+              "type": "bool"
+            },
+            {
+              "name": "OsType",
+              "type": "string"
+            },
+            {
+              "name": "IsGeneralizedImage",
+              "type": "bool"
+            },
+            {
+              "name": "ImagePublisher",
+              "type": "string"
+            },
+            {
+              "name": "ImageOffer",
+              "type": "string"
+            },
+            {
+              "name": "ImageSku",
+              "type": "string"
+            },
+            {
+              "name": "ImageVersion",
+              "type": "string"
+            },
+            {
+              "name": "OsBlobUri",
+              "type": "string"
+            },
+            {
+              "name": "OsDiskStorageAccountType",
+              "type": "string"
+            },
+            {
+              "name": "VmSize",
+              "type": "string"
+            },
+            {
+              "name": "ConcurrentVmBootCount",
+              "type": "long"
+            },
+            {
+              "name": "DrivenByNodeService",
+              "type": "bool"
+            },
+            {
+              "name": "CrpOperationId",
+              "type": "string"
+            },
+            {
+              "name": "TenantName",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "VmBootDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "ProvisioningDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "StorageEndPoint",
+              "type": "string"
+            },
+            {
+              "name": "PrefetchErrorCode",
+              "type": "string"
+            },
+            {
+              "name": "PrefetchSizeInKb",
+              "type": "long"
+            },
+            {
+              "name": "TenantId",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "CrpVmId",
+              "type": "string"
+            },
+            {
+              "name": "VIP",
+              "type": "string"
+            },
+            {
+              "name": "HostOs",
+              "type": "string"
+            },
+            {
+              "name": "TipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "IsEphemeralVm",
+              "type": "bool"
+            },
+            {
+              "name": "IsApDriveActive",
+              "type": "bool"
+            },
+            {
+              "name": "ProvisioningRecoveryCount",
+              "type": "long"
+            },
+            {
+              "name": "PercentageIOToApDrive",
+              "type": "long"
+            },
+            {
+              "name": "PreprovisioningStatus",
+              "type": "string"
+            },
+            {
+              "name": "DAG",
+              "type": "string"
+            },
+            {
+              "name": "Forest",
+              "type": "string"
+            },
+            {
+              "name": "Operation",
+              "type": "string"
+            },
+            {
+              "name": "Object",
+              "type": "string"
+            },
+            {
+              "name": "TotalCount",
+              "type": "long"
+            },
+            {
+              "name": "SuccessCount",
+              "type": "long"
+            },
+            {
+              "name": "Retries",
+              "type": "long"
+            },
+            {
+              "name": "AverageDuration",
+              "type": "real"
+            },
+            {
+              "name": "AverageSize",
+              "type": "real"
+            },
+            {
+              "name": "AverageDelay",
+              "type": "real"
+            },
+            {
+              "name": "TotalSize",
+              "type": "long"
+            },
+            {
+              "name": "TotalRowsRead",
+              "type": "long"
+            },
+            {
+              "name": "TotalRowsSent",
+              "type": "long"
+            },
+            {
+              "name": "cvBase",
+              "type": "string"
+            },
+            {
+              "name": "VmBootXioLatencyHistogramJson",
+              "type": "string"
+            },
+            {
+              "name": "ProvisioningXioLatencyHistogramJson",
+              "type": "string"
+            },
+            {
+              "name": "ProximityPlacementGroup",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "AzSMCluster",
+              "type": "string"
+            },
+            {
+              "name": "PrefetchDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "DataPathExtendedPropertiesJson",
+              "type": "string"
+            },
+            {
+              "name": "FailureCategory",
+              "type": "string"
+            },
+            {
+              "name": "CrpResult",
+              "type": "string"
+            },
+            {
+              "name": "CrpOperationName",
+              "type": "string"
+            },
+            {
+              "name": "EdgeLocation",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCorrelationOrOperationId",
+              "externalSourceName": "queryCorrelationOrOperationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let crp = IaasVmOperations \r\n| where EgId == queryCorrelationOrOperationId\r\n| extend SourceTable = \"CRP\"\r\n| take 1;\r\nlet arm = UserOperations \r\n| where EgId =~ queryCorrelationOrOperationId\r\n| extend SourceTable = \"ARM\"\r\n| take 1;\r\nunion arm, crp\r\n| take 1",
+          "panelPath": [
+            "Execution Graph",
+            "Execution Graph"
+          ]
+        }
+      ]
+    },
+    "Extract SVD": {
+      "panelPath": [
+        "Extract SVD"
+      ],
+      "queries": [
+        {
+          "id": "113307ed-b2db-4567-ae5b-b0d2a64b1e8b",
+          "name": "Extract SVD",
+          "groupId": "df85167e-9ab2-4223-8781-d1a6b770236f",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcsupfollower2.centralus.kusto.windows.net",
+          "database": "crp_allprod",
+          "type": "ResourceGet",
+          "widgetType": "Card",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryStart",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryEnd",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "uncompressed",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "queryStart",
+              "externalSourceName": "opStartTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "queryEnd",
+              "externalSourceName": "opEndTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "GetUncompressedSvds(queryStart, queryEnd, queryOperationId)",
+          "panelPath": [
+            "Extract SVD"
+          ]
+        }
+      ]
+    },
+    "GatewayApiQoSEvent > GatewayApiQoSEvent > GatewayApiQoSEvent - operationId {{operationId}}": {
+      "panelPath": [
+        "GatewayApiQoSEvent",
+        "GatewayApiQoSEvent",
+        "GatewayApiQoSEvent - operationId {{operationId}}"
+      ],
+      "queries": [
+        {
+          "id": "7996a06b-cd0c-46ae-a859-157ddeae3082",
+          "name": "OperationId GatewayApiQoSEvent GET",
+          "groupId": "ec55310b-87c3-4ce4-9b20-7313fd657e7c",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "GatewayApiQoSEvent - operationId {{operationId}}",
+          "params": [
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "lastPhase",
+              "type": "string"
+            },
+            {
+              "name": "targetEndpoint",
+              "type": "string"
+            },
+            {
+              "name": "targetRPNode",
+              "type": "string"
+            },
+            {
+              "name": "serviceName",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "userName",
+              "type": "string"
+            },
+            {
+              "name": "resourceId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let adjustedStart = datetime_add('hour', -6, local_startDate);\r\nlet adjustedEnd = datetime_add('hour', 6, local_endDate);\r\nGatewayApiQoSEvent\r\n| where PreciseTimeStamp between (adjustedStart..adjustedEnd)\r\n| where operationId =~ local_operationId\r\n| extend startIndex = indexof(targetEndpoint, \"/subscriptions\")\r\n| extend resourceId = substring(targetEndpoint, startIndex, indexof(targetEndpoint,\"?\") - startIndex)\r\n| project PreciseTimeStamp,httpStatusCode,resultCode,lastPhase,targetEndpoint,targetRPNode,serviceName,serviceBuild,userName, resourceId",
+          "panelPath": [
+            "GatewayApiQoSEvent",
+            "GatewayApiQoSEvent",
+            "GatewayApiQoSEvent - operationId {{operationId}}"
+          ]
+        }
+      ]
+    },
+    "Preemption State": {
+      "panelPath": [
+        "Preemption State"
+      ],
+      "queries": [
+        {
+          "id": "87e6d3e6-b0dd-4b1a-a121-a54fa41b4877",
+          "name": "Preemption",
+          "groupId": "bd28b83e-4354-4b63-8fc7-6dba71a8934a",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Preemption State",
+          "params": [
+            {
+              "name": "starttime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endtime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "operationid",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "preemption_operationId",
+              "type": "string"
+            },
+            {
+              "name": "preemption_count_string",
+              "type": "string"
+            },
+            {
+              "name": "preemption_count_long",
+              "type": "long"
+            },
+            {
+              "name": "preemption_status",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "starttime",
+              "externalSourceName": "startTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "endtime",
+              "externalSourceName": "endTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "operationid",
+              "externalSourceName": "operationId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "union\r\n(cluster('azcrp.kusto.windows.net').database('crp_allprod').ContextActivity\r\n| where PreciseTimeStamp between (starttime .. endtime)\r\n| where activityId == operationid\r\n| where message contains \"is requesting preemption.\" or message contains \"Not preempting current execution as it was preempted too many times.\"\r\n| parse message with \"Activity \" preemption_operationId \" is requesting preemption. Current preemption count is \" preemption_count \".\"\r\n| order by PreciseTimeStamp asc\r\n| extend preemption_status = case (message contains \"is requesting preemption.\", \"Preempted\", \r\n    message contains \"Not preempting current execution as it was preempted too many times.\", \"Failed to preempt / Preempted too many times\", \"No Preemption\")\r\n| project PreciseTimeStamp, preemption_operationId, preemption_count, preemption_status),\r\n(print PreciseTimeStamp = datetime(null), preemption_operationId = \"\", preemption_count = 0, preemption_status = \"Not Preempted\")\r\n| top 1 by PreciseTimeStamp asc",
+          "panelPath": [
+            "Preemption State"
+          ]
+        }
+      ]
+    },
+    "Target Resource - VM": {
+      "panelPath": [
+        "Target Resource - VM"
+      ],
+      "queries": [
+        {
+          "id": "3dd3afce-99cf-4181-9902-2701cf9bce58",
+          "name": "Get VM from VMApiQosEvent",
+          "groupId": "0d4db6b1-62af-4440-8f40-3341a0268773",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Target Resource - VM",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "VMId",
+              "type": "string"
+            },
+            {
+              "name": "targetARMResourceId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VMApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where operationId =~ queryOperationId\r\n| project subscriptionId = tolower(subscriptionId), resourceGroupName = tolower(resourceGroupName), resourceName=tolower(resourceName), VMId = tolower(vMId)\r\n| extend targetARMResourceId = strcat(\"/subscriptions/\", subscriptionId, \"/resourceGroups/\", resourceGroupName, \"/providers/Microsoft.Compute/virtualMachines/\", resourceName)",
+          "panelPath": [
+            "Target Resource - VM"
+          ]
+        },
+        {
+          "id": "7996a06b-cd0c-46ae-a859-157ddeae3082",
+          "name": "OperationId GatewayApiQoSEvent GET",
+          "groupId": "ec55310b-87c3-4ce4-9b20-7313fd657e7c",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Target Resource - VM",
+          "params": [
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "lastPhase",
+              "type": "string"
+            },
+            {
+              "name": "targetEndpoint",
+              "type": "string"
+            },
+            {
+              "name": "targetRPNode",
+              "type": "string"
+            },
+            {
+              "name": "serviceName",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "userName",
+              "type": "string"
+            },
+            {
+              "name": "resourceId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let adjustedStart = datetime_add('hour', -6, local_startDate);\r\nlet adjustedEnd = datetime_add('hour', 6, local_endDate);\r\nGatewayApiQoSEvent\r\n| where PreciseTimeStamp between (adjustedStart..adjustedEnd)\r\n| where operationId =~ local_operationId\r\n| extend startIndex = indexof(targetEndpoint, \"/subscriptions\")\r\n| extend resourceId = substring(targetEndpoint, startIndex, indexof(targetEndpoint,\"?\") - startIndex)\r\n| project PreciseTimeStamp,httpStatusCode,resultCode,lastPhase,targetEndpoint,targetRPNode,serviceName,serviceBuild,userName, resourceId",
+          "panelPath": [
+            "Target Resource - VM"
+          ]
+        }
+      ]
+    },
+    "Target Resource - VMSS": {
+      "panelPath": [
+        "Target Resource - VMSS"
+      ],
+      "queries": [
+        {
+          "id": "6759ffb9-24bc-4088-a36d-185f422fb6b1",
+          "name": "Get VMSS from GatewayApiQoSEvent",
+          "groupId": "6411d413-62e9-49f1-a1e8-a6d8d77127f4",
+          "majorVersion": 1,
+          "minorVersion": 6,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Target Resource - VMSS",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "targetUrl",
+              "type": "string"
+            },
+            {
+              "name": "targetARMResourceId",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "startTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "endTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "GatewayApiQoSEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where operationId =~ queryOperationId\r\n| where targetEndpoint contains \"subscriptions\" and targetEndpoint contains \"Microsoft.Compute/virtualMachineScaleSets\"\r\n| extend targetUrl = substring(targetEndpoint, indexof(targetEndpoint, \"/subscriptions\"))\r\n| extend targetARMResourceId = trim_end(@\"(\\?.*)\", targetUrl)\r\n| extend resourceGroupName = tolower(split(targetARMResourceId, \"/\")[4])\r\n| extend resourceName = tolower(split(targetARMResourceId, \"/\")[8])\r\n| project targetUrl, targetARMResourceId, subscriptionId = tolower(subscriptionId), resourceGroupName, resourceName",
+          "panelPath": [
+            "Target Resource - VMSS"
+          ]
+        }
+      ]
+    },
+    "VMApiQosEvent > VMApiQosEvent > VMApiQosEvent - operationId {{operationId}}": {
+      "panelPath": [
+        "VMApiQosEvent",
+        "VMApiQosEvent",
+        "VMApiQosEvent - operationId {{operationId}}"
+      ],
+      "queries": [
+        {
+          "id": "e8e74b56-67cb-41de-b215-0abac0f01e6f",
+          "name": "OperationId VMApiQosEvent GET",
+          "groupId": "98b51bcb-3ad1-4eb1-b5d7-42fd5289e7fc",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "VMApiQosEvent - operationId {{operationId}}",
+          "params": [
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "allocationAction",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySet",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySetKind",
+              "type": "string"
+            },
+            {
+              "name": "extraVMProperties",
+              "type": "string"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            },
+            {
+              "name": "galleryImage",
+              "type": "string"
+            },
+            {
+              "name": "isManaged",
+              "type": "string"
+            },
+            {
+              "name": "networkSpineIds",
+              "type": "string"
+            },
+            {
+              "name": "oSDiskStorageAccountType",
+              "type": "string"
+            },
+            {
+              "name": "oSProvisionDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "oSType",
+              "type": "string"
+            },
+            {
+              "name": "physicalAvailablityZone",
+              "type": "string"
+            },
+            {
+              "name": "platformImage",
+              "type": "string"
+            },
+            {
+              "name": "preprovisionedVMReuse",
+              "type": "string"
+            },
+            {
+              "name": "proximityPlacementGroup",
+              "type": "string"
+            },
+            {
+              "name": "userVMImage",
+              "type": "string"
+            },
+            {
+              "name": "vMId",
+              "type": "string"
+            },
+            {
+              "name": "vMSize",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let adjustedStart = datetime_add('hour', -6, local_startDate);\r\nlet adjustedEnd = datetime_add('hour', 6, local_endDate);\r\nVMApiQosEvent\r\n| where PreciseTimeStamp between (adjustedStart .. adjustedEnd)\r\n| where operationId =~ local_operationId\r\n| project allocationAction, availabilitySet, availabilitySetKind, extraVMProperties, fabricCluster, fabricTenantName, \r\n    galleryImage, isManaged, networkSpineIds, oSDiskStorageAccountType, oSProvisionDurationInSeconds, oSType, physicalAvailablityZone, \r\n    platformImage, preprovisionedVMReuse, proximityPlacementGroup , userVMImage, vMId, vMSize, operationName, errorDetails, resourceName\r\n",
+          "panelPath": [
+            "VMApiQosEvent",
+            "VMApiQosEvent",
+            "VMApiQosEvent - operationId {{operationId}}"
+          ]
+        }
+      ]
+    },
+    "VmssVMApiQosEvent > VmssVMApiQosEvent > VmssVMApiQosEvent - operationId {{operationId}}": {
+      "panelPath": [
+        "VmssVMApiQosEvent",
+        "VmssVMApiQosEvent",
+        "VmssVMApiQosEvent - operationId {{operationId}}"
+      ],
+      "queries": [
+        {
+          "id": "9275c5c7-cc84-46f9-b3b1-b8086667f0fb",
+          "name": "OperationId VmssVMApiQosEvent GET",
+          "groupId": "bda361b6-33ed-47ba-9f00-76f63bb5ad44",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "VmssVMApiQosEvent - operationId {{operationId}}",
+          "params": [
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "availabilitySet",
+              "type": "string"
+            },
+            {
+              "name": "extensionStates",
+              "type": "string"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            },
+            {
+              "name": "oSIsoGeneratingComponent",
+              "type": "string"
+            },
+            {
+              "name": "oSProvisionDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "reliableProvisioningState",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "vMScaleSetName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let adjustedStart = datetime_add('hour', -6, local_startDate);\r\nlet adjustedEnd = datetime_add('hour', 6, local_endDate);\r\nVmssVMApiQosEvent\r\n| where PreciseTimeStamp between (adjustedStart .. adjustedEnd)\r\n| where operationId =~ local_operationId\r\n| project \r\n    availabilitySet,\r\n    extensionStates,\r\n    fabricCluster,\r\n    fabricTenantName,\r\n    oSIsoGeneratingComponent,\r\n    oSProvisionDurationInSeconds,\r\n    reliableProvisioningState,\r\n    resourceName,\r\n    vMScaleSetName",
+          "panelPath": [
+            "VmssVMApiQosEvent",
+            "VmssVMApiQosEvent",
+            "VmssVMApiQosEvent - operationId {{operationId}}"
+          ]
+        }
+      ]
+    },
+    "VmssVMGoalSeekingActivity > VmssVMGoalSeekingActivity > VmssVMGoalSeekingActivity - operationId {{operationId}}": {
+      "panelPath": [
+        "VmssVMGoalSeekingActivity",
+        "VmssVMGoalSeekingActivity",
+        "VmssVMGoalSeekingActivity - operationId {{operationId}}"
+      ],
+      "queries": [
+        {
+          "id": "38a6f0c9-4374-411e-a55b-d439d30778cd",
+          "name": "OperationId VmssVMGoalSeekingActivity",
+          "groupId": "b40e88c6-e874-48e3-87c1-a60645a372f0",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VmssVMGoalSeekingActivity - operationId {{operationId}}",
+          "params": [
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryFilter",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "qMaxLevel",
+              "type": "int",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "traceLevel",
+              "type": "long"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "vMName",
+              "type": "string"
+            },
+            {
+              "name": "callerName",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "opEndTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c387796c-9883-4102-9035-cdeba010c8e5",
+              "majorVersion": 5,
+              "minorVersion": 1,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "opStartTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "9df36dc2-1111-4157-93b1-ecdf726f698e",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFilter",
+              "externalSourceName": "Value",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "node_input",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qMaxLevel",
+              "externalSourceName": "Max Log Level",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let adjustedStart = datetime_add('hour', -6, local_startDate);\r\nlet adjustedEnd = datetime_add('hour', 6, local_endDate);\r\nVmssVMGoalSeekingActivity\r\n//| where PreciseTimeStamp between (adjustedStart..adjustedEnd)\r\n| where activityId =~ local_operationId\r\n| where not(queryFilter == 'errors') or traceLevel < 8\r\n| where traceLevel <= qMaxLevel\r\n| project PreciseTimeStamp, traceLevel, message, vMName, callerName\r\n| extend level = case(\r\n    traceLevel == 4, 'warn', \r\n    traceLevel == 2, 'error', \r\n    'info'\r\n)\r\n| order by PreciseTimeStamp desc",
+          "panelPath": [
+            "VmssVMGoalSeekingActivity",
+            "VmssVMGoalSeekingActivity",
+            "VmssVMGoalSeekingActivity - operationId {{operationId}}"
+          ]
+        },
+        {
+          "id": "a907d419-1b55-46d7-a668-fd39e608a928",
+          "name": "Filter - All or Errors",
+          "groupId": "9df36dc2-1111-4157-93b1-ecdf726f698e",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "Azcrp",
+          "database": "crp_allprod",
+          "type": "Filter",
+          "widgetType": "Table",
+          "widgetTitle": "VmssVMGoalSeekingActivity - operationId {{operationId}}",
+          "params": [],
+          "schema": [
+            {
+              "name": "Value",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "datatable (Value:string, Description:string)\r\n[\r\n    \"all\", \"All (default)\",\r\n    \"errors\", \"Errors only\"\r\n]\r\n",
+          "panelPath": [
+            "VmssVMGoalSeekingActivity",
+            "VmssVMGoalSeekingActivity",
+            "VmssVMGoalSeekingActivity - operationId {{operationId}}"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:18:25.102Z",
+    "totalPanels": 15,
+    "totalUniqueQueries": 19,
+    "totalWidgetRefs": 21
+  }
+}

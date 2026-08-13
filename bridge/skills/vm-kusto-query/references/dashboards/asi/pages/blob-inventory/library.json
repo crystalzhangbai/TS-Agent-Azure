@@ -1,0 +1,767 @@
+{
+  "service": "Storage Tools",
+  "page": "Blob Inventory",
+  "pageId": "4dbc4b82-8f34-45eb-ad7d-63ac8363ac36",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "f13fec28-2acc-4ba7-af79-37be3cab900f",
+          "name": "Get Tenant Info by Account",
+          "groupId": "b760a659-e8eb-4ff6-ac4b-2614f64bc29c",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "CompoundWidgetContainer",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XStoreAccountPropertiesHourly()\r\n| where TimePeriod > ago(3d)\r\n| where Account startswith strcat(trim(@\"[\\s]+\", accountName),\";\")\r\n| order by TimePeriod desc \r\n| take 1\r\n| project Tenant, Subscription\r\n// if Account not found, retuns empty Tenant instead of ASI error\r\n| union (        \r\n    print Tenant=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1\r\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "Account Rules Status & SLO": {
+      "panelPath": [
+        "Account Rules Status & SLO"
+      ],
+      "queries": [
+        {
+          "id": "d2a946cb-92af-435a-8e25-6b771e674689",
+          "name": "Get Account Inventory Rules & SLO",
+          "groupId": "a75d4329-eedd-4cac-a4c5-2646a9bd5559",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Account Rules Status & SLO",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "runID",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "InventoryFormat",
+              "type": "string"
+            },
+            {
+              "name": "AccountType",
+              "type": "string"
+            },
+            {
+              "name": "RuleName",
+              "type": "string"
+            },
+            {
+              "name": "RunCount",
+              "type": "long"
+            },
+            {
+              "name": "SloMet",
+              "type": "long"
+            },
+            {
+              "name": "SloNotMet",
+              "type": "long"
+            },
+            {
+              "name": "percentile_BilledObjectsCount_50",
+              "type": "real"
+            },
+            {
+              "name": "percentile_ObjectCountFromBilling_50",
+              "type": "real"
+            },
+            {
+              "name": "MetSloRetio",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "runID",
+              "externalSourceName": "PolicyRunID",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let PendingTaskState = \"Pending\";\nlet SucceededTaskState = \"Succeeded\";\nlet _startTime = startofweek(queryFrom);\nBlobInventorySloTable\n| where DispatchTime between (_startTime..queryTo) and AccountName == storageAccountName and isnotempty(storageAccountName) and PolicyRunId has runID\n| summarize arg_max(TIMESTAMP, ManifestTaskState, DispatchTime, AccountType, InventoryFormat, BilledObjectsCount, ObjectCountFromBilling) by TaskId, RuleName\n| extend TaskDuration = iff(ManifestTaskState == PendingTaskState, now() - DispatchTime, TIMESTAMP - DispatchTime)\n| where not(ManifestTaskState == PendingTaskState and TaskDuration < 1d)\n| extend MeetSLO = ManifestTaskState == SucceededTaskState and TaskDuration < 1d, true, false\n| summarize RunCount=count(), SloMet = countif(MeetSLO == true), SloNotMet = countif(MeetSLO == false), percentile(BilledObjectsCount, 50), percentile(ObjectCountFromBilling, 50) by InventoryFormat, AccountType, RuleName\n| extend MetSloRetio = round(100. * SloMet / (SloMet + SloNotMet), 3)",
+          "panelPath": [
+            "Account Rules Status & SLO"
+          ]
+        }
+      ]
+    },
+    "Pages - Storage Tools": {
+      "panelPath": [
+        "Pages - Storage Tools"
+      ],
+      "queries": [
+        {
+          "id": "f13fec28-2acc-4ba7-af79-37be3cab900f",
+          "name": "Get Tenant Info by Account",
+          "groupId": "b760a659-e8eb-4ff6-ac4b-2614f64bc29c",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XStoreAccountPropertiesHourly()\r\n| where TimePeriod > ago(3d)\r\n| where Account startswith strcat(trim(@\"[\\s]+\", accountName),\";\")\r\n| order by TimePeriod desc \r\n| take 1\r\n| project Tenant, Subscription\r\n// if Account not found, retuns empty Tenant instead of ASI error\r\n| union (        \r\n    print Tenant=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1\r\n",
+          "panelPath": [
+            "Pages - Storage Tools"
+          ]
+        },
+        {
+          "id": "2bc22049-e59c-45fe-8074-40dfea9dac00",
+          "name": "TrimStorageName",
+          "groupId": "013910c6-a3a7-4a35-8c20-8591d0282342",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "local_StorageNameName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StorageName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_StorageNameName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let trimmed_StorageName = trim(@\"[\\s]+\", local_StorageNameName);\r\nprint StorageName = trimmed_StorageName ;",
+          "panelPath": [
+            "Pages - Storage Tools"
+          ]
+        }
+      ]
+    },
+    "Recent Run": {
+      "panelPath": [
+        "Recent Run"
+      ],
+      "queries": [
+        {
+          "id": "cb408919-710d-42cc-93d3-da8baa040df1",
+          "name": "Get Blob Inventory Task Run",
+          "groupId": "9f84205f-a22c-46cb-8ebc-ba7fe0332955",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Recent Run",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "policyRunId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PolicyRunId",
+              "type": "string"
+            },
+            {
+              "name": "RuleName",
+              "type": "string"
+            },
+            {
+              "name": "RuleIdentifier",
+              "type": "string"
+            },
+            {
+              "name": "min_DispatchTime",
+              "type": "datetime"
+            },
+            {
+              "name": "max_EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "set_TaskState",
+              "type": "dynamic"
+            },
+            {
+              "name": "set_ErrorCode",
+              "type": "dynamic"
+            },
+            {
+              "name": "set_ErrorDescription",
+              "type": "dynamic"
+            },
+            {
+              "name": "MinManifestTaskVersion",
+              "type": "string"
+            },
+            {
+              "name": "MaxManifestTaskVersion",
+              "type": "string"
+            },
+            {
+              "name": "max_BilledObjectsCount",
+              "type": "real"
+            },
+            {
+              "name": "Duration",
+              "type": "timespan"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "policyRunId",
+              "externalSourceName": "PolicyRunID",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let _startTime = startofweek(queryFrom);\nBlobInventoryManifestTaskTable\n| where DispatchTime between (_startTime .. queryTo) and AccountName ==  trim(@\"[\\s]+\", storageAccountName)\n| where PolicyRunId has  trim(@\"[\\s]+\", policyRunId) \n| join kind=leftouter(BlobInventoryErrorCodeDescriptions()) on ErrorCode\n| summarize\n    min(DispatchTime),\n    max(EndTime), \n    make_set(TaskState),\n    make_set(ErrorCode),\n    make_set(ErrorDescription),\n    (_, MinManifestTaskVersion) = arg_min(parse_version(ProductVersion), ProductVersion),\n    (_1, MaxManifestTaskVersion) = arg_max(parse_version(ProductVersion), ProductVersion),\n    max(BilledObjectsCount)\n    by PolicyRunId, RuleName, RuleIdentifier\n| where isnotempty(PolicyRunId)\n| project-away _, _1\n| extend Duration = max_EndTime - min_DispatchTime\n| sort by min_DispatchTime desc",
+          "panelPath": [
+            "Recent Run"
+          ]
+        }
+      ]
+    },
+    "Rule Definition": {
+      "panelPath": [
+        "Rule Definition"
+      ],
+      "queries": [
+        {
+          "id": "4d5ecbd4-4374-45bb-abc3-dacfd615e0c9",
+          "name": "Get Blob Inventory Rule Definition",
+          "groupId": "a540a543-e829-4188-a3c6-856602907f16",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Rule Definition",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "policyRunId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "RuleName",
+              "type": "string"
+            },
+            {
+              "name": "RuleIdentifier",
+              "type": "string"
+            },
+            {
+              "name": "ObjectType",
+              "type": "string"
+            },
+            {
+              "name": "Schedule",
+              "type": "string"
+            },
+            {
+              "name": "min_DispatchTime",
+              "type": "datetime"
+            },
+            {
+              "name": "max_DispatchTime",
+              "type": "datetime"
+            },
+            {
+              "name": "RuleDefinition",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "policyRunId",
+              "externalSourceName": "PolicyRunID",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "BlobInventoryRuleTaskTable\n| where DispatchTime between (startofweek(queryFrom) .. queryTo) and AccountName == trim(@\"[\\s]+\", storageAccountName) and isnotempty( RuleDefinition)\n| where PolicyRunId has trim(@\"[\\s]+\", policyRunId)\n| summarize min(DispatchTime), max(DispatchTime) by RuleDefinition, RuleName, RuleIdentifier\n| parse RuleDefinition with * 'objectType\":\"' ObjectType '\"' * 'schedule\":\"' Schedule '\"' *\n| project-reorder RuleName, RuleIdentifier, ObjectType, Schedule, min_DispatchTime, max_DispatchTime, RuleDefinition\n| sort by  max_DispatchTime desc, RuleIdentifier asc",
+          "panelPath": [
+            "Rule Definition"
+          ]
+        }
+      ]
+    },
+    "Scheduler Logs": {
+      "panelPath": [
+        "Scheduler Logs"
+      ],
+      "queries": [
+        {
+          "id": "1fe86986-05b5-4824-b9e0-2bc57f4d2256",
+          "name": "Get Blob Inventory Scheduler Logs",
+          "groupId": "efc7d233-80fa-4660-b862-0a185f9bf187",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "https://xstore.westcentralus.kusto.windows.net/",
+          "database": "xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Scheduler Logs",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "runID",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "ProductVersion",
+              "type": "string"
+            },
+            {
+              "name": "policyRunId",
+              "type": "string"
+            },
+            {
+              "name": "Action",
+              "type": "string"
+            },
+            {
+              "name": "ErrorCode",
+              "type": "string"
+            },
+            {
+              "name": "ErrorDescription",
+              "type": "string"
+            },
+            {
+              "name": "ActionStats",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "runID",
+              "externalSourceName": "PolicyRunID",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let _accountName = storageAccountName;\r\nlet _policyRunId = runID;\r\nlet dispatchTime = toscalar(BlobInventoryManifestTaskTable | where isnotempty(_policyRunId) and  PolicyRunId == _policyRunId | take 20 | summarize min(DispatchTime));\r\nlet startTime = iff (isempty(dispatchTime), queryFrom, dispatchTime - 1h);\r\nlet endTime = iff (isempty(dispatchTime), queryTo, dispatchTime + 10m);\r\nlet results = BlobInventorySchedulerActionStatsTable\r\n| where TIMESTAMP between (startTime .. (endTime))  and AccountName == _accountName and isnotempty(_accountName)\r\n| extend HomeTenantName = Tenant, Time = bin(TIMESTAMP, 30m), TaskId = \"\"\r\n| invoke BlobInventoryExtendDebuggingLinks();\r\nlet versions = ETWEventOLCMSchedulerDispatchStatsProdHourly \r\n| where TIMESTAMP between (startTime .. (endTime)) and Tenant in (results | distinct Tenant) and isnotempty(_accountName)\r\n| distinct RoleInstance, Time = bin(TIMESTAMP, 30m), ProductVersion;\r\nlet resultsWithVersions = results\r\n| join kind=leftouter(versions) on RoleInstance, Time;\r\nresultsWithVersions\r\n| invoke BlobInventoryExtendErrorDescription()\r\n| project TIMESTAMP, ProductVersion = iff(isnotempty(ProductVersion), ProductVersion, ProductVersion1), policyRunId, Action, ErrorCode, ErrorDescription, ActionStats, ActivityId, RoleInstance, Tenant//, XDS, FrontEndLink\r\n| sort by TIMESTAMP desc",
+          "panelPath": [
+            "Scheduler Logs"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:54:48.679Z",
+    "totalPanels": 6,
+    "totalUniqueQueries": 6,
+    "totalWidgetRefs": 7
+  }
+}

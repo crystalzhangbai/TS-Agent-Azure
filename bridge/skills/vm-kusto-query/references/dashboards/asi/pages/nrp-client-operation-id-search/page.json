@@ -1,0 +1,209 @@
+{
+  "entityType": "Page",
+  "id": "7e01649d-b714-4702-bd87-0cf531bc8b96",
+  "description": "",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "dateSelectEnabled": false,
+    "props": {
+      "gridColumns": 12
+    },
+    "children": [
+      {
+        "type": "Row",
+        "dateSelectEnabled": false,
+        "props": {},
+        "children": [
+          {
+            "type": "Column",
+            "dateSelectEnabled": false,
+            "props": {
+              "gridColumns": 12
+            },
+            "children": [
+              {
+                "type": "Card",
+                "dateSelectEnabled": false,
+                "props": {},
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "PreciseTimeStamp",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "771493b8-54ff-455a-8f17-9a39ba62b796",
+                    "paramName": "PreciseTimeStamp",
+                    "uuid": "071e561b-4c79-4e95-8af6-3f298a1054e2",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "ClientOperationId",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "771493b8-54ff-455a-8f17-9a39ba62b796",
+                    "paramName": "ClientOperationId",
+                    "uuid": "1d905f09-4155-4e56-b9ed-bfa4af34de21",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": ""
+              },
+              {
+                "type": "CoBeTimeline",
+                "dateSelectEnabled": false,
+                "props": {},
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "460d5b2f-b7cf-48cb-863d-d896e2cfe7da",
+                    "groupId": "25c061c9-fe44-4acb-867e-c5ea6dbf2d47",
+                    "majorVersion": 1,
+                    "minorVersion": 0,
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "4577b17a-bf67-4cc4-af88-a3bac1af83df",
+                        "majorVersion": 1,
+                        "minorVersion": 0,
+                        "internalDestinationName": "timestamp",
+                        "externalSourceName": "PreciseTimeStamp",
+                        "required": false
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "4577b17a-bf67-4cc4-af88-a3bac1af83df",
+                        "majorVersion": 1,
+                        "minorVersion": 0,
+                        "internalDestinationName": "clientRequestId",
+                        "externalSourceName": "ClientOperationId",
+                        "required": false
+                      }
+                    ]
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": ""
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": ""
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": ""
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [
+      {
+        "id": "d759afd1-71de-472d-9760-fb61d9e4465e",
+        "groupId": "4577b17a-bf67-4cc4-af88-a3bac1af83df",
+        "majorVersion": 1,
+        "minorVersion": 2,
+        "allowMultipleSelection": false,
+        "inputMappings": [
+          {
+            "source": "page",
+            "groupId": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_PreciseTimeStamp",
+            "externalSourceName": "PreciseTimeStamp",
+            "required": false
+          },
+          {
+            "source": "page",
+            "groupId": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_ClientOperationId",
+            "externalSourceName": "ClientOperationId",
+            "required": false
+          }
+        ]
+      }
+    ],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": ""
+  },
+  "queries": [],
+  "groupId": "7e01649d-b714-4702-bd87-0cf531bc8b96",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "PreciseTimeStamp",
+      "type": "datetime",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {},
+      "displayConditions": []
+    },
+    {
+      "name": "ClientOperationId",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {},
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "groupId": "4577b17a-bf67-4cc4-af88-a3bac1af83df",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "25c061c9-fe44-4acb-867e-c5ea6dbf2d47",
+      "entityType": "Query"
+    }
+  ],
+  "serviceId": "NRP",
+  "deleted": false,
+  "name": "ClientOperationId Search",
+  "_ts": 1665038925,
+  "databaseSavedTimestamp": "2022-10-06T06:48:45+00:00",
+  "_etag": "\"6600eccd-0000-1a00-0000-633e7a4d0000\"",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "reneesun@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2021-01-26T01:16:24+00:00",
+  "tags": []
+}

@@ -1,0 +1,541 @@
+{
+  "service": "Storage Tools",
+  "page": "Billing Drilldown",
+  "pageId": "3d43acf0-0ad5-4a76-a4f3-94f6aeab6e4d",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "f13fec28-2acc-4ba7-af79-37be3cab900f",
+          "name": "Get Tenant Info by Account",
+          "groupId": "b760a659-e8eb-4ff6-ac4b-2614f64bc29c",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "CompoundWidgetContainer",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false
+            }
+          ],
+          "kustoQuery": "XStoreAccountPropertiesHourly()\r\n| where TimePeriod > ago(3d)\r\n| where Account startswith strcat(trim(@\"[\\s]+\", accountName),\";\")\r\n| order by TimePeriod desc \r\n| take 1\r\n| project Tenant, Subscription\r\n// if Account not found, retuns empty Tenant instead of ASI error\r\n| union (        \r\n    print Tenant=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1\r\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "Account Billing Daily": {
+      "panelPath": [
+        "Account Billing Daily"
+      ],
+      "queries": [
+        {
+          "id": "c15559e1-0ee1-42ab-8267-784565c676c8",
+          "name": "List Account Billing Daily",
+          "groupId": "641a00e9-dbdf-447f-8995-25b8ff0db763",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xdataanalytics",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Account Billing Daily",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "meterId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimePeriod",
+              "type": "datetime"
+            },
+            {
+              "name": "AccountName",
+              "type": "string"
+            },
+            {
+              "name": "StgMeterName",
+              "type": "string"
+            },
+            {
+              "name": "MeterId",
+              "type": "string"
+            },
+            {
+              "name": "Quantity",
+              "type": "real"
+            },
+            {
+              "name": "ProratedQuantity",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false
+            },
+            {
+              "source": "node_input",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "meterId",
+              "externalSourceName": "MeterID",
+              "required": false
+            }
+          ],
+          "kustoQuery": "XStoreAccountBillingDaily \n| where TimePeriod between (startofweek(queryFrom) .. queryTo)\n| where AccountName startswith strcat(trim(@\"[\\s]+\", storageAccountName), \";\")\n| where isempty(meterId) or MeterId == meterId\n| project TimePeriod, AccountName, StgMeterName, MeterId, Quantity, ProratedQuantity",
+          "panelPath": [
+            "Account Billing Daily"
+          ]
+        }
+      ]
+    },
+    "Billable Transactions, Ingress & Egress": {
+      "panelPath": [
+        "Billable Transactions, Ingress & Egress"
+      ],
+      "queries": [
+        {
+          "id": "daae7070-fd90-48f0-8526-f0f9571c0d16",
+          "name": "Get Account Billable Transactions",
+          "groupId": "4429f4fe-b7a1-4f1a-8736-85fef993c78f",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xdataanalytics",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Billable Transactions, Ingress & Egress",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimePeriod",
+              "type": "datetime"
+            },
+            {
+              "name": "sum_BillableTransactionCount",
+              "type": "long"
+            },
+            {
+              "name": "sum_BillableEgressInMB",
+              "type": "long"
+            },
+            {
+              "name": "sum_BillableIngressInMB",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let accountName = storageAccountName;\nAccountTransactionsDaily\n| where TimePeriod between (startofweek(queryFrom) .. queryTo)\n| where AccountName startswith strcat(trim(@\"[\\s]+\", accountName), \";\")\n| where TransactionType == \"user\"\n| where RequestType !in (\"XBlobFE_All\", \"XFileFE_All\", \"XQueueFE_All\", \"XTableFE_All\")\n| extend BillableEgressInMB = BillableEgress / (1024 * 1024)\n| extend BillableIngressInMB = BillableIngress / (1024 * 1024)\n| project TimePeriod, AccountName, Tenant, RequestType, TransactionType, TransactionCount, BillableTransactionCount, BillableEgressInMB, BillableIngressInMB, BillableEgress, BillableIngress\n| summarize sum(BillableTransactionCount), sum(BillableEgressInMB), sum(BillableIngressInMB) by TimePeriod\n",
+          "panelPath": [
+            "Billable Transactions, Ingress & Egress"
+          ]
+        }
+      ]
+    },
+    "Pages - Storage Tools": {
+      "panelPath": [
+        "Pages - Storage Tools"
+      ],
+      "queries": [
+        {
+          "id": "f13fec28-2acc-4ba7-af79-37be3cab900f",
+          "name": "Get Tenant Info by Account",
+          "groupId": "b760a659-e8eb-4ff6-ac4b-2614f64bc29c",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XStoreAccountPropertiesHourly()\r\n| where TimePeriod > ago(3d)\r\n| where Account startswith strcat(trim(@\"[\\s]+\", accountName),\";\")\r\n| order by TimePeriod desc \r\n| take 1\r\n| project Tenant, Subscription\r\n// if Account not found, retuns empty Tenant instead of ASI error\r\n| union (        \r\n    print Tenant=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1\r\n",
+          "panelPath": [
+            "Pages - Storage Tools"
+          ]
+        },
+        {
+          "id": "2bc22049-e59c-45fe-8074-40dfea9dac00",
+          "name": "TrimStorageName",
+          "groupId": "013910c6-a3a7-4a35-8c20-8591d0282342",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "local_StorageNameName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StorageName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_StorageNameName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let trimmed_StorageName = trim(@\"[\\s]+\", local_StorageNameName);\r\nprint StorageName = trimmed_StorageName ;",
+          "panelPath": [
+            "Pages - Storage Tools"
+          ]
+        }
+      ]
+    },
+    "Sum of the total Transaction, Ingress & Egress": {
+      "panelPath": [
+        "Sum of the total Transaction, Ingress & Egress"
+      ],
+      "queries": [
+        {
+          "id": "8f459bf5-036c-4ba1-b285-fd67bbb7ee1d",
+          "name": "Sum of total Transaction, Ingress & Egress",
+          "groupId": "0fbdc975-f5d3-459c-b3b4-49ca870dbf32",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xdataanalytics",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Sum of the total Transaction, Ingress & Egress",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "sum_TransactionCount",
+              "type": "long"
+            },
+            {
+              "name": "sum_TotalEgressInMB",
+              "type": "long"
+            },
+            {
+              "name": "sum_TotalIngressInMB",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "storageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let accountName = storageAccountName;\r\nAccountTransactionsDaily\r\n| where TimePeriod between (queryFrom .. queryTo)\r\n| where AccountName startswith strcat(trim(@\"[\\s]+\", accountName), \";\")\r\n//| where TransactionType == \"user\"\r\n| where RequestType !in (\"XBlobFE_All\", \"XFileFE_All\", \"XQueueFE_All\", \"XTableFE_All\")\r\n//| extend BillableEgressInMB = BillableEgress / (1024 * 1024)\r\n//| extend BillableIngressInMB = BillableIngress / (1024 * 1024)\r\n| extend TotalEgressInMB = TotalEgress / (1024 * 1024)\r\n| extend TotalIngressInMB = TotalIngress / (1024 * 1024)\r\n//| project TimePeriod, AccountName, Tenant, RequestType, TransactionType, TransactionCount, BillableTransactionCount, BillableEgressInMB, BillableIngressInMB, BillableEgress, BillableIngress, TotalIngress, TotalEgress\r\n| summarize sum(TransactionCount), sum(TotalEgressInMB), sum(TotalIngressInMB)",
+          "panelPath": [
+            "Sum of the total Transaction, Ingress & Egress"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:54:47.530Z",
+    "totalPanels": 5,
+    "totalUniqueQueries": 5,
+    "totalWidgetRefs": 6
+  }
+}

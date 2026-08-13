@@ -1,0 +1,370 @@
+{
+  "service": "ARM",
+  "page": "Resource Groups",
+  "pageId": "42c7630a-0da3-481a-ad02-7f9a8d79c842",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "b4d9bd84-02e2-498c-97cd-c81486c44585",
+          "name": "Resource Group Deployments",
+          "groupId": "8631c17f-7b05-4343-bfb9-081934010f3c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprod",
+          "database": "armprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroupName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "deploymentName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupLocation",
+              "type": "string"
+            },
+            {
+              "name": "resourceCount",
+              "type": "long"
+            },
+            {
+              "name": "executionStatus",
+              "type": "string"
+            },
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroupName",
+              "externalSourceName": "ResourceGroupName",
+              "required": false
+            }
+          ],
+          "kustoQuery": "Deployments\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where subscriptionId == querySubscriptionId and resourceGroupName =~ queryResourceGroupName\n| summarize arg_max(PreciseTimeStamp, *) by subscriptionId, resourceGroupName, deploymentName\n| extend startTime = todatetime(startTime), endTime = todatetime(endTime)\n| project deploymentName, resourceGroupName, resourceGroupLocation, resourceCount, executionStatus, startTime, endTime, durationInMilliseconds\n| order by startTime desc",
+          "panelPath": []
+        }
+      ]
+    },
+    "Requests": {
+      "panelPath": [
+        "Requests"
+      ],
+      "queries": [
+        {
+          "id": "1f3bc369-a46e-46f9-8aa5-96e17aff452b",
+          "name": "Resource Group Requests",
+          "groupId": "022b3b4e-f95e-41f6-aecb-4a222409688e",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "armprod",
+          "database": "armprod",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Requests",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroupName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Requests",
+              "type": "long"
+            },
+            {
+              "name": "InternalServiceErrors",
+              "type": "long"
+            },
+            {
+              "name": "Throttled",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroupName",
+              "externalSourceName": "ResourceGroupName",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let rgToken = strcat(\"/\", queryResourceGroupName, \"/\");\nHttpIncomingRequests\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where subscriptionId == querySubscriptionId and targetUri has rgToken and TaskName != \"HttpIncomingRequestStart\"\n| summarize Requests = count(), InternalServiceErrors = countif(httpStatusCode >= 500), Throttled = countif(httpStatusCode == 429) by bin(PreciseTimeStamp, 30m)\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "Requests"
+          ]
+        }
+      ]
+    },
+    "Resources": {
+      "panelPath": [
+        "Resources"
+      ],
+      "queries": [
+        {
+          "id": "b872d1e5-a3aa-4dcc-bba3-1717310107c7",
+          "name": "Resource Group Resources",
+          "groupId": "6202cbe8-f327-47b0-9a2a-bf826a8bbd5e",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "armprod",
+          "database": "CosmosToKusto",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Resources",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroupName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "ResourceId",
+              "type": "string"
+            },
+            {
+              "name": "SnapshotDate",
+              "type": "datetime"
+            },
+            {
+              "name": "Timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "ChangedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "CreatedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "DeletedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Location",
+              "type": "string"
+            },
+            {
+              "name": "ProvisioningState",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupLocation",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "Kind",
+              "type": "string"
+            },
+            {
+              "name": "Plan",
+              "type": "string"
+            },
+            {
+              "name": "Lens_IngestionTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Lens_Originator",
+              "type": "string"
+            },
+            {
+              "name": "Lens_JobId",
+              "type": "string"
+            },
+            {
+              "name": "Lens_SessionId",
+              "type": "string"
+            },
+            {
+              "name": "Lens_BatchId",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceProvider",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroupName",
+              "externalSourceName": "ResourceGroupName",
+              "required": false
+            }
+          ],
+          "kustoQuery": "ResourcesTable\n| where SubscriptionId == querySubscriptionId and ResourceGroupName =~ queryResourceGroupName\n| summarize arg_max(SnapshotDate, *) by ResourceId\n| extend tokens = split(ResourceId, \"/\")\n| extend ResourceName = tostring(tokens[array_length(tokens) - 1])\n| extend ResourceProvider = tokens[0]\n| project-away tokens\n| order by ResourceName asc",
+          "panelPath": [
+            "Resources"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:23:48.955Z",
+    "totalPanels": 3,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

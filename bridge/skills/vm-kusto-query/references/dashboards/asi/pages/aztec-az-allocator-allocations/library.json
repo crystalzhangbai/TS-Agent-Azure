@@ -1,0 +1,416 @@
+{
+  "service": "Aztec",
+  "page": "AzAllocatorAllocations",
+  "pageId": "aef4eee5-f3ae-4af1-bec9-eb8625f36dc8",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "d4593450-3a9c-4729-88b8-11993fc00277",
+          "name": "Retrieve Resource \"AzSMAllocations\"",
+          "groupId": "4a7f3bdd-8444-484a-8076-f852e3b986cb",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "accp.centralus.kusto.windows.net",
+          "database": "AZSM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_allocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "EventId",
+              "type": "long"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "EventMessage",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "allocationId",
+              "type": "string"
+            },
+            {
+              "name": "inProgressAllocationId",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "applicationName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_allocationId",
+              "externalSourceName": "allocationId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "AzSMAllocationEvents\r\n| where PreciseTimeStamp between (globalFrom..globalTo)\r\n| where allocationId contains 'searchText'\r\n| take 1\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "08921c55-9488-4349-8b5f-a7ac71a888e9",
+          "name": "Query AllocatorContainerResult",
+          "groupId": "d55486d9-ddb5-42ff-8e39-19f4c0f1b10d",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "Azcsupfollower",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "containerIndex",
+              "type": "long"
+            },
+            {
+              "name": "isSucceeded",
+              "type": "string"
+            },
+            {
+              "name": "resultType",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "totalTime",
+              "type": "long"
+            },
+            {
+              "name": "comment",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "4a7f3bdd-8444-484a-8076-f852e3b986cb",
+              "majorVersion": 1,
+              "minorVersion": 1,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "allocationId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "AllocatorContainerResult\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) \r\n| where  allocationId == queryAllocationId\r\n| project PreciseTimeStamp, containerRequestId, containerIndex, isSucceeded, resultType, containerId, nodeId, totalTime, comment",
+          "panelPath": []
+        }
+      ]
+    },
+    "AllocatorContainerRequestTrait ": {
+      "panelPath": [
+        "AllocatorContainerRequestTrait "
+      ],
+      "queries": [
+        {
+          "id": "0a6c174d-3ea2-48dc-b04f-f9818078d40d",
+          "name": "Query AllocatorContainerRequestTrait",
+          "groupId": "be8e6845-a8a9-46a0-a4a4-e7f33f13149d",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "AzureAllocator.westcentralus",
+          "database": "AzureAllocator",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "AllocatorContainerRequestTrait ",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryAllocationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "containerRequestId",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "4a7f3bdd-8444-484a-8076-f852e3b986cb",
+              "majorVersion": 1,
+              "minorVersion": 1,
+              "internalDestinationName": "queryAllocationId",
+              "externalSourceName": "allocationId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "AllocatorContainerRequestTrait\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) \r\n| where  allocationId == queryAllocationId\r\n| project PreciseTimeStamp, containerRequestId, name, value\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "AllocatorContainerRequestTrait "
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:27.889Z",
+    "totalPanels": 2,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

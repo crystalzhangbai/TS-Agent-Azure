@@ -1,0 +1,1017 @@
+[
+  {
+    "id": "1461f31b-dc61-4c0d-9db6-37d07a075404",
+    "name": "AZ Firewall Operation Timline",
+    "groupId": "461c1eb1-33d1-419e-b4d6-9bdb80d6b629",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "nrp",
+    "database": "mdsnrp",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").QosEtwEvent\r\n| where PreciseTimeStamp between (qFrom .. qTo)\r\n| where ResourceName =~ qName and ResourceGroup =~ qRG\r\n| where SubscriptionId =~ qSub\r\n| where HttpMethod !~ \"GET\"\r\n| project PreciseTimeStamp, ResourceType, OperationId, OperationName, HttpMethod, Success, DurationInMilliseconds\r\n| extend DurationInSeconds = round(DurationInMilliseconds / 1000)\r\n| summarize arg_max(PreciseTimeStamp, *) by OperationId\r\n| extend StartTime = PreciseTimeStamp\r\n| extend Content = OperationName\r\n| extend GroupBy = OperationName",
+    "params": [
+      {
+        "name": "qFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qSub",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qRG",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "ResourceType",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "HttpMethod",
+        "type": "string"
+      },
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "DurationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "82f5884e-a2ce-48ac-b0d3-b0ea4c896a1d",
+    "name": "Az firewall snapshots",
+    "groupId": "034d876d-ba44-46f3-b4d8-580e769db458",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "argwus2nrpone.westus2",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where timestamp between (qFrom .. qTo)\r\n| where name =~ qName and type == 'microsoft.network/azurefirewalls'\r\n| where subscriptionId =~ qSub and resourceGroup =~ qRG\r\n| order by timestamp asc\r\n| extend prevProps = prev(properties)\r\n| where tostring(prevProps) != tostring(properties)\r\n",
+    "params": [
+      {
+        "name": "qFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qRG",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qSub",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "properties",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "prevProps",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "69a90688-5121-46b0-a92f-6133067a10de",
+    "name": "Retrieve Resource \"Firewall\"",
+    "groupId": "2451e269-3549-457c-8529-47d249804de3",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "cluster": "argwus2nrpone.westus2",
+    "database": "AzureResourceGraph",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "Resources\r\n| where isnull(local_timestamp) or timestamp between(datetime_add(\"minute\", -60, local_timestamp) .. datetime_add(\"minute\", 60, local_timestamp))\r\n| where type =~ \"microsoft.network/azurefirewalls\"\r\n    and subscriptionId =~ local_subscriptionId\r\n    and resourceGroup =~ local_resourceGroupName\r\n    and name =~ local_name\r\n| summarize arg_max(timestamp, *) by id\r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| extend IpConfigurations = properties.ipConfigurations\r\n| extend skuName = tostring(properties.sku.name)\r\n| extend skuTier = tostring(properties.sku.tier)\r\n| extend threatIntelMode = tostring(properties.threatIntelMode)\r\n| extend AdditionalProperties = properties.additionalProperties\r\n| extend networkRuleCollections = properties.networkRuleCollections\r\n| extend applicationRuleCollections = properties.applicationRuleCollections\r\n| extend natRuleCollections = properties.natRuleCollections\r\n| extend virtualHubId = properties.virtualHub\r\n| extend firewallPolicyId = properties.firewallPolicy\r\n| extend ManagementIpConfiguration = properties.managementIpConfiguration\r\n| extend hubPrivateIPAddress = tostring(properties.hubIPAddresses.privateIPAddress)\r\n| extend hubPublicIPAddress = array_strcat(properties.hubIPAddresses.publicIPs.addresses, \", \")\r\n| extend hubPublicIPs = array_strcat(properties.publicIPs.addresses, \", \")\r\n| project \r\n    Name = name,\r\n    GroupName = resourceGroup,\r\n    SubscriptionId = subscriptionId,\r\n    Region = location,\r\n    provisioningState,\r\n    IpConfigurations,\r\n    skuName,\r\n    skuTier,\r\n    threatIntelMode,\r\n    AdditionalProperties,\r\n    networkRuleCollections, \r\n    applicationRuleCollections,\r\n    natRuleCollections,\r\n    virtualHubId,\r\n    firewallPolicyId,\r\n    ManagementIpConfiguration,\r\n    hubPrivateIPAddress,\r\n    hubPublicIPAddress,\r\n    hubPublicIPs\r\n    ",
+    "params": [
+      {
+        "name": "local_resourceGroupName",
+        "description": "Resource group name",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "Subscription ID",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_name",
+        "description": "Name",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "Timestamp",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "GroupName",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "IpConfigurations",
+        "type": "dynamic"
+      },
+      {
+        "name": "skuName",
+        "type": "string"
+      },
+      {
+        "name": "skuTier",
+        "type": "string"
+      },
+      {
+        "name": "threatIntelMode",
+        "type": "string"
+      },
+      {
+        "name": "AdditionalProperties",
+        "type": "dynamic"
+      },
+      {
+        "name": "networkRuleCollections",
+        "type": "dynamic"
+      },
+      {
+        "name": "applicationRuleCollections",
+        "type": "dynamic"
+      },
+      {
+        "name": "natRuleCollections",
+        "type": "dynamic"
+      },
+      {
+        "name": "virtualHubId",
+        "type": "dynamic"
+      },
+      {
+        "name": "firewallPolicyId",
+        "type": "dynamic"
+      },
+      {
+        "name": "ManagementIpConfiguration",
+        "type": "dynamic"
+      },
+      {
+        "name": "hubPrivateIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "hubPublicIPAddress",
+        "type": "string"
+      },
+      {
+        "name": "hubPublicIPs",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ca64c45b-6337-4a4a-9c09-88890f81704e",
+    "name": "Firewall - Network Rule Collections",
+    "groupId": "c7d5549f-abd1-4276-8814-26afd56d873f",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where isnull(local_timestamp) or timestamp between(datetime_add(\"minute\", -60, local_timestamp) .. datetime_add(\"minute\", 60, local_timestamp))\r\n| where type =~ \"microsoft.network/azurefirewalls\"\r\n    and subscriptionId =~ local_subscriptionId\r\n    and resourceGroup =~ local_resourceGroupName\r\n    and name =~ local_name\r\n| summarize arg_max(timestamp, *) by id\r\n| extend networkRuleCollections = properties.networkRuleCollections\r\n| mv-expand networkRule = properties.networkRuleCollections\r\n| project networkRule\r\n| extend id = tostring(networkRule.id)\r\n| extend name = tostring(networkRule.name)\r\n| extend type = tostring(networkRule.type)\r\n| extend etag = tostring(networkRule.etag)\r\n| extend provisioningState = tostring(networkRule.properties.provisioningState)\r\n| extend priority = tostring(networkRule.properties.priority)\r\n| extend rules = networkRule.properties.rules\r\n| extend rule_count = array_length(rules)\r\n| extend action_type = tostring(networkRule.properties.action.type)\r\n| project-away networkRule",
+    "params": [
+      {
+        "name": "local_resourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_name",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "etag",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "priority",
+        "type": "string"
+      },
+      {
+        "name": "rules",
+        "type": "dynamic"
+      },
+      {
+        "name": "rule_count",
+        "type": "long"
+      },
+      {
+        "name": "action_type",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "fcead916-5a00-4e36-9d06-46edda59fee0",
+    "name": "Firewall - NetworkRuleCollections - Rules",
+    "groupId": "06579fb9-b7c5-4813-8b34-b9ad20b5b526",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where isnull(local_timestamp) or timestamp between(datetime_add(\"minute\", -60, local_timestamp) .. datetime_add(\"minute\", 60, local_timestamp))\r\n| where type =~ \"microsoft.network/azurefirewalls\"\r\n    and subscriptionId =~ local_subscriptionId\r\n    and resourceGroup =~ local_resourceGroupName\r\n    and name =~ local_name\r\n| summarize arg_max(timestamp, *) by id\r\n| extend networkRuleCollections = properties.networkRuleCollections\r\n| mv-expand networkRule = properties.networkRuleCollections\r\n| where networkRule.id == rule_collection_id\r\n| mv-expand rule = networkRule.properties.rules\r\n| project rule\r\n| extend name = tostring(rule.name)\r\n| extend description = tostring(rule.description)\r\n| extend protocols = array_strcat(rule.protocols, ', ')\r\n| extend sourceAddresses = array_strcat(rule.sourceAddresses, '\\n')\r\n| extend destinationAddresses = array_strcat(rule.destinationAddresses, '\\n')\r\n| extend sourceIpGroups = array_strcat(rule.sourceIpGroups, '\\n')\r\n| extend destinationIpGroups = array_strcat(rule.destinationIpGroups, '\\n')\r\n| extend destinationFqdns = array_strcat(rule.destinationFqdns, '\\n')\r\n| extend destinationPorts = array_strcat(rule.destinationPorts, '\\n')\r\n| project-away rule",
+    "params": [
+      {
+        "name": "local_resourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_name",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "rule_collection_id",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "name": "protocols",
+        "type": "string"
+      },
+      {
+        "name": "sourceAddresses",
+        "type": "string"
+      },
+      {
+        "name": "destinationAddresses",
+        "type": "string"
+      },
+      {
+        "name": "sourceIpGroups",
+        "type": "string"
+      },
+      {
+        "name": "destinationIpGroups",
+        "type": "string"
+      },
+      {
+        "name": "destinationFqdns",
+        "type": "string"
+      },
+      {
+        "name": "destinationPorts",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "87b2da07-59d3-4ab1-8425-322063efb9f3",
+    "name": "Firewall - ApplicationRuleCollections",
+    "groupId": "1e20daae-be59-4143-bc91-f4a3904a6094",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where isnull(local_timestamp) or timestamp between(datetime_add(\"minute\", -60, local_timestamp) .. datetime_add(\"minute\", 60, local_timestamp))\r\n| where type =~ \"microsoft.network/azurefirewalls\"\r\n    and subscriptionId =~ local_subscriptionId\r\n    and resourceGroup =~ local_resourceGroupName\r\n    and name =~ local_name\r\n| summarize arg_max(timestamp, *) by id\r\n| extend applicationRuleCollections = properties.applicationRuleCollections\r\n| mv-expand appRuleCol = applicationRuleCollections\r\n| project appRuleCol\r\n| extend id = tostring(appRuleCol.id)\r\n| extend name = tostring(appRuleCol.name)\r\n| extend type = tostring(appRuleCol.type)\r\n| extend etag = tostring(appRuleCol.etag)\r\n| extend provisioningState = tostring(appRuleCol.properties.provisioningState)\r\n| extend priority = tostring(appRuleCol.properties.priority)\r\n| extend rules = appRuleCol.properties.rules\r\n| extend rule_count = array_length(rules)\r\n| extend action_type = tostring(appRuleCol.properties.action.type)\r\n| project-away appRuleCol",
+    "params": [
+      {
+        "name": "local_resourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_name",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "etag",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "priority",
+        "type": "string"
+      },
+      {
+        "name": "rules",
+        "type": "dynamic"
+      },
+      {
+        "name": "rule_count",
+        "type": "long"
+      },
+      {
+        "name": "action_type",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ac205ed9-97d2-4193-b512-2b5ea05beaf6",
+    "name": "Firewall - ApplicationRuleCollections - Rules",
+    "groupId": "f25836a1-1db5-4fb0-9888-037788d277b3",
+    "majorVersion": 3,
+    "minorVersion": 3,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where isnull(local_timestamp) or timestamp between(datetime_add(\"minute\", -60, local_timestamp) .. datetime_add(\"minute\", 60, local_timestamp))\r\n| where type =~ \"microsoft.network/azurefirewalls\"\r\n    and subscriptionId =~ local_subscriptionId\r\n    and resourceGroup =~ local_resourceGroupName\r\n    and name =~ local_name\r\n| summarize arg_max(timestamp, *) by id\r\n| extend applicationRuleCollections = properties.applicationRuleCollections\r\n| mv-expand appRuleCol = applicationRuleCollections\r\n| where appRuleCol.id == rule_collection_id\r\n| mv-expand rule = appRuleCol.properties.rules\r\n| project rule\r\n| extend name = tostring(rule.name)\r\n| extend priority = toint(rule.priority)\r\n| extend protocols = array_length(rule.protocols)\r\n| extend protocol = strcat(rule.protocols[0].protocolType, ' (', rule.protocols[0].port, ')')\r\n| extend sourceAddresses = array_strcat(rule.sourceAddresses, '\\n')\r\n| extend sourceIpGroups = array_strcat(rule.sourceIpGroups, '\\n')\r\n| extend direction = tostring(rule.direction)\r\n| extend fqdnTags = array_strcat(rule.fqdnTags, '\\n')\r\n| extend targetFqdns = array_strcat(rule.targetFqdns, '\\n')\r\n| extend actions = array_strcat(rule.actions, ', ')\r\n| project-away rule\r\n",
+    "params": [
+      {
+        "name": "local_resourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_name",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "rule_collection_id",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "priority",
+        "type": "int"
+      },
+      {
+        "name": "protocols",
+        "type": "long"
+      },
+      {
+        "name": "protocol",
+        "type": "string"
+      },
+      {
+        "name": "sourceAddresses",
+        "type": "string"
+      },
+      {
+        "name": "sourceIpGroups",
+        "type": "string"
+      },
+      {
+        "name": "direction",
+        "type": "string"
+      },
+      {
+        "name": "fqdnTags",
+        "type": "string"
+      },
+      {
+        "name": "targetFqdns",
+        "type": "string"
+      },
+      {
+        "name": "actions",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ca5e1c80-def4-4e7e-aeb3-90f74065404b",
+    "name": "Firewall - NatRuleCollections",
+    "groupId": "1f0a20b3-33b9-48fa-ac5a-c1341d8cdc5f",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where isnull(local_timestamp) or timestamp between(datetime_add(\"minute\", -60, local_timestamp) .. datetime_add(\"minute\", 60, local_timestamp))\r\n| where type =~ \"microsoft.network/azurefirewalls\"\r\n    and subscriptionId =~ local_subscriptionId\r\n    and resourceGroup =~ local_resourceGroupName\r\n    and name =~ local_name\r\n| summarize arg_max(timestamp, *) by id\r\n| extend natRuleCollections = properties.natRuleCollections\r\n| mv-expand natRuleCol = natRuleCollections\r\n| project natRuleCol\r\n| extend id = tostring(natRuleCol.id)\r\n| extend name = tostring(natRuleCol.name)\r\n| extend type = tostring(natRuleCol.type)\r\n| extend etag = tostring(natRuleCol.etag)\r\n| extend provisioningState = tostring(natRuleCol.properties.provisioningState)\r\n| extend priority = tostring(natRuleCol.properties.priority)\r\n| extend rules = natRuleCol.properties.rules\r\n| extend rule_count = array_length(rules)\r\n| extend action_type = tostring(natRuleCol.properties.action.type)\r\n| project-away natRuleCol",
+    "params": [
+      {
+        "name": "local_resourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_name",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "etag",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "priority",
+        "type": "string"
+      },
+      {
+        "name": "rules",
+        "type": "dynamic"
+      },
+      {
+        "name": "rule_count",
+        "type": "long"
+      },
+      {
+        "name": "action_type",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "69d2c1b7-7447-4f4d-bf4a-a04f2e302983",
+    "name": "Firewall - NatRuleCollections - Rules",
+    "groupId": "e783497c-46d1-4d44-9a0e-82e8b125fe29",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where isnull(local_timestamp) or timestamp between(datetime_add(\"minute\", -60, local_timestamp) .. datetime_add(\"minute\", 60, local_timestamp))\r\n| where type =~ \"microsoft.network/azurefirewalls\"\r\n    and subscriptionId =~ local_subscriptionId\r\n    and resourceGroup =~ local_resourceGroupName\r\n    and name =~ local_name\r\n| summarize arg_max(timestamp, *) by id\r\n| extend natRuleCollections = properties.natRuleCollections\r\n| mv-expand natRuleCol = natRuleCollections\r\n| project natRuleCol\r\n| where natRuleCol.id == rule_collection_id\r\n| mv-expand rule = natRuleCol.properties.rules\r\n| project rule\r\n| extend name = tostring(rule.name)\r\n| extend protocols = array_strcat(rule.protocols, ', ')\r\n| extend sourceAddresses = array_strcat(rule.sourceAddresses, '\\n')\r\n| extend destinationAddresses = array_strcat(rule.destinationAddresses, '\\n')\r\n| extend sourceIpGroups = array_strcat(rule.sourceIpGroups, '\\n')\r\n| extend destinationPorts = array_strcat(rule.destinationPorts, '\\n')\r\n| extend translatedAddress = tostring(rule.translatedAddress)\r\n| extend translatedPort = tostring(rule.translatedPort)\r\n| project-away rule",
+    "params": [
+      {
+        "name": "local_resourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_name",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "rule_collection_id",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "protocols",
+        "type": "string"
+      },
+      {
+        "name": "sourceAddresses",
+        "type": "string"
+      },
+      {
+        "name": "destinationAddresses",
+        "type": "string"
+      },
+      {
+        "name": "sourceIpGroups",
+        "type": "string"
+      },
+      {
+        "name": "destinationPorts",
+        "type": "string"
+      },
+      {
+        "name": "translatedAddress",
+        "type": "string"
+      },
+      {
+        "name": "translatedPort",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

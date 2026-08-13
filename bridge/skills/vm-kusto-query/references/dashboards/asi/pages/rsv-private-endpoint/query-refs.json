@@ -1,0 +1,382 @@
+[
+  {
+    "groupId": "f5c51840-254b-48c1-b09f-75f554a06cbe",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "panelPath": [
+      "RecoveryServices Private Endpoint"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "7e56fb69-0eca-4d7b-adcf-d845b4592469",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "RSVSubscriptionId",
+        "externalSourceName": "RSVSubscriptionId",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "RSVName",
+        "externalSourceName": "RSVName",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "RSVDeploymentName",
+        "externalSourceName": "RSVDeploymentName",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "StartTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "EndTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "ResourceIdforRSV",
+    "cluster": "mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Table",
+    "params": [
+      {
+        "name": "RSVSubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "RSVName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "RSVDeploymentName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ResourceId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+    "majorVersion": 6,
+    "minorVersion": 0,
+    "panelPath": [
+      "RecoveryServices Private Endpoint"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "ae4c5d71-5859-4d9c-a73a-a4bdbb26a456",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "RSVSubscriptionId",
+        "externalSourceName": "RSVSubscriptionId",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "RSVDeploymentName",
+        "externalSourceName": "RSVDeploymentName",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "StartTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "EndTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "RSVName",
+        "externalSourceName": "RSVName",
+        "required": false
+      }
+    ],
+    "name": "PEForResourceId",
+    "cluster": "mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "RSVSubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "RSVDeploymentName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "RSVName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PEName",
+        "type": "string"
+      },
+      {
+        "name": "GroupIds",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+    "majorVersion": 6,
+    "minorVersion": 0,
+    "panelPath": [
+      "RecoveryServices Private Endpoint"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "TIMESTAMP",
+    "name": "PEForResourceId",
+    "cluster": "mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "RSVSubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "RSVDeploymentName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "RSVName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PEName",
+        "type": "string"
+      },
+      {
+        "name": "GroupIds",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+    "majorVersion": 6,
+    "minorVersion": 0,
+    "panelPath": [
+      "RecoveryServices Private Endpoint"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "ResourceId",
+    "name": "PEForResourceId",
+    "cluster": "mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "RSVSubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "RSVDeploymentName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "RSVName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PEName",
+        "type": "string"
+      },
+      {
+        "name": "GroupIds",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9be3842d-ca8e-4041-b807-1938091c8c33",
+    "majorVersion": 6,
+    "minorVersion": 0,
+    "panelPath": [
+      "RecoveryServices Private Endpoint"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "PEName",
+    "name": "PEForResourceId",
+    "cluster": "mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "RSVSubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "RSVDeploymentName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "RSVName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PEName",
+        "type": "string"
+      },
+      {
+        "name": "GroupIds",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

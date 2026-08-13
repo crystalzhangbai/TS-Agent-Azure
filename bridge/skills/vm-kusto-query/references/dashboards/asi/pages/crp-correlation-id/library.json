@@ -1,0 +1,418 @@
+{
+  "service": "CRP",
+  "page": "CorrelationId",
+  "pageId": "3c4c7451-2e97-49b1-80a7-09991232739f",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "2aecefce-a829-4b2b-ba9f-d07a9574420c",
+          "name": "Retrieve Resource \"Correlation Id\"",
+          "groupId": "b767c09a-016a-4750-a180-7f316c11ecf4",
+          "majorVersion": 4,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_correlationId",
+              "externalSourceName": "correlationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ApiQosEvent\r\n| where correlationId =~ local_correlationId\r\n| take 1\r\n| project PreciseTimeStamp, correlationId\r\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "ApiQosEvent > ApiQosEvent": {
+      "panelPath": [
+        "ApiQosEvent",
+        "ApiQosEvent"
+      ],
+      "queries": [
+        {
+          "id": "ccbc663c-bc95-4162-8217-6a84bee1146c",
+          "name": "CorrelationId - ApiQosEvent",
+          "groupId": "747a8259-131c-4f15-8b66-6cc2cdaaaddb",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ApiQosEvent",
+          "params": [
+            {
+              "name": "local_correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "e2EDurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "resultType",
+              "type": "long"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "labels",
+              "type": "string"
+            },
+            {
+              "name": "requestEntity",
+              "type": "string"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_correlationId",
+              "externalSourceName": "correlationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ApiQosEvent\r\n//| where PreciseTimeStamp between (local_startDate..local_endDate)\r\n| where correlationId =~ local_correlationId\r\n| project PreciseTimeStamp, operationName,operationId,resourceGroupName,resourceName,resultCode, durationInMilliseconds, e2EDurationInMilliseconds, \r\n    resultType, httpStatusCode, exceptionType, errorDetails, labels, requestEntity, userAgent\r\n| order by PreciseTimeStamp desc",
+          "panelPath": [
+            "ApiQosEvent",
+            "ApiQosEvent"
+          ]
+        }
+      ]
+    },
+    "ApiQosEvent_nonGet > ApiQosEvent_nonGet": {
+      "panelPath": [
+        "ApiQosEvent_nonGet",
+        "ApiQosEvent_nonGet"
+      ],
+      "queries": [
+        {
+          "id": "fc72dbbe-8e28-4678-a87f-bcd9a8418c87",
+          "name": "CorrelationId - ApiQosEvent_nonGet",
+          "groupId": "03238413-721a-45b1-94e2-e81b5e59c2d2",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "ApiQosEvent_nonGet",
+          "params": [
+            {
+              "name": "local_correlationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_correlationId",
+              "externalSourceName": "correlationId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ApiQosEvent_nonGet\r\n| where correlationId =~ local_correlationId\r\n| extend startTime=PreciseTimeStamp-e2EDurationInMilliseconds*1ms\r\n| project startTime,PreciseTimeStamp,operationName,operationId,resourceGroupName,resourceName,resultCode\r\n| order by PreciseTimeStamp desc",
+          "panelPath": [
+            "ApiQosEvent_nonGet",
+            "ApiQosEvent_nonGet"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:18:21.934Z",
+    "totalPanels": 3,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

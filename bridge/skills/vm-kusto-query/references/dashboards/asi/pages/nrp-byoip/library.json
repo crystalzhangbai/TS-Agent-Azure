@@ -1,0 +1,131 @@
+{
+  "service": "NRP",
+  "page": "NRP BYOIP",
+  "pageId": "878928e3-9f5c-421c-958a-b48110995619",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Monthly Active Users": {
+      "panelPath": [
+        "Monthly Active Users"
+      ],
+      "queries": [
+        {
+          "id": "abe567df-0db9-433c-aeb4-209db8d5be01",
+          "name": "Monthly Calls for Create/Delete CustomIPPRefix",
+          "groupId": "026dc4f8-0cec-4b42-879c-0a1040e1d296",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Monthly Active Users",
+          "params": [
+            {
+              "name": "region",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "CustomIpPrefix",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region",
+              "externalSourceName": "Region",
+              "required": false
+            }
+          ],
+          "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(90d)\r\n| where Region == region\r\n| where OperationName contains \"CustomIpPrefix\"\r\n| summarize ct = count() by bin(TIMESTAMP, 30d)\r\n| summarize CustomIpPrefix = sum(ct)/1.0 by bin(TIMESTAMP, 30d)\r\n| project TIMESTAMP, CustomIpPrefix",
+          "panelPath": [
+            "Monthly Active Users"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:53.935Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

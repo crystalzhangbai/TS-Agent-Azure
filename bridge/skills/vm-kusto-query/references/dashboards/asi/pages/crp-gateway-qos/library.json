@@ -1,0 +1,516 @@
+{
+  "service": "CRP",
+  "page": "Gateway QoS",
+  "pageId": "9f10d516-b02c-4ebb-8707-dc448cfe7a25",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "40a4a689-83d2-4a2c-85b9-fe7d84f2e60d",
+          "name": "Retrieve Resource \"Gateway QoS\"",
+          "groupId": "dd7e08db-4cd5-45b5-8efa-ef520b81dbe9",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_PreciseTimeStamp",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_serviceRequestId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "serviceRequestId",
+              "type": "string"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "Deployment",
+              "type": "string"
+            },
+            {
+              "name": "RoleLocation",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "ReleaseVersion",
+              "type": "string"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "ProviderGuid",
+              "type": "string"
+            },
+            {
+              "name": "ProviderName",
+              "type": "string"
+            },
+            {
+              "name": "EventId",
+              "type": "long"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "principalOid",
+              "type": "string"
+            },
+            {
+              "name": "principalPuid",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "authorizationSource",
+              "type": "string"
+            },
+            {
+              "name": "authorizationAction",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "httpMethod",
+              "type": "string"
+            },
+            {
+              "name": "hostName",
+              "type": "string"
+            },
+            {
+              "name": "targetUri",
+              "type": "string"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "clientSessionId",
+              "type": "string"
+            },
+            {
+              "name": "clientIpAddress",
+              "type": "string"
+            },
+            {
+              "name": "clientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "contentLength",
+              "type": "long"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "exceptionMessage",
+              "type": "string"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "failureCause",
+              "type": "string"
+            },
+            {
+              "name": "errorMessage",
+              "type": "string"
+            },
+            {
+              "name": "referer",
+              "type": "string"
+            },
+            {
+              "name": "commandName",
+              "type": "string"
+            },
+            {
+              "name": "parameterSetName",
+              "type": "string"
+            },
+            {
+              "name": "contentType",
+              "type": "string"
+            },
+            {
+              "name": "contentEncoding",
+              "type": "string"
+            },
+            {
+              "name": "armServiceRequestId",
+              "type": "string"
+            },
+            {
+              "name": "organizationId",
+              "type": "string"
+            },
+            {
+              "name": "activityVector",
+              "type": "string"
+            },
+            {
+              "name": "locale",
+              "type": "string"
+            },
+            {
+              "name": "realPuid",
+              "type": "string"
+            },
+            {
+              "name": "altSecId",
+              "type": "string"
+            },
+            {
+              "name": "additionalProperties",
+              "type": "string"
+            },
+            {
+              "name": "targetResourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "targetResourceType",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "ClusterName",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "ProviderNamespace",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "type": "string"
+            },
+            {
+              "name": "env_name",
+              "type": "string"
+            },
+            {
+              "name": "env_time",
+              "type": "datetime"
+            },
+            {
+              "name": "env_ver",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "severityNumber",
+              "type": "long"
+            },
+            {
+              "name": "severityText",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_PreciseTimeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_serviceRequestId",
+              "externalSourceName": "serviceRequestId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let startTime = datetime_add('hour', -12, local_PreciseTimeStamp);\nlet endTime = datetime_add('hour', 12, local_PreciseTimeStamp);\nprint(\"\")\n| project PreciseTimeStamp = local_PreciseTimeStamp, serviceRequestId = local_serviceRequestId\n| join kind=fullouter (\n    macro-expand isfuzzy=true ARMProdEG as X\n    (\n        union \n            X.database('Requests').HttpIncomingRequests,\n            X.database('Requests').HttpOutgoingRequests\n        | where PreciseTimeStamp between(startTime .. endTime)\n        | where serviceRequestId == local_serviceRequestId\n        | take 1\n    )\n) on serviceRequestId\n| extend PreciseTimeStamp = coalesce(PreciseTimeStamp, PreciseTimeStamp1), serviceRequestId = coalesce(serviceRequestId, serviceRequestId1)\n| project-away PreciseTimeStamp1, serviceRequestId1\n| take 1",
+          "panelPath": []
+        },
+        {
+          "id": "327c00df-f6f9-4488-8c6b-ed9a504306e5",
+          "name": "Gateway QoS",
+          "groupId": "0468c12a-347a-4dd7-bc1c-018ddc2a2375",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "crp_allprod",
+          "type": "CoBeTimeline",
+          "widgetType": "CoBeTimeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "timeStamp",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "EventId",
+              "type": "string"
+            },
+            {
+              "name": "ParentId",
+              "type": "string"
+            },
+            {
+              "name": "EventName",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "DurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "Properties",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "dd7e08db-4cd5-45b5-8efa-ef520b81dbe9",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "serviceRequestId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "dd7e08db-4cd5-45b5-8efa-ef520b81dbe9",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "timeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "let startTime = datetime_add('hour', -12, timeStamp);\nlet endTime = datetime_add('hour', 12, timeStamp);\nCRPGatewayQoS(operationId, startTime, endTime);",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:18:20.478Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

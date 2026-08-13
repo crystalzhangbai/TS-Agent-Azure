@@ -1,0 +1,65 @@
+[
+  {
+    "id": "ae6b5a6e-e051-4e0d-ba03-a06e71146c90",
+    "name": "Retrieve Resource \"subscriptionID\"",
+    "groupId": "7997aae7-dbd8-499a-b58b-3a17bc584cd3",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncContextActivity\r\n| where subscriptionID == local_subscriptionID\r\n| distinct subscriptionID, resourceGroupName, resourceName",
+    "params": [
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionID",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "subscriptionID",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  }
+]

@@ -1,0 +1,2154 @@
+[
+  {
+    "id": "a4a3d08c-d796-45d0-9b50-3ea6a02ac9ef",
+    "name": "Retrieve Resource \"NodeService_NodeView\"",
+    "groupId": "6212c6b8-3b9b-4cce-9e88-34e7e9c06d00",
+    "majorVersion": 3,
+    "minorVersion": 2,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "AzureCP",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "MycroftNodeSnapshot\r\n| where NodeId == local_NodeId\r\n| where PreciseTimeStamp > ago(10h)\r\n| take 1\r\n| project Cluster=ClusterName, NodeId, Region, PreciseTimeStamp, AzSMCluster=Cluster, HostName, OSBaseImageName = parse_json(HostingEnvironment).OSBaseImageName",
+    "params": [
+      {
+        "name": "local_NodeId",
+        "description": "",
+        "type": "string",
+        "default": "764a80da-de43-7f15-a20e-8b42e3d7beb2",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AzSMCluster",
+        "type": "string"
+      },
+      {
+        "name": "HostName",
+        "type": "string"
+      },
+      {
+        "name": "OSBaseImageName",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "6f71375d-c92c-492e-9514-62b5d66c3fb9",
+    "name": "LogNodeSnapshot - NodeState",
+    "groupId": "6c7cfa75-419e-42f3-a42b-6274b7312e4b",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let raw = LogNodeSnapshot\r\n| where PreciseTimeStamp between ((faultTime-5h)..6h)\r\n| where nodeId == queryNode \r\n| project PreciseTimeStamp, nodeState, faultInfo, nsProgressHealthStatus, cmNodeWasChannelHealthStatus, cmNodeWillBeChannelHealthStatus, nodeServiceMadariAggregatedHealth, nodeServiceMadariPublisherHealth, nodeServiceMadariSubscriberHealth, tipNodeSessionId, diskConfiguration, currentBareMetalState;\r\nlet nodeState = raw\r\n| project StartTime=PreciseTimeStamp, Content=nodeState, Health = iff(nodeState == \"Ready\", \"Healthy\",\r\n                                                                     iff (nodeState in (\"Unhealthy\", \"HumanInvestigate\", \"Dead\", \"OutForRepair\"), \"Unhealthy\",\r\n                                                                     \"Neutral\")),\r\n          Tooltip = faultInfo, GroupBy = \"NodeState\";\r\nlet progressHealth = raw | project StartTime=PreciseTimeStamp, Content=nsProgressHealthStatus, Health = iff(nsProgressHealthStatus == \"Healthy\", \"Healthy\", \"Unhealthy\"), GroupBy = \"NSProgressHealth\",Tooltip = nsProgressHealthStatus;\r\nlet wasHealth = raw | project StartTime=PreciseTimeStamp, Content=cmNodeWasChannelHealthStatus, Health = iff(cmNodeWasChannelHealthStatus == \"Healthy\", \"Healthy\", \"Unhealthy\"), GroupBy = \"CMNSWasHealth\",Tooltip = cmNodeWasChannelHealthStatus;\r\nlet willBeHealth = raw | project StartTime=PreciseTimeStamp, Content=cmNodeWillBeChannelHealthStatus, Health = iff(cmNodeWillBeChannelHealthStatus == \"Healthy\", \"Healthy\", \"Unhealthy\"), GroupBy = \"CMNSWillBeHealth\",Tooltip = cmNodeWillBeChannelHealthStatus;\r\nlet madariAggrHealth = raw | project StartTime=PreciseTimeStamp, Content=nodeServiceMadariAggregatedHealth, Health = iff(nodeServiceMadariAggregatedHealth == \"Healthy\", \"Healthy\", \"Unhealthy\"), GroupBy = \"MadariAggrHealth\",Tooltip = nodeServiceMadariAggregatedHealth;\r\nlet nodeServiceMadariPublisherHealth = raw | project StartTime=PreciseTimeStamp, Content=nodeServiceMadariPublisherHealth, Health = iff(nodeServiceMadariPublisherHealth == \"Healthy\", \"Healthy\", \"Unhealthy\"), GroupBy = \"MadariPublisherHealth\",Tooltip = nodeServiceMadariPublisherHealth;\r\nlet nodeServiceMadariSubscriberHealth = raw | project StartTime=PreciseTimeStamp, Content=nodeServiceMadariSubscriberHealth, Health = iff(nodeServiceMadariSubscriberHealth == \"Healthy\", \"Healthy\", \"Unhealthy\"), GroupBy = \"MadariSubscriberHealth\",Tooltip = nodeServiceMadariSubscriberHealth;\r\nlet isTip = raw | project StartTime=PreciseTimeStamp, Content=iff(tipNodeSessionId==\"00000000-0000-0000-0000-000000000000\",\"ProdNode\", \"TipNode\"), Health = iff(tipNodeSessionId==\"00000000-0000-0000-0000-000000000000\", \"Healthy\", \"Degraded\"), GroupBy = \"IsTip\",Tooltip = tipNodeSessionId;\r\nlet diskConfiguration = raw | project StartTime=PreciseTimeStamp, Content=diskConfiguration, GroupBy=\"DiskConfiguration\", Tooltip = diskConfiguration;\r\nlet baremetalState = raw | project StartTime=PreciseTimeStamp, Content=currentBareMetalState, GroupBy=\"CurrentBareMetalState\", Tooltip = currentBareMetalState;\r\nnodeState\r\n| union progressHealth\r\n| union wasHealth\r\n| union willBeHealth\r\n| union madariAggrHealth\r\n| union nodeServiceMadariPublisherHealth\r\n| union nodeServiceMadariSubscriberHealth\r\n| union isTip\r\n| union diskConfiguration\r\n| union baremetalState\r\n| order by GroupBy asc, StartTime asc\r\n| serialize \r\n| extend FilterOut = (GroupBy == prev(GroupBy) and Content == prev(Content) and isnotempty(next(StartTime)) and GroupBy == next(GroupBy))\r\n| where FilterOut != 1\r\n| extend EndTime = case(isnotempty(next(StartTime)) and GroupBy == next(GroupBy), next(StartTime), now()), Tooltip = iff(isempty(Tooltip), next(Tooltip), Tooltip)\r\n| where EndTime != now()\r\n| extend Tooltip = strcat(tostring(StartTime), \": \", Tooltip)\r\n| sort by GroupBy asc, StartTime asc",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "18964b65-6e9a-4f1a-bfcc-d0ecf36fbce5",
+    "name": "ApSvcMgr State",
+    "groupId": "ec3f6152-34ec-4ee5-ad7e-c2109995946f",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureDCMdb",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "PFClientBootstrapAvailability\r\n| where PreciseTimeStamp between ((faultTime - 3h)..4h)\r\n| where Id == queryNode\r\n| project StartTime = PreciseTimeStamp, Content = iff(ApSvcMgrUp == 1, \"ApSvcMgr - Up\", \"ApSvcMgr - Down\"),\r\n          Health = iff(ApSvcMgrUp == 1, \"Healthy\", \"Unhealthy\"),\r\n          Tooltip = strcat(\"DcmState:\", DcmState,\r\n                           \" DmState:\", DmState,\r\n                           \" TmState:\", TmState,\r\n                           \" PfAgentUp:\", PfAgentUp,\r\n                           \" ApLauncherUp\", ApLauncherUp)\r\n| sort by StartTime asc\r\n| serialize \r\n| extend FilterOut = Content == prev(Content) and isnotempty(next(StartTime))\r\n| where FilterOut != 1\r\n| extend EndTime = case(isnotempty(next(StartTime)), next(StartTime), now())\r\n| where EndTime != now()\r\n| sort by StartTime asc",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "8a2a9e0c-4ad0-4a4a-9c09-bb832369d164",
+    "name": "Events Count",
+    "groupId": "463d1212-d656-4994-8171-e6fe6a68849b",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let operation_count = NodeServiceOperationEtwTable\r\n| where NodeId == queryNode\r\n| make-series count() default=0 on PreciseTimeStamp from faultTime - 3h to faultTime + 1h step 5m\r\n| mvexpand count_, PreciseTimeStamp to typeof(datetime);\r\nlet event_count = NodeServiceEventEtwTable\r\n| where NodeId == queryNode\r\n| make-series count() default=0 on PreciseTimeStamp from faultTime - 3h to faultTime + 1h step 5m\r\n| mvexpand count_, PreciseTimeStamp to typeof(datetime);\r\nlet winevent_count = WindowsEventTable\r\n| where NodeId == queryNode\r\n| make-series count() default=0 on PreciseTimeStamp from faultTime - 3h to faultTime + 1h step 5m\r\n| mvexpand count_, PreciseTimeStamp to typeof(datetime);\r\nlet rdagentupdater_count = RdAgentUpdaterEventTable\r\n| where NodeId == queryNode\r\n| make-series count() default=0 on PreciseTimeStamp from faultTime - 3h to faultTime + 1h step 5m\r\n| mvexpand count_, PreciseTimeStamp to typeof(datetime);\r\noperation_count\r\n| join kind=fullouter  event_count on PreciseTimeStamp\r\n| join kind=fullouter winevent_count on PreciseTimeStamp\r\n| join kind=fullouter rdagentupdater_count on PreciseTimeStamp\r\n| project PreciseTimeStamp, NSOperationsCount = toint(count_), NSEventsCount = toint(count_1), WindowsEventsCount = toint(count_2), RdAgentUpdaterEventsCount = toint(count_3)",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "NSOperationsCount",
+        "type": "int"
+      },
+      {
+        "name": "NSEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "WindowsEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "RdAgentUpdaterEventsCount",
+        "type": "int"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "7131ab06-71b3-4374-9563-ea2565bbf84f",
+    "name": "ContainerState and ASILink",
+    "groupId": "e3ade81e-aef5-4dfd-8902-1c1cb36bd5d0",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "https://mycroft.westcentralus.kusto.windows.net",
+    "database": "Mycroft",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let bmcMycroft = MycroftContainerHealthSnapshot\r\n| where NodeId == queryNode\r\n| where PreciseTimeStamp between ((faultTime - 3h)..4h);\r\nlet azcoreMycroft = cluster('azcore.centralus.kusto.windows.net').database('AzureCP').MycroftContainerHealthSnapshot\r\n| where NodeId == queryNode\r\n| where PreciseTimeStamp between ((faultTime - 3h)..4h);\r\nlet JoinedTable = materialize(bmcMycroft\r\n| union azcoreMycroft\r\n| sort by ContainerId, PreciseTimeStamp asc);\r\nlet GlobalMinMaxTimeStamps = JoinedTable\r\n| summarize min(PreciseTimeStamp), max(PreciseTimeStamp) by ContainerId\r\n| project ContainerId, MinTime = min_PreciseTimeStamp - 5m, MaxTime=case(min_PreciseTimeStamp != max_PreciseTimeStamp, max_PreciseTimeStamp, now()) + 5m;\r\nJoinedTable\r\n| serialize \r\n| extend FilterOut = ContainerState == prev(ContainerState) and ContainerId == prev(ContainerId)\r\n| where FilterOut != 1\r\n| extend EndTime = case(isnotempty(next(PreciseTimeStamp)) and ContainerId == next(ContainerId), next(PreciseTimeStamp), now())\r\n| join kind=inner GlobalMinMaxTimeStamps on ContainerId\r\n| project StartTime=PreciseTimeStamp,\r\n          EndTime=EndTime,\r\n          Content=ContainerState,\r\n          Tooltip=strcat(ContainerState, \" Click for Container ASI Link\"),\r\n          GroupBy=ContainerId,\r\n          ContainerState,\r\n          OsState,\r\n          ASILink=strcat(\"https://asi.azure.ms/view/services/NodeService/pages/Peregrine_ContainerEvents?containerId=\", ContainerId, \"&globalFrom=\", MinTime, \"&globalTo=\", MaxTime)\r\n",
+    "params": [
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "default": "c5167da4-4480-b699-b10a-f060c030f512",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "ContainerState",
+        "type": "string"
+      },
+      {
+        "name": "OsState",
+        "type": "string"
+      },
+      {
+        "name": "ASILink",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "84623760-e71a-43fe-997f-a305c8d62b6f",
+    "name": "Madari errors",
+    "groupId": "02d44bce-7e0b-44b6-a40b-281f33e8a548",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "NodeServiceMadariEventsEtwTable\r\n| where NodeId == queryNode\r\n| where Message endswith_cs \"CreateSocketHandlerAndConnect, error connecting socket.\"\r\n| parse Message with * \"(HR = \" error \")\" *\r\n| where PreciseTimeStamp between ((faultTime - 3h)..4h)\r\n| project StartTime=PreciseTimeStamp, Content=error, Health=\"Unhealthy\"\r\n          ",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "5eb46a2f-a660-47a4-8383-99e2fa3cbaf1",
+    "name": "Networking dashboard query",
+    "groupId": "665f7b7f-b479-4946-91ff-3b9d98f7a9f1",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "",
+    "database": "",
+    "type": "Single",
+    "dataSource": "Browser",
+    "language": "JavaScript",
+    "kustoQuery": "console.log(data.queryTime);\r\n\r\nfunction addHours(date, hours) {\r\n  let dateObj = new Date(date);\r\n  dateObj.setHours(dateObj.getHours() + hours);\r\n  return dateObj.toISOString();\r\n}\r\n\r\nlet response = [\r\n    {\r\n        \"Networking DRI dashboard\": (\"https://dataexplorer.azure.com/dashboards/bea4ccac-baf1-45f3-b160-533232cbfdaa?p-_startTime=\" +\r\n                    addHours(data.queryTime, -1) + \"&p-_endTime=\" + addHours(data.queryTime, 1) +\r\n                    \"&p-_NodeId=v-\" + data.queryNode + \"&p-_ContainerId=all&p-_ICMId=all\")\r\n    }\r\n];\r\ncallback(false, response);\r\n",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "08d81fab-262a-4ecc-80da-e92c404cd075",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-07-21T21:54:25.816Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Networking DRI dashboard",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "e259da8c-63e5-44a7-b047-1be1ecb1b3f2",
+    "name": "Cluster level node unhealthy metrics",
+    "groupId": "e1b98208-dee0-4373-9273-03901d057901",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "LogNodeSnapshot\r\n| where PreciseTimeStamp between ((faultTime-2h)..4h) and Tenant == cluster\r\n| where nodeState == \"Unhealthy\"\r\n| make-series nodeCount = dcount(nodeId) default=0 on PreciseTimeStamp from (faultTime-2h) to (faultTime+2h) step 30m\r\n| mv-expand PreciseTimeStamp to typeof(datetime), nodeCount to typeof(long)\r\n| project PreciseTimeStamp, nodeCount\r\n",
+    "params": [
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-30T00:12:15.984Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "cluster",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "nodeCount",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "a493c1ad-5d1a-49f1-bcec-5397c16539e1",
+    "name": "Anvil Repair Diagnostics",
+    "groupId": "ef37c8c3-fbea-4513-9b94-413f9d1e77f9",
+    "majorVersion": 1,
+    "minorVersion": 10,
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AnvilRepairServiceForgeEvents\r\n| where ResourceId == queryNode\r\n| where PreciseTimeStamp > faultTime - 1h and PreciseTimeStamp < faultTime + 1h\r\n| where (\r\n    (MessageTrigger == \"OnExecuteAction\" and TreeActionName == \"PingRdAgentAction\") or \r\n    (MessageTrigger == \"OnExecuteAction\" and TreeActionName == \"AnvilNodeSacDiagnosticsCollectionAction\" and (\r\n        Message contains \"NodeService.exe\" or Message contains \"apsvcmgr.exe\" or Message contains \"rdagent.exe\"\r\n    ))\r\n)\r\n| project bin(PreciseTimeStamp, 2s), TreeActionName, Message\r\n| summarize make_list(Message) by TreeActionName, PreciseTimeStamp\r\n| extend Message = strcat_array(list_Message, \"\")\r\n| project-away list_Message\r\n| extend RdAgentRunning=Message contains \" rdagent.exe\"\r\n| extend PfNodeServiceRunning=Message contains \" PfNodeService.exe\"\r\n| extend NodeServiceRunning=Message contains \" NodeService.exe\"\r\n| extend ApSvcMgrRunning=Message contains \" apsvcmgr.exe\"\r\n| project StartTime=PreciseTimeStamp, Content=case(\r\n    Message contains \"RDAgent is pinged\", \"AnvilSuccessfullyPingedRdAgent\",\r\n    Message contains \"Not able to ping RDAgent\", \"AnvilFailedToPingRdAgent\",\r\n    TreeActionName == \"AnvilNodeSacDiagnosticsCollectionAction\", strcat(\r\n        \"NodeServiceRunning: \", NodeServiceRunning, \", \",\r\n        \"PfNodeServiceRunning: \", PfNodeServiceRunning, \", \",\r\n        \"RdAgentRunning: \", RdAgentRunning, \", \",\r\n        \"ApSvcMgrRunning: \", ApSvcMgrRunning, \"\\n\"\r\n    ),\r\n    \"Unexpected!\"\r\n), Message, GroupBy=TreeActionName",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "2023-11-01T15:27:50.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-11-02T15:27:50.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "ffb5c823-1505-483f-a071-992ba93dcb64",
+    "name": "NodeService Exits",
+    "groupId": "b75e1731-372b-4640-9a01-ff5c3828f18f",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let entries = materialize(NodeServiceExitEtwTable\r\n| where NodeId == nodeId\r\n| where PreciseTimeStamp between ((faultTime-45m)..faultTime)\r\n| project StartTime=PreciseTimeStamp, Content=tostring(ExitCode), NodeId);\r\nlet entryCount = entries\r\n| summarize count(), arg_max(StartTime, ExitCode=Content) by NodeId\r\n| extend MoreThan50 = case(count_ > 50, \"True\", \"False\");\r\nlet tooManyEntriesRaw = materialize(datatable(Test:string) [\"\"]\r\n| extend StartTime=(faultTime-45m), EndTime=faultTime, Message=\"More than 50 entries, please query NodeServiceExitEtwTable directly. Last ExitCode=\", MoreThan50=\"True\");\r\nlet tooManyEntries = tooManyEntriesRaw\r\n| join kind=inner entryCount on MoreThan50\r\n| project StartTime, EndTime, Content=strcat(Message, ExitCode);\r\nunion\r\ntooManyEntries,\r\n(entries\r\n| join kind=inner entryCount on NodeId\r\n| where count_ < 50)\r\n| project StartTime, EndTime, Content",
+    "params": [
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-19T17:51:07.522Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nodeId",
+        "description": "",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "f8b24d65-c6da-48b4-ad14-1a0006c969ab",
+    "name": "Fabric incarnations",
+    "groupId": "048a2d4e-f8c6-4979-aab9-a287f4a14a2c",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "mycroft.westcentralus.kusto.windows.net",
+    "database": "Mycroft",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "MycroftClusterSnapshot\r\n| where ClusterName == fabricCluster\r\n| where PreciseTimeStamp > faultTime - 5h and PreciseTimeStamp < faultTime + 1h\r\n| project StartTime = PreciseTimeStamp, Content=IncarnationId\r\n| sort by StartTime asc\r\n| serialize \r\n| extend EndTime = case(isnotempty(next(StartTime)), next(StartTime), now())\r\n| where EndTime != now()\r\n| sort by StartTime asc",
+    "params": [
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-21T17:15:50.139Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "fabricCluster",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "ab380065-ed52-4e08-8950-ae36a81d9893",
+    "name": "SEL Events",
+    "groupId": "f18deff2-bd71-4de1-bfdc-125c1f9670fb",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "sparkle.eastus.kusto.windows.net",
+    "database": "defaultdb",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"sparkle.eastus\").database(\"defaultdb\").SparkleSELByNodeId(_nodeId, _faultTime - 2h, _faultTime + 2h)\r\n| where BMCSelTimestamp > _faultTime - 2h and BMCSelTimestamp < _faultTime + 2h\r\n| where SensorType == \"Power Unit\" or SensorType == \"Memory\" or SensorType == \"Processor\"\r\n| project BMCSelTimestamp, EventDataDetails1, EventDataDetails2, EventDataDetails3, SensorType, EventDetail, NodeId\r\n| extend Content=case(\r\n    EventDataDetails1 contains \"Power Off\", \"Power Off\",\r\n    EventDataDetails1 contains \"Processor Automatically Throttled\", EventDataDetails1,\r\n    EventDataDetails1 contains \"Correctable ECC\", EventDataDetails2,\r\n    \"\"\r\n)\r\n| where Content != \"\"\r\n| project StartTime=BMCSelTimestamp, Content, Tooltip=Content, GroupBy=\"Realtime SEL Logs\"\r\n| union (\r\ncluster(\"sparkle.eastus\").database(\"defaultdb\").SparkleOFRSelByNodeId(_nodeId, _faultTime, _faultTime + 1d)\r\n| project BMCSelTimestamp, EventDataDetails1\r\n| where EventDataDetails1 contains \"Bus Correctable Error\"\r\n| summarize count(), arg_max(BMCSelTimestamp, EventDataDetails1) by EventDataDetails1\r\n| project StartTime=_faultTime,\r\n          Content=\"Correctable Memory errors found during OFR diagnostics when node enters OFR\",\r\n          GroupBy=\"OFR Sel Logs\"\r\n)",
+    "params": [
+      {
+        "name": "_faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "abed529b-c5a4-4413-a57b-edbdfc0aa774",
+    "name": "TOR Send Packet Health",
+    "groupId": "d7635a71-8644-441d-8c7c-8ccdfc40d6cc",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('aznwsdn').database('aznwmds').TorPingSendAggreEvent\r\n| where TIMESTAMP between ((bin(_faultTime, 5m) - 1h) .. bin(_faultTime, 5m) + 1h)\r\n| where NodeId =~ _nodeId\r\n| make-series PacketsSent = max(SendCount) default=0 on TIMESTAMP in range ((_faultTime - 1h), (_faultTime + 1h), 5m)\r\n| mv-expand PacketsSent, TIMESTAMP\r\n| extend max_TIMESTAMP=todatetime(TIMESTAMP)+5m\r\n| project StartTime=todatetime(TIMESTAMP), EndTime=max_TIMESTAMP, Health=case(PacketsSent > 0, \"Healthy\", PacketsSent == 0, \"Unhealthy\", \"Unknown\")\r\n| extend Content=Health",
+    "params": [
+      {
+        "name": "_nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "3784b0a3-9f89-49ff-b9d8-599d4aa7f4c6",
+    "name": "TOR Recv Packet Health",
+    "groupId": "fee8f7ba-7bdb-4905-9cc9-92165dd272ed",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('aznwsdn').database('aznwmds').TorPingRecvAggreEvent\r\n| where TIMESTAMP between ((bin(_faultTime, 5m) - 1h) .. bin(_faultTime, 5m) + 1h)\r\n| where NodeId =~ _nodeId\r\n| make-series PacketsSent = max(RecvCount) default=0 on TIMESTAMP in range ((_faultTime - 1h), (_faultTime + 1h), 5m)\r\n| mv-expand PacketsSent, TIMESTAMP\r\n| extend max_TIMESTAMP=todatetime(TIMESTAMP)+5m\r\n| project StartTime=todatetime(TIMESTAMP), EndTime=max_TIMESTAMP, Health=case(PacketsSent > 0, \"Healthy\", PacketsSent == 0, \"Unhealthy\", \"Unknown\")\r\n| extend Content=Health",
+    "params": [
+      {
+        "name": "_nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "8815c86c-71d2-4e7a-b358-4ca470bfac35",
+    "name": "TOR InMaintenance",
+    "groupId": "24487b70-b48f-4ff8-8c7d-414517b1e4c5",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let tor = database('aznwmds').TorPingSendAggreEvent\r\n| where NodeId =~ _nodeId\r\n| take 1 // Assumption that the tor doesn't change throughout lifetime of the node\r\n| project TorName;\r\ncluster('azphynet.kusto.windows.net').database('azdhmds').f_DeviceHealthLookupMultiSearch(_faultTime - 30m, _faultTime + 30m, todynamic(toscalar(tor)))\r\n| where Status contains \"InMaintenance\"\r\n| project StartTime=TIMESTAMP,\r\n          EndTime=TIMESTAMP + 5m,\r\n          Content=\"ToRInMaintenance\",\r\n          Health=\"Unhealthy\"",
+    "params": [
+      {
+        "name": "_nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "624c89ff-0aea-4eb0-a687-dd855d8b5c0f",
+    "name": "CM WillBe Generation",
+    "groupId": "5d484be1-327d-449a-a701-b62e890ee375",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "CMClientCriticalEventEtwTable\r\n| where NodeId == _nodeId\r\n| where PreciseTimeStamp between ((_faultTime - 2h)..(_faultTime+2h))\r\n| project PreciseTimeStamp, ErrorMessage\r\n| summarize StartTime=min(PreciseTimeStamp), EndTime=max(PreciseTimeStamp) by Content=ErrorMessage\r\n| extend Health=\"Unhealthy\"",
+    "params": [
+      {
+        "name": "_nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "e0a222aa-b3d6-4866-9e74-4c0b1a6f8350",
+    "name": "TOR in Quarantine Network",
+    "groupId": "e077ba2b-0ddc-43c5-b16e-73ce5ccd5124",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "azphynet.kusto.windows.net",
+    "database": "azdhmds",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = faultTime - 5h;\r\nlet endTime = faultTime + 1h;\r\ncluster('azphynet.kusto.windows.net').database('azdhmds').LinkLifecycleState\r\n| where StartDevice == toupper(hostName)\r\n| project StartTime=TIMESTAMP, EndDevice, OriginalState, State\r\n| sort by EndDevice, StartTime asc\r\n| serialize\r\n| extend EndTime = case(EndDevice == next(EndDevice), next(StartTime), max_of(endTime, StartTime))\r\n| where EndTime > startTime and StartTime < endTime\r\n| where State != \"InProduction\"\r\n| project StartTime=max_of(StartTime, startTime),\r\n          EndTime=min_of(EndTime, endTime),\r\n          Content=State,\r\n          GroupBy=strcat(\"TorDeviceInQuarantineNetwork: \", EndDevice),\r\n          Health=iff(State == \"InProduction\", \"Healthy\", \"Unhealthy\")",
+    "params": [
+      {
+        "name": "hostName",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "fda80b8d-fad9-48d7-9f1b-eb87b8b0bf7b",
+    "name": "Overlake Healthstore Data",
+    "groupId": "959585b5-8461-429f-92b9-099efe68d8c2",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "OvlProd",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "OverlakeHsDataUploader\r\n| where NodeId == nodeId\r\n| where detail startswith '{\"HS data'\r\n| make-series sum(dataUploadSuccessCount) default=0 on PreciseTimeStamp from faultTime - 3h to faultTime + 1h step 10m\r\n| mvexpand sum_dataUploadSuccessCount, PreciseTimeStamp to typeof(datetime)\r\n| project PreciseTimeStamp, SoCEventsCount = toint(sum_dataUploadSuccessCount)",
+    "params": [
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-09-02T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nodeId",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "701140b1-c1ca-a9a6-8a40-e72cbbe02005",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SoCEventsCount",
+        "type": "int"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "145236b4-17cc-4677-93fb-4c983e3399ea",
+    "name": "NodeServiceVersion",
+    "groupId": "5fa31cdc-7126-401f-8379-870e860e13c5",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "NodeServiceOperationEtwTable\r\n| where PreciseTimeStamp between ((faultTime-1h)..(faultTime+1h))\r\n| where NodeId == nodeId\r\n| project ServiceVersion",
+    "params": [
+      {
+        "name": "nodeId",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ServiceVersion",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "5a62120c-e45c-4113-b189-ebcb14b66471",
+    "name": "SDP Phase",
+    "groupId": "7d05c2e2-7285-45cb-ac81-adc7a6b31718",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "MycroftClusterSnapshot\r\n| where ClusterName == cluster\r\n| where PreciseTimeStamp between ((faultTime-1h)..(faultTime+1h))\r\n| take 1\r\n| project SDPPhase=VirtualEnvironment",
+    "params": [
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "cluster",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "SDPPhase",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "8a0504f3-eaff-45ba-b824-3a3c1ed95a03",
+    "name": "SocId",
+    "groupId": "723da144-3006-4c90-8322-8e8a4b43bf74",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "LogNodeSnapshot\r\n| where nodeId == _nodeId\r\n| distinct socId;",
+    "params": [
+      {
+        "name": "_nodeId",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "socId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "b5c57a66-71d9-43ce-8949-c7dca785e37c",
+    "name": "Soc Health",
+    "groupId": "7cfba16a-ade0-4e67-9810-a7f5c81ff18f",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "KyberNodeAggregatedHealthSnapshot\r\n | where PreciseTimeStamp between ((faultTime-5h)..6h)\r\n | where NodeId == queryNode\r\n | extend SocHwMonHB=tostring(parse_json(SocHealthSignals).SocHwMonHB.Status)\r\n | project StartTime=PreciseTimeStamp, Content=SocHwMonHB,\r\n           Health = case(SocHwMonHB == \"Healthy\", \"Healthy\", SocHwMonHB == \"\", \"Unknown\", \"Unhealthy\"),\r\n           GroupBy = \"SocHealthSignals\",\r\n           Tooltip = SocHealthSignals\r\n | order by GroupBy asc, StartTime asc\r\n | serialize \r\n | extend FilterOut = (GroupBy == prev(GroupBy) and Content == prev(Content) and isnotempty(next(StartTime)) and GroupBy == next(GroupBy))\r\n | where FilterOut != 1\r\n | extend EndTime = case(isnotempty(next(StartTime)) and GroupBy == next(GroupBy), next(StartTime), now()), Tooltip = iff(isempty(Tooltip), next(Tooltip), Tooltip)\r\n | where EndTime != now()\r\n | extend Tooltip = strcat(tostring(StartTime), \": \", Tooltip)\r\n | sort by GroupBy asc, StartTime asc",
+    "params": [
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryNode",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "e441ea9b-c371-49ff-ae95-55eb941da4cf",
+    "name": "SeedIncarnation query",
+    "groupId": "b19222af-51d7-4307-9135-3c89b6ff35a5",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "sdnpubsub",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('aznwsdn.kusto.windows.net').database('sdnpubsub').PubSubAPICall\r\n| parse additional with * \"pk: \" contextSelector \", rp: \" relativePath \",\" *\r\n| where contextSelector endswith nodeId\r\n| where action == \"UpdateNode\"\r\n| where PreciseTimeStamp > faultTime - 1h and PreciseTimeStamp < faultTime + 1h\r\n| project PreciseTimeStamp, userIdentity, contextSelector, relativePath, action, dataSize\r\n| project StartTime=PreciseTimeStamp,\r\n          Tooltip=\"First launch after Boot\",\r\n          Content=\"First time NodeService writes to seedincarnation after boot\",\r\n          GroupBy=\"SeedIncarnation\"",
+    "params": [
+      {
+        "name": "nodeId",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "23321603-c9a9-4e05-bb17-117d577c0c9d",
+    "name": "SocHB",
+    "groupId": "de621ad8-e9f3-478f-b97d-ae9a07c11b5b",
+    "majorVersion": 1,
+    "minorVersion": 8,
+    "cluster": "azdeployer.kusto.windows.net",
+    "database": "AzDeployerKusto",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let data = cluster('wdgeventstore').database('hostosdeploy').nodes\r\n| where nodeId == _nodeId\r\n| project nodeId, machineName, tenant;\r\nlet gapThreshold = 5m;   // any delta larger than this between samples = gap\r\nlet socMachineName = data | project strcat(machineName, \"SOC\");\r\nlet segments =\r\n    cluster('azdeployer.kusto.windows.net').database('AzDeployerKusto').OMWorkerRepairGenerator\r\n    | where PreciseTimeStamp > _faultTime - 4h and PreciseTimeStamp < _faultTime + 1h\r\n    | where machineName in (socMachineName)\r\n    | project PreciseTimeStamp, machineName, nodeHealth=toint(nodeHealth)\r\n    | extend Health = iff(nodeHealth == 6, \"Healthy\", \"Unhealthy\")\r\n    | order by machineName asc, PreciseTimeStamp asc\r\n    | extend prevHealth = prev(Health), prevMachine = prev(machineName)\r\n    | extend isNewSegment = (Health != prevHealth) or (machineName != prevMachine)\r\n    | extend segmentId = row_cumsum(toint(isNewSegment))\r\n    | summarize StartTime = min(PreciseTimeStamp),\r\n                EndTime  = max(PreciseTimeStamp),\r\n                UnhealthyMinutes = max(60 - nodeHealth * 10)\r\n            by segmentId, machineName, Health;\r\nlet gaps =\r\n    segments\r\n    | order by machineName asc, StartTime asc\r\n    | extend nextStart = next(StartTime), nextMachine = next(machineName)\r\n    | where machineName == nextMachine and (nextStart - EndTime) > gapThreshold\r\n    | project StartTime = EndTime, EndTime = nextStart, machineName,\r\n              Health = \"Gap\", UnhealthyMinutes = long(null);\r\nsegments\r\n| union gaps\r\n| extend Content = strcat(machineName, \" \", Health,\r\n            iff(Health == \"Unhealthy\", strcat(\" (~\", UnhealthyMinutes, \" min)\"), \"\"))\r\n| project StartTime, EndTime, Content, Health\r\n| order by StartTime asc\r\n\r\n",
+    "params": [
+      {
+        "name": "_nodeId",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "3d2ee797-852e-499c-ad5e-c24f3d13795b",
+    "name": "WindowsEvents",
+    "groupId": "350518ed-0df6-4bb1-9ae9-474da5e858f0",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WindowsEventTable\r\n| where PreciseTimeStamp between ((faultTime - 2h)..2h)\r\n| where NodeId == queryNode\r\n| where toint(EventId) == 147\r\n| project StartTime=PreciseTimeStamp, Content=\"Event 147\", Explanation=Description, AdditionalHelp=\"This usually means there is something wrong with the OS/firmware. Please work with Host OS teams\"",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Explanation",
+        "type": "string"
+      },
+      {
+        "name": "AdditionalHelp",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "892b31cc-f96b-432c-948a-1629b6aed3d8",
+    "name": "NodeServiceWatchdogEtwTable",
+    "groupId": "b6ec7b76-4aa5-427a-b9a1-0619bfc6527d",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "NodeServiceWatchdogEtwTable\r\n| where PreciseTimeStamp between ((faultTime - 3h)..4h)\r\n| where NodeId == queryNode\r\n| project PreciseTimeStamp, Scope, ResultCode, Message, NodeServiceVersion",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Scope",
+        "type": "string"
+      },
+      {
+        "name": "ResultCode",
+        "type": "long"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "NodeServiceVersion",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "34c08870-e50a-4836-8541-aa238326412b",
+    "name": "NodeService Events",
+    "groupId": "414c8e79-3bdf-4e80-be38-2be09d93715c",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "NodeServiceEventEtwTable\r\n| where PreciseTimeStamp between ((faultTime - 45m)..1h)\r\n| where NodeId == queryNode\r\n| project TIMESTAMP, Message, Pid\r\n| order by TIMESTAMP asc",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "8f2da70b-a3a7-403c-b366-87aca0b4bddd",
+    "name": "NodeService Exits",
+    "groupId": "2d645915-c06d-4ddf-a654-9a567f961159",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "NodeServiceExitEtwTable\r\n| where PreciseTimeStamp between ((faultTime - 3h)..4h)\r\n| where NodeId == queryNode\r\n| project PreciseTimeStamp, ExitCode, Pid",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "ExitCode",
+        "type": "long"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "806d1257-8c23-4e84-ba89-1a1a2cf573f6",
+    "name": "CMWorkerNodeServiceChannel failures",
+    "groupId": "288373ce-1358-4b66-a1a5-4d914ed09962",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "CMWorkerNodeServiceChannelFailure\r\n| where NodeId == queryNode  and PreciseTimeStamp between ((faultTime - 3h)..4h)\r\n| project PreciseTimeStamp, Message",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "2022a6e5-367e-4c79-b74e-0db23d7fdd49",
+    "name": "CMWorkerNodeServiceWas",
+    "groupId": "4335e64e-c214-4e10-a694-5bc6852241d6",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "CMWorkerNodeServiceWasReceivedByChannel\r\n| where PreciseTimeStamp between ((faultTime-2h)..3h)\r\n| where NodeId == queryNode\r\n| project PreciseTimeStamp, Revision, NodeServiceIncarnation\r\n| top 500 by PreciseTimeStamp desc\r\n| order by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Revision",
+        "type": "long"
+      },
+      {
+        "name": "NodeServiceIncarnation",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "9ef582a1-669c-4c88-945b-05008aa194c0",
+    "name": "CMWorkerNodeServiceWillBe",
+    "groupId": "a48f81b1-8652-4f91-aa52-3abcccc84d3d",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "CMWorkerNodeServiceWillBeSentToChannel\r\n| where PreciseTimeStamp between ((faultTime-2h)..3h)\r\n| where NodeId == queryNode\r\n| project PreciseTimeStamp, Revision, NodeServiceIncarnation\r\n| top 500 by PreciseTimeStamp desc\r\n| order by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Revision",
+        "type": "long"
+      },
+      {
+        "name": "NodeServiceIncarnation",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "b48eab0e-9158-4936-8ce3-4fa0189bfa3a",
+    "name": "CMWorkerNodeEvents",
+    "groupId": "7fe96428-cbc2-4478-accd-944d9c95b8d6",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "CMWorkerNodeEvents\r\n| where PreciseTimeStamp between ((faultTime-3h)..4h)\r\n| where nodeId == queryNode\r\n| project PreciseTimeStamp, message, RoleInstance\r\n| top 2000 by PreciseTimeStamp desc\r\n| order by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "54973179-f36f-4454-911e-265701fae4ba",
+    "name": "TMMgmtNodeEventsTable",
+    "groupId": "5ffe59d3-073a-4d0b-bc3e-8d76faf29bb7",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "TMMgmtNodeEventsEtwTable\r\n| where PreciseTimeStamp between ((faultTime - 3h)..(3h + 1min))\r\n| where NodeId == queryNode\r\n| project PreciseTimeStamp, Message, Pid\r\n| top 500 by PreciseTimeStamp desc\r\n| order by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "657aff26-3e4d-4b98-8a96-59e97e8e7c43",
+    "name": "WindowsEventsTable",
+    "groupId": "65158924-7d9c-4a96-96c2-0e7e5105d9ba",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WindowsEventTable\r\n| where PreciseTimeStamp between ((faultTime - 1h)..2h)\r\n| where NodeId == queryNode\r\n| project PreciseTimeStamp, Level, Description",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "48165561-af6c-4d2d-9e44-36571b483d4f",
+    "name": "CPU_Usage",
+    "groupId": "9407a014-5340-4bf3-830e-575807af2622",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "HighCpuCounterNodeTable\r\n| where PreciseTimeStamp between ((faultTime - 45m)..1h)\r\n| where NodeId == queryNode\r\n| project PreciseTimeStamp, CounterValue\r\n| order by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "4cfc48cd-2f6a-a9b5-0091-963603411673",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-21T17:15:50.139Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CounterValue",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "84cfdd77-0993-41e5-ab47-c20abea5a55b",
+    "name": "MemoryReport",
+    "groupId": "2a0632f8-6248-4a62-b849-b67e5cfcdb24",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "KernelAgent",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "KernelAgentEvents\r\n| where PreciseTimeStamp between ((faultTime - 45m)..1h)\r\n| where NodeId == queryNode\r\n| where MetricName in (\"memory\", \"report\")\r\n| project PreciseTimeStamp, MetricName, KaValueName\r\n| order by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "4cfc48cd-2f6a-a9b5-0091-963603411673",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-21T17:15:50.139Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "MetricName",
+        "type": "string"
+      },
+      {
+        "name": "KaValueName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "e17802a9-a264-434c-bcb0-0b85b5dd5ad1",
+    "name": "CPU Graph",
+    "groupId": "da93a324-62ef-479e-9185-94753c544798",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "HighCpuCounterNodeTable\r\n| where PreciseTimeStamp between ((faultTime - 8h)..9h)\r\n| where NodeId == queryNode\r\n| summarize AvgCPU=avg(CounterValue) by bin(PreciseTimeStamp, 15m)",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "4cfc48cd-2f6a-a9b5-0091-963603411673",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-21T17:15:50.139Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AvgCPU",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "c429e435-e9d3-4ad1-9dee-381bf08778ea",
+    "name": "ProcessMemUsage",
+    "groupId": "dfc28399-978c-462c-a508-ab3f680dba26",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "AutopilotDeployment",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "ProcessesPerfCounter\r\n| where PreciseTimeStamp between ((faultTime - 8h)..9h)\r\n| where NodeId == queryNode\r\n| summarize max(PrivateUsage) by ImageName, bin(PreciseTimeStamp, 15m)\r\n| summarize TotalPrivateUsage=sum(max_PrivateUsage), NSPrivateUsage=sumif(max_PrivateUsage, ImageName =~ \"nodeservice.exe\") by PreciseTimeStamp",
+    "params": [
+      {
+        "name": "queryNode",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "4cfc48cd-2f6a-a9b5-0091-963603411673",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-21T17:15:50.139Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "TotalPrivateUsage",
+        "type": "long"
+      },
+      {
+        "name": "NSPrivateUsage",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "588e4534-16f1-46dc-8ffc-677fd6de7aca",
+    "name": "Node Snapshot",
+    "groupId": "410e5021-fdf0-4a77-8f2c-8d432f052285",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "MycroftNodeHealthSnapshot\r\n| where NodeId == nodeId\r\n| where PreciseTimeStamp between ((faultTime-1h)..(faultTime+1h))\r\n| extend ExtendedDetails=case(parse_json(FaultInfo).ExtendedDetails != \"\", parse_json(FaultInfo).ExtendedDetails, dynamic([{\"Name\":\"EscalateTo\",\"Value\":\"No Fault\"}]))\r\n| mv-expand ExtendedDetails\r\n| where parse_json(ExtendedDetails).Name == \"EscalateTo\"\r\n| project PreciseTimeStamp, NsdState, NodeServiceAggregatedHealthStatus, AvailabilityState, EscalateTo=parse_json(ExtendedDetails).Value, Reason=parse_json(FaultInfo).Reason, FaultTime=parse_json(FaultInfo).Time\r\n| sort by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "nodeId",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "faultTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "NsdState",
+        "type": "string"
+      },
+      {
+        "name": "NodeServiceAggregatedHealthStatus",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityState",
+        "type": "string"
+      },
+      {
+        "name": "EscalateTo",
+        "type": "dynamic"
+      },
+      {
+        "name": "Reason",
+        "type": "dynamic"
+      },
+      {
+        "name": "FaultTime",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "ddcf9edf-7523-4d99-bbc5-0411ff4e070a",
+    "name": "Echo",
+    "groupId": "c1c053cf-fdea-4856-b710-d1310694f5f6",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "",
+    "database": "",
+    "type": "Single",
+    "dataSource": "Browser",
+    "language": "JavaScript",
+    "kustoQuery": "return [data];",
+    "params": [
+      {
+        "name": "_nodeId",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_timeOfFault",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "_nodeId",
+        "type": "string"
+      },
+      {
+        "name": "_timeOfFault",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  }
+]

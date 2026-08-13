@@ -1,0 +1,150 @@
+[
+  {
+    "groupId": "55f3763f-b365-44f1-8ffa-2433d8bc5df5",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "2e51dc99-f253-4058-8374-91db64cda724",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_EgId",
+        "externalSourceName": "EgId",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_SubscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"Execution Graph\"",
+    "cluster": "https://egpublic.westus.kusto.windows.net",
+    "database": "eg",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "globalFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "globalTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_EgId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_SubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTimeUtc",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInSeconds",
+        "type": "long"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "LinkToExecutionGraph",
+        "type": "string"
+      },
+      {
+        "name": "TenantId",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "EgId",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroupNameOrServiceName",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "FailureSignature",
+        "type": "string"
+      },
+      {
+        "name": "FailureCategory",
+        "type": "string"
+      },
+      {
+        "name": "TeamResponsible",
+        "type": "string"
+      },
+      {
+        "name": "BugNumber",
+        "type": "long"
+      },
+      {
+        "name": "CssTsgUrl",
+        "type": "string"
+      },
+      {
+        "name": "ArticleName",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

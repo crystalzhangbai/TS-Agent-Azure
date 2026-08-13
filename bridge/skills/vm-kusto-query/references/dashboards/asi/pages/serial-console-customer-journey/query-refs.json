@@ -1,0 +1,108 @@
+[
+  {
+    "groupId": "cc8dfe89-f1f1-45bb-b7fd-0d4ac2d40a93",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Unique Subscriptions"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "Unique Subscriptions",
+    "queryId": "9b150aee-b92e-47b6-b477-b33fa4552f7c",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "uniquesubscriptions",
+    "cluster": "https://azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "Single",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Count",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1272bc0a-abe5-41a2-8530-c852d737713f",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "panelPath": [],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "54b6c33e-0785-4e6b-a958-6e0abcf99c7c",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "icmcount",
+    "cluster": "https://icmcluster.kusto.windows.net",
+    "database": "IcmDataWarehouse",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "CorrelationId",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  }
+]

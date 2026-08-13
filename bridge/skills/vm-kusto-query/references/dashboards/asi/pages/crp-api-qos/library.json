@@ -1,0 +1,256 @@
+{
+  "service": "CRP",
+  "page": "API QoS",
+  "pageId": "72ab3144-6a13-4701-a270-32e172c941d1",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "deb634c1-838b-4c06-a5a4-6505c7364381",
+          "name": "Retrieve Resource \"API QoS\"",
+          "groupId": "fcfd5c9d-5e0e-4667-8ed8-aee87b3fd578",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_PreciseTimeStamp",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "opStartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "opEndTime",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_PreciseTimeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_operationId",
+              "externalSourceName": "operationId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let fuzzyStart = datetime_add(\"hour\", -12, local_PreciseTimeStamp);\nlet fuzzyEnd = datetime_add(\"hour\", 12, local_PreciseTimeStamp);\ncluster('azcrp.kusto.windows.net').database('crp_allprod').ApiQosEvent_nonGet\n| where PreciseTimeStamp >= fuzzyStart and PreciseTimeStamp < fuzzyEnd\n| where operationId == local_operationId\n| extend opStartTime = floor(datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp), 1m)\n| extend opEndTime = floor(PreciseTimeStamp, 1m) + 1m\n| join kind=fullouter\n(\ncluster('azcrp.kusto.windows.net').database('crp_allprod').ComponentQoSEvent\n| where PreciseTimeStamp >= fuzzyStart and PreciseTimeStamp < fuzzyEnd\n| where activityId == local_operationId\n) on $left.operationId==$right.activityId\n| project PreciseTimeStamp=coalesce(PreciseTimeStamp1, PreciseTimeStamp), operationId=coalesce(operationId, activityId), opStartTime, opEndTime\n| take 1",
+          "panelPath": []
+        },
+        {
+          "id": "8431945a-2cd4-4a69-8e02-2720f5d4246b",
+          "name": "API QoS",
+          "groupId": "9de02be6-327c-4aee-b3ca-48d36ef2fab0",
+          "majorVersion": 1,
+          "minorVersion": 6,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "crp_allprod",
+          "type": "CoBeTimeline",
+          "widgetType": "CoBeTimeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "operationId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "timeStamp",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "EventId",
+              "type": "string"
+            },
+            {
+              "name": "ParentId",
+              "type": "string"
+            },
+            {
+              "name": "EventName",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "DurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "Properties",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "fcfd5c9d-5e0e-4667-8ed8-aee87b3fd578",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "fcfd5c9d-5e0e-4667-8ed8-aee87b3fd578",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "timeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "let startDatetime = datetime_add('hour', -12, timeStamp);\nlet endDatetime = datetime_add('hour', 12, timeStamp);\nCRPAPIQoS(operationId, startDatetime, endDatetime)\n// adding the following to try and make the timeline less noisy.\n| where EventName !in (\n    'Fabric:GetTenantInformation',\n    'Fabric:GetRoleInstanceContainerProvisioningDetails'\n)",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:18:19.987Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

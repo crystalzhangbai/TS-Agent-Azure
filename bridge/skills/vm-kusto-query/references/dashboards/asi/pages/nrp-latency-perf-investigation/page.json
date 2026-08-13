@@ -1,0 +1,405 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "b29c0ab4-cd3e-4b6f-b0d1-fec4bd7ef27f",
+  "description": "This is meant to be an assistant to make investigating latencies and performance differences easy and clear for users. ",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "4403f297-0c9e-42a8-bd1d-861062970781",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "Batch Manager Performance Drill Down",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "30482ada-2c1d-4538-9a33-efcffe0fc5cc",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "da2568d9-40ec-43f6-a247-da9bf9b8d5e9",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 6,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Table",
+                "id": "dcc9f81c-d38c-4b80-8e05-ec373437dabc",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Queue Processing Percentiles",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "7e942d7c-4e7c-4bc1-97ec-44ddf4889f14",
+                    "idForPopups": "7e942d7c-4e7c-4bc1-97ec-44ddf4889f14",
+                    "groupId": "8047eac5-299c-47d1-b68c-37b93dbe12b4",
+                    "majorVersion": 1,
+                    "minorVersion": 0,
+                    "serviceId": "NRP",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryFrom",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryTo",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "region",
+                        "externalSourceName": "Region",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "subscriptionId",
+                        "externalSourceName": "Subscription",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "These durations are in milliseconds. Most jobs take a few milliseconds to complete, and most large operations should take a few seconds to complete. Anything off the charts (to the order of 10k ms) is concerning.",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "Table",
+                "id": "101f72e1-780c-47fb-99ef-2e3f042c79e8",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Batch Sizes",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "1bdf395d-25f7-4252-8cd9-78cafce13cf6",
+                    "idForPopups": "1bdf395d-25f7-4252-8cd9-78cafce13cf6",
+                    "groupId": "934f889c-053b-493d-a0f9-13b065f7f4b5",
+                    "majorVersion": 1,
+                    "minorVersion": 0,
+                    "serviceId": "NRP",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryFrom",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryTo",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "region",
+                        "externalSourceName": "Region",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "subscription",
+                        "externalSourceName": "Subscription",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          },
+          {
+            "type": "Column",
+            "id": "690eaeab-bfaa-4e99-9fee-0fe5a121add4",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 6,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "TimeSeries",
+                "id": "37d7f02b-dd9f-4a4f-8bcd-3cf0af68a9e2",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Long Running Jobs",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "985fbe96-9dfe-40f7-9280-f0bc980c1605",
+                    "idForPopups": "985fbe96-9dfe-40f7-9280-f0bc980c1605",
+                    "groupId": "9ee40a84-bb1a-4886-b214-c6fbfcb061bc",
+                    "majorVersion": 1,
+                    "minorVersion": 0,
+                    "serviceId": "NRP",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryFrom",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryTo",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "region",
+                        "externalSourceName": "Region",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "subscriptionId",
+                        "externalSourceName": "Subscription",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "Spikes here typically indicate poisonous jobs. One huge spike could cause all x jobs (typically 100) in a batch to time out or for a whole batch of jobs to be slow due to transitive blocking or the convoy effect. ",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 7,
+  "basedOnVersionId": "06b717d8-ff9c-4941-a048-49cefbdbdcd3",
+  "groupId": "918f6662-54d4-443b-bcef-bfd2c1164ab8",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "Region",
+      "description": "",
+      "type": "enum",
+      "userControl": {
+        "type": "Dropdown",
+        "options": {
+          "userControlOptions": "{\"source\":\"PredefinedValues\",\"options\":[{\"name\":\"all\",\"description\":\"\"},{\"name\":\"asiaeast\",\"description\":\"\"},{\"name\":\"asiasoutheast\",\"description\":\"\"},{\"name\":\"australiac\",\"description\":\"\"},{\"name\":\"australiac2\",\"description\":\"\"},{\"name\":\"australiaeast\",\"description\":\"\"},{\"name\":\"australiasoutheast\",\"description\":\"\"},{\"name\":\"brazilse\",\"description\":\"\"},{\"name\":\"brazilsouth\",\"description\":\"\"},{\"name\":\"canadacentral\",\"description\":\"\"},{\"name\":\"canadaeast\",\"description\":\"\"},{\"name\":\"europenorth\",\"description\":\"\"},{\"name\":\"europewest\",\"description\":\"\"},{\"name\":\"francec\",\"description\":\"\"},{\"name\":\"frances\",\"description\":\"\"},{\"name\":\"germanyn\",\"description\":\"\"},{\"name\":\"germanywc\",\"description\":\"\"},{\"name\":\"indiacentral\",\"description\":\"\"},{\"name\":\"indiasouth\",\"description\":\"\"},{\"name\":\"indiawest\",\"description\":\"\"},{\"name\":\"israelc\",\"description\":\"\"},{\"name\":\"italyn\",\"description\":\"\"},{\"name\":\"japaneast\",\"description\":\"\"},{\"name\":\"japanwest\",\"description\":\"\"},{\"name\":\"jioinc\",\"description\":\"\"},{\"name\":\"jioinw\",\"description\":\"\"},{\"name\":\"koreacentral\",\"description\":\"\"},{\"name\":\"koreasouth\",\"description\":\"\"},{\"name\":\"malaysias\",\"description\":\"\"},{\"name\":\"mexicoc\",\"description\":\"\"},{\"name\":\"norwaye\",\"description\":\"\"},{\"name\":\"norwayw\",\"description\":\"\"},{\"name\":\"polandc\",\"description\":\"\"},{\"name\":\"qatarc\",\"description\":\"\"},{\"name\":\"southafrican\",\"description\":\"\"},{\"name\":\"southafricaw\",\"description\":\"\"},{\"name\":\"spainc\",\"description\":\"\"},{\"name\":\"swedenc\",\"description\":\"\"},{\"name\":\"swedens\",\"description\":\"\"},{\"name\":\"switzerlandn\",\"description\":\"\"},{\"name\":\"switzerlandw\",\"description\":\"\"},{\"name\":\"taiwann\",\"description\":\"\"},{\"name\":\"taiwannw\",\"description\":\"\"},{\"name\":\"uaec\",\"description\":\"\"},{\"name\":\"uaen\",\"description\":\"\"},{\"name\":\"uksouth\",\"description\":\"\"},{\"name\":\"ukwest\",\"description\":\"\"},{\"name\":\"uscentral\",\"description\":\"\"},{\"name\":\"uscentraleuap\",\"description\":\"\"},{\"name\":\"useast\",\"description\":\"\"},{\"name\":\"useast2\",\"description\":\"\"},{\"name\":\"useast2euap\",\"description\":\"\"},{\"name\":\"usnorth\",\"description\":\"\"},{\"name\":\"ussouth\",\"description\":\"\"},{\"name\":\"usstagee\",\"description\":\"\"},{\"name\":\"usstagesc\",\"description\":\"\"},{\"name\":\"uswest\",\"description\":\"\"},{\"name\":\"uswest2\",\"description\":\"\"},{\"name\":\"uswest3\",\"description\":\"\"},{\"name\":\"uswest_Validation\",\"description\":\"\"},{\"name\":\"uswestcentral\",\"description\":\"\"}]}"
+        }
+      },
+      "default": "useast2euap",
+      "optional": false,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[{\"name\":\"all\",\"description\":\"\"},{\"name\":\"asiaeast\",\"description\":\"\"},{\"name\":\"asiasoutheast\",\"description\":\"\"},{\"name\":\"australiac\",\"description\":\"\"},{\"name\":\"australiac2\",\"description\":\"\"},{\"name\":\"australiaeast\",\"description\":\"\"},{\"name\":\"australiasoutheast\",\"description\":\"\"},{\"name\":\"brazilse\",\"description\":\"\"},{\"name\":\"brazilsouth\",\"description\":\"\"},{\"name\":\"canadacentral\",\"description\":\"\"},{\"name\":\"canadaeast\",\"description\":\"\"},{\"name\":\"europenorth\",\"description\":\"\"},{\"name\":\"europewest\",\"description\":\"\"},{\"name\":\"francec\",\"description\":\"\"},{\"name\":\"frances\",\"description\":\"\"},{\"name\":\"germanyn\",\"description\":\"\"},{\"name\":\"germanywc\",\"description\":\"\"},{\"name\":\"indiacentral\",\"description\":\"\"},{\"name\":\"indiasouth\",\"description\":\"\"},{\"name\":\"indiawest\",\"description\":\"\"},{\"name\":\"israelc\",\"description\":\"\"},{\"name\":\"italyn\",\"description\":\"\"},{\"name\":\"japaneast\",\"description\":\"\"},{\"name\":\"japanwest\",\"description\":\"\"},{\"name\":\"jioinc\",\"description\":\"\"},{\"name\":\"jioinw\",\"description\":\"\"},{\"name\":\"koreacentral\",\"description\":\"\"},{\"name\":\"koreasouth\",\"description\":\"\"},{\"name\":\"malaysias\",\"description\":\"\"},{\"name\":\"mexicoc\",\"description\":\"\"},{\"name\":\"norwaye\",\"description\":\"\"},{\"name\":\"norwayw\",\"description\":\"\"},{\"name\":\"polandc\",\"description\":\"\"},{\"name\":\"qatarc\",\"description\":\"\"},{\"name\":\"southafrican\",\"description\":\"\"},{\"name\":\"southafricaw\",\"description\":\"\"},{\"name\":\"spainc\",\"description\":\"\"},{\"name\":\"swedenc\",\"description\":\"\"},{\"name\":\"swedens\",\"description\":\"\"},{\"name\":\"switzerlandn\",\"description\":\"\"},{\"name\":\"switzerlandw\",\"description\":\"\"},{\"name\":\"taiwann\",\"description\":\"\"},{\"name\":\"taiwannw\",\"description\":\"\"},{\"name\":\"uaec\",\"description\":\"\"},{\"name\":\"uaen\",\"description\":\"\"},{\"name\":\"uksouth\",\"description\":\"\"},{\"name\":\"ukwest\",\"description\":\"\"},{\"name\":\"uscentral\",\"description\":\"\"},{\"name\":\"uscentraleuap\",\"description\":\"\"},{\"name\":\"useast\",\"description\":\"\"},{\"name\":\"useast2\",\"description\":\"\"},{\"name\":\"useast2euap\",\"description\":\"\"},{\"name\":\"usnorth\",\"description\":\"\"},{\"name\":\"ussouth\",\"description\":\"\"},{\"name\":\"usstagee\",\"description\":\"\"},{\"name\":\"usstagesc\",\"description\":\"\"},{\"name\":\"uswest\",\"description\":\"\"},{\"name\":\"uswest2\",\"description\":\"\"},{\"name\":\"uswest3\",\"description\":\"\"},{\"name\":\"uswest_Validation\",\"description\":\"\"},{\"name\":\"uswestcentral\",\"description\":\"\"}]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "Subscription",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "default": "06579a5c-70c5-4a0e-b750-68e1c5ca8d47",
+      "optional": false,
+      "useTestValueAsDefault": true,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "OperationId",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "CorrelationRequestId",
+      "description": "",
+      "type": "uint",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "NRP",
+      "groupId": "8047eac5-299c-47d1-b68c-37b93dbe12b4",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "934f889c-053b-493d-a0f9-13b065f7f4b5",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "9ee40a84-bb1a-4886-b214-c6fbfcb061bc",
+      "entityType": "Query"
+    }
+  ],
+  "serviceId": "NRP",
+  "deleted": false,
+  "name": "Latency and Performance Investigation Dashboard",
+  "_ts": 1741723662,
+  "databaseSavedTimestamp": "2025-03-11T20:07:42+00:00",
+  "_etag": "\"0100756a-0000-0800-0000-67d0980e0000\"",
+  "createdAt": "2025-03-11T20:07:42.7686017+00:00",
+  "createdBy": "ericodoom@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "ericodoom@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2025-03-11T20:07:42.7686017+00:00",
+  "tags": []
+}

@@ -1,0 +1,103 @@
+[
+  {
+    "id": "be431171-3111-4262-b69d-b3ef8ac2deb5",
+    "name": "ListRpSectors",
+    "groupId": "9c02dbad-c15a-4d9f-b833-b2054e496d6c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Filter",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncContextActivity\r\n| where RPTenant == \"prod\"\r\n| distinct RPSector\r\n| extend Value = RPSector\r\n| project Value",
+    "params": [],
+    "schema": [
+      {
+        "name": "Value",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "be054a09-7c9e-40ef-acef-8b6c5b2b3f57",
+    "name": "PopReceipt Count Over Time - No VMSS",
+    "groupId": "1c942b1f-6258-4496-8aad-2b35a0c2fa69",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let interval = 1m;\r\nlet threshold = 80;\r\n// let targetSector = \"eastus\";\r\n// concurrent message limit\r\nAsyncContextActivity\r\n| where PreciseTimeStamp between ( queryFrom .. queryTo )\r\n| where RPTenant == \"prod\"\r\n| where RPSector == targetRegion\r\n| where  operationName != \"SourceImageTriggerEvaluationTask\"\r\n| summarize MessageInProcess = dcount(popReceipt) by bin(PreciseTimeStamp, interval), RPSector\r\n| extend Threshold = threshold\r\n| extend HalfThreshold = 0.5*threshold\r\n| render timechart with (title = \"PopReceipt Count Over Time\")\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-08-06T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-08-07T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "targetRegion",
+        "description": "",
+        "type": "string",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "eastus",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "MessageInProcess",
+        "type": "long"
+      },
+      {
+        "name": "Threshold",
+        "type": "long"
+      },
+      {
+        "name": "HalfThreshold",
+        "type": "real"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  }
+]

@@ -1,0 +1,148 @@
+{
+  "service": "Azure Compute Gallery",
+  "page": "Copy Statistics",
+  "pageId": "58adc32c-dc94-460f-8218-3b953701b3de",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "2342ca31-8069-4fa4-9708-90f92ecf3668",
+          "name": "Copy Speed",
+          "groupId": "851ae0bd-02a3-4354-abcc-0e8bbd014c92",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "crp_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "FastCopy",
+              "type": "real"
+            },
+            {
+              "name": "None",
+              "type": "real"
+            },
+            {
+              "name": "CopyV2",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "PirCasBlobCopyManagerEvent\r\n| where TIMESTAMP > ago(30d) and artifactCategory == \"SIGImage\"\r\n| where copyStatus == \"Success\" and isnotempty(replicationMetadata) and sourceBlobUri !contains \"http://fake.blobvalidation/\" and occupiedBlobSizeInBytes != 0\r\n| extend replicateMetadataObj=parse_json(replicationMetadata)\r\n| extend physicalSizeInGb = round(todouble(occupiedBlobSizeInBytes) / 1024 / 1024 /1024),timeSpent=totimespan(blobCopyDuration)/time(1s) \r\n| where physicalSizeInGb > 0\r\n| sort by physicalSizeInGb desc\r\n| project PreciseTimeStamp, physicalSizeInGb, blobCopyDuration, copyFlags, copyStaysAt0ByteDuration, timeSpent, speed=physicalSizeInGb*1024/timeSpent \r\n| summarize FastCopy=avgif(speed, copyFlags contains \"SystemPriorityCopy\"), \r\n            None=avgif(speed, copyFlags contains \"None\"), \r\n            CopyV2=avgif(speed, copyFlags == \"CopyV2\"), \r\n            min(PreciseTimeStamp), max(PreciseTimeStamp) by bin(PreciseTimeStamp, 1d)\r\n| project PreciseTimeStamp, FastCopy, None, CopyV2\r\n| render timechart",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.316Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

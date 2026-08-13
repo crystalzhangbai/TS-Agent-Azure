@@ -1,0 +1,192 @@
+[
+  {
+    "id": "804b81d2-189d-4fb8-9502-7da0e9eb1ede",
+    "name": "Retrieve Resource \"Operation Id\"",
+    "groupId": "528fc5d6-6511-4284-ad54-baf8f10f18f9",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "nrp",
+    "database": "mdsnrp",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent \r\n| where PreciseTimeStamp between(globalFrom .. globalTo)\r\n| where OperationId == local_OperationId\r\n| summarize arg_max(Sequence, *)\r\n| project StartTime, PreciseTimeStamp, CorrelationRequestId, OperationId, HttpMethod, ErrorCode, UserError, Success, ErrorDetails, TeamName, ResourceType, ResourceName, OperationName, Region, TraceSource, SubscriptionId, ResourceGroup, DurationInMilliseconds",
+    "params": [
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_OperationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "HttpMethod",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "UserError",
+        "type": "bool"
+      },
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "TeamName",
+        "type": "string"
+      },
+      {
+        "name": "ResourceType",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "TraceSource",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "DurationInMilliseconds",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "98f0fc94-e65b-457e-b460-13904344b87b",
+    "name": "Query FrontendOperationEtwEvent",
+    "groupId": "bc758d90-9872-4118-9620-4031e034cb6b",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "nrp",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontendOperationEtwEvent \r\n| where PreciseTimeStamp between (queryGlobalFrom .. queryGlobalTo)\r\n| where OperationId == queryOperationId\r\n| project PreciseTimeStamp, Level, EventCode, Message \r\n| order by PreciseTimeStamp asc ",
+    "params": [
+      {
+        "name": "queryGlobalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryGlobalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryOperationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

@@ -1,0 +1,283 @@
+[
+  {
+    "groupId": "8047eac5-299c-47d1-b68c-37b93dbe12b4",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Batch Manager Performance Drill Down",
+      "Queue Processing Percentiles"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Queue Processing Percentiles",
+    "queryId": "7e942d7c-4e7c-4bc1-97ec-44ddf4889f14",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subscriptionId",
+        "externalSourceName": "Subscription",
+        "required": false
+      }
+    ],
+    "name": "Queue Processing Percentiles",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "queueId",
+        "type": "string"
+      },
+      {
+        "name": "percentile_duration_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_95",
+        "type": "long"
+      },
+      {
+        "name": "percentile_duration_99",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "934f889c-053b-493d-a0f9-13b065f7f4b5",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Batch Manager Performance Drill Down",
+      "Batch Sizes"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Batch Sizes",
+    "queryId": "1bdf395d-25f7-4252-8cd9-78cafce13cf6",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subscription",
+        "externalSourceName": "Subscription",
+        "required": false
+      }
+    ],
+    "name": "Batch Sizes",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subscription",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "QueueId",
+        "type": "string"
+      },
+      {
+        "name": "percentile_batchsize_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_batchsize_99_9",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9ee40a84-bb1a-4886-b214-c6fbfcb061bc",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Batch Manager Performance Drill Down",
+      "Long Running Jobs"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Long Running Jobs",
+    "queryId": "985fbe96-9dfe-40f7-9280-f0bc980c1605",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "Region",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subscriptionId",
+        "externalSourceName": "Subscription",
+        "required": false
+      }
+    ],
+    "name": "Long Running Jobs",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "JobName",
+        "type": "string"
+      },
+      {
+        "name": "JobId",
+        "type": "string"
+      },
+      {
+        "name": "avg_jobDuration",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  }
+]

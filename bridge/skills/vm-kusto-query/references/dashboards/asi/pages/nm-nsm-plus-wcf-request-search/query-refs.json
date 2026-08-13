@@ -1,0 +1,190 @@
+[
+  {
+    "groupId": "5299dc36-6860-440c-9337-b12984a36e60",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "92fb9665-9111-42a3-853f-875ea611079c",
+    "inputMappings": [
+      {
+        "groupId": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_PreciseTimeStamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "groupId": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_TenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"NsmPlus WcfRequest Search\"",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "nsmplus",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "local_PreciseTimeStamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_TenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "action",
+        "type": "string"
+      },
+      {
+        "name": "additional",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1b69ec68-9c39-4229-a33a-daa9007c34d4",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "CoBeTimeline",
+    "widgetTitle": "",
+    "queryId": "c78c8e85-6e1b-41b4-83e4-5ee63d6f0cea",
+    "inputMappings": [
+      {
+        "groupId": "5299dc36-6860-440c-9337-b12984a36e60",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "groupId": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "TenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      }
+    ],
+    "name": "NsmPlusWcfRequest",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "nsmplus",
+    "type": "CoBeTimeline",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "TenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "11297adb-3a3e-4c91-9c26-cbfe1a6915d0",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "NsmPlus TraceLog"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "9970de38-fad3-4ea3-845a-95289c999abc",
+    "inputMappings": [
+      {
+        "groupId": "5299dc36-6860-440c-9337-b12984a36e60",
+        "majorVersion": 1,
+        "minorVersion": 1,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "PreciseTimeStamp",
+        "required": false
+      },
+      {
+        "groupId": "5299dc36-6860-440c-9337-b12984a36e60",
+        "majorVersion": 1,
+        "minorVersion": 1,
+        "internalDestinationName": "TenantName",
+        "externalSourceName": "TenantName",
+        "required": false
+      }
+    ],
+    "name": "NsmPlus TraceLog",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "nsmplus",
+    "type": "Table",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "TenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "text",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

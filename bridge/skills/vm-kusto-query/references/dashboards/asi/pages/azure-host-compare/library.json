@@ -1,0 +1,4370 @@
+{
+  "service": "Azure Host",
+  "page": "Azure Host Compare",
+  "pageId": "93bad27b-2bb1-42f1-8d85-3865ce2578b5",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "File Versions > FileVersions": {
+      "panelPath": [
+        "File Versions",
+        "FileVersions"
+      ],
+      "queries": [
+        {
+          "id": "583dfbfe-0ee0-481f-a85f-a022acbff766",
+          "name": "Azure Host FileVersion Compare",
+          "groupId": "c86916f9-ac4d-4507-bbfa-672c0ba3a896",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "SharedWorkspace",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "FileVersions",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId1",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "Time2From",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "Time2To",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId2",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "FileName",
+              "type": "string"
+            },
+            {
+              "name": "Node1_version",
+              "type": "string"
+            },
+            {
+              "name": "Node2_version",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId1",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "Time2From",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "Time2To",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId2",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "GetFileVersion(nodeId1, queryFrom, queryTo)\r\n| join kind=fullouter(\r\n    GetFileVersion(nodeId2, Time2From, Time2To)\r\n) on FileName\r\n| project FileName, Node1_version = FileVersion, Node2_version = FileVersion1\r\n| extend level = case(Node1_version != Node2_version, \"warning\", \"info\")\r\n| sort by level desc ",
+          "panelPath": [
+            "File Versions",
+            "FileVersions"
+          ]
+        }
+      ]
+    },
+    "File Versions > PF Services": {
+      "panelPath": [
+        "File Versions",
+        "PF Services"
+      ],
+      "queries": [
+        {
+          "id": "96a77811-7430-481e-94f2-f701e39eac43",
+          "name": "Azure Host PF Services Compare",
+          "groupId": "b83d7c8f-83df-47b2-8e49-6baa88e73280",
+          "majorVersion": 1,
+          "minorVersion": 5,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "AutopilotDeployment",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "PF Services",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId1",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "Time2From",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "Time2To",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId2",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "ServiceName",
+              "type": "string"
+            },
+            {
+              "name": "Node1_version",
+              "type": "string"
+            },
+            {
+              "name": "Node2_version",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId1",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "Time2From",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "Time2To",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId2",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "ServiceManagerInstrumentation\r\n| where PreciseTimeStamp between ((queryFrom - 2h) .. (queryTo + 2h)) and NodeId == nodeId1\r\n| summarize arg_max(PreciseTimeStamp, *) by ServiceName\r\n| project ServiceName, ServiceVersion\r\n| join kind=inner(\r\n    ServiceManagerInstrumentation\r\n    | where PreciseTimeStamp between ((Time2From - 2h) .. (Time2To + 2h)) and NodeId == nodeId2\r\n    | summarize arg_max(PreciseTimeStamp, *) by ServiceName\r\n    | project ServiceName, ServiceVersion\r\n) on ServiceName\r\n| project ServiceName, Node1_version = ServiceVersion, Node2_version = ServiceVersion1\r\n| extend level = case(Node1_version != Node2_version, \"warning\", \"info\")\r\n| sort by ServiceName desc\r\n| sort by level desc \r\n",
+          "panelPath": [
+            "File Versions",
+            "PF Services"
+          ]
+        }
+      ]
+    },
+    "Host Charts > Available Memory {{nodeId1}}": {
+      "panelPath": [
+        "Host Charts",
+        "Available Memory {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "31488d5c-44a4-4f36-b266-d79f13f41443",
+          "name": "Azure Host Node Available Memory",
+          "groupId": "0ca50a8c-647c-4454-a506-a2c72cff6580",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Available Memory {{nodeId1}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimestampUtc",
+              "type": "datetime"
+            },
+            {
+              "name": "Average",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let query = strcat(@\"metricNamespace('HostAgent.Counters').metric('\\\\Memory\\\\Available MBytes').dimensions('NodeID','Cluster').samplingTypes('Average', 'Count') | where NodeID == '\", nodeId, \"'\");\r\nevaluate geneva_metrics_request(\"RDOS\", query, startTime, endTime)\r\n| where column_ifexists(\"Count\", 0) > 0\r\n| project TimestampUtc = column_ifexists(\"TimestampUtc\", 0), Average = column_ifexists(\"Average\", 0)",
+          "panelPath": [
+            "Host Charts",
+            "Available Memory {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "Host Charts > Available Memory {{nodeId2}}": {
+      "panelPath": [
+        "Host Charts",
+        "Available Memory {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "31488d5c-44a4-4f36-b266-d79f13f41443",
+          "name": "Azure Host Node Available Memory",
+          "groupId": "0ca50a8c-647c-4454-a506-a2c72cff6580",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Available Memory {{nodeId2}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimestampUtc",
+              "type": "datetime"
+            },
+            {
+              "name": "Average",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let query = strcat(@\"metricNamespace('HostAgent.Counters').metric('\\\\Memory\\\\Available MBytes').dimensions('NodeID','Cluster').samplingTypes('Average', 'Count') | where NodeID == '\", nodeId, \"'\");\r\nevaluate geneva_metrics_request(\"RDOS\", query, startTime, endTime)\r\n| where column_ifexists(\"Count\", 0) > 0\r\n| project TimestampUtc = column_ifexists(\"TimestampUtc\", 0), Average = column_ifexists(\"Average\", 0)",
+          "panelPath": [
+            "Host Charts",
+            "Available Memory {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "Host Charts > Host CPU Node 1 ({{nodeId1}})": {
+      "panelPath": [
+        "Host Charts",
+        "Host CPU Node 1 ({{nodeId1}})"
+      ],
+      "queries": [
+        {
+          "id": "e12de5fc-078b-46f3-94ac-688d5787c762",
+          "name": "Azure Host VP CPU",
+          "groupId": "3b4ec648-778c-416c-b049-d3c1ceb160df",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Host CPU Node 1 ({{nodeId1}})",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimestampUtc",
+              "type": "datetime"
+            },
+            {
+              "name": "Average",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let query = strcat(@\"metricNamespace('OS.Counters').metric('\\\\Hyper-V Hypervisor Root Virtual Processor(_Total)\\\\% Total Run Time').dimensions('NodeID').samplingTypes('Average', 'Count') | where NodeID == '\", nodeId, \"'\");\r\nevaluate geneva_metrics_request(\"RDOS\", query, startTime, endTime)\r\n| where column_ifexists(\"Count\", 0) > 0\r\n| project TimestampUtc = column_ifexists(\"TimestampUtc\", 0), Average = column_ifexists(\"Average\", 0)",
+          "panelPath": [
+            "Host Charts",
+            "Host CPU Node 1 ({{nodeId1}})"
+          ]
+        }
+      ]
+    },
+    "Host Charts > Host CPU Node 2 ({{nodeId2}})": {
+      "panelPath": [
+        "Host Charts",
+        "Host CPU Node 2 ({{nodeId2}})"
+      ],
+      "queries": [
+        {
+          "id": "e12de5fc-078b-46f3-94ac-688d5787c762",
+          "name": "Azure Host VP CPU",
+          "groupId": "3b4ec648-778c-416c-b049-d3c1ceb160df",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Host CPU Node 2 ({{nodeId2}})",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimestampUtc",
+              "type": "datetime"
+            },
+            {
+              "name": "Average",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let query = strcat(@\"metricNamespace('OS.Counters').metric('\\\\Hyper-V Hypervisor Root Virtual Processor(_Total)\\\\% Total Run Time').dimensions('NodeID').samplingTypes('Average', 'Count') | where NodeID == '\", nodeId, \"'\");\r\nevaluate geneva_metrics_request(\"RDOS\", query, startTime, endTime)\r\n| where column_ifexists(\"Count\", 0) > 0\r\n| project TimestampUtc = column_ifexists(\"TimestampUtc\", 0), Average = column_ifexists(\"Average\", 0)",
+          "panelPath": [
+            "Host Charts",
+            "Host CPU Node 2 ({{nodeId2}})"
+          ]
+        }
+      ]
+    },
+    "Host Charts > Jitter Trend for {{nodeId1}}": {
+      "panelPath": [
+        "Host Charts",
+        "Jitter Trend for {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "50969e85-d00b-41fe-a222-0eafb9fa7778",
+          "name": "CPU Jitter (High granularity)",
+          "groupId": "3a5cb5ca-3001-4a18-be09-77ecbeab746b",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "intmgmtshared.centralus.kusto.windows.net",
+          "database": "Fleet",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Jitter Trend for {{nodeId1}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "nodeCpuJitterScoreV1",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "NodeCpuJitterBaseView_prod(startTime, endTime) \r\n| where  NodeId =~ nodeId \r\n| project Timestamp, nodeCpuJitterScoreV1 = CpuJitterScoreV1\r\n| render timechart \r\n",
+          "panelPath": [
+            "Host Charts",
+            "Jitter Trend for {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "Host Charts > Jitter Trend for {{nodeId2}}": {
+      "panelPath": [
+        "Host Charts",
+        "Jitter Trend for {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "50969e85-d00b-41fe-a222-0eafb9fa7778",
+          "name": "CPU Jitter (High granularity)",
+          "groupId": "3a5cb5ca-3001-4a18-be09-77ecbeab746b",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "intmgmtshared.centralus.kusto.windows.net",
+          "database": "Fleet",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Jitter Trend for {{nodeId2}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "nodeCpuJitterScoreV1",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "NodeCpuJitterBaseView_prod(startTime, endTime) \r\n| where  NodeId =~ nodeId \r\n| project Timestamp, nodeCpuJitterScoreV1 = CpuJitterScoreV1\r\n| render timechart \r\n",
+          "panelPath": [
+            "Host Charts",
+            "Jitter Trend for {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "Host Charts > Nonpaged Pool Bytes for {{nodeId1}}": {
+      "panelPath": [
+        "Host Charts",
+        "Nonpaged Pool Bytes for {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "4ecab5a6-5e77-4885-bed5-ec3971ceb60f",
+          "name": "Azure Host Node NPP Bytes",
+          "groupId": "2b139ab0-d3fb-4666-9c0c-9c28e9fd1a4c",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Nonpaged Pool Bytes for {{nodeId1}}",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimestampUtc",
+              "type": "datetime"
+            },
+            {
+              "name": "Average",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let query = strcat(@\"metricNamespace('OS.Counters').metric('\\\\Memory\\\\Pool Nonpaged Bytes').dimensions('NodeID','Cluster').samplingTypes('Average', 'Count') | where NodeID == '\", nodeId, \"'\");\r\nevaluate geneva_metrics_request(\"RDOS\", query, startTime, endTime)\r\n| where column_ifexists(\"Count\", 0) > 0\r\n| project TimestampUtc = column_ifexists(\"TimestampUtc\", 0), Average = column_ifexists(\"Average\", 0)",
+          "panelPath": [
+            "Host Charts",
+            "Nonpaged Pool Bytes for {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "Host Charts > Nonpaged Pool Bytes for {{nodeId2}}": {
+      "panelPath": [
+        "Host Charts",
+        "Nonpaged Pool Bytes for {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "4ecab5a6-5e77-4885-bed5-ec3971ceb60f",
+          "name": "Azure Host Node NPP Bytes",
+          "groupId": "2b139ab0-d3fb-4666-9c0c-9c28e9fd1a4c",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Nonpaged Pool Bytes for {{nodeId2}}",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimestampUtc",
+              "type": "datetime"
+            },
+            {
+              "name": "Average",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let query = strcat(@\"metricNamespace('OS.Counters').metric('\\\\Memory\\\\Pool Nonpaged Bytes').dimensions('NodeID','Cluster').samplingTypes('Average', 'Count') | where NodeID == '\", nodeId, \"'\");\r\nevaluate geneva_metrics_request(\"RDOS\", query, startTime, endTime)\r\n| where column_ifexists(\"Count\", 0) > 0\r\n| project TimestampUtc = column_ifexists(\"TimestampUtc\", 0), Average = column_ifexists(\"Average\", 0)",
+          "panelPath": [
+            "Host Charts",
+            "Nonpaged Pool Bytes for {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "Host Charts > Process Total Handle Count for {{nodeId1}}": {
+      "panelPath": [
+        "Host Charts",
+        "Process Total Handle Count for {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "c0e8c656-1c3d-4b66-9d5c-d9564ef8f819",
+          "name": "Azure Host Node Process Handle Count",
+          "groupId": "b0c2c1ce-357f-4a3a-aa93-7971d2afa672",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Process Total Handle Count for {{nodeId1}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimestampUtc",
+              "type": "datetime"
+            },
+            {
+              "name": "Average",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let query = strcat(@\"metricNamespace('OS.Counters').metric('\\\\Process(_Total)\\\\Handle Count').dimensions('NodeID','Cluster').samplingTypes('Average', 'Count') | where NodeID == '\", nodeId, \"'\");\r\nevaluate geneva_metrics_request(\"RDOS\", query, startTime, endTime)\r\n| where column_ifexists(\"Count\", 0) > 0\r\n| project TimestampUtc = column_ifexists(\"TimestampUtc\", 0), Average = column_ifexists(\"Average\", 0)",
+          "panelPath": [
+            "Host Charts",
+            "Process Total Handle Count for {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "Host Charts > Process Total Handle Count for {{nodeId2}}": {
+      "panelPath": [
+        "Host Charts",
+        "Process Total Handle Count for {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "c0e8c656-1c3d-4b66-9d5c-d9564ef8f819",
+          "name": "Azure Host Node Process Handle Count",
+          "groupId": "b0c2c1ce-357f-4a3a-aa93-7971d2afa672",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Process Total Handle Count for {{nodeId2}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimestampUtc",
+              "type": "datetime"
+            },
+            {
+              "name": "Average",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let query = strcat(@\"metricNamespace('OS.Counters').metric('\\\\Process(_Total)\\\\Handle Count').dimensions('NodeID','Cluster').samplingTypes('Average', 'Count') | where NodeID == '\", nodeId, \"'\");\r\nevaluate geneva_metrics_request(\"RDOS\", query, startTime, endTime)\r\n| where column_ifexists(\"Count\", 0) > 0\r\n| project TimestampUtc = column_ifexists(\"TimestampUtc\", 0), Average = column_ifexists(\"Average\", 0)",
+          "panelPath": [
+            "Host Charts",
+            "Process Total Handle Count for {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "Host Details > Node1 Details": {
+      "panelPath": [
+        "Host Details",
+        "Node1 Details"
+      ],
+      "queries": [
+        {
+          "id": "bd7bc7e7-baac-475f-ad13-632415e7503e",
+          "name": "Retrieve Resource \"Azure Host Node\"",
+          "groupId": "b6116dad-fe82-4c09-bb35-ea14d7c1cd73",
+          "majorVersion": 13,
+          "minorVersion": 1,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Card",
+          "widgetTitle": "Node1 Details",
+          "params": [
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "ipAddress",
+              "type": "string"
+            },
+            {
+              "name": "containerCount",
+              "type": "string"
+            },
+            {
+              "name": "HostOsVhd",
+              "type": "string"
+            },
+            {
+              "name": "AgentPackage",
+              "type": "string"
+            },
+            {
+              "name": "diskConfiguration",
+              "type": "string"
+            },
+            {
+              "name": "machinePoolName",
+              "type": "string"
+            },
+            {
+              "name": "tipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\r\n| where PreciseTimeStamp between ((globalFrom - 1h) .. (globalTo + 1h)) and nodeId == local_nodeId\r\n| summarize arg_max(PreciseTimeStamp, Region, Tenant, DataCenterName, nodeId, ipAddress, containerCount, diskConfiguration, machinePoolName, tipNodeSessionId) by hostingEnvironment\r\n| extend hostingEnvironment = parse_json(hostingEnvironment)\r\n| extend HostOsVhd = tostring(hostingEnvironment.OSBaseImageName), AgentPackage = tostring(hostingEnvironment.AgentPackageName), ipAddress\r\n| distinct Region, Tenant, DataCenterName, nodeId, ipAddress, containerCount, HostOsVhd, AgentPackage, diskConfiguration, machinePoolName, tipNodeSessionId\r\n| extend globalFrom = globalFrom",
+          "panelPath": [
+            "Host Details",
+            "Node1 Details"
+          ]
+        },
+        {
+          "id": "73db43d8-23bc-4f70-9a34-f8710b9f8287",
+          "name": "Retrieve Node Hardware Details",
+          "groupId": "7fa921c5-2e68-4f9e-a0a2-a56e36fe33c7",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azuredcm.kusto.windows.net",
+          "database": "AzureDCMDb",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Node1 Details",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Sku",
+              "type": "string"
+            },
+            {
+              "name": "Manufacturer",
+              "type": "string"
+            },
+            {
+              "name": "Model",
+              "type": "string"
+            },
+            {
+              "name": "PhysicalCoreCount",
+              "type": "int"
+            },
+            {
+              "name": "Total_LP",
+              "type": "int"
+            },
+            {
+              "name": "Total_RootVP",
+              "type": "int"
+            },
+            {
+              "name": "Hostname",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster(\"azuredcm.kusto.windows.net\").database(\"AzureDCMDb\").RdmResourceSnapshot\r\n| where ResourceId == local_nodeId and PreciseTimeStamp > ago(1d)\r\n| summarize arg_max(PreciseTimeStamp, Sku, Manufacturer, Model, ResourceId) by ResourceId\r\n| project Sku, Manufacturer, Model, ResourceId\r\n| join kind=leftouter(\r\n    cluster(\"azuredcm.kusto.windows.net\").database(\"AzureDCMDb\").dcmInventoryComponentSystemDirect \r\n    | where NodeId == local_nodeId\r\n    | extend Total_RootVP = case(HyperVCore_MinRoot == 0, HyperVCore_PhysicalCoreCount, HyperVCore_MinRoot) \r\n    | project NodeId, PhysicalCoreCount = HyperVCore_PhysicalCoreCount, Total_LP = HyperVCore_LogicalCoreCount, Total_RootVP, Hostname | take 1\r\n) on $left.ResourceId == $right.NodeId\r\n| project-away ResourceId, NodeId\r\n//| extend globalFrom = globalFrom",
+          "panelPath": [
+            "Host Details",
+            "Node1 Details"
+          ]
+        },
+        {
+          "id": "3e0a279b-59e8-4529-b3d2-e25e55040766",
+          "name": "Host OS Version",
+          "groupId": "0be02afd-b9f6-48ef-92f7-5c181bf92b52",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "wdgeventstore.kusto.windows.net",
+          "database": "HostOSDeploy",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Node1 Details",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "HostOS",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('wdgeventstore.kusto.windows.net').database('HostOSDeploy').nodes\r\n| where nodeId == local_nodeId\r\n| distinct nodeId, HostOS = OSVersion | take 1 | project HostOS",
+          "panelPath": [
+            "Host Details",
+            "Node1 Details"
+          ]
+        }
+      ]
+    },
+    "Host Details > Node2 Details": {
+      "panelPath": [
+        "Host Details",
+        "Node2 Details"
+      ],
+      "queries": [
+        {
+          "id": "bd7bc7e7-baac-475f-ad13-632415e7503e",
+          "name": "Retrieve Resource \"Azure Host Node\"",
+          "groupId": "b6116dad-fe82-4c09-bb35-ea14d7c1cd73",
+          "majorVersion": 13,
+          "minorVersion": 1,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Card",
+          "widgetTitle": "Node2 Details",
+          "params": [
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "ipAddress",
+              "type": "string"
+            },
+            {
+              "name": "containerCount",
+              "type": "string"
+            },
+            {
+              "name": "HostOsVhd",
+              "type": "string"
+            },
+            {
+              "name": "AgentPackage",
+              "type": "string"
+            },
+            {
+              "name": "diskConfiguration",
+              "type": "string"
+            },
+            {
+              "name": "machinePoolName",
+              "type": "string"
+            },
+            {
+              "name": "tipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\r\n| where PreciseTimeStamp between ((globalFrom - 1h) .. (globalTo + 1h)) and nodeId == local_nodeId\r\n| summarize arg_max(PreciseTimeStamp, Region, Tenant, DataCenterName, nodeId, ipAddress, containerCount, diskConfiguration, machinePoolName, tipNodeSessionId) by hostingEnvironment\r\n| extend hostingEnvironment = parse_json(hostingEnvironment)\r\n| extend HostOsVhd = tostring(hostingEnvironment.OSBaseImageName), AgentPackage = tostring(hostingEnvironment.AgentPackageName), ipAddress\r\n| distinct Region, Tenant, DataCenterName, nodeId, ipAddress, containerCount, HostOsVhd, AgentPackage, diskConfiguration, machinePoolName, tipNodeSessionId\r\n| extend globalFrom = globalFrom",
+          "panelPath": [
+            "Host Details",
+            "Node2 Details"
+          ]
+        },
+        {
+          "id": "73db43d8-23bc-4f70-9a34-f8710b9f8287",
+          "name": "Retrieve Node Hardware Details",
+          "groupId": "7fa921c5-2e68-4f9e-a0a2-a56e36fe33c7",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azuredcm.kusto.windows.net",
+          "database": "AzureDCMDb",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Node2 Details",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Sku",
+              "type": "string"
+            },
+            {
+              "name": "Manufacturer",
+              "type": "string"
+            },
+            {
+              "name": "Model",
+              "type": "string"
+            },
+            {
+              "name": "PhysicalCoreCount",
+              "type": "int"
+            },
+            {
+              "name": "Total_LP",
+              "type": "int"
+            },
+            {
+              "name": "Total_RootVP",
+              "type": "int"
+            },
+            {
+              "name": "Hostname",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster(\"azuredcm.kusto.windows.net\").database(\"AzureDCMDb\").RdmResourceSnapshot\r\n| where ResourceId == local_nodeId and PreciseTimeStamp > ago(1d)\r\n| summarize arg_max(PreciseTimeStamp, Sku, Manufacturer, Model, ResourceId) by ResourceId\r\n| project Sku, Manufacturer, Model, ResourceId\r\n| join kind=leftouter(\r\n    cluster(\"azuredcm.kusto.windows.net\").database(\"AzureDCMDb\").dcmInventoryComponentSystemDirect \r\n    | where NodeId == local_nodeId\r\n    | extend Total_RootVP = case(HyperVCore_MinRoot == 0, HyperVCore_PhysicalCoreCount, HyperVCore_MinRoot) \r\n    | project NodeId, PhysicalCoreCount = HyperVCore_PhysicalCoreCount, Total_LP = HyperVCore_LogicalCoreCount, Total_RootVP, Hostname | take 1\r\n) on $left.ResourceId == $right.NodeId\r\n| project-away ResourceId, NodeId\r\n//| extend globalFrom = globalFrom",
+          "panelPath": [
+            "Host Details",
+            "Node2 Details"
+          ]
+        },
+        {
+          "id": "3e0a279b-59e8-4529-b3d2-e25e55040766",
+          "name": "Host OS Version",
+          "groupId": "0be02afd-b9f6-48ef-92f7-5c181bf92b52",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "wdgeventstore.kusto.windows.net",
+          "database": "HostOSDeploy",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Node2 Details",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "HostOS",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('wdgeventstore.kusto.windows.net').database('HostOSDeploy').nodes\r\n| where nodeId == local_nodeId\r\n| distinct nodeId, HostOS = OSVersion | take 1 | project HostOS",
+          "panelPath": [
+            "Host Details",
+            "Node2 Details"
+          ]
+        }
+      ]
+    },
+    "Host Details > VMs running in {{nodeId1}}": {
+      "panelPath": [
+        "Host Details",
+        "VMs running in {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "e9c1d2a7-24f8-4846-ae19-a6fedd5a99b4",
+          "name": "Azure Host Running VMs Query",
+          "groupId": "b6cd7436-9b01-42ef-aeb1-5ff1377518bf",
+          "majorVersion": 3,
+          "minorVersion": 7,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VMs running in {{nodeId1}}",
+          "params": [
+            {
+              "name": "nodeIdStr",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "creationTime",
+              "type": "datetime"
+            },
+            {
+              "name": "lastKnownTime",
+              "type": "datetime"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "DiskControlerType",
+              "type": "string"
+            },
+            {
+              "name": "containerType",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionName",
+              "type": "string"
+            },
+            {
+              "name": "CustomerName",
+              "type": "string"
+            },
+            {
+              "name": "VfId",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeIdStr",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let vmDetails = LogContainerSnapshot\r\n| where PreciseTimeStamp between ((startTime - 1h) .. (endTime + 1h)) and nodeId == nodeIdStr\r\n| extend DiskControlerType = tostring(parse_json(additionalContainerProperties).DiskControllerType) \r\n| union (\r\n    cluster('storageclient.eastus.kusto.windows.net').database('AzureCP').MycroftContainerSnapshot\r\n    | where PreciseTimeStamp between ((startTime - 1h) .. (endTime + 1h)) and NodeId == nodeIdStr and isnotempty(RoleInstanceName)\r\n    | extend containerId = ContainerId, creationTime = tostring(CreationTime), roleInstanceName = RoleInstanceName, \r\n         subscriptionId = SubscriptionId, containerType = PolicyName, virtualMachineUniqueId = VirtualMachineUniqueId,\r\n         nodeId = NodeId, tipNodeSessionId = TipNodeSessionId, tenantName = TenantName, availabilitySetName = AvailabilitySetName,\r\n         billingType = \"\", roleType = RoleType, additionalContainerProperties = AdditionalContainerProperties, Tenant = ClusterName\r\n)\r\n| summarize arg_max(PreciseTimeStamp, creationTime, roleInstanceName, subscriptionId, containerType, virtualMachineUniqueId, nodeId, DiskControlerType) by containerId\r\n| extend creationTime = todatetime(creationTime), lastKnownTime = PreciseTimeStamp, DiskControlerType = case(isnotempty(DiskControlerType), DiskControlerType, containerType contains \"_v6\", \"NVMe\", \"SCSI\")\r\n| project creationTime, lastKnownTime, roleInstanceName, DiskControlerType, containerType, containerId, virtualMachineUniqueId, nodeId, subscriptionId;\r\nlet subscriptionDetailsDataStudio = cluster('datastudiostreaming').database('Shared').DataStudio_AzureSubscription_Snapshot\r\n| where SubscriptionId in~ ((vmDetails | distinct subscriptionId))\r\n| distinct SubscriptionId, SubscriptionName, CustomerName;\r\nlet subscriptionDetailsCustomerDomData = cluster('customerdomrptwus3prod.westus3').database('CustomerDomData').CustomerModel\r\n| where SubscriptionGuid_String in~ ((vmDetails | distinct subscriptionId))\r\n| distinct SubscriptionId = SubscriptionGuid_String, SubscriptionName = FriendlySubscriptionName, CloudCustomerName, TopParentName = TPNameTranslated;\r\nlet subscriptionDetails = union subscriptionDetailsDataStudio, subscriptionDetailsCustomerDomData\r\n| summarize take_anyif(SubscriptionName, isnotempty(SubscriptionName)), \r\n            take_anyif(CustomerName, isnotempty(CustomerName)), \r\n            take_anyif(CloudCustomerName, isnotempty(CloudCustomerName)), \r\n            take_anyif(TopParentName, isnotempty(TopParentName))\r\n            by SubscriptionId\r\n| distinct SubscriptionId, SubscriptionName, \r\n           CustomerName = case(isnotempty(CustomerName), CustomerName, isnotempty(CloudCustomerName), CloudCustomerName, isnotempty(TopParentName), TopParentName, strcat(SubscriptionName, ' ', CloudCustomerName, ' ', TopParentName));\r\nvmDetails | join kind = leftouter subscriptionDetails on $left.subscriptionId == $right.SubscriptionId\r\n| distinct creationTime, lastKnownTime, roleInstanceName, DiskControlerType, containerType, containerId, virtualMachineUniqueId, nodeId, subscriptionId, SubscriptionName, CustomerName\r\n| order by creationTime asc\r\n| join kind = leftouter (cluster('storageclient.eastus.kusto.windows.net').database('Fa').AsapMapVfIdToContainerIdOvl2(nodeIdStr, startTime, endTime)) on containerId\r\n| project-away containerId1;\r\n",
+          "panelPath": [
+            "Host Details",
+            "VMs running in {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "Host Details > VMs running in {{nodeId2}}": {
+      "panelPath": [
+        "Host Details",
+        "VMs running in {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "e9c1d2a7-24f8-4846-ae19-a6fedd5a99b4",
+          "name": "Azure Host Running VMs Query",
+          "groupId": "b6cd7436-9b01-42ef-aeb1-5ff1377518bf",
+          "majorVersion": 3,
+          "minorVersion": 7,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "VMs running in {{nodeId2}}",
+          "params": [
+            {
+              "name": "nodeIdStr",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "creationTime",
+              "type": "datetime"
+            },
+            {
+              "name": "lastKnownTime",
+              "type": "datetime"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "DiskControlerType",
+              "type": "string"
+            },
+            {
+              "name": "containerType",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionName",
+              "type": "string"
+            },
+            {
+              "name": "CustomerName",
+              "type": "string"
+            },
+            {
+              "name": "VfId",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeIdStr",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let vmDetails = LogContainerSnapshot\r\n| where PreciseTimeStamp between ((startTime - 1h) .. (endTime + 1h)) and nodeId == nodeIdStr\r\n| extend DiskControlerType = tostring(parse_json(additionalContainerProperties).DiskControllerType) \r\n| union (\r\n    cluster('storageclient.eastus.kusto.windows.net').database('AzureCP').MycroftContainerSnapshot\r\n    | where PreciseTimeStamp between ((startTime - 1h) .. (endTime + 1h)) and NodeId == nodeIdStr and isnotempty(RoleInstanceName)\r\n    | extend containerId = ContainerId, creationTime = tostring(CreationTime), roleInstanceName = RoleInstanceName, \r\n         subscriptionId = SubscriptionId, containerType = PolicyName, virtualMachineUniqueId = VirtualMachineUniqueId,\r\n         nodeId = NodeId, tipNodeSessionId = TipNodeSessionId, tenantName = TenantName, availabilitySetName = AvailabilitySetName,\r\n         billingType = \"\", roleType = RoleType, additionalContainerProperties = AdditionalContainerProperties, Tenant = ClusterName\r\n)\r\n| summarize arg_max(PreciseTimeStamp, creationTime, roleInstanceName, subscriptionId, containerType, virtualMachineUniqueId, nodeId, DiskControlerType) by containerId\r\n| extend creationTime = todatetime(creationTime), lastKnownTime = PreciseTimeStamp, DiskControlerType = case(isnotempty(DiskControlerType), DiskControlerType, containerType contains \"_v6\", \"NVMe\", \"SCSI\")\r\n| project creationTime, lastKnownTime, roleInstanceName, DiskControlerType, containerType, containerId, virtualMachineUniqueId, nodeId, subscriptionId;\r\nlet subscriptionDetailsDataStudio = cluster('datastudiostreaming').database('Shared').DataStudio_AzureSubscription_Snapshot\r\n| where SubscriptionId in~ ((vmDetails | distinct subscriptionId))\r\n| distinct SubscriptionId, SubscriptionName, CustomerName;\r\nlet subscriptionDetailsCustomerDomData = cluster('customerdomrptwus3prod.westus3').database('CustomerDomData').CustomerModel\r\n| where SubscriptionGuid_String in~ ((vmDetails | distinct subscriptionId))\r\n| distinct SubscriptionId = SubscriptionGuid_String, SubscriptionName = FriendlySubscriptionName, CloudCustomerName, TopParentName = TPNameTranslated;\r\nlet subscriptionDetails = union subscriptionDetailsDataStudio, subscriptionDetailsCustomerDomData\r\n| summarize take_anyif(SubscriptionName, isnotempty(SubscriptionName)), \r\n            take_anyif(CustomerName, isnotempty(CustomerName)), \r\n            take_anyif(CloudCustomerName, isnotempty(CloudCustomerName)), \r\n            take_anyif(TopParentName, isnotempty(TopParentName))\r\n            by SubscriptionId\r\n| distinct SubscriptionId, SubscriptionName, \r\n           CustomerName = case(isnotempty(CustomerName), CustomerName, isnotempty(CloudCustomerName), CloudCustomerName, isnotempty(TopParentName), TopParentName, strcat(SubscriptionName, ' ', CloudCustomerName, ' ', TopParentName));\r\nvmDetails | join kind = leftouter subscriptionDetails on $left.subscriptionId == $right.SubscriptionId\r\n| distinct creationTime, lastKnownTime, roleInstanceName, DiskControlerType, containerType, containerId, virtualMachineUniqueId, nodeId, subscriptionId, SubscriptionName, CustomerName\r\n| order by creationTime asc\r\n| join kind = leftouter (cluster('storageclient.eastus.kusto.windows.net').database('Fa').AsapMapVfIdToContainerIdOvl2(nodeIdStr, startTime, endTime)) on containerId\r\n| project-away containerId1;\r\n",
+          "panelPath": [
+            "Host Details",
+            "VMs running in {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "Host Storage Charts > ASAP IO Stats for {{nodeId1}}": {
+      "panelPath": [
+        "Host Storage Charts",
+        "ASAP IO Stats for {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "6af8e9fa-6419-4b93-b6cf-83815c4ef648",
+          "name": "Azure Host Node ASAP 2.0 IO Stats",
+          "groupId": "47a2c8fd-8655-48da-8ed6-88cfb3a931c4",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "ASAP IO Stats for {{nodeId1}}",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OsDiagHostTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "IOPS",
+              "type": "real"
+            },
+            {
+              "name": "MBPS",
+              "type": "real"
+            },
+            {
+              "name": "ReadIOPS",
+              "type": "real"
+            },
+            {
+              "name": "WriteIOPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxReadIOPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxReadMBPS",
+              "type": "real"
+            },
+            {
+              "name": "QD",
+              "type": "real"
+            },
+            {
+              "name": "DeltaFoCompleted",
+              "type": "long"
+            },
+            {
+              "name": "DeltaPoCompleted",
+              "type": "long"
+            },
+            {
+              "name": "DeltaIOCompleted",
+              "type": "long"
+            },
+            {
+              "name": "FO_IOPS",
+              "type": "real"
+            },
+            {
+              "name": "FO_MBPS",
+              "type": "real"
+            },
+            {
+              "name": "PO_IOPS",
+              "type": "real"
+            },
+            {
+              "name": "PO_MBPS",
+              "type": "real"
+            },
+            {
+              "name": "AverageReadLatency",
+              "type": "real"
+            },
+            {
+              "name": "AverageWriteLatency",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsAsapCounterTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and NodeId == nodeId\r\n| summarize IOPS = sum(IOPS), MBPS = sum(MBPS), \r\n            ReadIOPS = sum(ReadIOPS), WriteIOPS = sum(WriteIOPS), MaxReadIOPS = max(MaxReadIOPS), MaxReadMBPS = max(MaxReadMBPS),\r\n            QD = sum(QD),\r\n            DeltaFoCompleted = sum(DeltaFoCompleted), DeltaPoCompleted = sum(DeltaPoCompleted), DeltaIOCompleted = sum(DeltaIOCompleted),\r\n            FO_IOPS = sum(DeltaFoCompleted) / max(OsDiagDurationInSec),\r\n            FO_MBPS = sum(DeltaFoBytesCompleted) / 1024.0 / 1024.0 / max(OsDiagDurationInSec),\r\n            PO_IOPS = sum(DeltaPoCompleted) / max(OsDiagDurationInSec),\r\n            PO_MBPS = sum(DeltaPoBytesCompleted) / 1024.0 / 1024.0 / max(OsDiagDurationInSec),\r\n            AverageReadLatency = avg(AverageReadLatency), AverageWriteLatency = avg(AverageWriteLatency)\r\n            by bin(todatetime(OsDiagHostTimeStamp), 5s)",
+          "panelPath": [
+            "Host Storage Charts",
+            "ASAP IO Stats for {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "Host Storage Charts > ASAP IO Stats for {{nodeId2}}": {
+      "panelPath": [
+        "Host Storage Charts",
+        "ASAP IO Stats for {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "6af8e9fa-6419-4b93-b6cf-83815c4ef648",
+          "name": "Azure Host Node ASAP 2.0 IO Stats",
+          "groupId": "47a2c8fd-8655-48da-8ed6-88cfb3a931c4",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "ASAP IO Stats for {{nodeId2}}",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OsDiagHostTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "IOPS",
+              "type": "real"
+            },
+            {
+              "name": "MBPS",
+              "type": "real"
+            },
+            {
+              "name": "ReadIOPS",
+              "type": "real"
+            },
+            {
+              "name": "WriteIOPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxReadIOPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxReadMBPS",
+              "type": "real"
+            },
+            {
+              "name": "QD",
+              "type": "real"
+            },
+            {
+              "name": "DeltaFoCompleted",
+              "type": "long"
+            },
+            {
+              "name": "DeltaPoCompleted",
+              "type": "long"
+            },
+            {
+              "name": "DeltaIOCompleted",
+              "type": "long"
+            },
+            {
+              "name": "FO_IOPS",
+              "type": "real"
+            },
+            {
+              "name": "FO_MBPS",
+              "type": "real"
+            },
+            {
+              "name": "PO_IOPS",
+              "type": "real"
+            },
+            {
+              "name": "PO_MBPS",
+              "type": "real"
+            },
+            {
+              "name": "AverageReadLatency",
+              "type": "real"
+            },
+            {
+              "name": "AverageWriteLatency",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsAsapCounterTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and NodeId == nodeId\r\n| summarize IOPS = sum(IOPS), MBPS = sum(MBPS), \r\n            ReadIOPS = sum(ReadIOPS), WriteIOPS = sum(WriteIOPS), MaxReadIOPS = max(MaxReadIOPS), MaxReadMBPS = max(MaxReadMBPS),\r\n            QD = sum(QD),\r\n            DeltaFoCompleted = sum(DeltaFoCompleted), DeltaPoCompleted = sum(DeltaPoCompleted), DeltaIOCompleted = sum(DeltaIOCompleted),\r\n            FO_IOPS = sum(DeltaFoCompleted) / max(OsDiagDurationInSec),\r\n            FO_MBPS = sum(DeltaFoBytesCompleted) / 1024.0 / 1024.0 / max(OsDiagDurationInSec),\r\n            PO_IOPS = sum(DeltaPoCompleted) / max(OsDiagDurationInSec),\r\n            PO_MBPS = sum(DeltaPoBytesCompleted) / 1024.0 / 1024.0 / max(OsDiagDurationInSec),\r\n            AverageReadLatency = avg(AverageReadLatency), AverageWriteLatency = avg(AverageWriteLatency)\r\n            by bin(todatetime(OsDiagHostTimeStamp), 5s)",
+          "panelPath": [
+            "Host Storage Charts",
+            "ASAP IO Stats for {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "Host Storage Charts > BlobCache/Vdc IO Stats for {{nodeId1}}": {
+      "panelPath": [
+        "Host Storage Charts",
+        "BlobCache/Vdc IO Stats for {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "01bf8e52-9dc9-4e18-9e01-1016119472cb",
+          "name": "Azure Host Surface Stats for Node",
+          "groupId": "d25d3cb5-461e-444e-8a8e-a3a0e7e8d59b",
+          "majorVersion": 2,
+          "minorVersion": 4,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "BlobCache/Vdc IO Stats for {{nodeId1}}",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OsDiagHostTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "IOPS",
+              "type": "real"
+            },
+            {
+              "name": "CachedIOPS",
+              "type": "long"
+            },
+            {
+              "name": "MBPS",
+              "type": "real"
+            },
+            {
+              "name": "ReadIOPS",
+              "type": "real"
+            },
+            {
+              "name": "WriteIOPS",
+              "type": "real"
+            },
+            {
+              "name": "ReadMBPS",
+              "type": "real"
+            },
+            {
+              "name": "WriteMBPS",
+              "type": "real"
+            },
+            {
+              "name": "AvgReadIOSizeInBytes",
+              "type": "real"
+            },
+            {
+              "name": "AvgWriteIOSizeInBytes",
+              "type": "real"
+            },
+            {
+              "name": "QD",
+              "type": "real"
+            },
+            {
+              "name": "Trims",
+              "type": "long"
+            },
+            {
+              "name": "MaxReadIOPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxWriteIOPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxReadMBPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxWriteMBPS",
+              "type": "real"
+            },
+            {
+              "name": "DeltaMisalignedReads",
+              "type": "long"
+            },
+            {
+              "name": "DeltaMisalignedWrites",
+              "type": "long"
+            },
+            {
+              "name": "DeltaReads",
+              "type": "long"
+            },
+            {
+              "name": "DeltaWrites",
+              "type": "long"
+            },
+            {
+              "name": "ActiveDisks",
+              "type": "long"
+            },
+            {
+              "name": "DeltaCacheReads",
+              "type": "long"
+            },
+            {
+              "name": "VM_Cache_Available_Tier0Blocks_Pct",
+              "type": "real"
+            },
+            {
+              "name": "DeltaFlush",
+              "type": "long"
+            },
+            {
+              "name": "AvgFlushLatencyInMs",
+              "type": "real"
+            },
+            {
+              "name": "AvgReadLatencyInMs",
+              "type": "real"
+            },
+            {
+              "name": "AvgWriteLatencyInMs",
+              "type": "real"
+            },
+            {
+              "name": "ReadCacheHitPercentage",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOSurfaceCounterTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and NodeId == nodeId\r\n| extend OsDiagHostTimeStamp = todatetime(OsDiagHostTimeStamp)\r\n| union (OsUltraSSDCounterTable | where PreciseTimeStamp between (queryFrom .. queryTo) and NodeId == nodeId | extend OsDiagHostTimeStamp = PreciseTimeStamp )\r\n| distinct *\r\n| where IsNewDisk == 0\r\n| extend CachedIOPS = (DeltaCacheReads + DeltaCacheWrites) / OsDiagDurationInSec\r\n| summarize IOPS = sum(IOPS), CachedIOPS = sum(CachedIOPS), MBPS = sum(MBPS), ReadIOPS = sum(ReadIOPS), WriteIOPS = sum(WriteIOPS), ReadMBPS = sum(ReadMBPS), WriteMBPS = sum(WriteMBPS), \r\n            AvgReadIOSizeInBytes = avg(AvgReadIOSizeInBytes), AvgWriteIOSizeInBytes = avg(AvgWriteIOSizeInBytes),\r\n            QD = sum(QD), Trims = sum(DeltaTrims),\r\n            MaxReadIOPS = avg(MaxReadIOPS), MaxWriteIOPS = avg(MaxWriteIOPS),\r\n            MaxReadMBPS = avg(MaxReadMBPS), MaxWriteMBPS = avg(MaxWriteMBPS),\r\n            DeltaMisalignedReads =  sum(DeltaMisalignedReads), DeltaMisalignedWrites = sum(DeltaMisalignedWrites), \r\n            DeltaReads = sum(DeltaReads), DeltaWrites = sum(DeltaWrites), \r\n            ActiveDisks = dcount(BlobPath), DeltaCacheReads = sum(DeltaCacheReads), VM_Cache_Available_Tier0Blocks_Pct = round(max(WsCacheAvailablePctTier0), 2),\r\n            DeltaFlush = sum(DeltaFlush),\r\n            AvgFlushLatencyInMs = avg(column_ifexists(\"AvgFlushLatencyInMs\", 0.0)), AvgReadLatencyInMs = avg(column_ifexists(\"AvgReadLatencyInMs\", 0.0)), AvgWriteLatencyInMs = avg(column_ifexists(\"AvgWriteLatencyInMs\", 0.0))\r\n            by bin(todatetime(OsDiagHostTimeStamp), 5m)\r\n| extend ReadCacheHitPercentage = DeltaCacheReads * 100.0 / DeltaReads",
+          "panelPath": [
+            "Host Storage Charts",
+            "BlobCache/Vdc IO Stats for {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "Host Storage Charts > BlobCache/Vdc IO Stats for {{nodeId2}}": {
+      "panelPath": [
+        "Host Storage Charts",
+        "BlobCache/Vdc IO Stats for {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "01bf8e52-9dc9-4e18-9e01-1016119472cb",
+          "name": "Azure Host Surface Stats for Node",
+          "groupId": "d25d3cb5-461e-444e-8a8e-a3a0e7e8d59b",
+          "majorVersion": 2,
+          "minorVersion": 4,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "BlobCache/Vdc IO Stats for {{nodeId2}}",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OsDiagHostTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "IOPS",
+              "type": "real"
+            },
+            {
+              "name": "CachedIOPS",
+              "type": "long"
+            },
+            {
+              "name": "MBPS",
+              "type": "real"
+            },
+            {
+              "name": "ReadIOPS",
+              "type": "real"
+            },
+            {
+              "name": "WriteIOPS",
+              "type": "real"
+            },
+            {
+              "name": "ReadMBPS",
+              "type": "real"
+            },
+            {
+              "name": "WriteMBPS",
+              "type": "real"
+            },
+            {
+              "name": "AvgReadIOSizeInBytes",
+              "type": "real"
+            },
+            {
+              "name": "AvgWriteIOSizeInBytes",
+              "type": "real"
+            },
+            {
+              "name": "QD",
+              "type": "real"
+            },
+            {
+              "name": "Trims",
+              "type": "long"
+            },
+            {
+              "name": "MaxReadIOPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxWriteIOPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxReadMBPS",
+              "type": "real"
+            },
+            {
+              "name": "MaxWriteMBPS",
+              "type": "real"
+            },
+            {
+              "name": "DeltaMisalignedReads",
+              "type": "long"
+            },
+            {
+              "name": "DeltaMisalignedWrites",
+              "type": "long"
+            },
+            {
+              "name": "DeltaReads",
+              "type": "long"
+            },
+            {
+              "name": "DeltaWrites",
+              "type": "long"
+            },
+            {
+              "name": "ActiveDisks",
+              "type": "long"
+            },
+            {
+              "name": "DeltaCacheReads",
+              "type": "long"
+            },
+            {
+              "name": "VM_Cache_Available_Tier0Blocks_Pct",
+              "type": "real"
+            },
+            {
+              "name": "DeltaFlush",
+              "type": "long"
+            },
+            {
+              "name": "AvgFlushLatencyInMs",
+              "type": "real"
+            },
+            {
+              "name": "AvgReadLatencyInMs",
+              "type": "real"
+            },
+            {
+              "name": "AvgWriteLatencyInMs",
+              "type": "real"
+            },
+            {
+              "name": "ReadCacheHitPercentage",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsXIOSurfaceCounterTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and NodeId == nodeId\r\n| extend OsDiagHostTimeStamp = todatetime(OsDiagHostTimeStamp)\r\n| union (OsUltraSSDCounterTable | where PreciseTimeStamp between (queryFrom .. queryTo) and NodeId == nodeId | extend OsDiagHostTimeStamp = PreciseTimeStamp )\r\n| distinct *\r\n| where IsNewDisk == 0\r\n| extend CachedIOPS = (DeltaCacheReads + DeltaCacheWrites) / OsDiagDurationInSec\r\n| summarize IOPS = sum(IOPS), CachedIOPS = sum(CachedIOPS), MBPS = sum(MBPS), ReadIOPS = sum(ReadIOPS), WriteIOPS = sum(WriteIOPS), ReadMBPS = sum(ReadMBPS), WriteMBPS = sum(WriteMBPS), \r\n            AvgReadIOSizeInBytes = avg(AvgReadIOSizeInBytes), AvgWriteIOSizeInBytes = avg(AvgWriteIOSizeInBytes),\r\n            QD = sum(QD), Trims = sum(DeltaTrims),\r\n            MaxReadIOPS = avg(MaxReadIOPS), MaxWriteIOPS = avg(MaxWriteIOPS),\r\n            MaxReadMBPS = avg(MaxReadMBPS), MaxWriteMBPS = avg(MaxWriteMBPS),\r\n            DeltaMisalignedReads =  sum(DeltaMisalignedReads), DeltaMisalignedWrites = sum(DeltaMisalignedWrites), \r\n            DeltaReads = sum(DeltaReads), DeltaWrites = sum(DeltaWrites), \r\n            ActiveDisks = dcount(BlobPath), DeltaCacheReads = sum(DeltaCacheReads), VM_Cache_Available_Tier0Blocks_Pct = round(max(WsCacheAvailablePctTier0), 2),\r\n            DeltaFlush = sum(DeltaFlush),\r\n            AvgFlushLatencyInMs = avg(column_ifexists(\"AvgFlushLatencyInMs\", 0.0)), AvgReadLatencyInMs = avg(column_ifexists(\"AvgReadLatencyInMs\", 0.0)), AvgWriteLatencyInMs = avg(column_ifexists(\"AvgWriteLatencyInMs\", 0.0))\r\n            by bin(todatetime(OsDiagHostTimeStamp), 5m)\r\n| extend ReadCacheHitPercentage = DeltaCacheReads * 100.0 / DeltaReads",
+          "panelPath": [
+            "Host Storage Charts",
+            "BlobCache/Vdc IO Stats for {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "Host Storage Internal (test VMs only) > Hagrid Perf VMs > {{nodeId1}} VM's Max Latencies (in milliseconds)": {
+      "panelPath": [
+        "Host Storage Internal (test VMs only)",
+        "Hagrid Perf VMs",
+        "{{nodeId1}} VM's Max Latencies (in milliseconds)"
+      ],
+      "queries": [
+        {
+          "id": "61c10ec9-441e-4775-9b45-a4b2adb5f5aa",
+          "name": "Azure Host Test VMs Max Latencies",
+          "groupId": "8794a36f-5331-4616-b792-d67630948b9a",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "{{nodeId1}} VM's Max Latencies (in milliseconds)",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeIdStr",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Lat_max",
+              "type": "real"
+            },
+            {
+              "name": "VmType",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeIdStr",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let _endTime = queryTo + 2h;\r\nlet _startTime = queryFrom - 2h;\r\nlet cs = database('Fc').LogContainerSnapshot | where PreciseTimeStamp between (_startTime .. _endTime) and nodeId == nodeIdStr\r\n| distinct containerId;\r\nlet startTime = ago(2d);\r\ndatabase('Sc').WorkloadResult\r\n| where PreciseTimeStamp between (_startTime .. _endTime) and RoleInstance in (cs) \r\n        and TestType contains \"summary\"\r\n        and TestType contains \"OD1-\" and TestType contains \"TJ1-\"\r\n| extend Summary = parse_json(Summary)\r\n| extend Lat_max = todouble(Summary.Lat_max)\r\n| project PreciseTimeStamp, Lat_max, VmType = strcat(RoleInstance, \"-\", tostring(parse_json(InstanceMetadata).compute.storageProfile.dataDisks[0].caching))",
+          "panelPath": [
+            "Host Storage Internal (test VMs only)",
+            "Hagrid Perf VMs",
+            "{{nodeId1}} VM's Max Latencies (in milliseconds)"
+          ]
+        }
+      ]
+    },
+    "Host Storage Internal (test VMs only) > Hagrid Perf VMs > {{nodeId2}} VM's Max Latencies (in milliseconds)": {
+      "panelPath": [
+        "Host Storage Internal (test VMs only)",
+        "Hagrid Perf VMs",
+        "{{nodeId2}} VM's Max Latencies (in milliseconds)"
+      ],
+      "queries": [
+        {
+          "id": "61c10ec9-441e-4775-9b45-a4b2adb5f5aa",
+          "name": "Azure Host Test VMs Max Latencies",
+          "groupId": "8794a36f-5331-4616-b792-d67630948b9a",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "{{nodeId2}} VM's Max Latencies (in milliseconds)",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeIdStr",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Lat_max",
+              "type": "real"
+            },
+            {
+              "name": "VmType",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeIdStr",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let _endTime = queryTo + 2h;\r\nlet _startTime = queryFrom - 2h;\r\nlet cs = database('Fc').LogContainerSnapshot | where PreciseTimeStamp between (_startTime .. _endTime) and nodeId == nodeIdStr\r\n| distinct containerId;\r\nlet startTime = ago(2d);\r\ndatabase('Sc').WorkloadResult\r\n| where PreciseTimeStamp between (_startTime .. _endTime) and RoleInstance in (cs) \r\n        and TestType contains \"summary\"\r\n        and TestType contains \"OD1-\" and TestType contains \"TJ1-\"\r\n| extend Summary = parse_json(Summary)\r\n| extend Lat_max = todouble(Summary.Lat_max)\r\n| project PreciseTimeStamp, Lat_max, VmType = strcat(RoleInstance, \"-\", tostring(parse_json(InstanceMetadata).compute.storageProfile.dataDisks[0].caching))",
+          "panelPath": [
+            "Host Storage Internal (test VMs only)",
+            "Hagrid Perf VMs",
+            "{{nodeId2}} VM's Max Latencies (in milliseconds)"
+          ]
+        }
+      ]
+    },
+    "Host Tables > HighCPU Table > HighCPU Table for {{nodeId1}}": {
+      "panelPath": [
+        "Host Tables",
+        "HighCPU Table",
+        "HighCPU Table for {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "1250fb0b-9ea8-4be2-be8b-87970fd9b5c2",
+          "name": "Azure Host HighCPUTable",
+          "groupId": "1b2613ec-e374-4c97-a917-8c3fd51c1df6",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "HighCPU Table for {{nodeId1}}",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CounterName",
+              "type": "string"
+            },
+            {
+              "name": "CounterValue",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "HighCpuCounterNodeTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeId\r\n| project PreciseTimeStamp, CounterName, CounterValue",
+          "panelPath": [
+            "Host Tables",
+            "HighCPU Table",
+            "HighCPU Table for {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "Host Tables > HighCPU Table > HighCPU Table for {{nodeId2}}": {
+      "panelPath": [
+        "Host Tables",
+        "HighCPU Table",
+        "HighCPU Table for {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "1250fb0b-9ea8-4be2-be8b-87970fd9b5c2",
+          "name": "Azure Host HighCPUTable",
+          "groupId": "1b2613ec-e374-4c97-a917-8c3fd51c1df6",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "HighCPU Table for {{nodeId2}}",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CounterName",
+              "type": "string"
+            },
+            {
+              "name": "CounterValue",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "HighCpuCounterNodeTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeId\r\n| project PreciseTimeStamp, CounterName, CounterValue",
+          "panelPath": [
+            "Host Tables",
+            "HighCPU Table",
+            "HighCPU Table for {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "Host Tables > Windows Event Table > Comparison > Windows Events Count": {
+      "panelPath": [
+        "Host Tables",
+        "Windows Event Table",
+        "Comparison",
+        "Windows Events Count"
+      ],
+      "queries": [
+        {
+          "id": "d09cd475-b836-4f53-90d1-b3ccb2813714",
+          "name": "Azure Host Compare Windows Event Comparison",
+          "groupId": "660ce2f3-8010-47cf-87af-964d071f3f24",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Windows Events Count",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId1",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "Time2From",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "Time2To",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId2",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "ProviderName",
+              "type": "string"
+            },
+            {
+              "name": "EventId",
+              "type": "string"
+            },
+            {
+              "name": "CountInNode1",
+              "type": "long"
+            },
+            {
+              "name": "CountInNode2",
+              "type": "long"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId1",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "Time2From",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "Time2To",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId2",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster(\"azcore.centralus.kusto.windows.net\").database(\"Fa\").WindowsEventTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and NodeId ==  nodeId1\r\n| summarize CountInNode1 = count() by ProviderName, EventId\r\n| join kind=fullouter (\r\n    cluster(\"azcore.centralus.kusto.windows.net\").database(\"Fa\").WindowsEventTable\r\n    | where PreciseTimeStamp between (Time2From .. Time2To) and NodeId ==  nodeId2\r\n    | summarize CountInNode2 = count() by ProviderName, EventId\r\n) on ProviderName, EventId\r\n| extend level = case(CountInNode1 != CountInNode2, \"warning\", \"info\")\r\n| sort by level desc\r\n| extend ProviderName = case(isempty(ProviderName), ProviderName1, ProviderName),\r\n         EventId = case(isempty(EventId), EventId1, EventId)\r\n| project-away ProviderName1, EventId1",
+          "panelPath": [
+            "Host Tables",
+            "Windows Event Table",
+            "Comparison",
+            "Windows Events Count"
+          ]
+        }
+      ]
+    },
+    "Host Tables > Windows Event Table > Events > Host Events {{nodeId1}}": {
+      "panelPath": [
+        "Host Tables",
+        "Windows Event Table",
+        "Events",
+        "Host Events {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "2ac64554-1cbc-42aa-a8bd-400c4637837a",
+          "name": "Azure Host WindowsEventTable",
+          "groupId": "bf1dca9b-e40b-428c-a70b-d330d53009e5",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Host Events {{nodeId1}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimeCreated",
+              "type": "datetime"
+            },
+            {
+              "name": "Id",
+              "type": "string"
+            },
+            {
+              "name": "ProviderName",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "WindowsEventTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeId\r\n| where EventId !in ('0','3095') \r\n| extend level = case(Level <= 2, \"error\", Level == 3, \"warning\", \"info\")\r\n| project TimeCreated = todatetime(TimeCreated), Id = EventId, ProviderName, Message = Description, level\r\n| sort by TimeCreated asc",
+          "panelPath": [
+            "Host Tables",
+            "Windows Event Table",
+            "Events",
+            "Host Events {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "Host Tables > Windows Event Table > Events > Host Events {{nodeId2}}": {
+      "panelPath": [
+        "Host Tables",
+        "Windows Event Table",
+        "Events",
+        "Host Events {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "2ac64554-1cbc-42aa-a8bd-400c4637837a",
+          "name": "Azure Host WindowsEventTable",
+          "groupId": "bf1dca9b-e40b-428c-a70b-d330d53009e5",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Host Events {{nodeId2}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TimeCreated",
+              "type": "datetime"
+            },
+            {
+              "name": "Id",
+              "type": "string"
+            },
+            {
+              "name": "ProviderName",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "WindowsEventTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeId\r\n| where EventId !in ('0','3095') \r\n| extend level = case(Level <= 2, \"error\", Level == 3, \"warning\", \"info\")\r\n| project TimeCreated = todatetime(TimeCreated), Id = EventId, ProviderName, Message = Description, level\r\n| sort by TimeCreated asc",
+          "panelPath": [
+            "Host Tables",
+            "Windows Event Table",
+            "Events",
+            "Host Events {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "HostStorage CoPilot": {
+      "panelPath": [
+        "HostStorage CoPilot"
+      ],
+      "queries": [
+        {
+          "id": "9f31e105-6265-4d01-8d1c-f5ca024c3c07",
+          "name": "node_insights_summary",
+          "groupId": "4873299e-4ff0-4ffb-aaf4-f96920410da6",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "sc",
+          "type": "Single",
+          "widgetType": "Column",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "reply",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('storageclient.eastus.kusto.windows.net').database('Sc').SummarizeNodeInsights(startTime, endTime, nodeId)\r\n",
+          "panelPath": [
+            "HostStorage CoPilot"
+          ]
+        }
+      ]
+    },
+    "Registry Keys > Registry Keys in the Nodes (different is highlighted)": {
+      "panelPath": [
+        "Registry Keys",
+        "Registry Keys in the Nodes (different is highlighted)"
+      ],
+      "queries": [
+        {
+          "id": "e890c0cc-8398-411a-9db2-2171e5b046a0",
+          "name": "Azure Host Node Compare Registry Keys",
+          "groupId": "57491234-a6ac-4d2b-a8ac-c82d7ae9c446",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Registry Keys in the Nodes (different is highlighted)",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId1",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "Time2From",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "Time2To",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId2",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Component",
+              "type": "string"
+            },
+            {
+              "name": "ConfigName",
+              "type": "string"
+            },
+            {
+              "name": "ConfigValue",
+              "type": "string"
+            },
+            {
+              "name": "ConfigValue1",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId1",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "Time2From",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "Time2To",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId2",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "OsConfigTable\r\n| where PreciseTimeStamp between ((queryFrom - 7h) .. queryTo) and NodeId == nodeId1 and ConfigType == \"registry\"\r\n| summarize arg_max(PreciseTimeStamp, *) by ConfigName, ConfigPath\r\n| project Component, ConfigName = strcat(ConfigPath, \"\\\\\", ConfigName), ConfigValue\r\n| join kind=fullouter(\r\n    OsConfigTable\r\n    | where PreciseTimeStamp between ((Time2From - 7h) .. Time2To) and NodeId == nodeId2 and ConfigType == \"registry\"\r\n    | summarize arg_max(PreciseTimeStamp, *) by ConfigName, ConfigPath\r\n    | project Component, ConfigName = strcat(ConfigPath, \"\\\\\", ConfigName), ConfigValue\r\n) on ConfigName\r\n//| where ConfigValue != ConfigValue1\r\n| where ConfigName !contains \"StartTime\" and ConfigName !contains \"DatapathExecutionSummary\"\r\n| project Component = case(isempty(Component), Component1, Component), ConfigName = case(isempty(ConfigName), ConfigName1, ConfigName ) , ConfigValue, ConfigValue1\r\n| extend level = case(ConfigValue != ConfigValue1, \"warning\", \"info\")\r\n| sort by level desc",
+          "panelPath": [
+            "Registry Keys",
+            "Registry Keys in the Nodes (different is highlighted)"
+          ]
+        }
+      ]
+    },
+    "TDPR > {{nodeId1}} TDPR Stats": {
+      "panelPath": [
+        "TDPR",
+        "{{nodeId1}} TDPR Stats"
+      ],
+      "queries": [
+        {
+          "id": "9530fafc-2d46-49a8-92cd-a13b453b89df",
+          "name": "Azure Host TDPR",
+          "groupId": "21aee3a0-60be-4a6b-8e86-4772bf7facc7",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "{{nodeId1}} TDPR Stats",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "sum_DurationInMs",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let operations = cluster(\"https://egpublic.westus.kusto.windows.net\").database(\"eg\").TDPR_OperationName2TeamServiceMap\r\n| where Service == \"StorageClient\"\r\n| distinct OperationName;\r\ncluster('azcore.centralus.kusto.windows.net').database('Fa').IfxOperationV2v1EtwTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and NodeId == nodeId and OperationName in (operations)\r\n| project PreciseTimeStamp, OperationName, DurationInMs = DurationIn100ns / 10000.0, RootOperationId, ActivityId, ParentActivityId\r\n| summarize sum(DurationInMs) by bin(PreciseTimeStamp, 1m), OperationName",
+          "panelPath": [
+            "TDPR",
+            "{{nodeId1}} TDPR Stats"
+          ]
+        }
+      ]
+    },
+    "TDPR > {{nodeId2}} TDPR Stats": {
+      "panelPath": [
+        "TDPR",
+        "{{nodeId2}} TDPR Stats"
+      ],
+      "queries": [
+        {
+          "id": "9530fafc-2d46-49a8-92cd-a13b453b89df",
+          "name": "Azure Host TDPR",
+          "groupId": "21aee3a0-60be-4a6b-8e86-4772bf7facc7",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "{{nodeId2}} TDPR Stats",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "sum_DurationInMs",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let operations = cluster(\"https://egpublic.westus.kusto.windows.net\").database(\"eg\").TDPR_OperationName2TeamServiceMap\r\n| where Service == \"StorageClient\"\r\n| distinct OperationName;\r\ncluster('azcore.centralus.kusto.windows.net').database('Fa').IfxOperationV2v1EtwTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and NodeId == nodeId and OperationName in (operations)\r\n| project PreciseTimeStamp, OperationName, DurationInMs = DurationIn100ns / 10000.0, RootOperationId, ActivityId, ParentActivityId\r\n| summarize sum(DurationInMs) by bin(PreciseTimeStamp, 1m), OperationName",
+          "panelPath": [
+            "TDPR",
+            "{{nodeId2}} TDPR Stats"
+          ]
+        }
+      ]
+    },
+    "VM Charts > VM Available Memory {{nodeId1}}": {
+      "panelPath": [
+        "VM Charts",
+        "VM Available Memory {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "9a000ae9-f46c-4bc7-8a89-75f93c42f1a4",
+          "name": "Azure Host VMs Memory Usage",
+          "groupId": "18e97f6b-790c-41ed-8c9d-4c9d87e93e76",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "VM Available Memory {{nodeId1}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RoleInstanceId",
+              "type": "string"
+            },
+            {
+              "name": "AverageCounterValue",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VmCounterFiveMinuteRoleInstanceCentralBondTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeId // and CounterName contains @\"\\Hyper-V Dynamic Memory VM\" and CounterName contains \"Current Pressure\"\r\n        and CounterName contains \"Guest Available Memory\"\r\n| project PreciseTimeStamp, RoleInstanceId, AverageCounterValue",
+          "panelPath": [
+            "VM Charts",
+            "VM Available Memory {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "VM Charts > VM Available Memory {{nodeId2}}": {
+      "panelPath": [
+        "VM Charts",
+        "VM Available Memory {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "9a000ae9-f46c-4bc7-8a89-75f93c42f1a4",
+          "name": "Azure Host VMs Memory Usage",
+          "groupId": "18e97f6b-790c-41ed-8c9d-4c9d87e93e76",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "VM Available Memory {{nodeId2}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RoleInstanceId",
+              "type": "string"
+            },
+            {
+              "name": "AverageCounterValue",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VmCounterFiveMinuteRoleInstanceCentralBondTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeId // and CounterName contains @\"\\Hyper-V Dynamic Memory VM\" and CounterName contains \"Current Pressure\"\r\n        and CounterName contains \"Guest Available Memory\"\r\n| project PreciseTimeStamp, RoleInstanceId, AverageCounterValue",
+          "panelPath": [
+            "VM Charts",
+            "VM Available Memory {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "VM Charts > VM CPU {{nodeId1}}": {
+      "panelPath": [
+        "VM Charts",
+        "VM CPU {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "bc8ed149-747a-41fc-aee0-5fc5f23fc520",
+          "name": "Azure Host VMs CPU Usage",
+          "groupId": "69ae5c84-8d60-48fa-a7fd-29e7ff1b0c01",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "VM CPU {{nodeId1}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RoleInstanceId",
+              "type": "string"
+            },
+            {
+              "name": "AverageCounterValue",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VmCounterFiveMinuteRoleInstanceCentralBondTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeId and CounterName == \"Percentage CPU\"\r\n| project PreciseTimeStamp, RoleInstanceId, AverageCounterValue",
+          "panelPath": [
+            "VM Charts",
+            "VM CPU {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "VM Charts > VM CPU {{nodeId2}}": {
+      "panelPath": [
+        "VM Charts",
+        "VM CPU {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "bc8ed149-747a-41fc-aee0-5fc5f23fc520",
+          "name": "Azure Host VMs CPU Usage",
+          "groupId": "69ae5c84-8d60-48fa-a7fd-29e7ff1b0c01",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "VM CPU {{nodeId2}}",
+          "params": [
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RoleInstanceId",
+              "type": "string"
+            },
+            {
+              "name": "AverageCounterValue",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VmCounterFiveMinuteRoleInstanceCentralBondTable\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeId and CounterName == \"Percentage CPU\"\r\n| project PreciseTimeStamp, RoleInstanceId, AverageCounterValue",
+          "panelPath": [
+            "VM Charts",
+            "VM CPU {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "VM Charts > VM Disk IOPS {{nodeId1}}": {
+      "panelPath": [
+        "VM Charts",
+        "VM Disk IOPS {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "c416d010-8379-415e-9457-b4aad7eec01d",
+          "name": "Azure Host StorageClient VMs Disk IOPS",
+          "groupId": "3a0b600b-e9b7-40ac-abd1-48bbb32fc23d",
+          "majorVersion": 9,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "VM Disk IOPS {{nodeId1}}",
+          "params": [
+            {
+              "name": "nodeIdStr",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OsDiagHostTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "IOPS",
+              "type": "real"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "metric",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeIdStr",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let containers = cluster(\"AzureCM.kusto.windows.net\").database(\"AzureCM\").LogContainerSnapshot\r\n| where PreciseTimeStamp between ((startTime - 2h) .. (endTime + 1h)) and nodeId == nodeIdStr\r\n| summarize arg_max(PreciseTimeStamp, roleInstanceName) by containerId\r\n| distinct containerId, roleInstanceName\r\n| extend metric = strcat(roleInstanceName, \" (\", substring(containerId, 0, 13), \")\")\r\n;\r\nOsXIOSurfaceCounterTable | union (OsRDSSDSurfaceCounterTable)\r\n| extend OsDiagHostTimeStamp = todatetime(OsDiagHostTimeStamp)\r\n| union (OsUltraSSDCounterTable | extend SurfaceName = ContainerId, OsDiagHostTimeStamp = PreciseTimeStamp)\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeIdStr and IsNewDisk == 0\r\n| extend containerId = tostring(case(indexof(SurfaceName, \"~\") > 0, split(SurfaceName, \"~\")[0], split(SurfaceName, \"_\")[0]))\r\n| summarize IOPS = sum(IOPS) by bin(todatetime(OsDiagHostTimeStamp), 5m), containerId\r\n| join kind=leftouter(\r\n    containers\r\n) on containerId\r\n| project-away containerId, containerId1",
+          "panelPath": [
+            "VM Charts",
+            "VM Disk IOPS {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "VM Charts > VM Disk IOPS {{nodeId2}}": {
+      "panelPath": [
+        "VM Charts",
+        "VM Disk IOPS {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "c416d010-8379-415e-9457-b4aad7eec01d",
+          "name": "Azure Host StorageClient VMs Disk IOPS",
+          "groupId": "3a0b600b-e9b7-40ac-abd1-48bbb32fc23d",
+          "majorVersion": 9,
+          "minorVersion": 1,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "VM Disk IOPS {{nodeId2}}",
+          "params": [
+            {
+              "name": "nodeIdStr",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OsDiagHostTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "IOPS",
+              "type": "real"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "metric",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeIdStr",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let containers = cluster(\"AzureCM.kusto.windows.net\").database(\"AzureCM\").LogContainerSnapshot\r\n| where PreciseTimeStamp between ((startTime - 2h) .. (endTime + 1h)) and nodeId == nodeIdStr\r\n| summarize arg_max(PreciseTimeStamp, roleInstanceName) by containerId\r\n| distinct containerId, roleInstanceName\r\n| extend metric = strcat(roleInstanceName, \" (\", substring(containerId, 0, 13), \")\")\r\n;\r\nOsXIOSurfaceCounterTable | union (OsRDSSDSurfaceCounterTable)\r\n| extend OsDiagHostTimeStamp = todatetime(OsDiagHostTimeStamp)\r\n| union (OsUltraSSDCounterTable | extend SurfaceName = ContainerId, OsDiagHostTimeStamp = PreciseTimeStamp)\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeIdStr and IsNewDisk == 0\r\n| extend containerId = tostring(case(indexof(SurfaceName, \"~\") > 0, split(SurfaceName, \"~\")[0], split(SurfaceName, \"_\")[0]))\r\n| summarize IOPS = sum(IOPS) by bin(todatetime(OsDiagHostTimeStamp), 5m), containerId\r\n| join kind=leftouter(\r\n    containers\r\n) on containerId\r\n| project-away containerId, containerId1",
+          "panelPath": [
+            "VM Charts",
+            "VM Disk IOPS {{nodeId2}}"
+          ]
+        }
+      ]
+    },
+    "VM Charts > VM Disk MBPS {{nodeId1}}": {
+      "panelPath": [
+        "VM Charts",
+        "VM Disk MBPS {{nodeId1}}"
+      ],
+      "queries": [
+        {
+          "id": "fab8cfa1-7c55-475d-8b11-de0788e1bf88",
+          "name": "Azure Host VM StorageClient Disk MBPS",
+          "groupId": "4328de47-8473-46a2-9a6d-c3ef9835f6a1",
+          "majorVersion": 3,
+          "minorVersion": 7,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "VM Disk MBPS {{nodeId1}}",
+          "params": [
+            {
+              "name": "nodeIdStr",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "MBPS",
+              "type": "real"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "metric",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeIdStr",
+              "externalSourceName": "nodeId1",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let containers = cluster('AzureCM').database('AzureCM').LogContainerSnapshot\r\n| where PreciseTimeStamp between ((startTime - 2h) .. (endTime + 1h)) and nodeId == nodeIdStr\r\n| summarize arg_max(PreciseTimeStamp, roleInstanceName) by containerId\r\n| distinct containerId, roleInstanceName\r\n| extend metric = strcat(roleInstanceName, \" (\", substring(containerId, 0, 13), \")\")\r\n;\r\nOsXIOSurfaceCounterTable | union (OsRDSSDSurfaceCounterTable)\r\n| union (OsUltraSSDCounterTable | extend SurfaceName = ContainerId)\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeIdStr and IsNewDisk == 0\r\n| extend containerId = tostring(case(indexof(SurfaceName, \"~\") > 0, split(SurfaceName, \"~\")[0], split(SurfaceName, \"_\")[0]))\r\n| summarize MBPS = sum(MBPS) by bin(PreciseTimeStamp, 5m), containerId\r\n| join kind=inner(\r\n    containers\r\n) on containerId\r\n| project-away containerId, containerId1",
+          "panelPath": [
+            "VM Charts",
+            "VM Disk MBPS {{nodeId1}}"
+          ]
+        }
+      ]
+    },
+    "VM Charts > VM Disk MBPS {{nodeId2}}": {
+      "panelPath": [
+        "VM Charts",
+        "VM Disk MBPS {{nodeId2}}"
+      ],
+      "queries": [
+        {
+          "id": "fab8cfa1-7c55-475d-8b11-de0788e1bf88",
+          "name": "Azure Host VM StorageClient Disk MBPS",
+          "groupId": "4328de47-8473-46a2-9a6d-c3ef9835f6a1",
+          "majorVersion": 3,
+          "minorVersion": 7,
+          "cluster": "storageclient.eastus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "VM Disk MBPS {{nodeId2}}",
+          "params": [
+            {
+              "name": "nodeIdStr",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "MBPS",
+              "type": "real"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "metric",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeIdStr",
+              "externalSourceName": "nodeId2",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "Time2From",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "Time2To",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let containers = cluster('AzureCM').database('AzureCM').LogContainerSnapshot\r\n| where PreciseTimeStamp between ((startTime - 2h) .. (endTime + 1h)) and nodeId == nodeIdStr\r\n| summarize arg_max(PreciseTimeStamp, roleInstanceName) by containerId\r\n| distinct containerId, roleInstanceName\r\n| extend metric = strcat(roleInstanceName, \" (\", substring(containerId, 0, 13), \")\")\r\n;\r\nOsXIOSurfaceCounterTable | union (OsRDSSDSurfaceCounterTable)\r\n| union (OsUltraSSDCounterTable | extend SurfaceName = ContainerId)\r\n| where PreciseTimeStamp between (startTime .. endTime) and NodeId == nodeIdStr and IsNewDisk == 0\r\n| extend containerId = tostring(case(indexof(SurfaceName, \"~\") > 0, split(SurfaceName, \"~\")[0], split(SurfaceName, \"_\")[0]))\r\n| summarize MBPS = sum(MBPS) by bin(PreciseTimeStamp, 5m), containerId\r\n| join kind=inner(\r\n    containers\r\n) on containerId\r\n| project-away containerId, containerId1",
+          "panelPath": [
+            "VM Charts",
+            "VM Disk MBPS {{nodeId2}}"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T09:57:57.334Z",
+    "totalPanels": 39,
+    "totalUniqueQueries": 24,
+    "totalWidgetRefs": 44
+  }
+}

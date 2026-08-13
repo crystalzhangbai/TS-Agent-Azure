@@ -1,0 +1,3260 @@
+[
+  {
+    "groupId": "6212c6b8-3b9b-4cce-9e88-34e7e9c06d00",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "81c653b5-4f1e-4963-9280-4debf9274393",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_NodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Retrieve Resource \"NodeService_NodeView\"",
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "AzureCP",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "local_NodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AzSMCluster",
+        "type": "string"
+      },
+      {
+        "name": "HostName",
+        "type": "string"
+      },
+      {
+        "name": "OSBaseImageName",
+        "type": "dynamic"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "665f7b7f-b479-4946-91ff-3b9d98f7a9f1",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "queryId": "e29f7d42-2659-4c76-a9e4-8dcda4d04f81",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Networking dashboard query",
+    "cluster": "",
+    "database": "",
+    "type": "Single",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Networking DRI dashboard",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "5fa31cdc-7126-401f-8379-870e860e13c5",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "queryId": "7485d05f-9e36-48b1-a088-2b16c96ce910",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "NodeServiceVersion",
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Single",
+    "params": [
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ServiceVersion",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7d05c2e2-7285-45cb-ac81-adc7a6b31718",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "queryId": "8fb441ca-a7ee-42ca-b0e3-9f693851c7cb",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6212c6b8-3b9b-4cce-9e88-34e7e9c06d00",
+        "majorVersion": 3,
+        "minorVersion": 2,
+        "internalDestinationName": "cluster",
+        "externalSourceName": "Cluster",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "SDP Phase",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Single",
+    "params": [
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "cluster",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "SDPPhase",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "723da144-3006-4c90-8322-8e8a4b43bf74",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "queryId": "1ec7b656-3fe1-44e9-8bf9-fcd7f6eb5e7a",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "SocId",
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Single",
+    "params": [
+      {
+        "name": "_nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "socId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "ec3f6152-34ec-4ee5-ad7e-c2109995946f",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "af38a971-c983-438d-8097-b201d28d6d95",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "ApSvcMgr State",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureDCMdb",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "6c7cfa75-419e-42f3-a42b-6274b7312e4b",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "8a834e8b-1497-4bab-8037-3a6ed7d20654",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "LogNodeSnapshot - NodeState",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "02d44bce-7e0b-44b6-a40b-281f33e8a548",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "75040b95-e688-457e-ae3d-3d847bd5e272",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Madari errors",
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "ef37c8c3-fbea-4513-9b94-413f9d1e77f9",
+    "majorVersion": 1,
+    "minorVersion": 10,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "419d9841-89e8-4add-86f3-9175539dbd35",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Anvil Repair Diagnostics",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b75e1731-372b-4640-9a01-ff5c3828f18f",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "1af01c7d-e312-403c-9d11-d881b3cec22c",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "NodeService Exits",
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "048a2d4e-f8c6-4979-aab9-a287f4a14a2c",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "3be11a76-99fc-418e-9ad8-07b3ba6cbe4f",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6212c6b8-3b9b-4cce-9e88-34e7e9c06d00",
+        "majorVersion": 3,
+        "minorVersion": 2,
+        "internalDestinationName": "fabricCluster",
+        "externalSourceName": "Cluster",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Fabric incarnations",
+    "cluster": "mycroft.westcentralus.kusto.windows.net",
+    "database": "Mycroft",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "fabricCluster",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "f18deff2-bd71-4de1-bfdc-125c1f9670fb",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "debbebcf-8e30-40e2-a18b-bc3eacb08964",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "SEL Events",
+    "cluster": "sparkle.eastus.kusto.windows.net",
+    "database": "defaultdb",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "_faultTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "_nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d7635a71-8644-441d-8c7c-8ccdfc40d6cc",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "1d893b96-d788-4063-a9be-94cad96ea9d7",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "TOR Send Packet Health",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "_nodeId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "_faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "fee8f7ba-7bdb-4905-9cc9-92165dd272ed",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "47c1ef38-710d-44f1-815b-7e05ca2382e7",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "TOR Recv Packet Health",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "_nodeId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "_faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "24487b70-b48f-4ff8-8c7d-414517b1e4c5",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "28264853-d441-4cf9-aa6a-54a055feb386",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "TOR InMaintenance",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "_nodeId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "_faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "5d484be1-327d-449a-a701-b62e890ee375",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "235e946a-684b-4f40-87cc-91437680b638",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "CM WillBe Generation",
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "_nodeId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "_faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "e077ba2b-0ddc-43c5-b16e-73ce5ccd5124",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "19ba486b-0e56-4ac8-9c7e-ff217a1839c8",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6212c6b8-3b9b-4cce-9e88-34e7e9c06d00",
+        "majorVersion": 3,
+        "minorVersion": 2,
+        "internalDestinationName": "hostName",
+        "externalSourceName": "HostName",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "TOR in Quarantine Network",
+    "cluster": "azphynet.kusto.windows.net",
+    "database": "azdhmds",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "hostName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7cfba16a-ade0-4e67-9810-a7f5c81ff18f",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "29896f4f-072a-4887-b90d-de66bfae3965",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Soc Health",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b19222af-51d7-4307-9135-3c89b6ff35a5",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "088e250c-c3f1-4d4e-b23e-c7ae9bb1aa57",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "SeedIncarnation query",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "sdnpubsub",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "de621ad8-e9f3-478f-b97d-ae9a07c11b5b",
+    "majorVersion": 1,
+    "minorVersion": 8,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "b1767810-3058-4b16-9686-6892b9d8b08e",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "SocHB",
+    "cluster": "azdeployer.kusto.windows.net",
+    "database": "AzDeployerKusto",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "_nodeId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "_faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "350518ed-0df6-4bb1-9ae9-474da5e858f0",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "NodeState",
+    "queryId": "8b511d2b-e104-4a05-b555-88b149552d91",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "WindowsEvents",
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Explanation",
+        "type": "string"
+      },
+      {
+        "name": "AdditionalHelp",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "6c7cfa75-419e-42f3-a42b-6274b7312e4b",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "StartTime",
+    "name": "LogNodeSnapshot - NodeState",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "6c7cfa75-419e-42f3-a42b-6274b7312e4b",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Content",
+    "name": "LogNodeSnapshot - NodeState",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "6c7cfa75-419e-42f3-a42b-6274b7312e4b",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Health",
+    "name": "LogNodeSnapshot - NodeState",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "6c7cfa75-419e-42f3-a42b-6274b7312e4b",
+    "majorVersion": 4,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Tooltip",
+    "name": "LogNodeSnapshot - NodeState",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "ec3f6152-34ec-4ee5-ad7e-c2109995946f",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "StartTime",
+    "name": "ApSvcMgr State",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureDCMdb",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "ec3f6152-34ec-4ee5-ad7e-c2109995946f",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Content",
+    "name": "ApSvcMgr State",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureDCMdb",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "ec3f6152-34ec-4ee5-ad7e-c2109995946f",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Health",
+    "name": "ApSvcMgr State",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureDCMdb",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "ec3f6152-34ec-4ee5-ad7e-c2109995946f",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "panelPath": [
+      "NodeState"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Tooltip",
+    "name": "ApSvcMgr State",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureDCMdb",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterOut",
+        "type": "bool"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "e3ade81e-aef5-4dfd-8902-1c1cb36bd5d0",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "Containers"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "Containers",
+    "queryId": "9bb3e500-d6ae-4785-aa4b-89a231a63aac",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "ContainerState and ASILink",
+    "cluster": "https://mycroft.westcentralus.kusto.windows.net",
+    "database": "Mycroft",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "ContainerState",
+        "type": "string"
+      },
+      {
+        "name": "OsState",
+        "type": "string"
+      },
+      {
+        "name": "ASILink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "463d1212-d656-4994-8171-e6fe6a68849b",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "panelPath": [
+      "Node-level events count"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Node-level events count",
+    "queryId": "e541af76-551f-493f-8911-096f810ddbaf",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Events Count",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "NSOperationsCount",
+        "type": "int"
+      },
+      {
+        "name": "NSEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "WindowsEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "RdAgentUpdaterEventsCount",
+        "type": "int"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "959585b5-8461-429f-92b9-099efe68d8c2",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node-level events count"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Node-level events count",
+    "queryId": "ff4df7cb-f279-4e34-982a-50708ad766a3",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Overlake Healthstore Data",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "OvlProd",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SoCEventsCount",
+        "type": "int"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "463d1212-d656-4994-8171-e6fe6a68849b",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "panelPath": [
+      "Node-level events count"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "PreciseTimeStamp",
+    "name": "Events Count",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "NSOperationsCount",
+        "type": "int"
+      },
+      {
+        "name": "NSEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "WindowsEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "RdAgentUpdaterEventsCount",
+        "type": "int"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "463d1212-d656-4994-8171-e6fe6a68849b",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "panelPath": [
+      "Node-level events count"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "NSOperationsCount",
+    "name": "Events Count",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "NSOperationsCount",
+        "type": "int"
+      },
+      {
+        "name": "NSEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "WindowsEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "RdAgentUpdaterEventsCount",
+        "type": "int"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "463d1212-d656-4994-8171-e6fe6a68849b",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "panelPath": [
+      "Node-level events count"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "NSEventsCount",
+    "name": "Events Count",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "NSOperationsCount",
+        "type": "int"
+      },
+      {
+        "name": "NSEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "WindowsEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "RdAgentUpdaterEventsCount",
+        "type": "int"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "463d1212-d656-4994-8171-e6fe6a68849b",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "panelPath": [
+      "Node-level events count"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "WindowsEventsCount",
+    "name": "Events Count",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "NSOperationsCount",
+        "type": "int"
+      },
+      {
+        "name": "NSEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "WindowsEventsCount",
+        "type": "int"
+      },
+      {
+        "name": "RdAgentUpdaterEventsCount",
+        "type": "int"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "959585b5-8461-429f-92b9-099efe68d8c2",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node-level events count"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "PreciseTimeStamp",
+    "name": "Overlake Healthstore Data",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "OvlProd",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SoCEventsCount",
+        "type": "int"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "e1b98208-dee0-4373-9273-03901d057901",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [
+      "Cluster-level Unhealthy Node Count"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Cluster-level Unhealthy Node Count",
+    "queryId": "efb41ab7-c646-4319-81a8-773fa25fdc1f",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6212c6b8-3b9b-4cce-9e88-34e7e9c06d00",
+        "majorVersion": 3,
+        "minorVersion": 2,
+        "internalDestinationName": "cluster",
+        "externalSourceName": "Cluster",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Cluster level node unhealthy metrics",
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "cluster",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "nodeCount",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "410e5021-fdf0-4a77-8f2c-8d432f052285",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Node Snapshot"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Node Snapshot",
+    "queryId": "3ef2a3c1-1b8e-44ff-9b86-b0c700d312e7",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Node Snapshot",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "NsdState",
+        "type": "string"
+      },
+      {
+        "name": "NodeServiceAggregatedHealthStatus",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityState",
+        "type": "string"
+      },
+      {
+        "name": "EscalateTo",
+        "type": "dynamic"
+      },
+      {
+        "name": "Reason",
+        "type": "dynamic"
+      },
+      {
+        "name": "FaultTime",
+        "type": "dynamic"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "414c8e79-3bdf-4e80-be38-2be09d93715c",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "panelPath": [
+      "NodeService Events",
+      "NodeService Events"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "NodeService Events",
+    "queryId": "b997de06-ec12-4014-97c5-deffcddff985",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "NodeService Events",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b6ec7b76-4aa5-427a-b9a1-0619bfc6527d",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "NodeService Watchdog events",
+      "NodeService Watchdog events"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "NodeService Watchdog events",
+    "queryId": "283c3248-218d-479c-b620-34208b3dc99f",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "NodeServiceWatchdogEtwTable",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Scope",
+        "type": "string"
+      },
+      {
+        "name": "ResultCode",
+        "type": "long"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "NodeServiceVersion",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d645915-c06d-4ddf-a654-9a567f961159",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "NodeService Exits",
+      "NodeService Exits"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "NodeService Exits",
+    "queryId": "6c3203f7-7c3c-44ad-9173-6a083777c43d",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "NodeService Exits",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "ExitCode",
+        "type": "long"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "65158924-7d9c-4a96-96c2-0e7e5105d9ba",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Windows Events",
+      "WindowsEvents"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "WindowsEvents",
+    "queryId": "d632ccc9-93e4-4d96-85ab-1f071c526b97",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "WindowsEventsTable",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "5ffe59d3-073a-4d0b-bc3e-8d76faf29bb7",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Fabric Node Events",
+      "TMMgmtNodeEvents"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "TMMgmtNodeEvents",
+    "queryId": "18b50fba-0482-4d3f-b04e-ccd21f9ad1c7",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "TMMgmtNodeEventsTable",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "4335e64e-c214-4e10-a694-5bc6852241d6",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "CMWorkerNodeServiceWas Events"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "d5dbfe26-eb2e-4a8d-a426-3cdd7dee6e09",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "CMWorkerNodeServiceWas",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Revision",
+        "type": "long"
+      },
+      {
+        "name": "NodeServiceIncarnation",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a48f81b1-8652-4f91-aa52-3abcccc84d3d",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "CMWorkerNodeServiceWillBe"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "82ece582-2e5f-4d33-94ea-a115dfd89769",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "CMWorkerNodeServiceWillBe",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Revision",
+        "type": "long"
+      },
+      {
+        "name": "NodeServiceIncarnation",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "288373ce-1358-4b66-a1a5-4d914ed09962",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "CMWorkerNodeServiceChannel failures",
+      "CMWorkerNodeServiceChannel failures"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "CMWorkerNodeServiceChannel failures",
+    "queryId": "c7a94e34-9bb3-479c-a14a-b345dda34cc9",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "CMWorkerNodeServiceChannel failures",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7fe96428-cbc2-4478-accd-944d9c95b8d6",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "CMWorkerNodeEvents"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "2bfefa87-9b95-410a-9aa8-8d6eb3b0521e",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "CMWorkerNodeEvents",
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2a0632f8-6248-4a62-b849-b67e5cfcdb24",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Memory Report"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "c7927f60-b8a3-4e51-8950-5e216c899ce6",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "MemoryReport",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "KernelAgent",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "MetricName",
+        "type": "string"
+      },
+      {
+        "name": "KaValueName",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9407a014-5340-4bf3-830e-575807af2622",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "CPU Usage"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "d44b6650-de4a-48b0-841b-1ee90e3d0caa",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6212c6b8-3b9b-4cce-9e88-34e7e9c06d00",
+        "majorVersion": 3,
+        "minorVersion": 2,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "CPU_Usage",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CounterValue",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "da93a324-62ef-479e-9185-94753c544798",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "panelPath": [
+      "Perf Graphs"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "",
+    "queryId": "b51ec6e7-9c3a-461c-9fe9-53833ce904c5",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "CPU Graph",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "Fa",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AvgCPU",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "dfc28399-978c-462c-a508-ab3f680dba26",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Perf Graphs"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "",
+    "queryId": "7717cd61-5324-4cd9-be43-881f72ce5d0e",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryNode",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "faultTime",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "ProcessMemUsage",
+    "cluster": "https://azcore.centralus.kusto.windows.net",
+    "database": "AutopilotDeployment",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryNode",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "faultTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "TotalPrivateUsage",
+        "type": "long"
+      },
+      {
+        "name": "NSPrivateUsage",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "c1c053cf-fdea-4856-b710-d1310694f5f6",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "panelPath": [
+      "NodeService SoC Logs",
+      "NodeService SoC Logs"
+    ],
+    "widgetType": "Markdown",
+    "widgetTitle": "NodeService SoC Logs",
+    "queryId": "d5a99aeb-be13-4fab-b3c8-eac6889f4f60",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "_timeOfFault",
+        "externalSourceName": "TimeOfFault",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Echo",
+    "cluster": "",
+    "database": "",
+    "type": "Single",
+    "params": [
+      {
+        "name": "_nodeId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "_timeOfFault",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "_nodeId",
+        "type": "string"
+      },
+      {
+        "name": "_timeOfFault",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

@@ -1,0 +1,1538 @@
+{
+  "service": "EEE RDOS",
+  "page": "Issue Detectors",
+  "pageId": "synthetic-issue-detectors",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "097c31ab-f521-4c8d-8347-fc778c8a087b",
+          "name": "IssueDetector_EI_CreateContainer Fails with 0xc3510224:VMAL_ASAP",
+          "groupId": "43a03188-422f-42b0-a1c9-4c86702118c9",
+          "majorVersion": 3,
+          "minorVersion": 7,
+          "cluster": "azcsupfollower.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "IssueDetector",
+          "widgetType": "Query",
+          "widgetTitle": "IssueDetector_EI_CreateContainer Fails with 0xc3510224:VMAL_ASAP",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querynodeid",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "querySubscription",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "description": "",
+              "type": "datetime",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "roleInstanceName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "tenantName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Tenant",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "containerId",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "nodeId",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "faultInfo",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "containerState",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "containerOsState",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "containerIsolationState",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "containerLifecycleState",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "actualOperationalState",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "vmExpectedHealthState",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "querySubscription",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Description",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Severity",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "LogContainerHealthSnapshot\r\n| where PreciseTimeStamp between (queryFrom .. 2h)\r\n| where nodeId == querynodeid and faultInfo has \"0xc3510224  VMAL_ASAPPF_NOT_RUNNING\" \r\n| project querySubscription,PreciseTimeStamp, roleInstanceName,virtualMachineUniqueId,tenantName,Tenant, containerId,nodeId, containerState, containerOsState, containerIsolationState, containerLifecycleState, actualOperationalState, vmExpectedHealthState, faultInfo\r\n| summarize arg_max(roleInstanceName,virtualMachineUniqueId,tenantName,Tenant, containerId,nodeId, faultInfo,containerState, containerOsState, containerIsolationState, containerLifecycleState, actualOperationalState, vmExpectedHealthState,querySubscription) by bin(PreciseTimeStamp,5m)\r\n//| extend uri = strcat(\"https://azureserviceinsights.trafficmanager.net/services/EEE%20RDOS/pages/WF%20Unexpected%20Restart?query_SubscriptionId=\",querySubscription,\"&query_VMName=\",roleInstanceName,\"&query_ContainerId=\",containerId,\"&query_TenantName=\",tenantName,\"&query_NodeId=\",nodeId,\"&query_vmId=\",virtualMachineUniqueId,\"&query_cluster=\",Tenant,\"&globalFrom=\",queryFrom,\"&globalTo=\",queryTo,\"&__userData=%7B%22nodeData%22%3A%7B%22bbd261dc-c6d5-45a0-b0f6-6a890f5a67ee%22%3A%22e44f1e85-b537-4420-88df-21b3b4875397%22%2C%228e11a227-ca25-47b0-8e15-aca9273d8904%22%3A%22903e7516-00fb-498a-8dd7-daded397a13e%22%7D%7D\")\r\n|extend Description = strcat(\"<a href='\",strcat(\"https://azureserviceinsights.trafficmanager.net/services/EEE%20RDOS/pages/WF%20Unexpected%20Restart?query_SubscriptionId=\",querySubscription,\"&query_VMName=\",roleInstanceName,\"&query_ContainerId=\",containerId,\"&query_TenantName=\",tenantName,\"&query_NodeId=\",nodeId,\"&query_vmId=\",virtualMachineUniqueId,\"&query_cluster=\",Tenant,\"&globalFrom=\",queryFrom,\"&globalTo=\",queryTo,\"&__userData=%7B%22nodeData%22%3A%7B%22bbd261dc-c6d5-45a0-b0f6-6a890f5a67ee%22%3A%22e44f1e85-b537-4420-88df-21b3b4875397%22%2C%228e11a227-ca25-47b0-8e15-aca9273d8904%22%3A%22903e7516-00fb-498a-8dd7-daded397a13e%22%7D%7D\"),\"'>Emerging issue 0xc3510224  VMAL_ASAPPF_NOT_RUNNING</a>\")\r\n|extend Severity = \"critical\"",
+          "panelPath": []
+        },
+        {
+          "id": "c14b34ea-423b-43bc-a5a1-962a31535fd0",
+          "name": "IssueDetector_EI_HostAgentUpdate_to_may2024_causes_NodeFaults",
+          "groupId": "8bf15d23-806f-445f-a732-d63da4847d96",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "IssueDetector",
+          "widgetType": "Query",
+          "widgetTitle": "IssueDetector_EI_HostAgentUpdate_to_may2024_causes_NodeFaults",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "querySubscription",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "tenantName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "VMId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryCluster",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "description": "",
+              "type": "datetime",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "UpdateTimestamp",
+              "description": "",
+              "type": "datetime",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Environment",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Tenant",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Role",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "RoleInstance",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Cluster_Azure",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "NodeId_Azure",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "DataCenter_Azure",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Level",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ProviderGuid",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ProviderName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Pid",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Tid",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "OpcodeName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "KeywordName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "TaskName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ChannelName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "EventMessage",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ActivityId",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ServiceName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Cluster",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "MachineName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "NodeId",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "CurrentVersion",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "NewVersion",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "SourceOfService",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ReportTimeUTC",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "TipNode",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "SourceNamespace",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "SourceMoniker",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "SourceVersion",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "COLUMN23",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "COLUMN24",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "COLUMN27",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "COLUMN25",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "__AuthType__",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "__AuthIdentity__",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ObfuscatedData",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "TIMESTAMP1",
+              "description": "",
+              "type": "datetime",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "NodeFaultTimestamp",
+              "description": "",
+              "type": "datetime",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Tenant1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Role1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "RoleInstance1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Level1",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ProviderGuid1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ProviderName1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "EventId",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Pid1",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Tid1",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "OpcodeName1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "KeywordName1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "TaskName1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ChannelName1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "EventMessage1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "ActivityId1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "LevelName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "EventVersion",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Task",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Opcode",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "RelatedActivityId",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Channel",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "NodeId1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Message",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "SourceNamespace1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "SourceMoniker1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "SourceVersion1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "CloudName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "AvailabilityZone",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Region",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "DataCenterName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "SourceNodeId",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "RegionFriendlyName",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "__AuthType__1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "__AuthIdentity__1",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Description",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Severity",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "cluster('azcsupfollower').database('AzureCM').ServiceVersionSwitch \r\n| where NodeId == queryNodeId and PreciseTimeStamp between ((queryFrom - 1h) .. (queryTo + 1h)) and ServiceName == \"RdAgentUpdater\" and CurrentVersion == \"r_mar_2024_151_24_3_135\" and NewVersion == \"r_may_2024_151_24_5_102\"\r\n| project-rename UpdateTimestamp = PreciseTimeStamp\r\n| join kind=inner\r\n(cluster('azcsupfollower').database('AzureCM').TMMgmtNodeEventsEtwTable\r\n| where TIMESTAMP between ((queryFrom - 1h) .. (queryTo + 1h)) \r\n| where Message has 'C351023D' and Message has 'AgentEnteredFaultedMode' and Message has 'Setting node Fault'\r\n| project-rename NodeFaultTimestamp = PreciseTimeStamp) on NodeId\r\n| where (NodeFaultTimestamp - UpdateTimestamp) between (0min .. 30min)\r\n| extend Description = strcat(\"<a href='\",strcat(\"https://azureserviceinsights.trafficmanager.net/services/EEE%20RDOS/pages/WF%20Unexpected%20Restart?query_SubscriptionId=\",querySubscription,\"&query_VMName=\",roleInstanceName,\"&query_ContainerId=\",containerId,\"&query_TenantName=\",tenantName,\"&query_NodeId=\",queryNodeId,\"&query_vmId=\",VMId,\"&query_cluster=\",queryCluster,\"&globalFrom=\",queryFrom,\"&globalTo=\",queryTo,\"&__userData=%7B%22nodeData%22%3A%7B%22bbd261dc-c6d5-45a0-b0f6-6a890f5a67ee%22%3A%22e44f1e85-b537-4420-88df-21b3b4875397%22%2C%228e11a227-ca25-47b0-8e15-aca9273d8904%22%3A%22789074c2-e4fb-48ab-a56e-9664e4cbe0fa%22%7D%7D\"),\"'>Emerging issue HostAgentUpdate to may2024 causes NodeFaults</a>\")\r\n| extend Severity = \"critical\"\r\n| take 1",
+          "panelPath": []
+        },
+        {
+          "id": "34f32a54-7efe-469c-8cb5-5ca21cf555e1",
+          "name": "IssueDetector_EI_Memory_Leak_caused_by_0RDN",
+          "groupId": "a182068f-438a-411c-8f5a-769972426848",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "gandalf.kusto.windows.net",
+          "database": "gandalf",
+          "type": "IssueDetector",
+          "widgetType": "Query",
+          "widgetTitle": "IssueDetector_EI_Memory_Leak_caused_by_0RDN",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "query_NodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "querySubscription",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryroleInstanceName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "querycontainerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "querytenantName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryvirtualMachineUniqueId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryTenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PlotTime",
+              "description": "",
+              "type": "datetime",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "AvailableMemoryMB",
+              "description": "",
+              "type": "real",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "AvailableCommitMB",
+              "description": "",
+              "type": "real",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "MemoryDeltaMB",
+              "description": "",
+              "type": "real",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "PagedPoolTotalMB",
+              "description": "",
+              "type": "real",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "NonPagedPoolTotalMB",
+              "description": "",
+              "type": "real",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Severity",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Type",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Component",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Description",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "LeakDetection_MemoryUsageAnomaly\r\n| where TIMESTAMP between ((queryFrom - 4h) .. (queryTo + 4h))\r\n| where NodeId == query_NodeId and Component == \"0RDN\" and Severity > 1\r\n| project TIMESTAMP, NodeId, Severity, Type, Component\r\n| join (cluster(\"Gandalf\").database(\"gandalf\").LeakDetection_NodeMemoryUsageSnapshot\r\n| where TIMESTAMP between ((queryFrom - 4h) .. (queryTo + 4h))\r\n| where isnotnull(CommitLimit) and AvailableMemoryMB <= 6000\r\n| extend AvailableCommitMB = (CommitLimit - CommittedBytes) / 1024 / 1024\r\n| extend PlotSource = \"AvailableCommit\"\r\n| extend MemoryDeltaMB=(AvailableMemoryMB-AvailableCommitMB)) on $left.NodeId == $right.NodeId\r\n| project PlotTime = TIMESTAMP, AvailableMemoryMB, AvailableCommitMB, MemoryDeltaMB, PagedPoolTotalMB, NonPagedPoolTotalMB, Severity, Type, Component\r\n| take 1\r\n| extend Description = strcat(\"<a href='\",strcat(\"https://azureserviceinsights.trafficmanager.net/services/EEE%20RDOS/pages/WF%20Unexpected%20Restart?query_SubscriptionId=\",querySubscription,\"&query_VMName=\",queryroleInstanceName,\"&query_ContainerId=\",querycontainerId,\"&query_TenantName=\",querytenantName,\"&query_NodeId=\",query_NodeId,\"&query_vmId=\",queryvirtualMachineUniqueId,\"&query_cluster=\",queryTenant,\"&globalFrom=\",queryFrom,\"&globalTo=\",queryTo,\"&__userData=%7B%22nodeData%22%3A%7B%22bbd261dc-c6d5-45a0-b0f6-6a890f5a67ee%22%3A%22e44f1e85-b537-4420-88df-21b3b4875397%22%2C%228e11a227-ca25-47b0-8e15-aca9273d8904%22%3A%227a5d7b50-9452-4b73-95ac-63fdcb462e78%22%7D%7D\"),\"'>Emerging issue Memory Leak caused by 0RDN</a>\")\r\n| extend Severity = \"critical\"",
+          "panelPath": []
+        },
+        {
+          "id": "8e9742be-76a3-4eb7-810a-315ced4ee31e",
+          "name": "IssueDetector_EI_SyncPolicy_ClientFailedOrMissingSignalVmphuSvc*",
+          "groupId": "fcfbe705-353e-41b7-9620-91bed698a1bf",
+          "majorVersion": 1,
+          "minorVersion": 14,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "IssueDetector",
+          "widgetType": "Query",
+          "widgetTitle": "IssueDetector_EI_SyncPolicy_ClientFailedOrMissingSignalVmphuSvc*",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "containerId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "NodeID",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "tenantName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "cluster",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "querySubscription",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "description": "",
+              "type": "datetime",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "NodeId",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "containerId",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Message",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "CountContainerStart",
+              "description": "",
+              "type": "long",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Description",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            },
+            {
+              "name": "Severity",
+              "description": "",
+              "type": "string",
+              "optional": false,
+              "useTestValueAsDefault": false,
+              "typeSpecificOptions": {
+                "enumTypeData": "[]"
+              },
+              "displayConditions": []
+            }
+          ],
+          "inputMappings": [],
+          "kustoQuery": "cluster(\"azcore.centralus.kusto.windows.net\").database(\"Fa\").NodeServiceEventEtwTable\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where NodeId == NodeID\r\n| where Cluster == cluster\r\n| where Message has \"SyncPolicy_ClientFailedOrMissingSignalVmphuSvcPolicy_BlockCreate_OneDeploy\"\r\n| project PreciseTimeStamp, NodeId, Message\r\n| join kind=inner (cluster('storageclient.eastus.kusto.windows.net').database('Fc').LogContainerHealthSnapshot\r\n| where PreciseTimeStamp >= queryFrom and PreciseTimeStamp <= queryTo \r\n| where containerId =~ containerId \r\n| summarize CountContainerStart = countif(containerState == \"ContainerStateStarted\") by nodeId) on $left.NodeId == $right.nodeId\r\n| where CountContainerStart == 0\r\n| project PreciseTimeStamp, NodeId, containerId, Message, CountContainerStart\r\n| take 1\r\n|extend Description = strcat(\"<a href='\",strcat(\"https://azureserviceinsights.trafficmanager.net/services/EEE%20RDOS/pages/WF%20Unexpected%20Restart?query_SubscriptionId=\",querySubscription,\"&query_VMName=\",roleInstanceName,\"&query_ContainerId=\",containerId,\"&query_TenantName=\",tenantName,\"&query_NodeId=\",NodeID,\"&query_vmId=\",virtualMachineUniqueId,\"&query_cluster=\",cluster,\"&globalFrom=\",queryFrom,\"&globalTo=\",queryTo,\"&__userData=%7B%22nodeData%22%3A%7B%22bbd261dc-c6d5-45a0-b0f6-6a890f5a67ee%22%3A%22e44f1e85-b537-4420-88df-21b3b4875397%22%2C%228e11a227-ca25-47b0-8e15-aca9273d8904%22%3A%22a6aa1140-3c31-4170-b59f-c0a980391017%22%7D%7D\"),\"'>Emerging issue SyncPolicy_ClientFailedOrMissingSignalVmphuSvcPolicy_BlockCreate_OneDeploy</a>\")\r\n|extend Severity = \"critical\"\r\n\r\n",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:54:43.631Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 4,
+    "totalWidgetRefs": 4
+  }
+}

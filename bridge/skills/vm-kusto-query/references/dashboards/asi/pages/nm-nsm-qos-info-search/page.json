@@ -1,0 +1,843 @@
+{
+  "entityType": "Page",
+  "id": "1b2966d3-ad10-42cc-a229-1dd4a05b4f19",
+  "description": "",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "a9e7e87d-dc6b-4c24-9c46-5201086d1913",
+    "dateSelectEnabled": false,
+    "props": {
+      "gridColumns": 12
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "357ae6cf-9efd-4a78-8b8c-d66532934ba5",
+        "dateSelectEnabled": false,
+        "props": {},
+        "children": [
+          {
+            "type": "Column",
+            "id": "03e3486b-cd88-4446-98d6-e8f244d4e014",
+            "dateSelectEnabled": false,
+            "props": {
+              "gridColumns": 8
+            },
+            "children": [
+              {
+                "type": "Card",
+                "id": "1246488c-3377-4b76-88df-36f54c7794bd",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "{{TenantName}} properties"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "PreciseTimeStamp",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "12030513-2733-417e-9893-93e9b4a87c87",
+                    "paramName": "PreciseTimeStamp",
+                    "uuid": "1277fc68-e393-4d9f-ad58-69463ce8d4ec",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Region",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "12030513-2733-417e-9893-93e9b4a87c87",
+                    "paramName": "Region",
+                    "uuid": "c646d868-3e33-4e15-95d8-4abc1e788a10",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Tenant",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "12030513-2733-417e-9893-93e9b4a87c87",
+                    "paramName": "Tenant",
+                    "uuid": "c8ab8a33-a4af-40ee-a12a-b19a4aac7c58",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "operation",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "12030513-2733-417e-9893-93e9b4a87c87",
+                    "paramName": "operation",
+                    "uuid": "89716a9c-193a-4d55-b797-2f8999092bea",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "success",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "12030513-2733-417e-9893-93e9b4a87c87",
+                    "paramName": "success",
+                    "uuid": "f3091bfc-438f-4ba0-899f-d61877c4e14f",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "TenantName",
+                    "props": {},
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "088dbd19-1a0a-4fd1-b019-cb18e449ae36",
+                    "linkText": "{{TenantName}}",
+                    "pageId": "d47d7713-30c3-4832-a15a-af98b45ea414",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                        "majorVersion": 1,
+                        "minorVersion": 9,
+                        "internalDestinationName": "tenantName",
+                        "externalSourceName": "TenantName",
+                        "required": false
+                      }
+                    ],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": ""
+              },
+              {
+                "type": "CoBeTimeline",
+                "id": "6b7a7545-6639-42b0-af05-1523fa41e783",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Requests received by NSM"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "036d6998-3551-4456-a617-969a48be63ec",
+                    "groupId": "7008ca46-a8d3-45ed-bbbd-b9362dbde811",
+                    "majorVersion": 2,
+                    "minorVersion": 2,
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                        "majorVersion": 1,
+                        "minorVersion": 9,
+                        "internalDestinationName": "timestamp",
+                        "externalSourceName": "PreciseTimeStamp",
+                        "required": false
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                        "majorVersion": 1,
+                        "minorVersion": 9,
+                        "internalDestinationName": "queryTenantName",
+                        "externalSourceName": "TenantName",
+                        "required": false
+                      }
+                    ]
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": ""
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": ""
+          },
+          {
+            "type": "Column",
+            "id": "121c7243-7fd0-4765-a41d-a77805fdc30e",
+            "dateSelectEnabled": false,
+            "props": {
+              "gridColumns": 4
+            },
+            "children": [
+              {
+                "type": "Card",
+                "id": "0769ad49-8fdb-42a1-a997-a77fec44e801",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Resource Group Information"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "correlationId",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "c3d05482-7f0e-44af-89ef-962ffd2c126f",
+                    "paramName": "correlationId",
+                    "uuid": "da17208f-518b-41c8-ac01-a0cd5906d2cd",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "operationId",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "c3d05482-7f0e-44af-89ef-962ffd2c126f",
+                    "paramName": "operationId",
+                    "uuid": "8987a49b-bca0-4bb9-bdc9-84435992254a",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "operationName",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "c3d05482-7f0e-44af-89ef-962ffd2c126f",
+                    "paramName": "operationName",
+                    "uuid": "4cf42f80-0740-4fed-97c4-0475134cc353",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "durationInMilliseconds",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "c3d05482-7f0e-44af-89ef-962ffd2c126f",
+                    "paramName": "durationInMilliseconds",
+                    "uuid": "f24a9840-1c8c-4a94-bd2c-69320814b9be",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "SourceVersion",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "c3d05482-7f0e-44af-89ef-962ffd2c126f",
+                    "paramName": "SourceVersion",
+                    "uuid": "2af4606a-fdfa-4423-be6c-c28e09738f3f",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "subscriptionId",
+                    "props": {},
+                    "type": "Kusto",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "queryId": "c3d05482-7f0e-44af-89ef-962ffd2c126f",
+                    "paramName": "subscriptionId",
+                    "uuid": "25802ea3-1e81-466a-8a8d-3f8fa4b8b35d",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Resource Groups",
+                    "props": {},
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "2bc9c6af-3bd3-40ca-ab56-75790714af8c",
+                    "linkText": "{{resourceGroupName}}",
+                    "pageId": "3fcbdc89-9a91-41ed-8565-cba33a7dfad6",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "cd334ea4-8fb1-4026-bf40-4fa4e49cf5f1",
+                        "majorVersion": 1,
+                        "minorVersion": 4,
+                        "internalDestinationName": "subscriptionId",
+                        "externalSourceName": "subscriptionId",
+                        "required": false
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "cd334ea4-8fb1-4026-bf40-4fa4e49cf5f1",
+                        "majorVersion": 1,
+                        "minorVersion": 4,
+                        "internalDestinationName": "resourceGroupName",
+                        "externalSourceName": "resourceGroupName",
+                        "required": false
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "NRP",
+                    "props": {},
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "71e4ef76-2acd-4953-aae4-41ffcba43bb4",
+                    "pageId": "46be1cda-e43a-43b6-9ded-08c9d5de9a69",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "cd334ea4-8fb1-4026-bf40-4fa4e49cf5f1",
+                        "majorVersion": 1,
+                        "minorVersion": 4,
+                        "internalDestinationName": "SubscriptionId",
+                        "externalSourceName": "subscriptionId",
+                        "required": false
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "cd334ea4-8fb1-4026-bf40-4fa4e49cf5f1",
+                        "majorVersion": 1,
+                        "minorVersion": 4,
+                        "internalDestinationName": "resourceGroup",
+                        "externalSourceName": "resourceGroupName",
+                        "required": false
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "cd334ea4-8fb1-4026-bf40-4fa4e49cf5f1",
+                        "majorVersion": 1,
+                        "minorVersion": 4,
+                        "internalDestinationName": "startDate",
+                        "externalSourceName": "TIMESTAMP",
+                        "required": false
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "cd334ea4-8fb1-4026-bf40-4fa4e49cf5f1",
+                        "majorVersion": 1,
+                        "minorVersion": 4,
+                        "internalDestinationName": "endDate",
+                        "externalSourceName": "PreciseTimeStamp",
+                        "required": false
+                      }
+                    ],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "702a0b54-26d4-450d-92f8-b085a206c7a6",
+                    "groupId": "cd334ea4-8fb1-4026-bf40-4fa4e49cf5f1",
+                    "majorVersion": 1,
+                    "minorVersion": 1,
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                        "majorVersion": 1,
+                        "minorVersion": 9,
+                        "internalDestinationName": "timestamp",
+                        "externalSourceName": "PreciseTimeStamp",
+                        "required": false
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                        "majorVersion": 1,
+                        "minorVersion": 9,
+                        "internalDestinationName": "queryTenantName",
+                        "externalSourceName": "TenantName",
+                        "required": false
+                      }
+                    ]
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "Resource Group information",
+                "footer": ""
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": ""
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": ""
+      },
+      {
+        "type": "Row",
+        "id": "68ae5194-7db5-43a4-91ca-1af80ec487f6",
+        "dateSelectEnabled": false,
+        "props": {},
+        "children": [
+          {
+            "type": "Column",
+            "id": "a317da01-99cf-47c5-af39-71d111a78a68",
+            "dateSelectEnabled": false,
+            "props": {
+              "gridColumns": 12
+            },
+            "children": [
+              {
+                "type": "TabPane",
+                "id": "9a6046ca-905c-47a8-b936-61e4e4796e0f",
+                "dateSelectEnabled": false,
+                "props": {},
+                "children": [
+                  {
+                    "type": "Row",
+                    "id": "8f232cb7-d4ae-435a-9e30-d8f867ebdf1c",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "RNM Requests"
+                    },
+                    "children": [
+                      {
+                        "type": "Column",
+                        "id": "5226928b-3aaf-4302-bed0-52ab77fffa3b",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "gridColumns": 12
+                        },
+                        "children": [
+                          {
+                            "type": "Table",
+                            "id": "60716e0e-57ec-4052-92c3-d2075851952e",
+                            "dateSelectEnabled": false,
+                            "props": {},
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "d1dac51c-850c-4ce1-bd83-724d16233d28",
+                                "groupId": "3d25cc76-b206-4ced-98a1-e78f025cb10a",
+                                "majorVersion": 1,
+                                "minorVersion": 1,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "Query_ColumnFromSingleRow",
+                                    "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                                    "majorVersion": 1,
+                                    "minorVersion": 9,
+                                    "internalDestinationName": "timestamp",
+                                    "externalSourceName": "PreciseTimeStamp",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "Query_ColumnFromSingleRow",
+                                    "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                                    "majorVersion": 1,
+                                    "minorVersion": 9,
+                                    "internalDestinationName": "queryTenantName",
+                                    "externalSourceName": "TenantName",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "Query_ColumnFromSingleRow",
+                                    "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                                    "majorVersion": 1,
+                                    "minorVersion": 9,
+                                    "internalDestinationName": "queryRegion",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  }
+                                ]
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": ""
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": ""
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": ""
+                  },
+                  {
+                    "type": "Row",
+                    "id": "f1259a32-c30a-4086-bf00-d4246ec975cd",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "RNM Resource Release"
+                    },
+                    "children": [
+                      {
+                        "type": "Column",
+                        "id": "119cd3e8-d843-48c2-aac2-5f2984a9613c",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "gridColumns": 12
+                        },
+                        "children": [
+                          {
+                            "type": "Table",
+                            "id": "86d023bc-a5c7-4f4e-a600-55c25e803f1b",
+                            "dateSelectEnabled": false,
+                            "props": {},
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "e22b3ed1-aa41-41c6-817f-481aaeb066da",
+                                "groupId": "cc42c5cd-534f-446d-9ee8-1ed9bb9009f9",
+                                "majorVersion": 1,
+                                "minorVersion": 0,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "Query_ColumnFromSingleRow",
+                                    "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                                    "majorVersion": 1,
+                                    "minorVersion": 9,
+                                    "internalDestinationName": "timestamp",
+                                    "externalSourceName": "PreciseTimeStamp",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "Query_ColumnFromSingleRow",
+                                    "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                                    "majorVersion": 1,
+                                    "minorVersion": 9,
+                                    "internalDestinationName": "queryRegion",
+                                    "externalSourceName": "Region",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "Query_ColumnFromSingleRow",
+                                    "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                                    "majorVersion": 1,
+                                    "minorVersion": 9,
+                                    "internalDestinationName": "queryTenantName",
+                                    "externalSourceName": "TenantName",
+                                    "required": false
+                                  }
+                                ]
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": ""
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": ""
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": ""
+                  },
+                  {
+                    "type": "Row",
+                    "id": "3524235c-2100-474a-b5fc-2471ac540aeb",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Frontend Operation"
+                    },
+                    "children": [
+                      {
+                        "type": "Column",
+                        "id": "dd78ad69-a019-4ed1-b39a-65fd75dc5859",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "gridColumns": 12
+                        },
+                        "children": [
+                          {
+                            "type": "Table",
+                            "id": "b130ee60-4793-4f48-83b2-572ff255caaa",
+                            "dateSelectEnabled": false,
+                            "props": {},
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [
+                              {
+                                "id": "4ffd375d-1cb0-4e25-afa6-e3187d9d59f7",
+                                "groupId": "b30f7e50-0018-4128-8a23-4db71fb664df",
+                                "majorVersion": 1,
+                                "minorVersion": 0,
+                                "allowMultipleSelection": false,
+                                "inputMappings": [
+                                  {
+                                    "source": "Query_ColumnFromSingleRow",
+                                    "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                                    "majorVersion": 1,
+                                    "minorVersion": 9,
+                                    "internalDestinationName": "timestamp",
+                                    "externalSourceName": "PreciseTimeStamp",
+                                    "required": false
+                                  },
+                                  {
+                                    "source": "Query_ColumnFromSingleRow",
+                                    "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+                                    "majorVersion": 1,
+                                    "minorVersion": 9,
+                                    "internalDestinationName": "queryTenantName",
+                                    "externalSourceName": "TenantName",
+                                    "required": false
+                                  }
+                                ]
+                              }
+                            ],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": ""
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": ""
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": ""
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": ""
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": ""
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": ""
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [
+      {
+        "id": "2cbb1fe8-451c-42de-a2a4-fb6e9425506a",
+        "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+        "majorVersion": 1,
+        "minorVersion": 9,
+        "allowMultipleSelection": false,
+        "inputMappings": [
+          {
+            "source": "page",
+            "groupId": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_PreciseTimeStamp",
+            "externalSourceName": "PreciseTimeStamp",
+            "required": false
+          },
+          {
+            "source": "page",
+            "groupId": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_TenantName",
+            "externalSourceName": "TenantName",
+            "required": false
+          }
+        ]
+      }
+    ],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": ""
+  },
+  "queries": [],
+  "groupId": "9405a6a5-30de-4595-b345-02776b0eb9de",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "PreciseTimeStamp",
+      "type": "datetime",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {},
+      "displayConditions": []
+    },
+    {
+      "name": "TenantName",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {},
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "groupId": "8ed3d6fa-73ee-4d08-af0b-44d85acfdf4f",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "7008ca46-a8d3-45ed-bbbd-b9362dbde811",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "cd334ea4-8fb1-4026-bf40-4fa4e49cf5f1",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "3d25cc76-b206-4ced-98a1-e78f025cb10a",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "cc42c5cd-534f-446d-9ee8-1ed9bb9009f9",
+      "entityType": "Query"
+    },
+    {
+      "groupId": "b30f7e50-0018-4128-8a23-4db71fb664df",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Network Manager",
+      "id": "d47d7713-30c3-4832-a15a-af98b45ea414",
+      "groupId": "d47d7713-30c3-4832-a15a-af98b45ea414",
+      "entityType": "Page"
+    },
+    {
+      "serviceId": "Network Manager",
+      "id": "3fcbdc89-9a91-41ed-8565-cba33a7dfad6",
+      "groupId": "3fcbdc89-9a91-41ed-8565-cba33a7dfad6",
+      "entityType": "Page"
+    },
+    {
+      "serviceId": "Network Manager",
+      "id": "46be1cda-e43a-43b6-9ded-08c9d5de9a69",
+      "groupId": "46be1cda-e43a-43b6-9ded-08c9d5de9a69",
+      "entityType": "Page"
+    }
+  ],
+  "serviceId": "Network Manager",
+  "deleted": false,
+  "name": "NsmQosInfo Search",
+  "_ts": 1665038947,
+  "databaseSavedTimestamp": "2022-10-06T06:49:07+00:00",
+  "_etag": "\"660073d0-0000-1a00-0000-633e7a630000\"",
+  "createdAt": "2021-06-03T22:34:57+00:00",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "huangr@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2021-06-03T22:34:58+00:00",
+  "tags": []
+}

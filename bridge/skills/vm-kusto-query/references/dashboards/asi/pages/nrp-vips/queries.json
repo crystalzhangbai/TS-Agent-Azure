@@ -1,0 +1,670 @@
+[
+  {
+    "id": "0f3187aa-3c52-462b-97f2-ba537d17e800",
+    "name": "VipAllocation Perf",
+    "groupId": "3c17d0d2-e56a-486b-867c-1502df4c9211",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let allocatedIps =FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"PutPublicIpAddressOperation\" \r\n| where EventCode == \"PublicIpAllocated\"\r\n| take 10000\r\n| summarize make_set(OperationId);\r\nlet allocated=QosEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where Success == true\r\n| where OperationName == \"PutPublicIpAddressOperation\"\r\n| where OperationId in (allocatedIps)\r\n| extend allocationType=\"vipManager\"\r\n| summarize dcount(OperationId), max(DurationInMilliseconds), avg(DurationInMilliseconds), percentiles(DurationInMilliseconds, 50, 75, 90, 99.9) by allocationType\r\n;\r\nlet reservedIps = FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where OperationName == \"PutPublicIpAddressOperation\" \r\n| where Message startswith \"Reserved ipaddress \"\r\n| take 10000\r\n| summarize make_set(OperationId);\r\nlet reserved=QosEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where Success == true\r\n| where OperationName == \"PutPublicIpAddressOperation\"\r\n| where OperationId in (reservedIps)\r\n| extend allocationType=\"sviManager\"\r\n| summarize dcount(OperationId), max(DurationInMilliseconds), avg(DurationInMilliseconds), percentiles(DurationInMilliseconds, 50, 75, 90, 99.9) by allocationType\r\n| union allocated\r\n;\r\nreserved;",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-16T16:58:00.613Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-17T16:58:00.613Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscription",
+        "description": "",
+        "type": "string",
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "allocationType",
+        "type": "string"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "max_DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "avg_DurationInMilliseconds",
+        "type": "real"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_99_9",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "2bd73302-fd63-406c-b6c5-ffff172d60c2",
+    "name": "VipAllocations Count",
+    "groupId": "a5ff08eb-257c-4a34-b746-a9fcf8663d68",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let allocatedIps =FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where EventCode == \"PublicIpAllocated\"\r\n| extend allocationType=\"vipManager\"\r\n| summarize count() by allocationType\r\n;\r\nlet reservedIps = FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where Message startswith \"Reserved ipaddress \"\r\n| extend allocationType=\"sviManager\"\r\n| summarize count() by allocationType\r\n| union allocatedIps\r\n;\r\nlet totalCount= toscalar(\r\nreservedIps\r\n| summarize sum(count_))\r\n;\r\nreservedIps\r\n| extend percentTotal = count_*100/totalCount\r\n;",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-16T16:58:00.613Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-06-17T16:58:00.613Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscription",
+        "description": "",
+        "type": "string",
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "allocationType",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "percentTotal",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "9d1e9931-090e-46a0-a988-c5f5e9c9d5bc",
+    "name": "prefix allocated count",
+    "groupId": "49c7ddcb-86de-4adf-bf33-2cf88ab35d44",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "\r\nlet allocatedIps =FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where SliceNum(SourceAssemblyFileVersion) < 10\r\n| where OperationName == \"PutPublicIpPrefixOperation\" \r\n| where Message startswith \"Allocating public ip prefix for\"\r\n| extend allocationType=\"vipManager\"\r\n| summarize count() by Region, Release=ReleaseBuild(SourceAssemblyFileVersion, IgnoreBuild=true)\r\n;\r\nallocatedIps",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-07T13:24:43.269Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-08T13:24:43.269Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Release",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "af039d18-8885-4dae-a1d0-15a5ec173dfe",
+    "name": "VIP Release Offline vs Sync",
+    "groupId": "cb3319ea-abc7-47ed-aec5-738c2d31ee4c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let allocatedIps =FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where Message startswith \"Offline tasks persisted for release of VipAllocation with id \"\r\n| extend ReleaseType=\"Offline Task\"\r\n| summarize count() by ReleaseType\r\n;\r\nlet reservedIps = FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where Message startswith \"Released ipaddress \"\r\n| extend ReleaseType=\"Synchronous\"\r\n| summarize count() by ReleaseType\r\n| union allocatedIps\r\n;\r\nlet totalCount= toscalar(\r\nreservedIps\r\n| summarize sum(count_))\r\n;\r\nreservedIps\r\n| extend percentTotal = count_*100/totalCount\r\n;",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-07T13:24:43.269Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-08T13:24:43.269Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscription",
+        "description": "",
+        "type": "string",
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ReleaseType",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "percentTotal",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "e4eb76f0-59df-4327-9daa-3f3f966c3e6d",
+    "name": "Transfer Count",
+    "groupId": "8e634de6-0a85-4ef8-adfc-4b26ac8375b3",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let transferredIps =FrontendOperationEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where querySubscription == \"*\" or SubscriptionId == querySubscription\r\n| where Message startswith \"PublicIp Transfer Reservation SUCCESS for subscriptionId: \"\r\n| summarize count() by OperationName\r\n;transferredIps",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-07T13:24:43.269Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-10-08T13:24:43.269Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscription",
+        "description": "",
+        "type": "string",
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "caee39d1-97f3-4582-aa0b-7287031e9b04",
+    "name": "VIP QOS Errors",
+    "groupId": "dc5cccd9-6991-407e-b3f8-744a2a465c71",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent \r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where OperationName == \"PutPublicIpAddressOperation\"  or OperationName == \"DeletePublicIpAddressOperation\" \r\n    or ErrorDetails contains \"TransferFastPathPublicIPAddresses\" \r\n    or ErrorDetails contains \"TransferVipResourceIpAndPollForCompletionAsync\" \r\n    or ErrorDetails contains \"VipAllocationToTr|ansfer\" \r\n    or ErrorDetails contains \"AllocatePublicIpAndPersistIfRequired\" \r\n    or ErrorDetails contains \"ReleasePublicIPAllocationOfflineAsync\" \r\n   // or ErrorDetails contains \"AllocateVipPrefixInRNM\" \r\n   // or ErrorDetails contains \"ReleaseVipAllocationPrefixAsync\" \r\n    or ErrorDetails contains \"ReleasePublicIpAsync\"\r\n    or ErrorDetails contains \"ReservePublicIpAsync\"\r\n| where Success == false \r\n| where UserError == false \r\n| extend containsParentOperation = ParentOperationId != \"\" \r\n| where ErrorDetails !contains \"FabricNotPrimaryException\"  \r\n    and ErrorCode != \"TaskCanceled\"  \r\n    and ErrorCode != \"PrimaryFailover\"  \r\n    and ErrorDetails !startswith \"System.OperationCanceledException: \"  \r\n    and ErrorDetails !startswith \"Microsoft.WindowsAzure.Networking.Nrp.Frontend.Common.NrpException: Primay role \" \r\n    and ErrorDetails !startswith \"System.Fabric.FabricTransientException: The operation failed because this replica set is currently reconfiguring.\"\r\n| extend errorType = case( \r\n    ErrorDetails contains \"There is no more VipAllocationService Uri with the current VIpClassification to try but still cannot allocate Vip address.\", \"Unable To Allocate\", \r\n    ErrorDetails contains \"Microsoft.Windows.Azure.Networking.Dns.Common.DnsResolver.DnsQueryException: Failed to query the DNS server at ''\", \"DNS Failed To Query The Server\", \r\n    ErrorDetails contains \"System.ArgumentException: vipTags must not be specified along with vipPrefixAllocationId\", \"VIP With Prefix Not Released In Time\", \r\n    ErrorDetails contains \"System.Net.WebException: Unable to connect to the remote server ---> System.Net.Sockets.\" and ErrorDetails contains \"DNS Facade\", \"dnsSocketException\", \r\n    ErrorDetails contains \"Vip reservation already exists for specified IPAddress\" and ErrorDetails contains \"TransferVipReservationAsync\", \"Reservation Already Exists For Transfer Api\", \r\n    ErrorDetails contains \"Error in CreateOrUpdateSlbServiceAsync :\", \"SLB Update Error\", \r\n    ErrorDetails contains \"SlbFacade.<DeleteSlbServiceAsync>\", \"SLB Delete Error\", \r\n    ErrorDetails contains \"This resource reference is a stub.\" and ErrorDetails contains \"prefixes/\" and ErrorDetails contains \"TransferVipResourceIpAndPollForCompletionAsync\", \"Transfer Api Null Ref For PublicIP Prefix\", \r\n    ErrorDetails contains \"No range found that can satisfy the allocation request.\" and ErrorDetails contains \"AllocateVipsInternal\", \"Vip Allocation No Range Found Error\", // why would we get this error if we have already gone to that vipManager? Race condition? \r\n    ErrorDetails contains \"Parameter name: vipAddress ---> System.ServiceModel.FaultException`1[Microsoft.WindowsAzure.Networking.Rnm.Contracts.Faults.VipManagementFault]: Value cannot be null.\", \"Vip Reservation Ip Address Value Is Null\", \r\n    \"Other\" \r\n) \r\n| where ClientAppId !in (\"a43ddf50-441a-442c-8e60-c423ceae1595\",\"237794b4-a7ac-4073-96c6-38f0cfddd8cf\",\"093a0dd8-9cae-4e29-a1c4-c2dc47bd2508\",\"f81873a0-342e-4769-a266-7159ac4e8cd4\") // client app id excluded\r\n// | project Region,ErrorCode, ErrorDetails, containsParentOperation, OperationName, SourceAssemblyFileVersion, SubscriptionId, OperationId, ClientAppId\r\n| summarize count(), make_set(ErrorDetails), make_set(Region), ReleaseBuilds = make_set(ReleaseBuild((SourceAssemblyFileVersion))) by errorType, containsParentOperation, OperationName\r\n| summarize by count_, errorType, OperationName, containsParentOperation, Regions = tostring(set_Region), ReleaseBuilds = tostring(ReleaseBuilds), ExampleError = substring(tostring(set_ErrorDetails[0]), 0, 500)\r\n| sort by count_ desc ",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-06-02T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-06-04T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "errorType",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "containsParentOperation",
+        "type": "bool"
+      },
+      {
+        "name": "Regions",
+        "type": "string"
+      },
+      {
+        "name": "ReleaseBuilds",
+        "type": "string"
+      },
+      {
+        "name": "ExampleError",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "a656d85b-6ecf-4867-8da4-de5e7cf85581",
+    "name": "Put/Delete Public IP Prefix QOS Errors",
+    "groupId": "9800f323-d0a5-4012-8b00-8b070df5098d",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent \r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where OperationName == \"PutPublicIpPrefixOperation\"  or OperationName == \"DeletePublicIpPrefixOperation\" \r\n| where Success == false \r\n| where UserError == false \r\n| where ErrorDetails !contains \"FabricNotPrimaryException\"  \r\n    and ErrorCode != \"TaskCanceled\"  \r\n    and ErrorCode != \"PrimaryFailover\"  \r\n    and ErrorDetails !startswith \"System.OperationCanceledException: \"  \r\n    and ErrorDetails !startswith \"Microsoft.WindowsAzure.Networking.Nrp.Frontend.Common.NrpException: Primay role \" \r\n    and ErrorDetails !startswith \"System.Fabric.FabricTransientException: The operation failed because this replica set is currently reconfiguring.\"\r\n| extend errorType = case( \r\n    ErrorDetails contains \"System.InvalidOperationException: RNM returned an error when trying to release public ip prefix with unexpected exception: System.InvalidOperationException: Reserved PublicIp Prefix release timed out for reservationId:\", \"Reservation Release in RNM Timed Out\",\r\n    \"Other\"\r\n    )\r\n| summarize count(), make_set(ErrorDetails), make_set(Region), ReleaseBuilds = make_set(ReleaseBuild((SourceAssemblyFileVersion))) by errorType, OperationName\r\n| summarize by count_, errorType, OperationName, Regions = tostring(set_Region), ReleaseBuilds = tostring(ReleaseBuilds), ExampleError = substring(tostring(set_ErrorDetails[0]), 0, 500)\r\n| sort by count_ desc \r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-06-02T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-06-04T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "errorType",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "Regions",
+        "type": "string"
+      },
+      {
+        "name": "ReleaseBuilds",
+        "type": "string"
+      },
+      {
+        "name": "ExampleError",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "960934b9-3c48-46af-b3b6-2f2e3b596b50",
+    "name": "VIP Allocate/Release Trends",
+    "groupId": "9fe02add-34a8-422f-9bb5-3d567c7065b6",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "VipLifeCycleEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| extend TransactionType = iff(TransactionType in (\"Allocation\",\"Reservation\",\"Alloction\"), \"Allocation\", \"Release\")\r\n| summarize count() by bin(TIMESTAMP, 1d), TransactionType",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-05-01T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-06-04T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "default": "useast2euap",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "TransactionType",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "62ca9406-4fa6-4838-bd57-5090a4f647f8",
+    "name": "Put/Delete Public IP Health",
+    "groupId": "183bd3a5-0685-4278-a1ce-b28282b4523d",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where TIMESTAMP between (queryFrom ..queryTo )\r\n| where queryRegion == \"*\" or Region == queryRegion\r\n| where OperationName == \"PutPublicIpAddressOperation\" or OperationName == \"DeletePublicIpAddressOperation\"\r\n| where UserError == false\r\n| summarize SuccessRate = 100.0 * countif(Success == true) / count() by bin(PreciseTimeStamp, 1d)\r\n| render timechart",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryRegion",
+        "description": "",
+        "type": "string",
+        "default": "*",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SuccessRate",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

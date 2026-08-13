@@ -1,0 +1,226 @@
+[
+  {
+    "groupId": "3603c091-2d19-4f98-969d-62dbc7c6c797",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "af228c7e-afd2-451a-96eb-660edee6b2a4",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_vMId",
+        "externalSourceName": "vMId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Retrieve Resource \"FastAttachDetachOperations\"",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "globalFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "globalTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_vMId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "print_0",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "ade84dd4-4997-4cb3-9177-fd11bfbe5217",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [],
+    "widgetType": "Timeline",
+    "widgetTitle": "",
+    "queryId": "e949b3cd-256f-4571-9119-4e9271161549",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "3603c091-2d19-4f98-969d-62dbc7c6c797",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "internalDestinationName": "vmid",
+        "externalSourceName": "print_0",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Timeline query",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "vmid",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "42114d2f-d06c-4e6f-9802-c2cfb4c7c0ae",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Unioned Logs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Unioned Logs",
+    "queryId": "f0a9502a-5589-49e1-ae75-1d6f5ca22ce4",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "3603c091-2d19-4f98-969d-62dbc7c6c797",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "internalDestinationName": "vmid",
+        "externalSourceName": "print_0",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Unioned Logs",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "vmid",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Source",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

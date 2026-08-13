@@ -1,0 +1,194 @@
+[
+  {
+    "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "0d36dac4-6fbc-421f-9022-3db8d67a4073",
+    "inputMappings": [
+      {
+        "groupId": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_SubscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false
+      },
+      {
+        "groupId": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_resourceGroup",
+        "externalSourceName": "resourceGroup",
+        "required": false
+      },
+      {
+        "groupId": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_startDate",
+        "externalSourceName": "startDate",
+        "required": false
+      },
+      {
+        "groupId": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_endDate",
+        "externalSourceName": "endDate",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"Customer Write Operations\"",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "local_SubscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_resourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_startDate",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_endDate",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "startTime",
+        "type": "datetime"
+      },
+      {
+        "name": "endTime",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "af33475b-f194-4d91-b1d9-50e847183bbf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [],
+    "widgetType": "CoBeTimeline",
+    "widgetTitle": "",
+    "queryId": "96d068d6-3862-4635-aee5-aec477e694cf",
+    "inputMappings": [
+      {
+        "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "SubscriptionId",
+        "required": false
+      },
+      {
+        "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "internalDestinationName": "resourceGroup",
+        "externalSourceName": "resourceGroup",
+        "required": false
+      },
+      {
+        "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "startTime",
+        "required": false
+      },
+      {
+        "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+        "majorVersion": 1,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "endTime",
+        "required": false
+      }
+    ],
+    "name": "CustomerWriteOperations",
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "CoBeTimeline",
+    "params": [
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "ParentId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

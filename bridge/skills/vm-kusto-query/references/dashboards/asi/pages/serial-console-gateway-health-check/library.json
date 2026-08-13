@@ -1,0 +1,144 @@
+{
+  "service": "Azure Serial Console",
+  "page": "Gateway Health Check",
+  "pageId": "3168915e-fbc9-4ff1-add8-0cb9da80b09b",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "09b5c402-a2ef-43cb-a8cd-681e7ca84de5",
+          "name": "Gateway To RP Healthcheck",
+          "groupId": "fb9f90ab-0656-41f7-9240-0ba5057d7d00",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azlinux.kusto.windows.net",
+          "database": "SerialConsole",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Gateway Health Check Failure Percentage",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "ratio",
+              "type": "real"
+            },
+            {
+              "name": "healthy_time_bin",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let totalCount = HttpAccessLog\r\n| where activitytimestamp > ago(1d)\r\n| where log contains \"/healthcheck HTTP/1.1\"\r\n| summarize total_count = count() by RPTenant, total_time_bin=bin(activitytimestamp, 1h);\r\nlet healthyCount = HttpAccessLog\r\n| where activitytimestamp > ago(1d)\r\n| where log contains \"/healthcheck HTTP/1.1\\\" 200 2\"\r\n| summarize healthy_count = count() by RPTenant, healthy_time_bin=bin(activitytimestamp, 1h);\r\ntotalCount\r\n| join kind=inner healthyCount on $left.total_time_bin == $right.healthy_time_bin, RPTenant\r\n| extend ratio = (1.0 - round(1.0 * healthy_count/total_count, 3))*100\r\n| project RPTenant, ratio, healthy_time_bin",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:59:23.565Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

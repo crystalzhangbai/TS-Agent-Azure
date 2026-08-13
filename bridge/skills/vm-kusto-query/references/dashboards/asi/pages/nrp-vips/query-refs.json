@@ -1,0 +1,786 @@
+[
+  {
+    "groupId": "183bd3a5-0685-4278-a1ce-b28282b4523d",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "NRP VIPs",
+      "VIP",
+      "Put/Delete Public IP Operation Health"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Put/Delete Public IP Operation Health",
+    "queryId": "2074ba01-91b2-459f-b21b-853fb9b30829",
+    "inputMappings": [
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "componentFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "componentTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "node_input",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Put/Delete Public IP Health",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SuccessRate",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "dc5cccd9-6991-407e-b3f8-744a2a465c71",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "NRP VIPs",
+      "VIP",
+      "Put/Delete Public IP +VIP Related QOS Errors"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Put/Delete Public IP +VIP Related QOS Errors",
+    "queryId": "b433d1c0-f935-4fe2-8af0-157370465a8a",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "queryRegion",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "VIP QOS Errors",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "errorType",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "containsParentOperation",
+        "type": "bool"
+      },
+      {
+        "name": "Regions",
+        "type": "string"
+      },
+      {
+        "name": "ReleaseBuilds",
+        "type": "string"
+      },
+      {
+        "name": "ExampleError",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a5ff08eb-257c-4a34-b746-a9fcf8663d68",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "panelPath": [
+      "NRP VIPs",
+      "VIP",
+      "Total VIP Allocation/Reservation Count (within region)"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Total VIP Allocation/Reservation Count (within region)",
+    "queryId": "3e91b3c8-3e9b-48ee-9224-2eeef2895cd5",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "queryRegion",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscription",
+        "externalSourceName": "querySubscription",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "VipAllocations Count",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscription",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "allocationType",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "percentTotal",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "cb3319ea-abc7-47ed-aec5-738c2d31ee4c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "NRP VIPs",
+      "VIP",
+      "Offline Task (vipmanager) vs Sync (svimanager) Release"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Offline Task (vipmanager) vs Sync (svimanager) Release",
+    "queryId": "b897c8df-15b3-46c2-acd3-12da83ce9aaf",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscription",
+        "externalSourceName": "querySubscription",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "queryRegion",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "VIP Release Offline vs Sync",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscription",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ReleaseType",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "percentTotal",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "3c17d0d2-e56a-486b-867c-1502df4c9211",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "NRP VIPs",
+      "VIP",
+      "Vip Allocation vs Reservation Performance"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Vip Allocation vs Reservation Performance",
+    "queryId": "b91706d1-cfdb-4a8a-9ac8-dd55f1827add",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "queryRegion",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscription",
+        "externalSourceName": "querySubscription",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "VipAllocation Perf",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "querySubscription",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "allocationType",
+        "type": "string"
+      },
+      {
+        "name": "dcount_OperationId",
+        "type": "long"
+      },
+      {
+        "name": "max_DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "avg_DurationInMilliseconds",
+        "type": "real"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_75",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_90",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMilliseconds_99_9",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8e634de6-0a85-4ef8-adfc-4b26ac8375b3",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "NRP VIPs",
+      "VIP",
+      "VIP Transfer Count by Operation"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "VIP Transfer Count by Operation",
+    "queryId": "14efb331-c306-4937-b778-9d2abb281680",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "querySubscription",
+        "externalSourceName": "querySubscription",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "queryRegion",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Transfer Count",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "querySubscription",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9fe02add-34a8-422f-9bb5-3d567c7065b6",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "NRP VIPs",
+      "VIP",
+      "VIP Allocate/Release Trends"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "VIP Allocate/Release Trends",
+    "queryId": "1b79c24c-6412-4c18-b1f8-1dd1a682ff1c",
+    "inputMappings": [
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "componentFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "componentTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "node_input",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "Region",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "VIP Allocate/Release Trends",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "TransactionType",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "49c7ddcb-86de-4adf-bf33-2cf88ab35d44",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "NRP VIPs",
+      "VIP Prefix",
+      "All Regions with VIP Prefix Allocation "
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "All Regions with VIP Prefix Allocation ",
+    "queryId": "6fb3ecb5-20cc-4ce1-9e25-eae202fbeea1",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "prefix allocated count",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Release",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9800f323-d0a5-4012-8b00-8b070df5098d",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "NRP VIPs",
+      "VIP Prefix",
+      "Put/Delete PIP Prefix Qos Errors"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Put/Delete PIP Prefix Qos Errors",
+    "queryId": "ab2fa896-8b4c-406d-88f8-e877a526efbb",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryRegion",
+        "externalSourceName": "queryRegion",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Put/Delete Public IP Prefix QOS Errors",
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryRegion",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "errorType",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "Regions",
+        "type": "string"
+      },
+      {
+        "name": "ReleaseBuilds",
+        "type": "string"
+      },
+      {
+        "name": "ExampleError",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

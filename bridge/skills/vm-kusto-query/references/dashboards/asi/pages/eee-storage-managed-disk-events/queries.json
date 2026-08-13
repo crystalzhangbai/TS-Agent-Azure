@@ -1,0 +1,83 @@
+[
+  {
+    "id": "d5270ef0-bbe9-4456-8ad0-69d950d5aee7",
+    "name": "Managed Disk Lifecycle Events",
+    "groupId": "1c6a3f96-cdd5-4776-a30b-56803823738d",
+    "majorVersion": 5,
+    "minorVersion": 2,
+    "cluster": "disks.kusto.windows.net",
+    "database": "Disks",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "DiskRPResourceLifecycleEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where resourceName contains resname\r\n| project PreciseTimeStamp,resourceName, resourceGroupName,  pseudosubscriptionId, blobUrl, diskEvent, RPTenant\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-11-18T11:54:45.707Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-11-20T11:54:45.707Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resname",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "pseudosubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "blobUrl",
+        "type": "string"
+      },
+      {
+        "name": "diskEvent",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      }
+    ],
+    "serviceId": "EEE Storage"
+  }
+]

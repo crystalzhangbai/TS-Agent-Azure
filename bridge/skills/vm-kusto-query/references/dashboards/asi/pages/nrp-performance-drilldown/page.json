@@ -1,0 +1,2401 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "de04e8d2-41d2-4449-ae90-96ef23cbd4c5",
+  "description": "This page is meant to be a one stop shop for all performance investigations in NRP.  From here you should be able to tell:\n\n* Batch Manager Times\n* Subscription Lock Times\n* EG times (if available)\n\nFiltering down to the operation or correlation id is available, but leaving those fields blank will also give the overall performance profile for a subscription in a given time frame",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "769adfc1-deba-48d4-9106-06e54e7bc685",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "9bff5d35-099e-4829-8351-aa3616b88d7e",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "44784925-2c5f-4984-aab3-2d0991f4f821",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Card",
+                "id": "4e56fa55-b9a1-4c79-84e8-2b64bc9374d2",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Overview",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "This dashboard can help diagnose the following categories of issues:\n* High delays from write transactions, due to either subscription lock or batch manager delays\n* Partition wide issues with high read / write size\n* High delays due to downstream services (when EG is available)\n\nThis dashboard cannot help diagnose deeper performance issues such as the following:\n* Thread exhaustion issues\n* Garbage collection and other transient .NET delays\n* Blocked subscription locks / batch manager down issues",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "FloatBottomRight"
+              },
+              {
+                "type": "TabPane",
+                "id": "bb315912-b47f-4d91-964e-f5bbc0d6d579",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [
+                  {
+                    "type": "Tab",
+                    "id": "04368130-362c-4c25-942c-d08b24ef0ecb",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "QOS Overview",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "be762dbd-71f6-4c00-87dd-a3c2254305f2",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "QOS Overview",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "1a21a40a-c92c-4c35-a447-f7991b4f1462",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Card",
+                                "id": "1c97d15f-9535-4a47-bdf2-bb7e99ff6e69",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "How To",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "QOS table information is a good starting point to help see exactly what a customer is doing / if they claim what their issue is appears to actually be the issue.  Usually checking here is best to see what operations are taking the longest, how many of each given api call type we are receiving, etc.  Taking a look here can help identify exactly where to start your investigation on later tabs and try and find operation ids / correlation ids to filter by.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "3aa39cf6-8ef3-4234-91d0-02df9e69a3db",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "QOS Overview",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "c65c2d78-4b13-4274-b7a7-c7f41e8e5519",
+                                    "idForPopups": "c65c2d78-4b13-4274-b7a7-c7f41e8e5519",
+                                    "groupId": "2a9a6f8e-a6f9-40c2-99a9-1d071e60f364",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  },
+                  {
+                    "type": "Tab",
+                    "id": "cb03f726-17a4-464c-bef6-e70e4b6d3ab4",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Top Possible Perf Issues",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "9714f590-a6db-49ab-870e-b831e9bbca1e",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "Top Possible Perf Issues",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "22185a00-ea19-4800-95c6-941cf66930d4",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Card",
+                                "id": "581b9754-45af-4b7c-b33d-0ad76ccc76c7",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "How To",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "This tab is meant to try and pull the worst offending data points from each of the following categories to help provide operation ids and correlation ids to narrow your search with.  If you have already been given an operation id or correlation id to check you can probably skip this tab.  If all you have is a subscription, region and time frame then starting here is likely your best bet to figure out what may be going wrong.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "b5c3d27f-ce34-4749-a884-a231d9f1e6af",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Slowest Batch Jobs",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "8d5e3baa-0bf7-44f1-899a-2211c27bdef3",
+                                    "idForPopups": "8d5e3baa-0bf7-44f1-899a-2211c27bdef3",
+                                    "groupId": "ed2143dd-86d5-46aa-9658-16c847b9b188",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "Any times here over ~1000 indicate that an individual job / category of jobs are taking longer than they should on this subscription, and with a high enough volume of these high duration jobs the customers subscription could experience very high latency on write transactions.  These high durations can also cause throttling on incoming requests if we cant process them within 30s.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "9985abbb-e8cc-47d1-b4a2-255425795b44",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Longest Subscription Locks",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "c6c280dd-4137-4d86-a26c-9341e40383c1",
+                                    "idForPopups": "c6c280dd-4137-4d86-a26c-9341e40383c1",
+                                    "groupId": "e6991165-0182-4635-b239-1578ff1910d8",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "Most of our services high-throughput operations are no longer using subscription locks, but some operations like PutVmss still do and can sometimes take very long underneath this lock.  If times here are over ~10000 and there are more than one of these calls per minute it will likely cause high latency on customer write transactions and similar throttling exceptions as batch manager delays.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "3f62fa30-da43-4a5a-96b8-00227fae4788",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Highest Reading Operations",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "09c6ba8e-ba8c-427d-a04f-7b2070610547",
+                                    "idForPopups": "09c6ba8e-ba8c-427d-a04f-7b2070610547",
+                                    "groupId": "fcfc8c43-c5e9-4d85-8636-14a0339e5962",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "When one of our partitions reads too much data it can cause high GC delays, thread exhaustion and sometimes out of memory exceptions that cause the partition to failover.  This can appear to customers as operations that have been stuck in progress for tens to hundreds of minutes while our service is stuck in a loop reading too much data.  If any operations here are reading over 20mb checking the readsize for the given correlation id on the transaction stats tab is a good next step to see how much data is being read by all operations on that correlation id.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "12b82e44-64fc-455c-b050-0cc3770f870c",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Longest EG Frames",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "4d38b3f4-7ab8-4220-b421-c1debffda128",
+                                    "idForPopups": "4d38b3f4-7ab8-4220-b421-c1debffda128",
+                                    "groupId": "6310445c-32de-4333-bfea-93503512539d",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  },
+                  {
+                    "type": "Tab",
+                    "id": "239bbfad-9ca5-41b7-bc21-47752e463985",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "EG Breakdown",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "8fa91fec-2af3-45f2-a4d9-274346771264",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "EG Breakdown",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "5d06de67-1d54-42ec-a2fb-64d702613620",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Table",
+                                "id": "8db506bb-c1fa-45b2-a1c4-c011f947b29e",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "NRP EG Exclusive Times",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "8fc5640f-9367-4486-9baf-26737e988911",
+                                    "idForPopups": "8fc5640f-9367-4486-9baf-26737e988911",
+                                    "groupId": "c78cf12d-7754-4fa6-92d3-108b8d447166",
+                                    "majorVersion": 1,
+                                    "minorVersion": 4,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "EG is an underutilized resource for investigating performance, most of the time because we are forced to rely on EG viewer to get latency information.  This page can pull this same EG latency information for NRP operations though, and so as long as the subscription is emitting EG logs we can pull this information.  This query only gets latency information one level down, meaning that it will only give a high level view of where operation time is going and can't break apart more detailed components of our background tasks other than information like which api call is being made to which service.  the OperationName can usually be found hardcoded into the operation source code, so if it is unclear what a given frame may be and needs further investigation it can usually be found by searching for it in our repo.\nHere are some common EG operationName categories you will see and what they mean:\n* Nrp Operation Name: this relates to time spent in the ExecuteAsync path of the given operation name.\n* Nrp Operation Name - Async: this relates to time spent in the RunBackgroundTaskAsync path of the given operation name\n* RnmClient.*: this relates to NRP code involved with calling Rnm + the api call time itself that is attributable to their service\n* SlbClient.*: this relates to NRP involved in SLB goal state creation + the api call to SLB",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  },
+                  {
+                    "type": "Tab",
+                    "id": "7082a735-97c7-44d9-b7d0-ede0a7f6a56b",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Batch Manager Summary",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "67dcacfe-d437-4568-b4da-adc4f808c1ca",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "Batch Manager Summary",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "953d3beb-e885-4139-9fad-8cc5bc31a780",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 4,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "TimeSeries",
+                                "id": "4480a2fc-0130-4538-b9b0-5be671340437",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Long Running Jobs",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "a0694db0-5337-446a-a848-d9c622c10579",
+                                    "idForPopups": "a0694db0-5337-446a-a848-d9c622c10579",
+                                    "groupId": "0b9ab269-da98-484d-a543-c71a58cd2b89",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscription",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "Spikes here typically indicate poisonous jobs. One huge spike could cause all x jobs (typically 100) in a batch to time out or for a whole batch of jobs to be slow due to transitive blocking or the convoy effect. ",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "CategoryChart",
+                                "id": "b969adee-38fd-40a6-a4ed-033fb5de5668",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Batch Sizes",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "5048a105-d2a9-4c11-b0e4-98ae632b061b",
+                                    "idForPopups": "5048a105-d2a9-4c11-b0e4-98ae632b061b",
+                                    "groupId": "104bfde5-b5e9-4a62-b792-849e343b330b",
+                                    "majorVersion": 1,
+                                    "minorVersion": 1,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {
+                                  "chartType": "Bar",
+                                  "layout": "Vertical",
+                                  "labelOrGroupingColumn": "",
+                                  "columnUsageInfo": "{\"percentile_batchsize_50\":true}",
+                                  "dataSeriesSource": "ROWS"
+                                },
+                                "header": "",
+                                "footer": "",
+                                "helpText": "Each column is split into the different percentiles by color. The default batch size is 100. Having a value of 100 across all queue types means there are lots of jobs in the Batch Manager and that it may be choking. ",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "876de0ed-6b50-41d8-bbb3-87c1e4a0b39c",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Commit Duration",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "d5008000-1293-4a1e-b03d-8f17184c9686",
+                                    "idForPopups": "d5008000-1293-4a1e-b03d-8f17184c9686",
+                                    "groupId": "15b585ff-c4d3-4ffd-b975-089a7e78fc71",
+                                    "majorVersion": 1,
+                                    "minorVersion": 1,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "CategoryChart",
+                                "id": "39ba1320-6fe2-406e-854d-acab9caec218",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Worst-Performing Non-Tenant Operations",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "0b928246-ab40-476d-913c-3c79203fcc2a",
+                                    "idForPopups": "0b928246-ab40-476d-913c-3c79203fcc2a",
+                                    "groupId": "d0a543b7-186a-43a1-bfbb-b4b7966389c2",
+                                    "majorVersion": 3,
+                                    "minorVersion": 2,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {
+                                  "chartType": "Bar",
+                                  "layout": "Vertical"
+                                },
+                                "header": "",
+                                "footer": "",
+                                "helpText": "Worst performing non-tenant/VM/VMSS operations by duration. \nThis graph samples the top 10. ",
+                                "popupDisplayStrategy": "None"
+                              },
+                              {
+                                "type": "CategoryChart",
+                                "id": "ac4c4cc5-5b8f-4aae-985e-da1304bff612",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Worst-Performing Tenant Operations",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "881232c3-f8dd-4ba1-84b1-eb89c985569e",
+                                    "idForPopups": "881232c3-f8dd-4ba1-84b1-eb89c985569e",
+                                    "groupId": "dee03fde-3b0d-499f-ac07-c3b102f02930",
+                                    "majorVersion": 1,
+                                    "minorVersion": 1,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryFrom",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "queryTo",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {
+                                  "chartType": "Bar",
+                                  "layout": "Vertical"
+                                },
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "None"
+                          },
+                          {
+                            "type": "Column",
+                            "id": "c0d135a2-489d-4cb5-ab22-cf44a914b186",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 4,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Card",
+                                "id": "36d4d6f2-aa33-4eb4-bde4-fba64f7cd2e5",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Overview",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "Batch manager is our system for efficiently processing write transactions.  If batch manager is running slow it means that customers will experience high delays in having their calls accepted, long vm deployment times, and in extreme cases throttling due to an ability to process write transactions.  There are two main parts to determining whether batch manager is running slow for a subscription, the queue processing durations and the job durations.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "f357887d-f7f8-44dc-8e9c-4fc962e84493",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Batch Queue Processing Percentiles",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "42b05dd9-b7cd-4ce9-b7df-2d420e15a9ee",
+                                    "idForPopups": "42b05dd9-b7cd-4ce9-b7df-2d420e15a9ee",
+                                    "groupId": "a77a22dc-18d8-42cb-bee6-c6f0960cc310",
+                                    "majorVersion": 2,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "Queue processing durations are how long write transaction jobs spend interacting with batch manager.  This includes all lock acquisition time, job execution time, and transaction commit time.  Determining exactly what the source of the times seen here is can be very difficult, but most of the time it is due to a high volume of high duration jobs.  If any of the queue durations here (except for those mentioning Ultra Low) are over 30000 ms then customers will experience throttling.  We use this value as a benchmark, and if times are lower we would consider batch manager healthy.  If the times are higher, looking at the durations and volume of the individual jobs is usually best to determine what the source of the delays are.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "719c2037-74b7-48dc-8402-65e9f59599bf",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Batch Job Durations",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "c270ad3a-7ccd-4fd8-acae-9bd576afb4d1",
+                                    "idForPopups": "c270ad3a-7ccd-4fd8-acae-9bd576afb4d1",
+                                    "groupId": "29de2c54-f079-4509-ab8b-5b9cddacea11",
+                                    "majorVersion": 1,
+                                    "minorVersion": 4,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "Job durations are measurements of exactly how long specific pieces of buisness logic are taking to execute in batch manger.  In an optimized workflow we would expect all the numbers here to be under 100ms in the p95, but customers usually wont notice any delays unless there is a high call volume (over 3k calls per min) or p50 job durations are somewhere in the 500-1000 ms range.  If some of these numbers are high in both count and p50 duration then they are likely responsible for the delay being seen.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          },
+                          {
+                            "type": "Column",
+                            "id": "7a29fc7e-7802-4f92-ae19-dc352a5d70e9",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 4,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "None"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  },
+                  {
+                    "type": "Tab",
+                    "id": "09e1135e-0da3-4dfc-a8bc-96a7d6c24f79",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Subscription Lock Summary",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "8eca24ee-5e15-4ba0-abb9-34f169cf95f1",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "Subscription Lock Summary",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "acfc8098-998a-4bfe-a96b-48f3867dc95d",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Table",
+                                "id": "8822f917-c777-4b06-8e8a-a570523196a6",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Subscription Lock Durations",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "6d22ea9b-c851-4a8c-8459-2323a619da80",
+                                    "idForPopups": "6d22ea9b-c851-4a8c-8459-2323a619da80",
+                                    "groupId": "f5b50975-9517-43de-aacf-7a59c97f8492",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "Most operations in NRP don't use subscription lock anymore, but the ones that do tend to be the least optimized / unmaintained operations in the codebase.  This means we occasionally see unanticipated customer configurations hit delays here or data access layer regressions cause delays.  If it looks like these numbers are in the 10000-30000 ms range in the p50 then these locks are likely responsible for latency delays.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  },
+                  {
+                    "type": "Tab",
+                    "id": "1cd0fb72-4bc0-4e8b-a142-db83d503b1b2",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Transaction Stats",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "d2ea68a8-2a5d-4874-a3d9-aa1d8031a644",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "Transaction Stats",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "4d3b7d7e-c3ef-4a4c-b139-08a39cfb427b",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Table",
+                                "id": "93791993-511b-4262-b055-fec6f04d9e9e",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Transaction Stats",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "146e48aa-5610-41f1-a2f7-3fc4d868c7b9",
+                                    "idForPopups": "146e48aa-5610-41f1-a2f7-3fc4d868c7b9",
+                                    "groupId": "a7f98a54-b9ee-4cd2-8275-0bd93bc1511c",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "Debugging read / write information and the delays they cause can be very tricky to do.  This is because there are two main issues high read size can cause, transient delays or partition failovers.\n* Delays from read size are a combination of GC pressure caused by reading large volumes of data and high cpu usage involved in deserializing this data.  Because many pieces of code that read have no concurrency control on them, this means that potentially hundreds to thousands of threads can be trying to read lots of data at once.  This can delay write transactions by making them compete for resources more with the other operations on the partition, make some networking calls non responsive while we read and cause transient delays for the whole partition.  \n* Partition failovers can happen from OutOfMemoryException, but these are usually rarer than simply delays caused by reading.  OOM are usually only thrown when there's a combination of both high read size and logic that keeps the read data loaded in memory for a long time.  An example of a healthy read is a GetResources operation, where the data is read and then immediately released by GC because the operation has completed.  This poses little risk to partition health.  An unhealthy read example would be if an operation read 50mb of resource data at the beginning of its background task and proceeded to make a potentially 15 minute long api call to Rnm.  This data would remain in memory for the entire duration of the operation, leaving us vulnerable to a customer that may want to run this same thing hundreds of times concurrently which could crash our machine from loading too much data.  \n\nTime frames are essential here to debugging, and if you have a correlation id that works best for tracking down exactly what a given update is attempting to read.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "93b0027e-b818-46c3-bf64-2a614b2da709",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Resource Type Read Count",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "57ea3883-f8dc-45e4-ac21-b9a6c82a80ee",
+                                    "idForPopups": "57ea3883-f8dc-45e4-ac21-b9a6c82a80ee",
+                                    "groupId": "51f2c1d2-700d-4933-ae42-744c2b8e8708",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "component_time_selector",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "componentTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  },
+                  {
+                    "type": "Tab",
+                    "id": "e6fbab85-1511-40bc-b958-2f5a77daeead",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Exclusive Write Attribution",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "d597ab38-0ecb-4c81-a6bd-407bb80bb205",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "Exclusive Write Attribution",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "bcb84eb7-3d9d-451f-9e01-586d61d4fe0e",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Table",
+                                "id": "391670d8-8181-403f-855a-c267c4694ace",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Exclusive Write Time Distribution",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "7a5753a2-a1bf-4b1c-913f-8b6e3d07980b",
+                                    "idForPopups": "7a5753a2-a1bf-4b1c-913f-8b6e3d07980b",
+                                    "groupId": "910571e9-9e54-4de6-a04e-80e081410b23",
+                                    "majorVersion": 1,
+                                    "minorVersion": 1,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "globalTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "When evaluating how a subscription is performing one of the important metrics is this Exclusive Write Time Attribution.  A given subscription only has a certain amount of throughput it can handle, as write transactions are processed either through subscription lock or Resource Locking.  Even though on resource locking we run many write transactions in parallel, we have a limit of 20 parallel jobs running at once and so even this can create a bottleneck if the incoming load is higher than we can process.  \n\nTo figure out what is limiting a subscriptions write operation throughput we can look at this query to see what is holding the most of a subscriptions exclusive write time.  For subscription lock this will be the duration of the subscription lock, for resource locking it is the total time it took us to process a batch of parallel jobs divided by the level of parallelism we achieved, as we hold a subscription lock while we run those jobs in parallel.\n\nThis is sorted by the total duration a piece of logic is holding this exclusivity for, so to optimize a subsccriptions workload the most we should pay attention to the top pieces of logic and find why they are running slowly.",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  },
+                  {
+                    "type": "Tab",
+                    "id": "02e864b5-a0b5-4334-8390-93be48626f36",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Resource Locking Summary",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "867b7090-d077-47c5-8e08-a2964ba1dd4c",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "Resource Locking Summary",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "126562d1-4242-45f4-a0d5-c152d0112028",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Table",
+                                "id": "9ff756a0-e3f2-42ca-9db3-4ee74b743c27",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Resource Locks Acquisition Failures",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "7c53a1ae-3949-49ff-b577-41a13245d7e4",
+                                    "idForPopups": "7c53a1ae-3949-49ff-b577-41a13245d7e4",
+                                    "groupId": "77a08035-ef01-4b63-8a36-3cf91b7661b8",
+                                    "majorVersion": 1,
+                                    "minorVersion": 0,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "component_time_selector",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "componentTo",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Table",
+                                "id": "21200b8e-bfc7-402d-b1d0-2888571779fc",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Resource Locks Acquired",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "3faff2f3-8093-4b3f-bbf9-02114a440666",
+                                    "idForPopups": "3faff2f3-8093-4b3f-bbf9-02114a440666",
+                                    "groupId": "41ed975b-bf46-4179-8db6-8300e7cc9b03",
+                                    "majorVersion": 2,
+                                    "minorVersion": 2,
+                                    "serviceId": "NRP",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "subscriptionId",
+                                        "externalSourceName": "SubscriptionId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "region",
+                                        "externalSourceName": "Region",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "operationId",
+                                        "externalSourceName": "OperationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "correlationId",
+                                        "externalSourceName": "CorrelationId",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "component_time_selector",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "endTime",
+                                        "externalSourceName": "componentTo",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "asi_values",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "startTime",
+                                        "externalSourceName": "globalFrom",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "FloatBottomRight"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "FloatBottomRight"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "FloatBottomRight"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "FloatBottomRight"
+  },
+  "queries": [],
+  "versionNumber": 27,
+  "basedOnVersionId": "fb23765b-3e44-4e50-b27c-14a53aae7ea5",
+  "groupId": "2b789dd3-257f-42ac-b756-19c5d8c54730",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "SubscriptionId",
+      "description": "",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "Region",
+      "description": "",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "OperationId",
+      "description": "",
+      "type": "string",
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "CorrelationId",
+      "description": "",
+      "type": "string",
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "NRP",
+      "groupId": "2a9a6f8e-a6f9-40c2-99a9-1d071e60f364",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "ed2143dd-86d5-46aa-9658-16c847b9b188",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "e6991165-0182-4635-b239-1578ff1910d8",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "fcfc8c43-c5e9-4d85-8636-14a0339e5962",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "6310445c-32de-4333-bfea-93503512539d",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "c78cf12d-7754-4fa6-92d3-108b8d447166",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "0b9ab269-da98-484d-a543-c71a58cd2b89",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "104bfde5-b5e9-4a62-b792-849e343b330b",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "15b585ff-c4d3-4ffd-b975-089a7e78fc71",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "d0a543b7-186a-43a1-bfbb-b4b7966389c2",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "dee03fde-3b0d-499f-ac07-c3b102f02930",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "a77a22dc-18d8-42cb-bee6-c6f0960cc310",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "29de2c54-f079-4509-ab8b-5b9cddacea11",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "f5b50975-9517-43de-aacf-7a59c97f8492",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "a7f98a54-b9ee-4cd2-8275-0bd93bc1511c",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "51f2c1d2-700d-4933-ae42-744c2b8e8708",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "910571e9-9e54-4de6-a04e-80e081410b23",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "77a08035-ef01-4b63-8a36-3cf91b7661b8",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "41ed975b-bf46-4179-8db6-8300e7cc9b03",
+      "entityType": "Query"
+    }
+  ],
+  "serviceId": "NRP",
+  "deleted": false,
+  "name": "Nrp Performance Drilldown",
+  "_ts": 1741726229,
+  "databaseSavedTimestamp": "2025-03-11T20:50:29+00:00",
+  "_etag": "\"0100ee7a-0000-0800-0000-67d0a2150000\"",
+  "createdAt": "2025-03-11T20:50:29.0370895+00:00",
+  "createdBy": "ericodoom@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "ericodoom@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2025-03-11T20:50:29.0370895+00:00",
+  "tags": []
+}

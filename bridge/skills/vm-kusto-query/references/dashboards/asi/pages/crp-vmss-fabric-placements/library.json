@@ -1,0 +1,193 @@
+{
+  "service": "CRP",
+  "page": "VMSS Fabric Placements",
+  "pageId": "4fa23a0f-59fe-43b7-bc4e-8b02894f7113",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "dc0cbb51-2998-4aa7-9c10-67c42b118181",
+          "name": "FabricPlacements",
+          "groupId": "21c0b72f-4f8d-46dc-a120-cb7b4db5c4ac",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "moseisley.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Fabric Placements",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryVmssUniqueId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "FirstSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "LastSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "InstanceName",
+              "type": "string"
+            },
+            {
+              "name": "ComputerName",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "isEphemeralVM",
+              "type": "string"
+            },
+            {
+              "name": "FabricHost",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryVmssUniqueId",
+              "externalSourceName": "queryVmssUniqueId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\r\n| where PreciseTimeStamp between(queryFrom .. queryTo) \r\n    and additionalContainerProperties has queryVmssUniqueId\r\n| extend additionalContainerProperties = parse_json(additionalContainerProperties)\r\n| where additionalContainerProperties.VmssUniqueId == queryVmssUniqueId\r\n| extend InstanceName = trim_start(\"_\", roleInstanceName), ComputerName = tostring(additionalContainerProperties.ComputerName)\r\n| summarize \r\n    FirstSeen = min(PreciseTimeStamp), \r\n    LastSeen = max(PreciseTimeStamp)\r\n    by InstanceName, ComputerName, tenantName, nodeId, containerId, virtualMachineUniqueId, isEphemeralVM, FabricHost = Tenant, RegionFriendlyName, AvailabilityZone\r\n| project-reorder FirstSeen, LastSeen\r\n| order by FirstSeen desc",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:18:24.618Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

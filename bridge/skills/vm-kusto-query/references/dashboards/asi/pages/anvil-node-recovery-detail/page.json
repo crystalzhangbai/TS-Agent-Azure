@@ -1,0 +1,653 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "a3169645-1b91-4799-8bbe-1f3ce5fc74a7",
+  "description": "To build timeline around node recovery details.",
+  "hideGlobalTime": true,
+  "root": {
+    "type": "Container",
+    "id": "8c28bcf5-5174-4e61-92f9-efd9afcbaddf",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "Get Node Recovery Details",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "b2d8b906-1c71-4122-8155-a18597c8d605",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "fe2d302f-1aaf-456d-8a1d-e662359f800e",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Card",
+                "id": "555a5771-b690-4067-bc2e-76d189e9001a",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Node Diagnostic Details",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "Message",
+                    "props": {
+                      "formatter": "AutoDetect"
+                    },
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "1ccceca7-81f2-4a85-b4e6-bac6bcee30ea",
+                      "majorVersion": 1,
+                      "minorVersion": 1,
+                      "internalDestinationName": "ResourceId",
+                      "externalSourceName": "Message",
+                      "required": false,
+                      "rowSelectionCriteria": "allRows"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "Message",
+                    "uuid": "18da8baa-34c2-4d2b-9a60-190d8e6b0085",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "3e1514e5-0c59-4ea8-9d75-35cc8673182b",
+                    "idForPopups": "3e1514e5-0c59-4ea8-9d75-35cc8673182b",
+                    "groupId": "1ccceca7-81f2-4a85-b4e6-bac6bcee30ea",
+                    "majorVersion": 1,
+                    "minorVersion": 1,
+                    "serviceId": "Anvil Unhealthy",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "st",
+                        "externalSourceName": "startTime",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "et",
+                        "externalSourceName": "endTime",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "nId",
+                        "externalSourceName": "nodeId",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "Table",
+                "id": "c9af56f1-71c5-4de7-bd9e-90d6da7d2b18",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Container Snapshot",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "772204e5-5936-4b0c-9a6e-3d87482bb03f",
+                    "idForPopups": "772204e5-5936-4b0c-9a6e-3d87482bb03f",
+                    "groupId": "b68f1998-ea00-4331-84b3-d01593c940ee",
+                    "majorVersion": 1,
+                    "minorVersion": 1,
+                    "serviceId": "Anvil Unhealthy",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "st",
+                        "externalSourceName": "startTime",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "et",
+                        "externalSourceName": "endTime",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "nId",
+                        "externalSourceName": "nodeId",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "DelayedLoader",
+                "id": "c969ad26-a364-4110-b402-dc5a13df644f",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [
+                  {
+                    "type": "Table",
+                    "id": "90c275d5-d42a-4414-92d5-759d5222d134",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Anvil Repair Events",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [
+                      {
+                        "id": "6ac07464-50e8-4c80-bae9-8f8da066344f",
+                        "idForPopups": "6ac07464-50e8-4c80-bae9-8f8da066344f",
+                        "groupId": "d378b9e8-6584-4c54-a686-fdbf6103697d",
+                        "majorVersion": 1,
+                        "minorVersion": 3,
+                        "serviceId": "Anvil Unhealthy",
+                        "allowMultipleSelection": false,
+                        "inputMappings": [
+                          {
+                            "source": "page",
+                            "majorVersion": 0,
+                            "minorVersion": 0,
+                            "internalDestinationName": "st",
+                            "externalSourceName": "startTime",
+                            "required": false
+                          },
+                          {
+                            "source": "page",
+                            "majorVersion": 0,
+                            "minorVersion": 0,
+                            "internalDestinationName": "et",
+                            "externalSourceName": "endTime",
+                            "required": false
+                          },
+                          {
+                            "source": "page",
+                            "majorVersion": 0,
+                            "minorVersion": 0,
+                            "internalDestinationName": "nId",
+                            "externalSourceName": "nodeId",
+                            "required": false
+                          }
+                        ],
+                        "aggregationRule": {
+                          "type": "Append"
+                        }
+                      }
+                    ],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {
+                  "text": "Display Anvil repair events details."
+                },
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "TabPane",
+                "id": "44dc42bd-4b12-403d-887b-f0e1d795b919",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [
+                  {
+                    "type": "Tab",
+                    "id": "076977a3-ca58-48f6-920e-624981a7b48a",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "LogNodeSnapshot",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "06cdfaad-ea10-4c2d-9c52-fc7f27b7c3db",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "ecd58d78-f296-4201-8e62-5ea701d2d8ef",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Table",
+                                "id": "711733ab-6019-4a28-800a-17df027ea80c",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Log Node Snapshot",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "8ca973a2-a65f-4ea1-bfa5-e43ff8cc72bc",
+                                    "idForPopups": "8ca973a2-a65f-4ea1-bfa5-e43ff8cc72bc",
+                                    "groupId": "00d7b105-1f3f-4122-adda-bb2739194b08",
+                                    "majorVersion": 2,
+                                    "minorVersion": 5,
+                                    "serviceId": "Anvil Unhealthy",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "st",
+                                        "externalSourceName": "startTime",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "et",
+                                        "externalSourceName": "endTime",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "nId",
+                                        "externalSourceName": "nodeId",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "None"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "None"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  },
+                  {
+                    "type": "Tab",
+                    "id": "386863de-5359-4b45-96a7-44e8859a8a1c",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Node Events",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "b36ba642-0b68-4cdb-8b88-79507cd2a704",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "3c0d6349-c168-4e77-aa26-0c1b6e242f0e",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Table",
+                                "id": "ea8945e3-8eae-4893-aebb-2478c1bf2352",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "Events",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [
+                                  {
+                                    "id": "b1134c66-e5bc-4abd-b8bd-2f92a08ee620",
+                                    "idForPopups": "b1134c66-e5bc-4abd-b8bd-2f92a08ee620",
+                                    "groupId": "44cf92eb-1d00-4874-bfc4-2cbe5d915cf3",
+                                    "majorVersion": 2,
+                                    "minorVersion": 3,
+                                    "serviceId": "Anvil Unhealthy",
+                                    "allowMultipleSelection": false,
+                                    "inputMappings": [
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "st",
+                                        "externalSourceName": "startTime",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "et",
+                                        "externalSourceName": "endTime",
+                                        "required": false
+                                      },
+                                      {
+                                        "source": "page",
+                                        "majorVersion": 0,
+                                        "minorVersion": 0,
+                                        "internalDestinationName": "nId",
+                                        "externalSourceName": "nodeId",
+                                        "required": false
+                                      }
+                                    ],
+                                    "aggregationRule": {
+                                      "type": "Append"
+                                    }
+                                  }
+                                ],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "None"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "None"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "None"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {
+                  "displayType": "Accordion"
+                },
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 21,
+  "basedOnVersionId": "984c8467-a0d5-4b34-acf7-2c7fa96df924",
+  "groupId": "b02b1f5e-5763-4b90-aac9-77622bd6b555",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "nodeId",
+      "description": "",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "startTime",
+      "description": "",
+      "type": "datetime",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "endTime",
+      "description": "",
+      "type": "datetime",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "Anvil Unhealthy",
+      "groupId": "1ccceca7-81f2-4a85-b4e6-bac6bcee30ea",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Anvil Unhealthy",
+      "groupId": "b68f1998-ea00-4331-84b3-d01593c940ee",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Anvil Unhealthy",
+      "groupId": "d378b9e8-6584-4c54-a686-fdbf6103697d",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Anvil Unhealthy",
+      "groupId": "00d7b105-1f3f-4122-adda-bb2739194b08",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Anvil Unhealthy",
+      "groupId": "44cf92eb-1d00-4874-bfc4-2cbe5d915cf3",
+      "entityType": "Query"
+    }
+  ],
+  "serviceId": "Anvil Unhealthy",
+  "deleted": false,
+  "name": "Node Recovery Detail",
+  "_ts": 1707272284,
+  "databaseSavedTimestamp": "2024-02-07T02:18:04+00:00",
+  "_etag": "\"370140a8-0000-0800-0000-65c2e85c0000\"",
+  "createdAt": "2024-02-07T02:18:04.2039858+00:00",
+  "createdBy": "sheagra@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "sheagra@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2024-02-07T02:18:04.2039858+00:00",
+  "tags": [
+    "InPlaceRecovery",
+    "Node",
+    "Unhealthy"
+  ]
+}

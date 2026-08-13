@@ -1,0 +1,2058 @@
+[
+  {
+    "groupId": "f9793732-ae2f-4140-a159-5e2a4191f10b",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "In Place Recovery output Distribution"
+    ],
+    "widgetType": "CategoryChart",
+    "widgetTitle": "In Place Recovery output Distribution",
+    "queryId": "86e1b994-6dc2-49ee-956d-eb3b375a23a1",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "st",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "et",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Node In Place Output distribution",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "CategoryChart",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "dcount_ResourceId",
+        "type": "long"
+      },
+      {
+        "name": "percentile_durationInSeconds_50",
+        "type": "real"
+      },
+      {
+        "name": "percentile_durationInSeconds_90",
+        "type": "real"
+      },
+      {
+        "name": "percentile_durationInSeconds_99",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "4db519a9-248f-418f-9e31-50ac521d4835",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "13fc27e1-355f-467b-b686-1d889319550f",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "st",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "et",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "In Place Impact Details",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "dcount_ResourceId",
+        "type": "long"
+      },
+      {
+        "name": "percentile_durationInSeconds_50",
+        "type": "real"
+      },
+      {
+        "name": "percentile_durationInSeconds_90",
+        "type": "real"
+      },
+      {
+        "name": "percentile_durationInSeconds_99",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "ec63db4a-9cca-49f9-b19a-6ac26dfbf5c6",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "st",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "et",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "StartTime",
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "EndTime",
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "DurationInMin",
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "PowerCycleDuration",
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "OutputResult",
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Result",
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Status",
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "StimAttribution",
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "InsightLink",
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "StimHealthSignalsData",
+    "name": "NodeInPlaceStimEvents",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "Hit Detail"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Hit Detail",
+    "queryId": "1eae788b-710e-4ba3-a714-d93541f8593a",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "st",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "et",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Impact Hits",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "Hit Detail"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Hit Detail",
+    "via": "selectedProperty",
+    "propertyName": "StartTime",
+    "name": "Impact Hits",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "Hit Detail"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Hit Detail",
+    "via": "selectedProperty",
+    "propertyName": "EndTime",
+    "name": "Impact Hits",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "Hit Detail"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Hit Detail",
+    "via": "selectedProperty",
+    "propertyName": "Tenant",
+    "name": "Impact Hits",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "Hit Detail"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Hit Detail",
+    "via": "selectedProperty",
+    "propertyName": "OutputResult",
+    "name": "Impact Hits",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "Hit Detail"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Hit Detail",
+    "via": "selectedProperty",
+    "propertyName": "ImpactId",
+    "name": "Impact Hits",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "Hit Detail"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Hit Detail",
+    "via": "selectedProperty",
+    "propertyName": "ErrorCode",
+    "name": "Impact Hits",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "Hit Detail"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Hit Detail",
+    "via": "selectedProperty",
+    "propertyName": "durationInSeconds",
+    "name": "Impact Hits",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "Hit Detail"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Hit Detail",
+    "via": "selectedProperty",
+    "propertyName": "Result",
+    "name": "Impact Hits",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Node In Place Recovery Status",
+      "Hit Detail"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Hit Detail",
+    "via": "selectedProperty",
+    "propertyName": "Status",
+    "name": "Impact Hits",
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "params": [
+      {
+        "name": "st",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "et",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  }
+]

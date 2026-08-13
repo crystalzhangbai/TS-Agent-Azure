@@ -1,0 +1,429 @@
+[
+  {
+    "id": "7582baad-bd45-4550-9c22-261a9c460259",
+    "name": "Homepage - ICM incidents",
+    "groupId": "f06cff2a-a236-4eec-8a64-4f7bbf2beaa8",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "icmcluster",
+    "database": "IcMDataWarehouse",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let tenantName=\"AzTux\";\r\nlet owningTeam=\"AZLINUX\\\\AzSerialConsole\";\r\ndatabase(\"IcMDataWarehouse\").Incidents\r\n| where Lens_IngestionTime > ago(3d) and OwningTeamName == owningTeam\r\n| summarize argmax(Lens_IngestionTime, *) by IncidentId\r\n| where max_Lens_IngestionTime_Severity <= 4\r\n| project IncidentId, CreateDate=max_Lens_IngestionTime_CreateDate, MitigatedDate=max_Lens_IngestionTime_MitigateDate, Title=max_Lens_IngestionTime_Title, Severity=max_Lens_IngestionTime_Severity, OwningTeam=max_Lens_IngestionTime_OwningTeamName, Status=max_Lens_IngestionTime_Status\r\n| where CreateDate > ago(60d)\r\n| where Status != \"RESOLVED\"\r\n| order by Status asc, CreateDate desc",
+    "params": [],
+    "schema": [
+      {
+        "name": "IncidentId",
+        "type": "long"
+      },
+      {
+        "name": "CreateDate",
+        "type": "datetime"
+      },
+      {
+        "name": "MitigatedDate",
+        "type": "datetime"
+      },
+      {
+        "name": "Title",
+        "type": "string"
+      },
+      {
+        "name": "Severity",
+        "type": "int"
+      },
+      {
+        "name": "OwningTeam",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  },
+  {
+    "id": "89bf08ef-5c9e-49ba-99d6-d892fe53c8c9",
+    "name": "Portal Image Tag ",
+    "groupId": "49b54eff-8007-45fa-81ac-4d4ceb2b2dc7",
+    "majorVersion": 4,
+    "minorVersion": 0,
+    "cluster": "azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "PortalActivity\r\n| where ['time'] > queryFrom\r\n| where ['time'] < queryTo\r\n| summarize dcount(sessionId), dcount(RPTenant) by portalVersion",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-03-12T19:44:38.978Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-03-13T19:44:38.978Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "portalVersion",
+        "type": "string"
+      },
+      {
+        "name": "dcount_sessionId",
+        "type": "long"
+      },
+      {
+        "name": "dcount_RPTenant",
+        "type": "long"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  },
+  {
+    "id": "e3738309-892f-4c97-9d9b-5196c1fc3e4a",
+    "name": "Get Current On-Call",
+    "groupId": "308be34a-fcaf-4c69-8af1-9bee95514e05",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "icmcluster",
+    "database": "DirectoryServicePROD",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "OnCallNow(86021)",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-11-10T00:38:12.534Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-11-11T00:38:12.534Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TeamId",
+        "type": "long"
+      },
+      {
+        "name": "ContactId",
+        "type": "long"
+      },
+      {
+        "name": "FullName",
+        "type": "string"
+      },
+      {
+        "name": "Alias",
+        "type": "string"
+      },
+      {
+        "name": "EmailAddress",
+        "type": "string"
+      },
+      {
+        "name": "shiftStart",
+        "type": "datetime"
+      },
+      {
+        "name": "shiftEnd",
+        "type": "datetime"
+      },
+      {
+        "name": "OnCallPosition",
+        "type": "long"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  },
+  {
+    "id": "0b68e88b-0905-481b-b583-27b06b3abe07",
+    "name": "WIP Trivy Vulnerabilities",
+    "groupId": "776bfff9-8336-47f1-a999-28c7910004ea",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "https://azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "external_table(\"TrivyDevMichaelGira\")\r\n| where Namespace == 'prometheus'\r\n| where Name == 'trivy_image_vulnerabilities'\r\n| where TimeGenerated > queryFrom\r\n| where TimeGenerated <= queryTo\r\n| summarize ImageVulnerabilities = sum(Val) by Time = TimeGenerated\r\n| order by Time desc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-12-14T00:10:03.950Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-12-15T00:10:03.950Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Time",
+        "type": "datetime"
+      },
+      {
+        "name": "ImageVulnerabilities",
+        "type": "real"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  },
+  {
+    "id": "eccb2933-0192-49af-9bb2-f288ba5c3984",
+    "name": "WIP Trivy Config Audits",
+    "groupId": "65a1dbcd-a9ca-4033-ab3b-8fe3628c7f63",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "external_table(\"TrivyDevMichaelGira\")\r\n| where Namespace == 'prometheus' and Name == 'trivy_resource_configaudits'\r\n| where TimeGenerated > queryFrom\r\n| where TimeGenerated <= queryTo\r\n| summarize ConfigAudits = sum(Val) by Time = TimeGenerated\r\n| order by Time desc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-12-14T00:10:03.950Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-12-15T00:10:03.950Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Time",
+        "type": "datetime"
+      },
+      {
+        "name": "ConfigAudits",
+        "type": "real"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  },
+  {
+    "id": "2c6c705d-2818-4dcc-b790-d2b65c4ffcf6",
+    "name": "WIP Trivy Exposed Secrets",
+    "groupId": "a2225dda-0820-4b3c-8122-3187173079c2",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "external_table(\"TrivyDevMichaelGira\")\r\n| where Namespace == 'prometheus' and Name == 'trivy_image_exposedsecrets'\r\n| where TimeGenerated > queryFrom\r\n| where TimeGenerated <= queryTo\r\n| summarize ExposedSecrets = sum(Val) by Time = TimeGenerated\r\n| order by Time desc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-12-14T00:10:03.950Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-12-15T00:10:03.950Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Time",
+        "type": "datetime"
+      },
+      {
+        "name": "ExposedSecrets",
+        "type": "real"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  },
+  {
+    "id": "9391deee-ade9-46c4-8c66-99f1c4a4c402",
+    "name": "WIP Trivy Vulernabilities by Severity",
+    "groupId": "fae7f8a7-45c4-469c-ac0a-794d36bed7fe",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "https://azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "CategoryChart",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let latestTime = toscalar(external_table(\"TrivyDevMichaelGira\")\r\n    | where Namespace == 'prometheus' and Name == 'trivy_image_vulnerabilities'\r\n    | summarize max(TimeGenerated)\r\n);\r\nexternal_table(\"TrivyDevMichaelGira\")\r\n| where Namespace == 'prometheus' and Name == 'trivy_image_vulnerabilities' and TimeGenerated == latestTime\r\n| project Val, Image=Tags.image_repository, Severity=tostring(Tags.severity), Namespace=Tags.namespace\r\n| summarize Sum = sum(Val) by Severity",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-12-14T00:51:35.725Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-12-15T00:51:35.725Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Severity",
+        "type": "string"
+      },
+      {
+        "name": "Sum",
+        "type": "real"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  },
+  {
+    "id": "62558b60-adc1-4f20-b4da-59d76886b730",
+    "name": "Gateway To RP Healthcheck",
+    "groupId": "def1fc20-1e5f-47a1-b686-cdbc3ee0df87",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let totalCount = HttpAccessLog\r\n| where activitytimestamp > queryFrom\r\n| where activitytimestamp <= queryTo\r\n| where log contains \"/healthcheck HTTP/1.1\"\r\n| summarize total_count = count() by RPTenant, total_time_bin=bin(activitytimestamp, 1h);\r\nlet healthyCount = HttpAccessLog\r\n| where activitytimestamp > queryFrom\r\n| where activitytimestamp <= queryTo\r\n| where log contains \"/healthcheck HTTP/1.1\\\" 200 2\"\r\n| summarize healthy_count = count() by RPTenant, healthy_time_bin=bin(activitytimestamp, 1h);\r\ntotalCount\r\n| join kind=inner healthyCount on $left.total_time_bin == $right.healthy_time_bin, RPTenant\r\n| extend ratio = (1.0 - round(1.0 * healthy_count/total_count, 3))*100\r\n| project RPTenant, ratio, healthy_time_bin\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-03-13T13:03:42.110Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-03-14T13:03:42.110Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "ratio",
+        "type": "real"
+      },
+      {
+        "name": "healthy_time_bin",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  }
+]

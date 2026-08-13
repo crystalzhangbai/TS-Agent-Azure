@@ -1,0 +1,273 @@
+[
+  {
+    "id": "8526eb36-0e60-4557-887f-a803d4765166",
+    "name": "Retrieve Resource \"CumulusTestSuite\"",
+    "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "HACumulus",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let testDetails = CumulusV2TestAssertionSnapshot\r\n| where TestSuiteId == local_TestSuiteId\r\n| where Description startswith_cs \"Resource group\"\r\n| take 1\r\n| project TestSuiteId, Description\r\n| parse Description with \"Resource group (\" ResourceGroupName \") should be available\" *\r\n| project TestSuiteId, ResourceGroupName\r\n| union (print \"\" | project TestSuiteId = \"677895fbbf57b59d44da8ed9\")\r\n| sort by ResourceGroupName desc | take 1\r\n| join kind=inner (\r\n  CumulusV2TestSuiteStatusSnapshot\r\n  | where TestSuiteId == local_TestSuiteId\r\n  | summarize StartTime=max(StartTime), EndTime=max(EndTime), arg_max(PreciseTimeStamp, TipNodeSessionIds) by TestSuiteId\r\n) on TestSuiteId\r\n| project TestSuiteId, ResourceGroupName, StartTime, EndTime, TipNodeSessionId=tostring(parse_json(TipNodeSessionIds)[0]);\r\nlet _tipNodeSessionId = testDetails | project TipNodeSessionId;\r\nlet _startTime = testDetails | project StartTime;\r\nlet _endTime = testDetails | project EndTime;\r\ntestDetails\r\n| join kind=inner ( \r\n  database('AzureCP').MycroftNodeSnapshot\r\n  | where TipNodeSessionId == toscalar(_tipNodeSessionId)\r\n  | where PreciseTimeStamp > toscalar(_startTime) - 1h and PreciseTimeStamp < toscalar(_endTime) + 1h\r\n) on TipNodeSessionId\r\n| take 1\r\n| project TestSuiteId, ResourceGroupName, StartTime, EndTime, TipNodeSessionId, NodeId, ClusterName, Region, AvailabilityZone, CPAvailabilityZone=Tenant",
+    "params": [
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_TestSuiteId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TestSuiteId",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "TipNodeSessionId",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ClusterName",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "CPAvailabilityZone",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "29341e37-2cc3-4067-a26e-54748ac93769",
+    "name": "CRP Logs",
+    "groupId": "56821d70-9d22-4fb6-a515-198d9d066e1f",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let crpEvents = VMApiQosEvent\r\n| where PreciseTimeStamp > _startTime and PreciseTimeStamp < _endTime\r\n| where resourceGroupName == _resourceGroup\r\n| where operationName == \"VirtualMachines.ResourceOperation.PUT\"\r\n| project fabricTenantName, subscriptionId, correlationId, operationId, errorDetails\r\n| parse errorDetails with \"Constraints applied: \" Constraints \".\" *\r\n| extend hasError=errorDetails != \"\"\r\n| project-away errorDetails;\r\nlet crpLogs = crpEvents \r\n| project LogType=\"VMApiQosEvent\", Message=pack_all();\r\nlet fabricTenantName = crpEvents | project fabricTenantName;\r\nlet constraints = crpEvents | project Constraints;\r\nlet _activityId = crpEvents | project ActivityId=operationId;\r\nlet azSMLogs = cluster('azcore.centralus.kusto.windows.net').database('AzureCP').AzSMAllocationScoreStatus\r\n| where PreciseTimeStamp between (_startTime .. _endTime)\r\n| where tenantName in (fabricTenantName)\r\n| where activityId in (_activityId)\r\n| where Tenant == _cpAvailabilityZone\r\n| summarize arg_max(PreciseTimeStamp,*) by tenantName, Tenant\r\n| project PreciseTimeStamp, Tenant, tenantName, isAllocationSuccessful, allocationScoreCookie, aztmRejectionReason, scoreResultMessage\r\n| project LogType=\"AzSMAllocationScoreStatus\", Message=pack_all();\r\nlet allocationLogs = ComputeAllocationActivity\r\n| where PreciseTimeStamp between (_startTime .. _endTime)\r\n| where activityId in (_activityId)\r\n| where computeStamp =~ _clusterName\r\n| where errorCode != \"\"\r\n| distinct errorCode, errorType, resultDetails\r\n| project LogType=\"ComputeAllocationActivity\", Message=pack_all();\r\ncrpLogs\r\n| union allocationLogs\r\n| union azSMLogs",
+    "params": [
+      {
+        "name": "_startTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_endTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_resourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_cpAvailabilityZone",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_clusterName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "LogType",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "68590532-a1f9-4cd1-813b-486972cc0754",
+    "name": "Node ASI link",
+    "groupId": "ae3c4c0b-b4fa-4ab8-8574-b0b3203f1180",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "",
+    "database": "",
+    "type": "Table",
+    "dataSource": "Browser",
+    "language": "JavaScript",
+    "kustoQuery": "return [{\"Node ASI Link\": \"https://asi.azure.ms/services/NodeService/pages/NodeService_NodeView?NodeId=\" + data[\"_nodeId\"] + \"&TimeOfFault=\" + data[\"_endTime\"]}];",
+    "params": [
+      {
+        "name": "_startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-03T05:36:01.341Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2025-01-04T05:36:01.341Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "_nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Node ASI Link",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "d52fde32-8161-467e-be3a-54c00c972d36",
+    "name": "EG Query",
+    "groupId": "e99814b7-7ba3-4de0-a168-70108f24d565",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "executiongraph.kusto.windows.net",
+    "database": "eg",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "IaasVmOperations\r\n| where ResourceGroupName contains rgName\r\n| project OperationName, FailureSignature, EgUrl",
+    "params": [
+      {
+        "name": "rgName",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "string",
+        "default": "CumulusRG_NS_96ec619a-cc6a-44f5-92b3-b92e41db6f73",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "FailureSignature",
+        "type": "string"
+      },
+      {
+        "name": "EgUrl",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  }
+]

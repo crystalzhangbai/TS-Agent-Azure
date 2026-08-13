@@ -1,0 +1,1816 @@
+[
+  {
+    "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "panelPath": [
+      "VM Details"
+    ],
+    "widgetType": "Container",
+    "widgetTitle": "VM Details",
+    "queryId": "7f83c73b-c106-4d44-ac75-502bbce24612",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "RoleInstanceName",
+        "externalSourceName": "RoleInstanceName",
+        "required": false
+      }
+    ],
+    "name": "Get-VMDetails",
+    "cluster": "moseisley.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Single",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "nodeId",
+        "type": "string"
+      },
+      {
+        "name": "containerId",
+        "type": "string"
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "5f494ce7-827d-4d12-a332-527b0090cd23",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [
+      "VM Details"
+    ],
+    "widgetType": "Container",
+    "widgetTitle": "VM Details",
+    "queryId": "817283e1-6931-489b-a35e-b259d972a599",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "subscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "roleInstanceName",
+        "externalSourceName": "roleInstanceName",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-TOR",
+    "cluster": "moseisley.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Single",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TOR",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a2c233f6-c7d9-49c5-895f-1177e23f41e4",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "VM Details"
+    ],
+    "widgetType": "Container",
+    "widgetTitle": "VM Details",
+    "queryId": "5a08f2a0-5fa3-4bf1-a3dd-d04b2c96fb9a",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "containerId",
+        "externalSourceName": "containerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-SessionId",
+    "cluster": "AzureCM.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Single",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "containerId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "sessionId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "c0f58add-34d4-4bf9-baf7-6479f52332d5",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [
+      "VM Details",
+      "VM Config"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "VM Config",
+    "queryId": "4e6cea12-2e19-41be-b3b6-463513d06187",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "virtualMachineUniqueId",
+        "externalSourceName": "virtualMachineUniqueId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-VMSummary",
+    "cluster": "azcrpbifollower.kusto.windows.net",
+    "database": "bi_allprod",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "VMName",
+        "type": "string"
+      },
+      {
+        "name": "VMTimeCreated",
+        "type": "datetime"
+      },
+      {
+        "name": "DesiredPowerState",
+        "type": "string"
+      },
+      {
+        "name": "VMSize",
+        "type": "string"
+      },
+      {
+        "name": "OSState",
+        "type": "string"
+      },
+      {
+        "name": "OSDiskOSType",
+        "type": "string"
+      },
+      {
+        "name": "ProvisionVMAgent",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "e7734dd3-32ec-4796-8942-0a3fa00c415c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VM Details",
+      "VM Restart Events"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "VM Restart Events",
+    "queryId": "0ac8ae8e-873e-4107-bf0b-7522eab631d9",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "virtualMachineUniqueId",
+        "externalSourceName": "virtualMachineUniqueId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-VMRestartEvents",
+    "cluster": "moseisley.kusto.windows.net",
+    "database": "Air",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "EventType",
+        "type": "string"
+      },
+      {
+        "name": "IsCustomerInitiated",
+        "type": "string"
+      },
+      {
+        "name": "ImpactBeginTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "ImpactEndTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "ImpactDurationTimeSpan",
+        "type": "timespan"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "0557fa86-9c46-47c3-88e6-49aa2e877d46",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "VM Details",
+      "VM Insights for a given TIMESTAMP"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "VM Insights for a given TIMESTAMP",
+    "queryId": "d1d8d3bb-e4ab-4f5b-aad0-ff9e8c77afd3",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "nodeId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-VMInsights",
+    "cluster": "rdosdata.kusto.windows.net",
+    "database": "rdosdatapath",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "fcd74543-3c40-413e-9c61-aa8250eef369",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "panelPath": [
+      "VM Details",
+      "Get Updates on Node"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Get Updates on Node",
+    "queryId": "f72e3dfd-bea4-43c1-9020-67eff12804cb",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "nodeId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-NodeUpdates",
+    "cluster": "minekraft.westus.kusto.windows.net",
+    "database": "crawler5",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Payload",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EntityId",
+        "type": "string"
+      },
+      {
+        "name": "ChangeType",
+        "type": "string"
+      },
+      {
+        "name": "ImpactDuration",
+        "type": "int"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "95c8b16e-8a75-47c8-9116-6578e80942a0",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VM Details",
+      "Get HostOS Updates"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Get HostOS Updates",
+    "queryId": "c2a591e2-ce9f-4c33-a222-5c40342d7e64",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "nodeId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-HostOSUpdates",
+    "cluster": "AzureCM.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Component",
+        "type": "string"
+      },
+      {
+        "name": "NewVersion",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "96f19168-529d-496a-9f4e-7f74aa6c0e94",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VM Details",
+      "Get Maintenance details "
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Get Maintenance details ",
+    "queryId": "26420678-b199-471e-a76e-27f0026df3ec",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "subscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "roleInstanceName",
+        "externalSourceName": "roleInstanceName",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "tenantName",
+        "externalSourceName": "tenantName",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-MaintenanceDetails",
+    "cluster": "Azdeployer.kusto.windows.net",
+    "database": "AzDeployerKusto",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "tenantName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "MaintenanceType",
+        "type": "string"
+      },
+      {
+        "name": "ImpactType",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "string"
+      },
+      {
+        "name": "ImpactDurationInSeconds",
+        "type": "string"
+      },
+      {
+        "name": "NotBefore",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "964f01a4-4886-47d4-941f-cc5ed22a32c2",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VM Details",
+      "Node state change"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Node state change",
+    "queryId": "52171c86-4bb3-482d-9d8e-139e0f24809a",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "nodeId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-NodeStateChange",
+    "cluster": "AzureCM.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "OldState",
+        "type": "string"
+      },
+      {
+        "name": "NewState",
+        "type": "string"
+      },
+      {
+        "name": "BladeID",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "3e4cb690-e3d9-48f8-9ea3-f97f21f0f80f",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "VM Details",
+      "Container Health status"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Container Health status",
+    "queryId": "bd384d41-d871-4b25-8b38-e4cd1f7ee41d",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "containerId",
+        "externalSourceName": "containerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-ContainerHealthStatus",
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "containerId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      },
+      {
+        "name": "containerId",
+        "type": "string"
+      },
+      {
+        "name": "nodeId",
+        "type": "string"
+      },
+      {
+        "name": "containerState",
+        "type": "string"
+      },
+      {
+        "name": "containerLifecycleState",
+        "type": "string"
+      },
+      {
+        "name": "containerOsState",
+        "type": "string"
+      },
+      {
+        "name": "faultInfo",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "887affef-ed8b-4c58-a84f-4435fdfa1f2a",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "VM Details",
+      "Resource Health"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Resource Health",
+    "queryId": "4c0fafd4-21d1-499f-a169-64821c6f32f5",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "roleInstanceName",
+        "externalSourceName": "roleInstanceName",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "subscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-ResourceHealth",
+    "cluster": "icmbrain.kusto.windows.net",
+    "database": "AzureResourceHealth",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "eventTimestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "healthStatus",
+        "type": "string"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "healthEventType",
+        "type": "string"
+      },
+      {
+        "name": "healthEventCause",
+        "type": "string"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "internalId",
+        "type": "string"
+      },
+      {
+        "name": "resourceId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "5bce1705-7143-49fb-9c23-4ddfc5efef8d",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VM Details",
+      "TOR Health"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "TOR Health",
+    "queryId": "65209c99-4d12-40b5-a3ee-4d539210d725",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Get-TORHealth",
+    "cluster": "azphynet.kusto.windows.net",
+    "database": "azdhmds",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [],
+    "missing": false
+  },
+  {
+    "groupId": "da6b31c2-b3fa-4528-9709-9cc8050978df",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VM Details",
+      "VM Node to TOR Health"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "VM Node to TOR Health",
+    "queryId": "f8ea4b31-16e6-45b2-a4b3-31347390c2b4",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "nodeId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-VMNodetoTORHealth",
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [],
+    "missing": false
+  },
+  {
+    "groupId": "1b511007-0b9d-414b-b0f2-734a05f8b645",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VM Details",
+      "Live Migrations Events"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Live Migrations Events",
+    "queryId": "cb06e292-65a7-4492-8f1e-dc3a1b311cf9",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "a2c233f6-c7d9-49c5-895f-1177e23f41e4",
+        "majorVersion": 2,
+        "minorVersion": 0,
+        "internalDestinationName": "sessionId",
+        "externalSourceName": "sessionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-LiveMigrationsEvents",
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "sessionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CloudName",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "DataCenterName",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "SourceNodeId",
+        "type": "string"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "traceCode",
+        "type": "string"
+      },
+      {
+        "name": "sessionId",
+        "type": "string"
+      },
+      {
+        "name": "sourceContainerId",
+        "type": "string"
+      },
+      {
+        "name": "destinationContainerId",
+        "type": "string"
+      },
+      {
+        "name": "isAutoRollout",
+        "type": "string"
+      },
+      {
+        "name": "migrationConstraint",
+        "type": "string"
+      },
+      {
+        "name": "preferredNode",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      },
+      {
+        "name": "triggerType",
+        "type": "string"
+      },
+      {
+        "name": "sourceHost",
+        "type": "string"
+      },
+      {
+        "name": "isRehydration",
+        "type": "string"
+      },
+      {
+        "name": "roleType",
+        "type": "string"
+      },
+      {
+        "name": "containerSizePolicy",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "containerState",
+        "type": "string"
+      },
+      {
+        "name": "containerLifecycleState",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "isLowPriority",
+        "type": "string"
+      },
+      {
+        "name": "isIsolationRequested",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceFamilyId",
+        "type": "string"
+      },
+      {
+        "name": "updateDomain",
+        "type": "string"
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "RegionFriendlyName",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "elapsedTime",
+        "type": "string"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "sourceNodeId",
+        "type": "string"
+      },
+      {
+        "name": "destinationNodeId",
+        "type": "string"
+      },
+      {
+        "name": "vmUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "resourceId",
+        "type": "string"
+      },
+      {
+        "name": "context",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d05bdeb1-366d-41e4-984c-2e66c624f7ad",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VM Details",
+      "Live Migration Errors "
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Live Migration Errors ",
+    "queryId": "3cf3a304-fbd9-40fc-8212-3254a7728a6f",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "a2c233f6-c7d9-49c5-895f-1177e23f41e4",
+        "majorVersion": 2,
+        "minorVersion": 0,
+        "internalDestinationName": "sessionId",
+        "externalSourceName": "sessionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-LiveMigrationErrors",
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "sessionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CloudName",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "DataCenterName",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "SourceNodeId",
+        "type": "string"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "traceCode",
+        "type": "string"
+      },
+      {
+        "name": "sessionId",
+        "type": "string"
+      },
+      {
+        "name": "sourceContainerId",
+        "type": "string"
+      },
+      {
+        "name": "destinationContainerId",
+        "type": "string"
+      },
+      {
+        "name": "isAutoRollout",
+        "type": "string"
+      },
+      {
+        "name": "migrationConstraint",
+        "type": "string"
+      },
+      {
+        "name": "preferredNode",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      },
+      {
+        "name": "triggerType",
+        "type": "string"
+      },
+      {
+        "name": "sourceHost",
+        "type": "string"
+      },
+      {
+        "name": "isRehydration",
+        "type": "string"
+      },
+      {
+        "name": "roleType",
+        "type": "string"
+      },
+      {
+        "name": "containerSizePolicy",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "containerState",
+        "type": "string"
+      },
+      {
+        "name": "containerLifecycleState",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "isLowPriority",
+        "type": "string"
+      },
+      {
+        "name": "isIsolationRequested",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceFamilyId",
+        "type": "string"
+      },
+      {
+        "name": "updateDomain",
+        "type": "string"
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "RegionFriendlyName",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "elapsedTime",
+        "type": "string"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "sourceNodeId",
+        "type": "string"
+      },
+      {
+        "name": "destinationNodeId",
+        "type": "string"
+      },
+      {
+        "name": "vmUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "resourceId",
+        "type": "string"
+      },
+      {
+        "name": "context",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "5d0a57b0-f966-46cf-a5b9-309a9b3e0c4c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "VM Details",
+      "Overlake Config"
+    ],
+    "widgetType": "Column",
+    "widgetTitle": "",
+    "queryId": "8061bada-041a-4305-82eb-afca387f32d3",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "roleInstanceName",
+        "externalSourceName": "roleInstanceName",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Get-Overlake Config",
+    "cluster": "gandalf.kusto.windows.net",
+    "database": "gandalf",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "Hardware_Generation",
+        "type": "string"
+      },
+      {
+        "name": "NodeSS_PairId",
+        "type": "string"
+      },
+      {
+        "name": "isOverlake",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

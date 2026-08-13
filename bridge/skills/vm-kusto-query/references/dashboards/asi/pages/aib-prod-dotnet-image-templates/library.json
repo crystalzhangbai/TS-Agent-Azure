@@ -1,0 +1,542 @@
+{
+  "service": "Azure VM Image Builder",
+  "page": "Prod Dotnet Image Templates",
+  "pageId": "bc64cdf7-2aad-4d6d-8e4d-e22f1d1540fe",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "aac17667-39e8-41f8-a37e-fa9c61e084cc",
+          "name": "Gen2 2022 WS image templates",
+          "groupId": "fe570d6f-5833-4320-9312-67228b9d857a",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Prod Win 2022 Gen 2 Dotnet 6 & 8 Image templates ",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Date",
+              "type": "string"
+            },
+            {
+              "name": "Time",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "hypervgen",
+              "type": "string"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "correlationID",
+              "type": "string"
+            },
+            {
+              "name": "BuildTimeMinutes",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "UsageKpiEvent\r\n| where PreciseTimeStamp  between (queryFrom .. queryTo)\r\n| where subscriptionID == \"b80bcd5c-0c74-4b9e-b0c3-d67ce3803c5a\" and resourceGroupName == \"1PGalDotnetRG\"\r\n| where  operationName == \"PostRunTemplateHandler.POST\"\r\n| where resourceName startswith \"image-template-2022-datacenter-azure-edition\" and resourceName !contains \"dotnet\"\r\n| summarize arg_max(PreciseTimeStamp, hypervgen, operationstatus, correlationID, latencyinms) by resourceName\r\n| project Date=format_datetime(PreciseTimeStamp, 'yyyy-MM-dd'), Time=format_datetime(PreciseTimeStamp, 'HH:mm:ss'), ResourceName=resourceName, hypervgen, Status=operationstatus, correlationID, BuildTimeMinutes=latencyinms/(60*1000)",
+          "panelPath": []
+        },
+        {
+          "id": "26173bac-ce74-44fb-b009-808afe38112d",
+          "name": "Prod Gen 2 Windows 2022 Dotnet 8 Images",
+          "groupId": "d4f9c121-c96a-469d-8119-abbae1d610de",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Prod Win 2022 Gen 2 Dotnet 8 Image templates ",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Date",
+              "type": "string"
+            },
+            {
+              "name": "Time",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "hypervgen",
+              "type": "string"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "BuildTimeMinutes",
+              "type": "long"
+            },
+            {
+              "name": "correlationID",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('vmimagebuilder').UsageKpiEvent\r\n| where PreciseTimeStamp  between (queryFrom .. queryTo)\r\n| where subscriptionID == \"b80bcd5c-0c74-4b9e-b0c3-d67ce3803c5a\" and resourceGroupName == \"1PGalDotnetRG\"\r\n| where  operationName == \"PostRunTemplateHandler.POST\"\r\n| where hypervgen == \"V2\"\r\n| where resourceName contains \"2022\" and resourceName contains \"dotnet8\" and resourceName !contains \"preview\"\r\n| summarize arg_max(PreciseTimeStamp, hypervgen, operationstatus, correlationID, latencyinms) by resourceName\r\n| project Date=format_datetime(PreciseTimeStamp, 'yyyy-MM-dd'), Time=format_datetime(PreciseTimeStamp, 'HH:mm:ss'), ResourceName=resourceName, hypervgen, Status=operationstatus, BuildTimeMinutes=latencyinms/(60*1000),correlationID\r\n| order by Date asc",
+          "panelPath": []
+        },
+        {
+          "id": "e8b4e52b-0a1a-4f33-90b6-3d9a5889f43f",
+          "name": "Dotnet 10 Gen 2 Windows 2022 Dotnet Images",
+          "groupId": "2f79a4b7-17b3-4980-b71d-2f5b6718f0b0",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Prod Win 2022 Gen 2 Dotnet 10 Image templates",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Date",
+              "type": "string"
+            },
+            {
+              "name": "Time",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "hypervgen",
+              "type": "string"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "BuildTimeMinutes",
+              "type": "long"
+            },
+            {
+              "name": "correlationID",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "UsageKpiEvent\r\n| where PreciseTimeStamp  between (queryFrom .. queryTo)\r\n| where subscriptionID == \"b80bcd5c-0c74-4b9e-b0c3-d67ce3803c5a\" and resourceGroupName == \"1PGalDotnetRG\"\r\n| where  operationName == \"PostRunTemplateHandler.POST\"\r\n| where hypervgen == \"V2\" and resourceName contains \"2022\" and resourceName !contains \"preview\" and resourceName contains \"dotnet10\"\r\n| summarize arg_max(PreciseTimeStamp, hypervgen, operationstatus, correlationID, latencyinms) by resourceName\r\n| project Date=format_datetime(PreciseTimeStamp, 'yyyy-MM-dd'), Time=format_datetime(PreciseTimeStamp, 'HH:mm:ss'), ResourceName=resourceName, hypervgen, Status=operationstatus, BuildTimeMinutes=latencyinms/(60*1000),correlationID\r\n| order by Date asc",
+          "panelPath": []
+        },
+        {
+          "id": "7b39e34a-1466-4be0-89cc-1d74e6008cc8",
+          "name": "Dotnet 10 Gen 2 Windows 2025 Dotnet Images",
+          "groupId": "7305ef8a-3ec3-4abb-b5a4-d721288048c6",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Prod Win 2025 Gen 2 Dotnet 10 Image templates",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Date",
+              "type": "string"
+            },
+            {
+              "name": "Time",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "hypervgen",
+              "type": "string"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "BuildTimeMinutes",
+              "type": "long"
+            },
+            {
+              "name": "correlationID",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "UsageKpiEvent\r\n| where PreciseTimeStamp  between (queryFrom .. queryTo)\r\n| where subscriptionID == \"b80bcd5c-0c74-4b9e-b0c3-d67ce3803c5a\" and resourceGroupName == \"1PGalDotnetRG\"\r\n| where  operationName == \"PostRunTemplateHandler.POST\"\r\n| where hypervgen == \"V2\" and resourceName contains \"2025\" and resourceName !contains \"preview\" and resourceName contains \"dotnet10\"\r\n| summarize arg_max(PreciseTimeStamp, hypervgen, operationstatus, correlationID, latencyinms) by resourceName\r\n| project Date=format_datetime(PreciseTimeStamp, 'yyyy-MM-dd'), Time=format_datetime(PreciseTimeStamp, 'HH:mm:ss'), ResourceName=resourceName, hypervgen, Status=operationstatus, BuildTimeMinutes=latencyinms/(60*1000),correlationID\r\n| order by Date asc\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "e4d4bfc6-005e-4168-aaba-e2fb7f763ddf",
+          "name": "Prod Gen 1 Windows 2022 Dotnet 8 Images",
+          "groupId": "15420867-b6ca-4e5f-b6c4-d59745ef8cdb",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Prod Win 2022 Gen 1 Dotnet 8 Image templates",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Date",
+              "type": "string"
+            },
+            {
+              "name": "Time",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "hypervgen",
+              "type": "string"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "BuildTimeMinutes",
+              "type": "long"
+            },
+            {
+              "name": "correlationID",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('azcrp.kusto.windows.net').database('vmimagebuilder').UsageKpiEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where subscriptionID == \"b80bcd5c-0c74-4b9e-b0c3-d67ce3803c5a\" and resourceGroupName == \"1PGalDotnetRG\"\r\n| where  operationName == \"PostRunTemplateHandler.POST\"\r\n| where resourceName contains \"2022-datacenter\" and resourceName !contains \"preview\" and resourceName !contains \"azure\"  and resourceName contains \"dotnet8\"\r\n| summarize arg_max(PreciseTimeStamp, *) by resourceName\r\n| project Date=format_datetime(PreciseTimeStamp, 'yyyy-MM-dd'), Time=format_datetime(PreciseTimeStamp, 'HH:mm:ss'), ResourceName=resourceName, hypervgen, Status=operationstatus, BuildTimeMinutes=latencyinms/(60*1000), correlationID\r\n| order by Date asc",
+          "panelPath": []
+        },
+        {
+          "id": "01a6ffb7-a568-4473-bf8c-1fd6820cc418",
+          "name": "Dotnet 10 Gen 1 Windows 2022 Dotnet Images",
+          "groupId": "b1a36b6c-354f-4cdc-94f8-83f7a039b360",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Prod Win 2022 Gen 1 Dotnet 10 Image templates",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Date",
+              "type": "string"
+            },
+            {
+              "name": "Time",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "hypervgen",
+              "type": "string"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "BuildTimeMinutes",
+              "type": "long"
+            },
+            {
+              "name": "correlationID",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "UsageKpiEvent\r\n| where PreciseTimeStamp  between (queryFrom .. queryTo)\r\n| where subscriptionID == \"b80bcd5c-0c74-4b9e-b0c3-d67ce3803c5a\" and resourceGroupName == \"1PGalDotnetRG\"\r\n| where  operationName == \"PostRunTemplateHandler.POST\"\r\n| where hypervgen == \"V1\" and resourceName contains \"2022\" and resourceName !contains \"preview\" and resourceName contains \"dotnet10\"\r\n| summarize arg_max(PreciseTimeStamp, hypervgen, operationstatus, correlationID, latencyinms) by resourceName\r\n| project Date=format_datetime(PreciseTimeStamp, 'yyyy-MM-dd'), Time=format_datetime(PreciseTimeStamp, 'HH:mm:ss'), ResourceName=resourceName, hypervgen, Status=operationstatus, BuildTimeMinutes=latencyinms/(60*1000),correlationID\r\n| order by Date asc",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:12:10.377Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 6,
+    "totalWidgetRefs": 6
+  }
+}

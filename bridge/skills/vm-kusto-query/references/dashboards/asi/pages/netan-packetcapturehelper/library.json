@@ -1,0 +1,152 @@
+{
+  "service": "Network Analyser",
+  "page": "PacketCaptureHelper",
+  "pageId": "5337b20f-88f4-4981-a587-e4cf9d4d6683",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Everflow": {
+      "panelPath": [
+        "Everflow"
+      ],
+      "queries": [
+        {
+          "id": "da76f6bd-962b-49a5-bc86-bc75625cdb50",
+          "name": "PacketCaptureHelper-VIP-To-MuxNode-FilterGenerator-MultiRow",
+          "groupId": "76bee2f5-e7ba-42f3-8f9a-c6d014f8a212",
+          "majorVersion": 3,
+          "minorVersion": 2,
+          "cluster": "azslb.kusto.windows.net",
+          "database": "azslbmds",
+          "type": "MultiRow",
+          "widgetType": "ForEach",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "searchVip",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "dstIpPrefix",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "source",
+              "type": "string"
+            },
+            {
+              "name": "dataPackString",
+              "type": "string"
+            },
+            {
+              "name": "dataPackDynamic",
+              "type": "dynamic"
+            },
+            {
+              "name": "moreData",
+              "type": "dynamic"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "searchVip",
+              "externalSourceName": "VIP",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "dstIpPrefix",
+              "externalSourceName": "Dst IP Prefix",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let srcPort = '0';\r\nlet dstPort = '0';\r\nlet prot = '6';\r\nlet tcpFlags='0';\r\nlet dscp='0';\r\nlet timeDuration = ago(3h);\r\nlet rings=toscalar(cluster(\"azslb.kusto.windows.net\").database(\"azslbmds\").DSMulticastGroupEvent\r\n| where env_time > timeDuration\r\n| where SegmentName != \"0.0.0.0_0\" and SegmentName != \"::_0\" and Uri has \"MuxPoolManager\"\r\n| extend CidrString = replace_string(SegmentName, \"_\", \"/\")\r\n| summarize arg_max(env_time, *) by SegmentName, Uri\r\n| project env_cloud_name, CidrString, GroupIncarnationId, MulticastGroup\r\n| extend Ipv4Cidr = iff(CidrString has \":\", \"\", CidrString), Ipv6Cidr = iff(CidrString has \":\", CidrString, \"\")\r\n| where ipv6_is_in_range(searchVip, Ipv6Cidr) or ipv4_is_in_range(searchVip, Ipv4Cidr)\r\n| project SlbRing = parse_csv(replace_string(GroupIncarnationId, \"-azr\", \"-az,r\"))\r\n);\r\nlet ringsList=parse_csv(rings);\r\nlet muxNodeDetails=cluster(\"azurecm.kusto.windows.net\").database(\"AzureCM\").LogNodeSnapshot\r\n| where TIMESTAMP > timeDuration and dedicatedNodeGroupName startswith 'slb-'\r\n| extend ring2 = substring(trim(\" \", dedicatedNodeGroupName), 4), cluster = tolower(Tenant)\r\n| where dedicatedNodeGroupName in~ (ringsList) or ring2 in~ (ringsList)\r\n| distinct nodeId, ipAddress, nodeAvailabilityState, nodeState, ring=dedicatedNodeGroupName, cluster\r\n| join hint.strategy=broadcast kind=innerunique (cluster(\"Azphynet.kusto.windows.net\").database(\"azdhmds\").DeviceStatic | extend Cluster = tolower(Cluster) | project Server=DeviceName, Cluster, ServerIp = StaticIP ) on $left.ipAddress == $right.ServerIp, $left.['cluster'] == $right.Cluster\r\n| join hint.strategy=broadcast kind=inner (cluster(\"Azphynet.kusto.windows.net\").database(\"azdhmds\").DeviceInterfaceLinks | project Server=StartDevice,Tor=EndDevice) on Server\r\n| join hint.strategy=broadcast kind=inner (cluster(\"Azphynet.kusto.windows.net\").database(\"azdhmds\").DeviceStatic | project Tor=DeviceName, TorIp=StaticIP ) on Tor\r\n| project nodeId, nodeIp=ipAddress, nodeAvailabilityState, nodeState, ring, tor=Tor, torIp=TorIp, Cluster\r\n| order by tor asc;\r\nlet nodeIps = muxNodeDetails\r\n| summarize by ipAddress=nodeIp\r\n| extend b1 = tostring(split(ipAddress, '.')[0]), b2 = tostring(split(ipAddress, '.')[1]), b3 = tostring(split(ipAddress, '.')[2])\r\n;\r\nlet Summary32bits = nodeIps\r\n| project SrcIpPrefix = strcat(ipAddress, '/32'), joinMe=1, bit=32 //, DstIpPrefix = dstIpPrefix, SrcPort = srcPort, DstPort=dstPort,Protocol = prot, TcpFlags =tcpFlags, Dscp = dscp\r\n;\r\nlet Summary24bits = nodeIps\r\n| summarize by b1, b2, b3\r\n| project SrcIpPrefix = strcat_array(pack_array(b1,b2,b3,'0/24'),'.'), joinMe=1, bit=24 //, DstIpPrefix = dstIpPrefix, SrcPort = srcPort, DstPort=dstPort,Protocol = prot, TcpFlags =tcpFlags, Dscp = dscp\r\n;\r\nlet Summary16bits = nodeIps\r\n| summarize by b1, b2\r\n| project SrcIpPrefix = strcat_array(pack_array(b1,b2,'0/16'),'.'), joinMe=1, bit=16 //, DstIpPrefix = dstIpPrefix, SrcPort = srcPort, DstPort=dstPort,Protocol = prot, TcpFlags =tcpFlags, Dscp = dscp\r\n;\r\nlet muxNodeFilter=\r\nSummary16bits | union Summary24bits | union Summary32bits\r\n| extend DstIpPrefix = dstIpPrefix, SrcPort = srcPort, DstPort=dstPort,Protocol = prot, TcpFlags = tcpFlags, Dscp = dscp\r\n| summarize EverFlowSummary=make_set(bag_pack_columns(SrcIpPrefix, DstIpPrefix, SrcPort, DstPort, Protocol, TcpFlags, Dscp)) by AggregationBits=bit\r\n| order by AggregationBits asc\r\n| extend dataPackDynamic=EverFlowSummary, moreData=bag_pack('count',array_length(EverFlowSummary),'aggregationBits',AggregationBits), joinMe=1, source='node', dataPackString=''\r\n;\r\nlet muxTorList=muxNodeDetails | summarize torList=make_set(tor)\r\n| project dataPackString = strcat_array(torList,','), joinMe=1, source='tor', dataPackDynamic=todynamic(''), moreData=todynamic('')\r\n;\r\nlet finalData=\r\nmuxNodeFilter | union muxTorList\r\n;\r\nfinalData\r\n| project source, dataPackString, dataPackDynamic, moreData",
+          "panelPath": [
+            "Everflow"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.336Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

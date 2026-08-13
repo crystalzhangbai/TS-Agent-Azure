@@ -1,0 +1,165 @@
+[
+  {
+    "groupId": "76bee2f5-e7ba-42f3-8f9a-c6d014f8a212",
+    "majorVersion": 3,
+    "minorVersion": 2,
+    "panelPath": [
+      "Packet Capture Helper",
+      "Everflow"
+    ],
+    "widgetType": "ForEach",
+    "widgetTitle": "",
+    "queryId": "451f79e3-84e5-4516-b172-196aaaaa3c67",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "searchVip",
+        "externalSourceName": "VIP",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "dstIpPrefix",
+        "externalSourceName": "Dst IP Prefix",
+        "required": false
+      }
+    ],
+    "name": "PacketCaptureHelper-VIP-To-MuxNode-FilterGenerator-MultiRow",
+    "cluster": "azslb.kusto.windows.net",
+    "database": "azslbmds",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "searchVip",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "dstIpPrefix",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "dataPackString",
+        "type": "string"
+      },
+      {
+        "name": "dataPackDynamic",
+        "type": "dynamic"
+      },
+      {
+        "name": "moreData",
+        "type": "dynamic"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "76bee2f5-e7ba-42f3-8f9a-c6d014f8a212",
+    "majorVersion": 3,
+    "minorVersion": 2,
+    "panelPath": [
+      "Packet Capture Helper",
+      "Everflow",
+      "Node IP details (Summarized to /{{moreData.aggregationBits}})"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "Node IP details (Summarized to /{{moreData.aggregationBits}})",
+    "via": "selectedProperty",
+    "propertyName": "dataPackDynamic",
+    "name": "PacketCaptureHelper-VIP-To-MuxNode-FilterGenerator-MultiRow",
+    "cluster": "azslb.kusto.windows.net",
+    "database": "azslbmds",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "searchVip",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "dstIpPrefix",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "dataPackString",
+        "type": "string"
+      },
+      {
+        "name": "dataPackDynamic",
+        "type": "dynamic"
+      },
+      {
+        "name": "moreData",
+        "type": "dynamic"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "76bee2f5-e7ba-42f3-8f9a-c6d014f8a212",
+    "majorVersion": 3,
+    "minorVersion": 2,
+    "panelPath": [
+      "Packet Capture Helper",
+      "Everflow",
+      "TOR Details"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "TOR Details",
+    "via": "selectedProperty",
+    "propertyName": "dataPackString",
+    "name": "PacketCaptureHelper-VIP-To-MuxNode-FilterGenerator-MultiRow",
+    "cluster": "azslb.kusto.windows.net",
+    "database": "azslbmds",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "searchVip",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "dstIpPrefix",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "dataPackString",
+        "type": "string"
+      },
+      {
+        "name": "dataPackDynamic",
+        "type": "dynamic"
+      },
+      {
+        "name": "moreData",
+        "type": "dynamic"
+      }
+    ],
+    "missing": false
+  }
+]

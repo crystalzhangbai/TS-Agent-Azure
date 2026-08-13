@@ -1,0 +1,80 @@
+{
+  "mcpServers": {
+    "mslearn": {
+      "tools": [
+        "*"
+      ],
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp",
+      "headers": {}
+    },
+    "eagleai": {
+            "type": "http",
+            "url": "https://eagleai-api.trafficmanager.net/eagleai/mcp"
+    },
+    "enghub": {
+      "type": "http",
+      "url": "https://mcp.eng.ms"
+    },
+    "csswiki": {
+      "type": "http",
+      "url": "https://mcp.dev.azure.com/supportability",
+      "headers": {
+        "X-MCP-Toolsets": "repos,wiki,wit,work",
+        "X-MCP-Readonly": "false"
+      }
+    },
+    "azurewiki": { 
+      "type": "http",
+      "url": "https://mcp.dev.azure.com/msazure",
+      "headers": {
+        "X-MCP-Toolsets": "repos,wiki,wit,work",
+        "X-MCP-Readonly": "false"
+      }
+    },
+    "azurefrontdoor": {
+      "type": "http",
+      "url": "https://mcp.dev.azure.com/azurefrontdoor",
+      "headers": {
+        "X-MCP-Toolsets": "repos,wiki,wit,work",
+        "X-MCP-Readonly": "false"
+      }
+    },
+    "azuremcp": {
+      "type": "stdio",
+      "command": "npx",
+      "tools": [
+        "*"
+      ],
+      "args": [
+        "-y",
+        "@azure/mcp@2.0.2",
+        "server",
+        "start",
+        "--mode", "all",
+        "--namespace", "kusto",
+        "--namespace", "compute",
+        "--namespace", "aks",
+        "--namespace", "acr",
+        "--namespace", "extension",
+        "--namespace", "role",
+        "--namespace", "subscription",
+        "--namespace", "group",
+        "--namespace", "virtualdesktop",
+        "--namespace", "storage"
+      ]
+    },
+    "workiq": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@microsoft/workiq",
+        "mcp"
+      ],
+      "tools": [
+        "*"
+      ]
+    }
+  }
+}

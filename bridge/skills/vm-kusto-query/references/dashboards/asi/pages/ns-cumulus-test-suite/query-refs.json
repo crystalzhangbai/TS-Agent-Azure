@@ -1,0 +1,338 @@
+[
+  {
+    "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "bddf6cbf-3d3b-499b-ac3a-c365c8c5f24a",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalFrom",
+        "externalSourceName": "globalFrom",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalTo",
+        "externalSourceName": "globalTo",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_TestSuiteId",
+        "externalSourceName": "TestSuiteId",
+        "required": false,
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Retrieve Resource \"CumulusTestSuite\"",
+    "cluster": "azcore.centralus.kusto.windows.net",
+    "database": "HACumulus",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "globalFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "globalTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_TestSuiteId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TestSuiteId",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "TipNodeSessionId",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ClusterName",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "CPAvailabilityZone",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "56821d70-9d22-4fb6-a515-198d9d066e1f",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "CRP Logs (For debugging VM deployment)"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "CRP Logs (For debugging VM deployment)",
+    "queryId": "5e65e01f-8efb-4222-9802-c243e4668908",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "_startTime",
+        "externalSourceName": "StartTime",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "_endTime",
+        "externalSourceName": "EndTime",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "_resourceGroup",
+        "externalSourceName": "ResourceGroupName",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "_cpAvailabilityZone",
+        "externalSourceName": "CPAvailabilityZone",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "_clusterName",
+        "externalSourceName": "ClusterName",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "CRP Logs",
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Table",
+    "params": [
+      {
+        "name": "_startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "_endTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "_resourceGroup",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "_cpAvailabilityZone",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "_clusterName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "LogType",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "dynamic"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "ae3c4c0b-b4fa-4ab8-8574-b0b3203f1180",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Links to Node/Container page (For debugging host level issues during VM deployment)"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Links to Node/Container page (For debugging host level issues during VM deployment)",
+    "queryId": "18f5e46d-d7fd-4906-a6cc-597e7ec9a82f",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "_startTime",
+        "externalSourceName": "StartTime",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "_endTime",
+        "externalSourceName": "EndTime",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "_nodeId",
+        "externalSourceName": "NodeId",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "Node ASI link",
+    "cluster": "",
+    "database": "",
+    "type": "Table",
+    "params": [
+      {
+        "name": "_startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "_endTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "_nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Node ASI Link",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "e99814b7-7ba3-4de0-a168-70108f24d565",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "EG links"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "EG links",
+    "queryId": "53854767-9323-4dc0-9b28-d01613f5b954",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "internalDestinationName": "rgName",
+        "externalSourceName": "ResourceGroupName",
+        "required": false,
+        "rowSelectionCriteria": "default",
+        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+      }
+    ],
+    "name": "EG Query",
+    "cluster": "executiongraph.kusto.windows.net",
+    "database": "eg",
+    "type": "Table",
+    "params": [
+      {
+        "name": "rgName",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "FailureSignature",
+        "type": "string"
+      },
+      {
+        "name": "EgUrl",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

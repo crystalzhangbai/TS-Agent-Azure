@@ -1,0 +1,1037 @@
+{
+  "service": "Aztec",
+  "page": "Virtual Machines",
+  "pageId": "8bdf3982-ab8c-40e2-961e-d24b2aa1cd54",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "4f573070-603c-4f46-b696-143c2ca101c3",
+          "name": "Retrieve Resource \"Virtual Machines\"",
+          "groupId": "53e719cd-641b-4b54-99e7-9405ae152275",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_virtualMachineUniqueId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "containerType",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "updateDomain",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySetName",
+              "type": "string"
+            },
+            {
+              "name": "billingType",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceFamilyId",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "roleType",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "creationTime",
+              "type": "string"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "containerOsBaseImage",
+              "type": "string"
+            },
+            {
+              "name": "latchedOsFamily",
+              "type": "string"
+            },
+            {
+              "name": "latchedOsRelease",
+              "type": "string"
+            },
+            {
+              "name": "osReleaseUpgradeType",
+              "type": "string"
+            },
+            {
+              "name": "priority",
+              "type": "string"
+            },
+            {
+              "name": "hasDataPlaneSla",
+              "type": "string"
+            },
+            {
+              "name": "isEphemeralVM",
+              "type": "string"
+            },
+            {
+              "name": "osIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "tipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "provisioningIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "additionalContainerProperties",
+              "type": "string"
+            },
+            {
+              "name": "dataDisksIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "requiresSingularRootUpdateSet",
+              "type": "string"
+            },
+            {
+              "name": "volume1Media",
+              "type": "string"
+            },
+            {
+              "name": "IsProcessorSpeculationControlEnabled",
+              "type": "string"
+            },
+            {
+              "name": "requestedT1NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "requestedT2NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "isReusedContainer",
+              "type": "string"
+            },
+            {
+              "name": "preprovisionedOSImageName",
+              "type": "string"
+            },
+            {
+              "name": "currentOSImageName",
+              "type": "string"
+            },
+            {
+              "name": "guestAgentPackage",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "tenantOwners",
+              "type": "string"
+            },
+            {
+              "name": "features",
+              "type": "string"
+            },
+            {
+              "name": "isOversubscribable",
+              "type": "string"
+            },
+            {
+              "name": "actualCoreUsage",
+              "type": "string"
+            },
+            {
+              "name": "isWorkloadUserFacing",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostId",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostGroupId",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostContainerPlacementType",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_virtualMachineUniqueId",
+              "externalSourceName": "virtualMachineUniqueId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where virtualMachineUniqueId == local_virtualMachineUniqueId\n| top 1 by PreciseTimeStamp desc",
+          "panelPath": []
+        },
+        {
+          "id": "baa13741-c0b7-4898-8570-9b6f0ce24f83",
+          "name": "MDM Shoebox Region",
+          "groupId": "c8a8ff05-adc0-4878-8e96-7570f7aed491",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "Single",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryVmRegion",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "RegionCode",
+              "type": "string"
+            },
+            {
+              "name": "shoeboxMdmAccountName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "53e719cd-641b-4b54-99e7-9405ae152275",
+              "majorVersion": 1,
+              "minorVersion": 1,
+              "internalDestinationName": "queryVmRegion",
+              "externalSourceName": "Region",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let region_names = cluster('AzureCM.kusto.windows.net').database('AzureCM').LogContainerSnapshot\r\n| where Region == queryVmRegion or RegionFriendlyName == queryVmRegion\r\n| take 1\r\n| project RPTenant = RegionFriendlyName, Region\r\n| join kind=leftouter (\r\n    cluster(\"aznwnetmon\").database('aznwmds').RegionNamesMap\r\n    | distinct RegionCode, RegionName\r\n    | project RegionCode, Region = RegionName\r\n) on Region\r\n| project RPTenant, Region, RegionCode;\r\nlet rp_tenant = region_names | take 1 | project RPTenant;\r\nregion_names\r\n| join kind=leftouter (\r\n    cluster('AzureCM.kusto.windows.net').database('AzureCM').LogClusterSnapshot\r\n    | where RegionFriendlyName in (rp_tenant)\r\n    | take 1\r\n    | project RPTenant = RegionFriendlyName, shoeboxMdmAccountName\r\n) on RPTenant\r\n| project-away RPTenant1\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "625d2d6f-0ee8-4da6-a806-aa76fa6197d7",
+          "name": "VM Containers",
+          "groupId": "d02170e9-b7a4-48c2-ba2a-1843c12d1947",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus",
+          "database": "AzureCP",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "VM Timeline",
+          "params": [
+            {
+              "name": "qVmId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "qFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qVmId",
+              "externalSourceName": "virtualMachineUniqueId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('azcore.centralus').database('AzureCP').MycroftContainerSnapshot\n| where PreciseTimeStamp between(qFrom .. qTo) and VirtualMachineUniqueId == qVmId\n| project PreciseTimeStamp, NodeId, ContainerId, VirtualMachineUniqueId, RoleInstanceName, CreationTime\n| extend StartTime = PreciseTimeStamp\n| order by CreationTime asc, StartTime asc \n| where (ContainerId != next(ContainerId) or ContainerId != prev(ContainerId)) \n| extend EndTime = next(StartTime)\n| where ContainerId != prev(ContainerId)\n| extend Content = ContainerId\n| extend Tooltip = strcat(\"NodeId: \", NodeId, \"<br/>ContainerId: \", ContainerId)\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 5, StartTime), EndTime)\n| extend GroupBy = strcat(\"Container: \", substring(ContainerId, 0, 8))\n| project StartTime, EndTime, Content, Tooltip, GroupBy",
+          "panelPath": []
+        },
+        {
+          "id": "4427b394-1635-4316-8ce1-e9d7040a53d4",
+          "name": "Container VMA",
+          "groupId": "d73c899f-df65-45fc-ac41-b2a15d0c3fc2",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus",
+          "database": "AzureCP",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "VM Timeline",
+          "params": [
+            {
+              "name": "qFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qVM",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ActualEndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            },
+            {
+              "name": "E17_ClusterFailureReportUrl",
+              "type": "string"
+            },
+            {
+              "name": "TM_RCA",
+              "type": "string"
+            },
+            {
+              "name": "DowntimeReasonHint",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "VMADrilldown",
+              "type": "string"
+            },
+            {
+              "name": "Class",
+              "type": "string"
+            },
+            {
+              "name": "SubClass",
+              "type": "string"
+            },
+            {
+              "name": "RCA",
+              "type": "string"
+            },
+            {
+              "name": "RCA_CSS",
+              "type": "string"
+            },
+            {
+              "name": "DevRCA_EscalateTo",
+              "type": "string"
+            },
+            {
+              "name": "NodeStats_RCALevel1History",
+              "type": "string"
+            },
+            {
+              "name": "Detail",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qVM",
+              "externalSourceName": "virtualMachineUniqueId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let cloudEnv = \"public\";\r\nlet containers = cluster('azcore.centralus').database('AzureCP').MycroftContainerSnapshot\r\n| where PreciseTimeStamp between ((qFrom - 2h) .. (qTo + 2h)) and VirtualMachineUniqueId == qVM\r\n| distinct ContainerId\r\n;\r\ncluster(\"vmainsight\").database(\"vmadb\").VMA\r\n| where PreciseTimeStamp between (qFrom .. qTo) \r\n| where VmUniqueId == qVM or ContainerId in (containers)\r\n| extend Health = \"Unhealthy\"\r\n| extend Content = case(isnotempty(RCA_CSS), RCA_CSS, RCA)\r\n| extend ToolTip = NODESERVICE_RCA\r\n| extend ActualEndTime = EndTime\r\n| project StartTime, ActualEndTime, Content, Health, E17_ClusterFailureReportUrl, TM_RCA, DowntimeReasonHint, ContainerId, NodeId, VMADrilldown, Class, SubClass, RCA, RCA_CSS, DevRCA_EscalateTo, NodeStats_RCALevel1History, Detail\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "6ea1a302-31f3-43a5-b07b-b730ad53173c",
+          "name": "Air VMA",
+          "groupId": "ead70b64-935c-4541-8196-8472cf6fe5ff",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "vmainsight",
+          "database": "Air",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "VM Timeline",
+          "params": [
+            {
+              "name": "queryVmId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryVmId",
+              "externalSourceName": "virtualMachineUniqueId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "GetVMAvailabilityImpactEvents(queryVmId, global_startTime, global_endTime)\n| extend Content = strcat(\n    EventType,\n    \" - \",\n    EventSource\n)\n| extend Tooltip = \nstrcat(\n    \"Event Type: \", \n    EventType,\n    \"<br/>EventSource: \",\n    EventSource,\n    \"<br/>Impact Category: \",\n    ImpactCategory,\n    \"<br/>Article Id: \",\n    ArticleId,    \n    \"<br/>InternalArticleId: \",\n    InternalArticleId\n)\n| project StartTime = ImpactBeginTimeStamp, Content, Tooltip",
+          "panelPath": []
+        },
+        {
+          "id": "104fe61d-4d21-41d5-8512-bce4990e70e4",
+          "name": "VM Hosts",
+          "groupId": "3527ef8c-95a2-4f5a-9753-fb2f08bcefcc",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus",
+          "database": "AzureCP",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "VM Timeline",
+          "params": [
+            {
+              "name": "qFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qVmId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qVmId",
+              "externalSourceName": "virtualMachineUniqueId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('azcore.centralus').database('AzureCP').MycroftContainerSnapshot\r\n| where PreciseTimeStamp between(qFrom .. qTo) and VirtualMachineUniqueId == qVmId\r\n| project PreciseTimeStamp, NodeId, ContainerId, VirtualMachineUniqueId, RoleInstanceName, CreationTime\r\n| extend StartTime = PreciseTimeStamp\r\n| order by CreationTime asc, StartTime asc \r\n| where (NodeId != next(NodeId) or NodeId != prev(NodeId)) \r\n| extend EndTime = next(StartTime)\r\n| where NodeId != prev(NodeId)\r\n| extend Content = NodeId\r\n| extend Tooltip = strcat(\"NodeId: \", NodeId, \"<br/>ContainerId: \", ContainerId)\r\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 5, StartTime), EndTime)\r\n| extend GroupBy = strcat(\"Host: \", substring(NodeId, 0, 8))\r\n| project StartTime, EndTime, Content, Tooltip, GroupBy",
+          "panelPath": []
+        }
+      ]
+    },
+    "Containers > Containers": {
+      "panelPath": [
+        "Containers",
+        "Containers"
+      ],
+      "queries": [
+        {
+          "id": "139913ce-b8b0-429e-9c5e-ab6b12870e90",
+          "name": "Virtual Machine Containers Table",
+          "groupId": "158fc83b-402b-4e3e-b3a1-3e2c933337be",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Containers",
+          "params": [
+            {
+              "name": "queryVmId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "containerType",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "updateDomain",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySetName",
+              "type": "string"
+            },
+            {
+              "name": "billingType",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceFamilyId",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "roleType",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "creationTime",
+              "type": "string"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "containerOsBaseImage",
+              "type": "string"
+            },
+            {
+              "name": "latchedOsFamily",
+              "type": "string"
+            },
+            {
+              "name": "latchedOsRelease",
+              "type": "string"
+            },
+            {
+              "name": "osReleaseUpgradeType",
+              "type": "string"
+            },
+            {
+              "name": "priority",
+              "type": "string"
+            },
+            {
+              "name": "hasDataPlaneSla",
+              "type": "string"
+            },
+            {
+              "name": "isEphemeralVM",
+              "type": "string"
+            },
+            {
+              "name": "osIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "tipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "provisioningIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "additionalContainerProperties",
+              "type": "string"
+            },
+            {
+              "name": "dataDisksIncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "requiresSingularRootUpdateSet",
+              "type": "string"
+            },
+            {
+              "name": "volume1Media",
+              "type": "string"
+            },
+            {
+              "name": "IsProcessorSpeculationControlEnabled",
+              "type": "string"
+            },
+            {
+              "name": "requestedT1NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "requestedT2NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "isReusedContainer",
+              "type": "string"
+            },
+            {
+              "name": "preprovisionedOSImageName",
+              "type": "string"
+            },
+            {
+              "name": "currentOSImageName",
+              "type": "string"
+            },
+            {
+              "name": "guestAgentPackage",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "tenantOwners",
+              "type": "string"
+            },
+            {
+              "name": "features",
+              "type": "string"
+            },
+            {
+              "name": "isOversubscribable",
+              "type": "string"
+            },
+            {
+              "name": "actualCoreUsage",
+              "type": "string"
+            },
+            {
+              "name": "isWorkloadUserFacing",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostId",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostGroupId",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostContainerPlacementType",
+              "type": "string"
+            },
+            {
+              "name": "tableNodeId",
+              "type": "string"
+            },
+            {
+              "name": "tableContainerId",
+              "type": "string"
+            },
+            {
+              "name": "tableCluster",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryVmId",
+              "externalSourceName": "virtualMachineUniqueId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where virtualMachineUniqueId == queryVmId\n| summarize StartTime = min(PreciseTimeStamp), EndTime = arg_max(PreciseTimeStamp, *) by containerId\n| extend tableNodeId = nodeId, tableContainerId = containerId, tableCluster = Tenant\n| order by StartTime desc",
+          "panelPath": [
+            "Containers",
+            "Containers"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:32.190Z",
+    "totalPanels": 2,
+    "totalUniqueQueries": 7,
+    "totalWidgetRefs": 7
+  }
+}

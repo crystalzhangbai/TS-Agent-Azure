@@ -1,0 +1,172 @@
+[
+  {
+    "id": "d863a946-5a3e-4d1a-8c61-f211dd2299a2",
+    "name": "AsyncContextActivity by CorrelationID",
+    "groupId": "259b9872-2e21-4946-a72b-500b4d2393f1",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let correlationIdInput = correlationID;\r\nlet levelInput = level;\r\nAsyncContextActivity\r\n| where correlationID == correlationIdInput\r\n| where level == levelInput\r\n| project PreciseTimeStamp,operationID, serviceBuild, level, fileName, lineNumber, msg",
+    "params": [
+      {
+        "name": "correlationID",
+        "description": "",
+        "type": "guid",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "1954f2cc-f921-4868-85c5-9603a939b221",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "level",
+        "description": "",
+        "type": "string",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "error",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "operationID",
+        "type": "string"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      },
+      {
+        "name": "fileName",
+        "type": "string"
+      },
+      {
+        "name": "lineNumber",
+        "type": "long"
+      },
+      {
+        "name": "msg",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "b687c460-846d-4b38-9beb-af7efdd5f735",
+    "name": "Retrieve Resource \"correlationID\"",
+    "groupId": "303743ea-04ca-4910-be41-425974b7f54b",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncContextActivity\r\n| where correlationID == local_correlationID\r\n| summarize min(PreciseTimeStamp) by correlationID, operationID, serviceBuild, RPSector, RPTenant, resourceGroupName, resourceName, subscriptionID\r\n| take 1",
+    "params": [
+      {
+        "name": "local_correlationID",
+        "description": "",
+        "type": "string",
+        "default": "a86c5bc6-a90c-43a6-898a-91628abc9153",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "correlationID",
+        "type": "string"
+      },
+      {
+        "name": "operationID",
+        "type": "string"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionID",
+        "type": "string"
+      },
+      {
+        "name": "min_PreciseTimeStamp",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  }
+]

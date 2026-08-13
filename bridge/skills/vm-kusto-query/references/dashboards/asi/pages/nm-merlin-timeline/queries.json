@@ -1,0 +1,213 @@
+[
+  {
+    "id": "331f4ffe-363d-4b27-b7bc-6f15556abf7a",
+    "name": "MerlinTimelineFull",
+    "groupId": "661bba94-692f-44ee-ab18-583072a7a24b",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "azurecm",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let q_vmUniqueId = coalesce(tostring(toguid(vmUniqueId)), 'xcvv12f');\r\nNetworkServiceManagerEvents\r\n| where PreciseTimeStamp between (query_BeginTime .. query_EndTime)\r\n| where Tenant =~ cluster and TaskName !in ('LogMerlinNotificationReceived','NicInstanceManagerEvent','SwiftUpdates')\r\n| where Message has_any (interfaceId, q_vmUniqueId, query_containerId)\r\n| project PreciseTimeStamp, Event=strcat('NsmEvt: ', TaskName), Message\r\n| union (\r\nDCMNMQOSInfoEtwTable\r\n| where PreciseTimeStamp between (query_BeginTime .. query_EndTime)\r\n| where Tenant =~ cluster and operation in ('BatchUpdateNetworkResource-Allocation', 'BatchUpdateNetworkResource-Release')\r\n| where additionalMessage has query_containerId\r\n| project PreciseTimeStamp, Event=strcat('NsmQos: ', operation), Message=strcat(additionalMessage, @\"success=\", success, \" message=\", message)\r\n)\r\n| union (\r\n// NM programming\r\ncluster('aznwsdn').database('aznwmds').InterfaceProgramEndFiveMinuteTable\r\n| where TIMESTAMP between (query_BeginTime .. query_EndTime)\r\n| where Cluster =~ cluster\r\n| where ContainerId == query_containerId\r\n| where Detail == 'Unblock Port Event' or Detail has 'DHCP'\r\n| project PreciseTimeStamp = FirstTimeStamp, Event=\"NMAgent\", Message = strcat_delim(\", \", LastTimeStamp, MACAddress, Detail)\r\n)\r\n| union (\r\nLogRoleInstanceSnapshot\r\n| where PreciseTimeStamp between (query_BeginTime .. query_EndTime)\r\n| where Tenant =~ cluster\r\n| where containerId == query_containerId\r\n| summarize arg_min(PreciseTimeStamp, *) by roleInstanceName, creationTime, containerId, isExpectedToRun, provisioningState, roleState\r\n| project PreciseTimeStamp, Event=strcat(\"RoleInstance: \", roleInstanceName),\r\n    Message=strcat(\"creation \", creationTime, \" isExpectedToRun \", isExpectedToRun, \" provisioningState \", provisioningState, \" roleState \", roleState)\r\n)\r\n| top 1000 by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "cluster",
+        "description": "",
+        "type": "string",
+        "default": "BL5PrdApp11",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "query_containerId",
+        "description": "",
+        "type": "string",
+        "default": "33de062c-084f-4d3c-b1e1-302d643161b1",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "interfaceId",
+        "description": "",
+        "type": "string",
+        "default": "31730fe7-48bc-4bd7-a87c-64633ef0c883",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "vmUniqueId",
+        "description": "",
+        "type": "string",
+        "default": "xxcv",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "query_BeginTime",
+        "description": "",
+        "type": "datetime",
+        "default": "2023-06-01T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "query_EndTime",
+        "description": "",
+        "type": "datetime",
+        "default": "2023-06-03T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": true,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Event",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  },
+  {
+    "id": "9a8183c5-730b-42cc-8158-10385a2f19f7",
+    "name": "Retrieve Resource \"MerlinTimeline\"",
+    "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "azurecm",
+    "database": "AzureCM",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let cluster = coalesce(local_Tenant, 'xxcv');\r\nlet s_containerId = coalesce(local_containerId, 'xxcv');\r\nlet s_interfaceId = coalesce(local_interfaceId, 'xxcv');\r\nlet vmUniqueId = coalesce(local_vmUniqueId, 'xxcv');\r\nNetworkServiceManagerEvents\r\n| where PreciseTimeStamp  between (startTime .. endTime)\r\n| where Tenant =~ cluster\r\n| where TaskName == 'LogMerlinInterfaceStateMachineCreated'\r\n| where Message has_any (s_interfaceId, vmUniqueId, s_containerId)\r\n| top 1 by PreciseTimeStamp asc\r\n| parse Message with * 'containerId=\"' containerId:string '\"' * 'merlinNetworkInterfaceInstanceId=\"' interfaceId:string '\"' * \r\n| project PreciseTimeStamp, Tenant, containerId, interfaceId, vmUniqueId = local_vmUniqueId",
+    "params": [
+      {
+        "name": "local_Tenant",
+        "description": "",
+        "type": "string",
+        "default": "CBN14PrdApp01",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_containerId",
+        "description": "",
+        "type": "string",
+        "default": "baaa88f1-0576-418a-bf4a-930ec364bf97",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_interfaceId",
+        "description": "",
+        "type": "string",
+        "default": "5575544e-e4fe-4b4d-b7d0-76dff0754eda",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_vmUniqueId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "description": "",
+        "type": "datetime",
+        "default": "2023-06-02T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "",
+        "type": "datetime",
+        "default": "2023-06-03T00:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "containerId",
+        "type": "string"
+      },
+      {
+        "name": "interfaceId",
+        "type": "string"
+      },
+      {
+        "name": "vmUniqueId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Network Manager"
+  }
+]

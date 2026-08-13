@@ -1,0 +1,101 @@
+[
+  {
+    "groupId": "d6560c10-5855-405c-8cd8-8294eb6fb41b",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Profile",
+      "Profiles"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Profiles",
+    "queryId": "5a0f99e5-25bc-4b5f-a670-f8b6b072b203",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "region",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subscription",
+        "externalSourceName": "subscription",
+        "required": false
+      }
+    ],
+    "name": "azureprofiles",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subscription",
+        "type": "guid",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TraceStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "TraceEndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "ProfileTrigger",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "string"
+      },
+      {
+        "name": "NRPRoleIntance",
+        "type": "string"
+      },
+      {
+        "name": "Link",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

@@ -1,0 +1,224 @@
+{
+  "service": "NRP",
+  "page": "PLS Search",
+  "pageId": "c6796848-fdf3-4d77-b0df-1210c76c21bc",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "Last Operations": {
+      "panelPath": [
+        "Last Operations"
+      ],
+      "queries": [
+        {
+          "id": "5c771c52-56b9-4f12-b0ef-0700f4585202",
+          "name": "PLS_QosEtw",
+          "groupId": "2f1e4714-43cb-41eb-9088-2acf890700dc",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Last Operations",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "PLS_Subscription",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "PLS_ResourceGroup",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "PLS_ResourceName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "PLS_Key",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationRequestId",
+              "type": "string"
+            },
+            {
+              "name": "ErrorCode",
+              "type": "string"
+            },
+            {
+              "name": "ErrorDetails",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "Success",
+              "type": "bool"
+            },
+            {
+              "name": "UserError",
+              "type": "bool"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "PLS_Subscription",
+              "externalSourceName": "PLS_Subscription",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "PLS_ResourceGroup",
+              "externalSourceName": "PLS_ResourceGroup",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "PLS_ResourceName",
+              "externalSourceName": "PLS_ResourceName",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "PLS_Key",
+              "externalSourceName": "PLS_Key",
+              "required": false
+            }
+          ],
+          "kustoQuery": "QosEtwEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where SubscriptionId =~ PLS_Subscription\r\n| where ResourceGroup =~ PLS_ResourceGroup\r\n| where ResourceName =~ PLS_ResourceName\r\n| where HttpMethod != \"GET\"\r\n| project TIMESTAMP, OperationName, OperationId, CorrelationRequestId, ErrorCode, ErrorDetails, Region, Success, UserError\r\n| sort by TIMESTAMP desc\r\n| take 4 // Remove for all operations ran",
+          "panelPath": [
+            "Last Operations"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:53.922Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

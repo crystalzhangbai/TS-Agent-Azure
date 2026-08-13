@@ -1,0 +1,317 @@
+{
+  "service": "Aztec",
+  "page": "AzSM Cluster",
+  "pageId": "b2a93e01-40aa-4dc3-afc4-5195cf2c6c75",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "0c886d9b-6f71-4119-a17a-3993b1e8d19a",
+          "name": "Retrieve Resource \"AzSM Cluster\"",
+          "groupId": "0151e971-cb75-417e-aba6-09620ac5e4f6",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "accp.centralus",
+          "database": "AZSM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_Cluster",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "EventId",
+              "type": "long"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "EventMessage",
+              "type": "string"
+            },
+            {
+              "name": "serviceName",
+              "type": "string"
+            },
+            {
+              "name": "serviceTypeName",
+              "type": "string"
+            },
+            {
+              "name": "replicaOrInstanceId",
+              "type": "long"
+            },
+            {
+              "name": "applicationName",
+              "type": "string"
+            },
+            {
+              "name": "applicationTypeName",
+              "type": "string"
+            },
+            {
+              "name": "buildVersion",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_Cluster",
+              "externalSourceName": "Cluster",
+              "required": false
+            }
+          ],
+          "kustoQuery": "LogAzSMSnapshot\n| where Cluster == local_Cluster\n| top 1 by PreciseTimeStamp desc",
+          "panelPath": []
+        },
+        {
+          "id": "be5d0609-94fd-424b-9731-35dfeda62c9a",
+          "name": "AzSM Cluster Health",
+          "groupId": "16614114-4a8a-414a-8f0a-4605ef772490",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azurecm",
+          "database": "azurecm",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryCluster",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Resource",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "healthState",
+              "type": "string"
+            },
+            {
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCluster",
+              "externalSourceName": "Cluster",
+              "required": false
+            }
+          ],
+          "kustoQuery": "AzSMApplicationHealthEvent\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where Cluster == queryCluster and healthState != \"Ok\"\n| extend Resource = applicationName\n| project PreciseTimeStamp, Resource, healthState, description\n| order by PreciseTimeStamp asc\n| extend PrevTime = prev(PreciseTimeStamp)\n| extend NextTime = next(PreciseTimeStamp)\n| extend PrevApi = prev(Resource)\n| extend NextApi = next(Resource)\n| where \nisnull(PrevTime) or \nisnull(NextTime) or \n(Resource != PrevApi or Resource != NextApi) \n| extend StartTime = PreciseTimeStamp\n| extend EndTime = next(PreciseTimeStamp)\n| where NextApi == Resource\n| project StartTime, EndTime, Resource, Content = Resource, healthState, description\n| extend Health = case(\n    healthState == \"Warning\", \"Degraded\",\n    healthState == \"Error\", \"Unhealthy\",\n    \"\")\n| extend description = iif(isempty(description), \"N/A\", description)\n| extend Content = strcat(healthState, \" - \", Content)\n| extend Tooltip = strcat(\"Description: \", description, \"<br/>Start: \", StartTime, \"<br/>EndTime: \", EndTime)\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 1, StartTime), EndTime)",
+          "panelPath": []
+        },
+        {
+          "id": "357065a9-7c23-45b9-ad37-c9b7326dfa79",
+          "name": "AzSM Applications",
+          "groupId": "ba5a2bf3-830f-4b79-a881-3dfbc80d4994",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "accp.centralus",
+          "database": "AZSM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Applications",
+          "params": [
+            {
+              "name": "queryCluster",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "tableApplicationName",
+              "type": "string"
+            },
+            {
+              "name": "healthState",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCluster",
+              "externalSourceName": "Cluster",
+              "required": false
+            }
+          ],
+          "kustoQuery": "AzSMApplicationHealthEvent\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where Cluster == queryCluster\n| summarize arg_max(PreciseTimeStamp, *) by applicationName\n| project tableApplicationName = applicationName, healthState",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:29.331Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

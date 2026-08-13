@@ -1,0 +1,326 @@
+[
+  {
+    "id": "c5ae7dc1-e7a2-4cca-ba93-f8ecba0c9416",
+    "name": "Node In Place Output distribution",
+    "groupId": "f9793732-ae2f-4140-a159-5e2a4191f10b",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "CategoryChart",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('aplat.westcentralus.kusto.windows.net').database('APlat').AnvilRepairServiceForgeEvents\r\n| where PreciseTimeStamp between (st ..et ) and Message contains \"Initiated In Place repair with Node Recovery Response =\" and TreeActionName == \"NodeInPlaceRecoveryAction\"\r\n| project PreciseTimeStamp, Tenant, TreeNodeKey, TreeActionName, Message, RequestIdentifier, ResourceId\r\n| join kind=leftouter (cluster('aplat.westcentralus.kusto.windows.net').database('APlat').AnvilRepairServiceForgeEvents\r\n| where PreciseTimeStamp between (st ..et ) and Message contains \"Action Completed with Response == \"\r\n| summarize arg_max(PreciseTimeStamp, *) by RequestIdentifier\r\n| project PreciseTimeStamp, TreeNodeKey, TreeActionName, Message, RequestIdentifier, ResourceId) on RequestIdentifier, ResourceId\r\n| parse-where Message with \"Initiated In Place repair with Node Recovery Response = \"NodeRecoveryResponse: dynamic \r\n| parse Message1 with \"Action Completed with Response == \"actionResponse: dynamic \", Duration \"durationInSeconds : double\" seconds.\"\r\n| extend ImpactId = tostring(NodeRecoveryResponse[\"ImpactId\"]), Status = tobool(NodeRecoveryResponse[\"Status\"]), Result = tostring(NodeRecoveryResponse[\"Result\"]), ErrorCode = tostring(NodeRecoveryResponse[\"ErrorCode\"])\r\n| extend OutputResult = iff(actionResponse contains \"TimeoutOnAction\", \"TimeoutOnAction\", tostring(actionResponse[\"Output\"][\"Result\"]))\r\n| project StartTime = PreciseTimeStamp, EndTime = PreciseTimeStamp1, Tenant, ImpactId, Status, Result, ErrorCode, OutputResult, durationInSeconds, RequestIdentifier, ResourceId\r\n| summarize dcount(ResourceId), percentiles(durationInSeconds, 50, 90, 99) by OutputResult",
+    "params": [
+      {
+        "name": "st",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-30T22:05:35.487Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "et",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-31T00:05:35.487Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "dcount_ResourceId",
+        "type": "long"
+      },
+      {
+        "name": "percentile_durationInSeconds_50",
+        "type": "real"
+      },
+      {
+        "name": "percentile_durationInSeconds_90",
+        "type": "real"
+      },
+      {
+        "name": "percentile_durationInSeconds_99",
+        "type": "real"
+      }
+    ],
+    "serviceId": "Anvil Unhealthy"
+  },
+  {
+    "id": "aa56e287-1146-41f9-967a-071e1d6b9d0e",
+    "name": "In Place Impact Details",
+    "groupId": "4db519a9-248f-418f-9e31-50ac521d4835",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('aplat.westcentralus.kusto.windows.net').database('APlat').AnvilRepairServiceForgeEvents\r\n| where PreciseTimeStamp between (st ..et ) and Message contains \"Initiated In Place repair with Node Recovery Response =\" and TreeActionName == \"NodeInPlaceRecoveryAction\"\r\n| project PreciseTimeStamp, Tenant, TreeNodeKey, TreeActionName, Message, RequestIdentifier, ResourceId\r\n| join kind=leftouter (cluster('aplat.westcentralus.kusto.windows.net').database('APlat').AnvilRepairServiceForgeEvents\r\n| where PreciseTimeStamp between (st ..et ) and Message contains \"Action Completed with Response == \"\r\n| summarize arg_max(PreciseTimeStamp, *) by RequestIdentifier\r\n| project PreciseTimeStamp, TreeNodeKey, TreeActionName, Message, RequestIdentifier, ResourceId) on RequestIdentifier, ResourceId\r\n| parse-where Message with \"Initiated In Place repair with Node Recovery Response = \"NodeRecoveryResponse: dynamic \r\n| parse Message1 with \"Action Completed with Response == \"actionResponse: dynamic \", Duration \"durationInSeconds : double\" seconds.\"\r\n| extend ImpactId = tostring(NodeRecoveryResponse[\"ImpactId\"]), Status = tobool(NodeRecoveryResponse[\"Status\"]), Result = tostring(NodeRecoveryResponse[\"Result\"]), ErrorCode = tostring(NodeRecoveryResponse[\"ErrorCode\"])\r\n| extend OutputResult = iff(actionResponse contains \"TimeoutOnAction\", \"TimeoutOnAction\", tostring(actionResponse[\"Output\"][\"Result\"]))\r\n| project StartTime = PreciseTimeStamp, EndTime = PreciseTimeStamp1, Tenant, ImpactId, Status, Result, ErrorCode, OutputResult, durationInSeconds, RequestIdentifier, ResourceId\r\n| summarize dcount(ResourceId), percentiles(durationInSeconds, 50, 90, 99) by OutputResult\r\n",
+    "params": [
+      {
+        "name": "st",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-30T00:56:57.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "et",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-07T00:56:57.637Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "dcount_ResourceId",
+        "type": "long"
+      },
+      {
+        "name": "percentile_durationInSeconds_50",
+        "type": "real"
+      },
+      {
+        "name": "percentile_durationInSeconds_90",
+        "type": "real"
+      },
+      {
+        "name": "percentile_durationInSeconds_99",
+        "type": "real"
+      }
+    ],
+    "serviceId": "Anvil Unhealthy"
+  },
+  {
+    "id": "322613b3-84bc-4254-a602-47d1131bf295",
+    "name": "Impact Hits",
+    "groupId": "8d05dff0-3eda-44c2-a01f-1482d34162c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('aplat.westcentralus.kusto.windows.net').database('APlat').AnvilRepairServiceForgeEvents\r\n| where PreciseTimeStamp between (st ..et ) and Message contains \"Initiated In Place repair with Node Recovery Response =\" and TreeActionName == \"NodeInPlaceRecoveryAction\"\r\n| project PreciseTimeStamp, Tenant, TreeNodeKey, TreeActionName, Message, RequestIdentifier, ResourceId\r\n| join kind=leftouter (cluster('aplat.westcentralus.kusto.windows.net').database('APlat').AnvilRepairServiceForgeEvents\r\n| where PreciseTimeStamp between (st ..et ) and Message contains \"Action Completed with Response == \"\r\n| summarize arg_max(PreciseTimeStamp, *) by RequestIdentifier\r\n| project PreciseTimeStamp, TreeNodeKey, TreeActionName, Message, RequestIdentifier, ResourceId) on RequestIdentifier, ResourceId\r\n| parse-where Message with \"Initiated In Place repair with Node Recovery Response = \"NodeRecoveryResponse: dynamic \r\n| parse Message1 with \"Action Completed with Response == \"actionResponse: dynamic \", Duration \"durationInSeconds : double\" seconds.\"\r\n| extend ImpactId = tostring(NodeRecoveryResponse[\"ImpactId\"]), Status = tobool(NodeRecoveryResponse[\"Status\"]), Result = tostring(NodeRecoveryResponse[\"Result\"]), ErrorCode = tostring(NodeRecoveryResponse[\"ErrorCode\"])\r\n| extend OutputResult = iff(actionResponse contains \"TimeoutOnAction\", \"TimeoutOnAction\", tostring(actionResponse[\"Output\"][\"Result\"]))\r\n| project StartTime = PreciseTimeStamp, EndTime = PreciseTimeStamp1, Tenant, ImpactId, Status, Result, ErrorCode, OutputResult, durationInSeconds, RequestIdentifier, ResourceId\r\n| extend EventStartTime = StartTime - 1h, EventEndTime = EndTime + 1h;",
+    "params": [
+      {
+        "name": "st",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-30T00:56:57.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "et",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-07T00:56:57.637Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "durationInSeconds",
+        "type": "real"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "EventStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventEndTime",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "Anvil Unhealthy"
+  },
+  {
+    "id": "8323edfa-ca1e-4dc9-ae12-fd8b5f443ab1",
+    "name": "NodeInPlaceStimEvents",
+    "groupId": "be361bb8-2e37-4504-a804-1d907a502bcf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('aplat.westcentralus.kusto.windows.net').database('APlat').AnvilRepairServiceForgeEvents\r\n| where PreciseTimeStamp between (st ..et ) and Message contains \"Initiated In Place repair with Node Recovery Response =\" and TreeActionName == \"NodeInPlaceRecoveryAction\"\r\n| project PreciseTimeStamp, Tenant, TreeNodeKey, TreeActionName, Message, RequestIdentifier, ResourceId\r\n| join kind=leftouter (cluster('aplat.westcentralus.kusto.windows.net').database('APlat').AnvilRepairServiceForgeEvents\r\n| where PreciseTimeStamp between (st ..et ) and Message contains \"Action Completed with Response == \"\r\n| summarize arg_max(PreciseTimeStamp, *) by RequestIdentifier\r\n| project PreciseTimeStamp, TreeNodeKey, TreeActionName, Message, RequestIdentifier, ResourceId) on RequestIdentifier, ResourceId\r\n| parse-where Message with \"Initiated In Place repair with Node Recovery Response = \"NodeRecoveryResponse: dynamic \r\n| parse Message1 with \"Action Completed with Response == \"actionResponse: dynamic \", Duration \"durationInSeconds : double\" seconds.\"\r\n| extend ImpactId = tostring(NodeRecoveryResponse[\"ImpactId\"]), Status = tobool(NodeRecoveryResponse[\"Status\"]), Result = tostring(NodeRecoveryResponse[\"Result\"]), ErrorCode = tostring(NodeRecoveryResponse[\"ErrorCode\"])\r\n| extend OutputResult = iff(actionResponse contains \"TimeoutOnAction\", \"TimeoutOnAction\", tostring(actionResponse[\"Output\"][\"Result\"]))\r\n| project InPlaceStartTime = PreciseTimeStamp, InPlaceEndTime = PreciseTimeStamp1, Tenant, ImpactId, Status, Result, ErrorCode, OutputResult, durationInSeconds, RequestIdentifier, ResourceId\r\n| join kind=inner (cluster('hawkeyedataexplorer.westus2.kusto.windows.net').database('HawkeyeLogs').HawkeyeStimImpactEvents\r\n| where StartTime between (st .. et)\r\n| summarize arg_max(PreciseTimeStamp, *) by CadPrimaryKey) on $left.ResourceId == $right.NodeId\r\n| extend Relevant = InPlaceStartTime between (StartTime..EndTime)\r\n| where Relevant\r\n| extend DurationInMin = datetime_diff(\"Minute\", EndTime, StartTime)\r\n| extend PowerCycleDuration = durationInSeconds/60\r\n| project StartTime, EndTime, DurationInMin,  NodeId, ContainerId, OutputResult, PowerCycleDuration, ImpactId, Status, Result, ErrorCode, StimAttribution, StimHealthSignalsData, NodeAdditionalDetails, AnvilActionBag\r\n| extend InsightLink = strcat(\"https://azureserviceinsights.trafficmanager.net/view/services/Stim/pages/Stim Impact Detail?ResourceId=\", NodeId, \"&ContainerId=\", ContainerId, \"&globalFrom=\", StartTime - 1h, \"&globalTo=\", EndTime + 1h)\r\n| sort by DurationInMin desc",
+    "params": [
+      {
+        "name": "st",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-30T00:56:57.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "et",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-07T00:56:57.637Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "DurationInMin",
+        "type": "long"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "OutputResult",
+        "type": "string"
+      },
+      {
+        "name": "PowerCycleDuration",
+        "type": "real"
+      },
+      {
+        "name": "ImpactId",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "bool"
+      },
+      {
+        "name": "Result",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "StimAttribution",
+        "type": "string"
+      },
+      {
+        "name": "StimHealthSignalsData",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeAdditionalDetails",
+        "type": "string"
+      },
+      {
+        "name": "AnvilActionBag",
+        "type": "dynamic"
+      },
+      {
+        "name": "InsightLink",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Anvil Unhealthy"
+  }
+]

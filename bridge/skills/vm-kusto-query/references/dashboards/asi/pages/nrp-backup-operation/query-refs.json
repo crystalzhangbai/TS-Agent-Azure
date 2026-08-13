@@ -1,0 +1,238 @@
+[
+  {
+    "groupId": "d46c704b-89b1-465c-a5ef-77b1a4a8dbea",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "panelPath": [
+      "Scheduled Back up",
+      "Backup Scheduled vs Failed Per Region"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "cb02296d-7064-4032-af9c-872e0f1a4ea2",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "RegionDropDown",
+        "required": false
+      }
+    ],
+    "name": "Backup Scheduled",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SourceAssemblyFileVersion",
+        "type": "string"
+      },
+      {
+        "name": "PartitionId",
+        "type": "string"
+      },
+      {
+        "name": "totalBackUpOperationFailedCount",
+        "type": "long"
+      },
+      {
+        "name": "totalBackupInitiated",
+        "type": "long"
+      },
+      {
+        "name": "totalFailedPercent",
+        "type": "real"
+      },
+      {
+        "name": "min_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "max_TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "ErrorCode_Details",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "83f8af59-26f7-4693-808f-e4416b8c7487",
+    "majorVersion": 4,
+    "minorVersion": 0,
+    "panelPath": [
+      "Scheduled Back up",
+      "Top Error Code in Backup Operations"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "7231a33b-d7e3-40c8-a0e1-1a9b5d18ac92",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Backup Top Error",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StackTrace",
+        "type": "string"
+      },
+      {
+        "name": "failedErrorCount",
+        "type": "long"
+      },
+      {
+        "name": "set_Region",
+        "type": "dynamic"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "ErrorCode_Details",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a68b1c32-6c7b-4847-849a-02d18961f0ca",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Scheduled Back up",
+      "Backup Initiated Less than 20% of the total time."
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "c70dd57f-229d-4182-94f6-b741f3e31f06",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Not scheduled backup",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "PartitionId",
+        "type": "string"
+      },
+      {
+        "name": "totalBackupInitiated",
+        "type": "long"
+      },
+      {
+        "name": "min_PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "max_PreciseTimeStamp",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  }
+]

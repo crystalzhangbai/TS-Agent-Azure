@@ -1,0 +1,808 @@
+{
+  "service": "ARM",
+  "page": "Sub Throttling",
+  "pageId": "32db026d-4952-4eb3-ac93-2bcce65dc5d4",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "86d24304-2dfd-4586-b3df-09dd69a14004",
+          "name": "Retrieve Resource \"Sub Throttling\"",
+          "groupId": "46573ce2-709e-4ec8-8dff-7c35baf04f91",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\r\n(\r\n    X.database('Requests').HttpIncomingRequests\r\n    | where PreciseTimeStamp between(globalFrom..globalTo)\r\n    | where subscriptionId == local_subscriptionId and httpStatusCode == 429\r\n    | project subscriptionId\r\n    | take 1\r\n)\r\n| take 1\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "3367aea0-2737-4057-931c-bb72915439ec",
+          "name": "Retrieve Resource \"Subscriptions\"",
+          "groupId": "64930346-40d6-4a1b-86cf-08a49c493aca",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "genevareference.westcentralus",
+          "database": "AzureGraph",
+          "type": "ResourceGet",
+          "widgetType": "Card",
+          "widgetTitle": "Subscription Details",
+          "params": [
+            {
+              "name": "local_SubscriptionId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Id",
+              "type": "string"
+            },
+            {
+              "name": "Name",
+              "type": "string"
+            },
+            {
+              "name": "IsVL",
+              "type": "bool"
+            },
+            {
+              "name": "IsDirect",
+              "type": "bool"
+            },
+            {
+              "name": "BillingSystem",
+              "type": "string"
+            },
+            {
+              "name": "BillableAccountId",
+              "type": "long"
+            },
+            {
+              "name": "StartsOn",
+              "type": "datetime"
+            },
+            {
+              "name": "EndsOn",
+              "type": "datetime"
+            },
+            {
+              "name": "CreatedDate",
+              "type": "datetime"
+            },
+            {
+              "name": "StartDate",
+              "type": "datetime"
+            },
+            {
+              "name": "EndDate",
+              "type": "datetime"
+            },
+            {
+              "name": "OfferId",
+              "type": "string"
+            },
+            {
+              "name": "OfferName",
+              "type": "string"
+            },
+            {
+              "name": "OfferType",
+              "type": "string"
+            },
+            {
+              "name": "IsFraudIdentified",
+              "type": "string"
+            },
+            {
+              "name": "FraudIdentifiedDate",
+              "type": "string"
+            },
+            {
+              "name": "Status",
+              "type": "string"
+            },
+            {
+              "name": "IsTrial",
+              "type": "string"
+            },
+            {
+              "name": "DUNSNumber",
+              "type": "string"
+            },
+            {
+              "name": "PaidIncludedQuantity",
+              "type": "long"
+            },
+            {
+              "name": "TrialIncludedQuantity",
+              "type": "long"
+            },
+            {
+              "name": "TrialStartDate",
+              "type": "datetime"
+            },
+            {
+              "name": "TrialEndDate",
+              "type": "datetime"
+            },
+            {
+              "name": "PaidStartDate",
+              "type": "datetime"
+            },
+            {
+              "name": "PaidEndDate",
+              "type": "long"
+            },
+            {
+              "name": "TrialToPaidConversionDate",
+              "type": "datetime"
+            },
+            {
+              "name": "LastTrialExtendedDate",
+              "type": "string"
+            },
+            {
+              "name": "LastDisabledDate",
+              "type": "string"
+            },
+            {
+              "name": "LastWarnedDate",
+              "type": "string"
+            },
+            {
+              "name": "DeprovisionedDate",
+              "type": "string"
+            },
+            {
+              "name": "TenantCountryCode",
+              "type": "string"
+            },
+            {
+              "name": "ServiceUseCountryCode",
+              "type": "string"
+            },
+            {
+              "name": "BillToCountryCode",
+              "type": "string"
+            },
+            {
+              "name": "CloudCustomer",
+              "type": "string"
+            },
+            {
+              "name": "ServiceOids",
+              "type": "dynamic"
+            },
+            {
+              "name": "IsHostedOnBehalfOf",
+              "type": "bool"
+            },
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "TenantID",
+              "type": "string"
+            },
+            {
+              "name": "_isghost",
+              "type": "bool"
+            },
+            {
+              "name": "_ts",
+              "type": "datetime"
+            },
+            {
+              "name": "_updated",
+              "type": "datetime"
+            },
+            {
+              "name": "_created",
+              "type": "datetime"
+            },
+            {
+              "name": "_partitionkeyrangeid",
+              "type": "string"
+            },
+            {
+              "name": "_graph_syndicateTime",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "46573ce2-709e-4ec8-8dff-7c35baf04f91",
+              "majorVersion": 2,
+              "minorVersion": 2,
+              "internalDestinationName": "local_SubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "Customer_Subscription\n| where Id =~ local_SubscriptionId\n| take 1\n",
+          "panelPath": []
+        },
+        {
+          "id": "f84aa4a4-4191-45ad-9d13-48a606a1fa9b",
+          "name": "Get Throttling",
+          "groupId": "6fe27310-d73d-48e7-a846-c23cae3bb18f",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "armprod",
+          "type": "IssueDetector",
+          "widgetType": "IssueDetector",
+          "widgetTitle": "ARM Throttling Detector",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "46573ce2-709e-4ec8-8dff-7c35baf04f91",
+              "majorVersion": 2,
+              "minorVersion": 2,
+              "internalDestinationName": "querySubId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\r\n(\r\n    X.database('Requests').HttpIncomingRequests\r\n    | where PreciseTimeStamp between(queryFrom..queryTo)\r\n    | where subscriptionId == querySubId and TaskName != \"HttpIncomingRequestStart\"\r\n)\r\n| summarize Requests = count(), Throttled = countif(httpStatusCode == 429)\r\n| extend Title = \"**Subscription throttling requests (429)**\"\r\n| extend Severity = iif(Throttled == 0, 'Info', 'Error')\r\n| extend Description = iif(Throttled == 0, \r\n    'The subscription is not getting throttled, no 429 ARM response in selected time range.', \r\n    'The subscription is throttled, please review more details in this page to decide where the throttling comes from.'\r\n)\r\n| project Title, Severity, Description\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "56617412-26eb-46db-ac87-7f700faf1b17",
+          "name": "Get RP Throttling",
+          "groupId": "b8ca4687-1446-4367-81e9-7cd517ddf39e",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "armprod",
+          "type": "IssueDetector",
+          "widgetType": "IssueDetector",
+          "widgetTitle": "RP Throttling Detector",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Title",
+              "type": "string"
+            },
+            {
+              "name": "Severity",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "46573ce2-709e-4ec8-8dff-7c35baf04f91",
+              "majorVersion": 2,
+              "minorVersion": 2,
+              "internalDestinationName": "querySubId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\r\n(\r\n    X.database('Requests').HttpOutgoingRequests\r\n    | where PreciseTimeStamp between(queryFrom..queryTo)\r\n    | where subscriptionId == querySubId\r\n    | where httpStatusCode == 429\r\n)\r\n| summarize Count = count()\r\n| extend Title = \"**Resource Provider throttling requests (429)**\"\r\n| extend Severity = iif(Count == 0, 'Info', 'Error')\r\n| extend Description = iif(Count == 0, \r\n    strcat(\"Resource Providers do not return 429 response in selected time range.\"), \r\n    strcat(\"Specific RP requests is throttled, please review more details in this page and contact related RP team as needed.\")\r\n)\r\n| project Title, Severity, Description\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "aa8010c7-be59-4281-b854-b34f74a3a97b",
+          "name": "Subscription Requests",
+          "groupId": "734e0551-8810-4086-981b-e5f1d08624f0",
+          "majorVersion": 3,
+          "minorVersion": 2,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Throttled Requests (429)",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Requests",
+              "type": "long"
+            },
+            {
+              "name": "InternalServiceErrors",
+              "type": "long"
+            },
+            {
+              "name": "Throttled",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "46573ce2-709e-4ec8-8dff-7c35baf04f91",
+              "majorVersion": 2,
+              "minorVersion": 2,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Requests').HttpIncomingRequests\n    | where PreciseTimeStamp between(queryFrom..queryTo)\n    | where subscriptionId == querySubscriptionId and TaskName != \"HttpIncomingRequestStart\"\n)\n| summarize Requests = count(), InternalServiceErrors = countif(httpStatusCode >= 500), Throttled = countif(httpStatusCode == 429) by bin(PreciseTimeStamp, 30m)\n| order by PreciseTimeStamp asc\n",
+          "panelPath": []
+        },
+        {
+          "id": "e63c8ce1-b10e-4aa3-9954-6701b528a3fe",
+          "name": "Get Sub Requests",
+          "groupId": "72e1eb84-a3f4-48ba-8c42-202d5ea5014b",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "armprod",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "ARM Layer",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "GeneralReads",
+              "type": "long"
+            },
+            {
+              "name": "GeneralWrites",
+              "type": "long"
+            },
+            {
+              "name": "Deletes",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\r\n(\r\n    X.database('Requests').HttpIncomingRequests\r\n    | where PreciseTimeStamp between(queryFrom..queryTo)\r\n    | where subscriptionId == querySubId and TaskName != \"HttpIncomingRequestStart\"\r\n)\r\n| summarize GeneralReads = countif(httpMethod == \"GET\"), GeneralWrites = countif(httpMethod == \"PUT\" or httpMethod == \"PATCH\" or httpMethod == \"POST\"), Deletes = countif(httpMethod == \"DELETE\") by bin(PreciseTimeStamp, 1h)\r\n| order by PreciseTimeStamp asc ",
+          "panelPath": []
+        },
+        {
+          "id": "f114a2e3-23c3-45a6-a8ff-95a4311d9e15",
+          "name": "ARM - throttles by provider",
+          "groupId": "348a7341-48ab-499d-b007-c6bf61236e56",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Throttles By Provider",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "targetResourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "429_Count",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\r\n(\r\n    X.database('Requests').HttpOutgoingRequests\r\n    | where PreciseTimeStamp between(queryFrom..queryTo)\r\n    | where subscriptionId == querySubId and httpStatusCode == 429\r\n)\r\n| summarize 429_Count = dcount(ActivityId) by bin(PreciseTimeStamp, 15m), targetResourceProvider\r\n| order by PreciseTimeStamp asc",
+          "panelPath": []
+        },
+        {
+          "id": "4b6dd03f-03b6-437d-9979-4f2f63b8bd07",
+          "name": "Get RP Throttling",
+          "groupId": "d9106daa-358a-41f5-b596-b59348bd3b68",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "armprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Resource Provider Layer",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "hostName",
+              "type": "string"
+            },
+            {
+              "name": "targetResourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "429_Count",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\r\n(\r\n    X.database('Requests').HttpOutgoingRequests\r\n    | where PreciseTimeStamp between(queryFrom..queryTo)\r\n    | where subscriptionId == querySubId and httpStatusCode == 429\r\n)\r\n| summarize 429_Count = count() by bin(PreciseTimeStamp, 1h), operationName, hostName, targetResourceProvider\r\n| order by 429_Count desc",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:29:30.264Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 8,
+    "totalWidgetRefs": 8
+  }
+}

@@ -1,0 +1,302 @@
+[
+  {
+    "id": "975f79b6-ccd1-42ea-8e78-4f0ae5028ca0",
+    "name": "Retrieve Resource \"NodeId\"",
+    "groupId": "bda64b6b-0111-41f9-89ef-3c3c0eb42c55",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "wdgeventstore.kusto.windows.net",
+    "database": "KernelAgent",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "HostResourceManagerResourceSnapshotMetadata\r\n| where TIMESTAMP between (globalFrom..globalTo) and NodeId == local_NodeId\r\n| summarize arg_max(TIMESTAMP, Environment, Cluster, NodeId, Hostname, SnapshotId)\r\n| project Environment, Cluster, NodeId, Hostname, SnapshotId\r\n",
+    "params": [
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_NodeId",
+        "description": "",
+        "type": "string",
+        "default": "2f336749-549c-a46b-bdc9-3960a1e19381",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Environment",
+        "type": "string"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "Hostname",
+        "type": "string"
+      },
+      {
+        "name": "SnapshotId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Host Resource Manager"
+  },
+  {
+    "id": "9e23c4e2-40a9-49b3-919e-51927e9a0ba6",
+    "name": "HRM snapshots",
+    "groupId": "f8c17346-3d56-4b50-851a-0c6b1ba6ccf6",
+    "majorVersion": 6,
+    "minorVersion": 0,
+    "cluster": "wdgeventstore",
+    "database": "KernelAgent",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "HostResourceManagerResourceSnapshotMetadata\r\n| where TIMESTAMP between (queryFrom..queryTo) and NodeId == nodeId\r\n| project Id=SnapshotId,\r\n          Content=strcat(SnapshotId, ' (', SnapshotType, ')'),\r\n          FilterCategory=ReasonLevel1,\r\n          StartTime=SnapshotStartTime,\r\n          EndTime=LastDataCaptureTime",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-10-26T00:55:04.645Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-10-27T00:55:04.645Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "nodeId",
+        "description": "",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "serviceId": "Host Resource Manager"
+  },
+  {
+    "id": "412d3c24-9db6-4b0c-bb31-9a711991bd20",
+    "name": "Entries for HRM snapshot",
+    "groupId": "8e65488f-14ca-4427-95d1-c667249ce330",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "wdgeventstore",
+    "database": "KernelAgent",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "HostResourceManagerResourceSnapshotEntries\r\n| where TIMESTAMP between (queryFrom..queryTo) and NodeId == nodeId and SnapshotId == snapshotId\r\n| project NodeId, SnapshotId, IdentifierLevel1, IdentifierLevel2, IdentifierLevel3, IdentifierAdditionalMetaData,\r\n          CommitUsageBytes_Undelegated, CommitUsageBytes_Undelegated_Avg, CommitUsageBytes_Undelegated_Min, CommitUsageBytes_Undelegated_Max, CommitUsageBytes_Undelegated_LastObserved,\r\n          CommitUsageBytes_Total, CommitUsageBytes_Total_Avg, CommitUsageBytes_Total_Min, CommitUsageBytes_Total_Max, CommitUsageBytes_Total_LastObserved,\r\n          PhysicalUsageBytes_Undelegated, PhysicalUsageBytes_Undelegated_Avg, PhysicalUsageBytes_Undelegated_Min, PhysicalUsageBytes_Undelegated_Max, PhysicalUsageBytes_Undelegated_LastObserved,\r\n          PhysicalUsageBytes_Total, PhysicalUsageBytes_Total_Avg, PhysicalUsageBytes_Total_Min, PhysicalUsageBytes_Total_Max, PhysicalUsageBytes_Total_LastObserved,\r\n          AdditionalData",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-10-26T20:46:13.232Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-10-27T20:46:13.232Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "nodeId",
+        "description": "",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "snapshotId",
+        "description": "",
+        "type": "string",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "SnapshotId",
+        "type": "string"
+      },
+      {
+        "name": "IdentifierLevel1",
+        "type": "string"
+      },
+      {
+        "name": "IdentifierLevel2",
+        "type": "string"
+      },
+      {
+        "name": "IdentifierLevel3",
+        "type": "string"
+      },
+      {
+        "name": "IdentifierAdditionalMetaData",
+        "type": "string"
+      },
+      {
+        "name": "CommitUsageBytes_Undelegated",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Undelegated_Avg",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Undelegated_Min",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Undelegated_Max",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Undelegated_LastObserved",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Total",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Total_Avg",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Total_Min",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Total_Max",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Total_LastObserved",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Undelegated",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Undelegated_Avg",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Undelegated_Min",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Undelegated_Max",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Undelegated_LastObserved",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Total",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Total_Avg",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Total_Min",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Total_Max",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Total_LastObserved",
+        "type": "long"
+      },
+      {
+        "name": "AdditionalData",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Host Resource Manager"
+  }
+]

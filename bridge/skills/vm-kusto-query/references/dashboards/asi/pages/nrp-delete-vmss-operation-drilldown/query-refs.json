@@ -1,0 +1,721 @@
+[
+  {
+    "groupId": "be26271c-3472-44b8-a7fe-e51b057e371b",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "DELETE VMScaleSet operation drilldown",
+      "Region level",
+      "Success rate"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Success rate",
+    "queryId": "6e572f67-239d-4e2c-a814-4d9f7835bec1",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "region",
+        "required": false
+      }
+    ],
+    "name": "DeleteVmssSuccess",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      },
+      {
+        "name": "sum_isSuccess",
+        "type": "long"
+      },
+      {
+        "name": "sum_fail",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "4646a889-185c-49a1-95d2-35c7aaac66eb",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "DELETE VMScaleSet operation drilldown",
+      "Region level",
+      "Latency"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Latency",
+    "queryId": "ae817f6e-46a1-471e-81d6-ce5bb2a189ff",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "region",
+        "required": false
+      }
+    ],
+    "name": "Latency",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "percentile_DurationInMillisecond_50",
+        "type": "long"
+      },
+      {
+        "name": "percentile_DurationInMillisecond_90",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "ef77bea6-b54a-4fbb-9bab-5397128bc5ac",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "DELETE VMScaleSet operation drilldown",
+      "Region level",
+      "Sub lock duration"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Sub lock duration",
+    "queryId": "d9d73312-a0bb-4f93-bac6-d05e455ec466",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "region",
+        "required": false
+      }
+    ],
+    "name": "DeleteVmssSubLockRegion",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "sum_LockDuration",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7bf9f09b-576c-4d6d-84b8-76e8eca58448",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "DELETE VMScaleSet operation drilldown",
+      "Region level",
+      "Transaction stats (KB)"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Transaction stats (KB)",
+    "queryId": "898e7736-5d0e-4419-9354-34c9789fc45f",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "region",
+        "required": false
+      }
+    ],
+    "name": "DeleteVmssTransactionStatsRegion",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "readSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "addSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "updateSizeKb",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "f519a384-82ae-4987-8819-7c82651e0d87",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "DELETE VMScaleSet operation drilldown",
+      "Region level",
+      "Top Subscriptions"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Top Subscriptions",
+    "queryId": "4095ed53-e66a-4c5f-92c1-a05368bd3dbf",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "region",
+        "required": false
+      }
+    ],
+    "name": "DeleteVmssTopSubs",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "9714a06e-0df0-4115-b3ac-2a0f475723d4",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "DELETE VMScaleSet operation drilldown",
+      "Sub level",
+      "Sub lock duration"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Sub lock duration",
+    "queryId": "52ea4f6c-9153-4eb9-8317-84929bb45b3f",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "region",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "Subscription",
+        "required": false
+      }
+    ],
+    "name": "DeleteVmssSubLockSub",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "sum_LockDuration",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "812150f0-a08e-47cd-9c87-d0e34f7f5106",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "DELETE VMScaleSet operation drilldown",
+      "Sub level",
+      "Transaction stats (KB)"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Transaction stats (KB)",
+    "queryId": "6c74501c-953c-4efc-85b9-ec49e93007cc",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "region",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "Subscription",
+        "required": false
+      }
+    ],
+    "name": "DeleteVmssTransactionStatsSub",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "readSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "addSizeKb",
+        "type": "long"
+      },
+      {
+        "name": "updateSizeKb",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "f90eba6a-fa00-4710-b96f-66b017b65518",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "DELETE VMScaleSet operation drilldown",
+      "Sub level",
+      "Delete VMSS Ip configurations reads"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Delete VMSS Ip configurations reads",
+    "queryId": "2e6e6353-051b-4a82-a79d-cdb4f55dd03f",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "region",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "Subscription",
+        "required": false
+      }
+    ],
+    "name": "DeleteVmssIpConfigReads",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AvgIpConfigurationsReadCount",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "e370cf3d-a7f6-4a0e-96a1-501c7189a84e",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "DELETE VMScaleSet operation drilldown",
+      "Sub level",
+      "Delete VMSS Subnet reads"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Delete VMSS Subnet reads",
+    "queryId": "74b0597b-c520-46ba-9aa6-eb4cd76bbf88",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "region",
+        "externalSourceName": "region",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subId",
+        "externalSourceName": "Subscription",
+        "required": false
+      }
+    ],
+    "name": "DeleteVmssSubnetReadsSub",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "AvgSubnetReadCount",
+        "type": "real"
+      }
+    ],
+    "missing": false
+  }
+]

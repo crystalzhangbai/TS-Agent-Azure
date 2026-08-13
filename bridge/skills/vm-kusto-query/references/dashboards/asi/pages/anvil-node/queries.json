@@ -1,0 +1,69 @@
+[
+  {
+    "id": "0c8920cc-aab9-45aa-ac77-d52bea2d9fc5",
+    "name": "Retrieve Resource \"Node\"",
+    "groupId": "3b11c8ef-0264-4319-b00a-c1274038577c",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "LogNodeSnapshot\r\n| where nodeId == local_nodeId\r\n| take 1\r\n| project PreciseTimeStamp, nodeState, nodeAvailabilityState, aliveContainerCount, containerCount, cmNodeChannelAggregatedHealthStatus, cmNodeWasChannelHealthStatus, hostingEnvironment, lastStateChangeTime = todatetime(lastStateChangeTime), faultInfo",
+    "params": [
+      {
+        "name": "local_nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "nodeState",
+        "type": "string"
+      },
+      {
+        "name": "nodeAvailabilityState",
+        "type": "string"
+      },
+      {
+        "name": "aliveContainerCount",
+        "type": "long"
+      },
+      {
+        "name": "containerCount",
+        "type": "string"
+      },
+      {
+        "name": "cmNodeChannelAggregatedHealthStatus",
+        "type": "string"
+      },
+      {
+        "name": "cmNodeWasChannelHealthStatus",
+        "type": "string"
+      },
+      {
+        "name": "hostingEnvironment",
+        "type": "string"
+      },
+      {
+        "name": "lastStateChangeTime",
+        "type": "datetime"
+      },
+      {
+        "name": "faultInfo",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Anvil Unhealthy"
+  }
+]

@@ -1,0 +1,193 @@
+{
+  "service": "Azure VM Image Builder",
+  "page": "Deployments",
+  "pageId": "3032e41a-1c2f-4e9b-ba36-25d68591d32a",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "AIB INT Deployments": {
+      "panelPath": [
+        "AIB INT Deployments"
+      ],
+      "queries": [
+        {
+          "id": "ca7bd0af-29fc-4fee-a561-d34a72d212d2",
+          "name": "AIB Deployments",
+          "groupId": "65ecc299-cae4-4608-b4a8-a0b8476cc10a",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "AIB INT Deployments",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "subID",
+              "type": "guid",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "deploymentName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupLocation",
+              "type": "string"
+            },
+            {
+              "name": "resourceCount",
+              "type": "long"
+            },
+            {
+              "name": "executionStatus",
+              "type": "string"
+            },
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "real"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subID",
+              "externalSourceName": "subID",
+              "required": false
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\r\n(\r\n    X.database('Deployments').Deployments\r\n    | where PreciseTimeStamp between(queryFrom .. queryTo)\r\n    | where subscriptionId == subID\r\n    | summarize arg_max(PreciseTimeStamp, *) by subscriptionId, resourceGroupName, deploymentName, ActivityId\r\n    | extend startTime = todatetime(startTime), endTime = todatetime(endTime)\r\n    | project \r\n        deploymentName, \r\n        resourceGroupName, \r\n        resourceGroupLocation, \r\n        resourceCount, \r\n        executionStatus, \r\n        startTime, \r\n        endTime, \r\n        durationInMilliseconds, \r\n        TaskName, \r\n        level = iif(TaskName == \"DeploymentsFailed\", \"error\", \"info\"),\r\n        correlationId\r\n)\r\n| order by startTime desc",
+          "panelPath": [
+            "AIB INT Deployments"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:12:09.353Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

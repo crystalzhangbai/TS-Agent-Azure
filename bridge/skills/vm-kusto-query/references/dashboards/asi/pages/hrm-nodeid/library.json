@@ -1,0 +1,426 @@
+{
+  "service": "Host Resource Manager",
+  "page": "NodeId",
+  "pageId": "29849e84-41d0-4d3b-833b-6feeb8370598",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "975f79b6-ccd1-42ea-8e78-4f0ae5028ca0",
+          "name": "Retrieve Resource \"NodeId\"",
+          "groupId": "bda64b6b-0111-41f9-89ef-3c3c0eb42c55",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "wdgeventstore.kusto.windows.net",
+          "database": "KernelAgent",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_NodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Environment",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "Hostname",
+              "type": "string"
+            },
+            {
+              "name": "SnapshotId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_NodeId",
+              "externalSourceName": "NodeId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "HostResourceManagerResourceSnapshotMetadata\r\n| where TIMESTAMP between (globalFrom..globalTo) and NodeId == local_NodeId\r\n| summarize arg_max(TIMESTAMP, Environment, Cluster, NodeId, Hostname, SnapshotId)\r\n| project Environment, Cluster, NodeId, Hostname, SnapshotId\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "9e23c4e2-40a9-49b3-919e-51927e9a0ba6",
+          "name": "HRM snapshots",
+          "groupId": "f8c17346-3d56-4b50-851a-0c6b1ba6ccf6",
+          "majorVersion": 6,
+          "minorVersion": 0,
+          "cluster": "wdgeventstore",
+          "database": "KernelAgent",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Id",
+              "type": "string"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "FilterCategory",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "NodeId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "HostResourceManagerResourceSnapshotMetadata\r\n| where TIMESTAMP between (queryFrom..queryTo) and NodeId == nodeId\r\n| project Id=SnapshotId,\r\n          Content=strcat(SnapshotId, ' (', SnapshotType, ')'),\r\n          FilterCategory=ReasonLevel1,\r\n          StartTime=SnapshotStartTime,\r\n          EndTime=LastDataCaptureTime",
+          "panelPath": []
+        },
+        {
+          "id": "412d3c24-9db6-4b0c-bb31-9a711991bd20",
+          "name": "Entries for HRM snapshot",
+          "groupId": "8e65488f-14ca-4427-95d1-c667249ce330",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "wdgeventstore",
+          "database": "KernelAgent",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "snapshotId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "SnapshotId",
+              "type": "string"
+            },
+            {
+              "name": "IdentifierLevel1",
+              "type": "string"
+            },
+            {
+              "name": "IdentifierLevel2",
+              "type": "string"
+            },
+            {
+              "name": "IdentifierLevel3",
+              "type": "string"
+            },
+            {
+              "name": "IdentifierAdditionalMetaData",
+              "type": "string"
+            },
+            {
+              "name": "CommitUsageBytes_Undelegated",
+              "type": "long"
+            },
+            {
+              "name": "CommitUsageBytes_Undelegated_Avg",
+              "type": "long"
+            },
+            {
+              "name": "CommitUsageBytes_Undelegated_Min",
+              "type": "long"
+            },
+            {
+              "name": "CommitUsageBytes_Undelegated_Max",
+              "type": "long"
+            },
+            {
+              "name": "CommitUsageBytes_Undelegated_LastObserved",
+              "type": "long"
+            },
+            {
+              "name": "CommitUsageBytes_Total",
+              "type": "long"
+            },
+            {
+              "name": "CommitUsageBytes_Total_Avg",
+              "type": "long"
+            },
+            {
+              "name": "CommitUsageBytes_Total_Min",
+              "type": "long"
+            },
+            {
+              "name": "CommitUsageBytes_Total_Max",
+              "type": "long"
+            },
+            {
+              "name": "CommitUsageBytes_Total_LastObserved",
+              "type": "long"
+            },
+            {
+              "name": "PhysicalUsageBytes_Undelegated",
+              "type": "long"
+            },
+            {
+              "name": "PhysicalUsageBytes_Undelegated_Avg",
+              "type": "long"
+            },
+            {
+              "name": "PhysicalUsageBytes_Undelegated_Min",
+              "type": "long"
+            },
+            {
+              "name": "PhysicalUsageBytes_Undelegated_Max",
+              "type": "long"
+            },
+            {
+              "name": "PhysicalUsageBytes_Undelegated_LastObserved",
+              "type": "long"
+            },
+            {
+              "name": "PhysicalUsageBytes_Total",
+              "type": "long"
+            },
+            {
+              "name": "PhysicalUsageBytes_Total_Avg",
+              "type": "long"
+            },
+            {
+              "name": "PhysicalUsageBytes_Total_Min",
+              "type": "long"
+            },
+            {
+              "name": "PhysicalUsageBytes_Total_Max",
+              "type": "long"
+            },
+            {
+              "name": "PhysicalUsageBytes_Total_LastObserved",
+              "type": "long"
+            },
+            {
+              "name": "AdditionalData",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "bda64b6b-0111-41f9-89ef-3c3c0eb42c55",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "snapshotId",
+              "externalSourceName": "SnapshotId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "nodeId",
+              "externalSourceName": "NodeId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "HostResourceManagerResourceSnapshotEntries\r\n| where TIMESTAMP between (queryFrom..queryTo) and NodeId == nodeId and SnapshotId == snapshotId\r\n| project NodeId, SnapshotId, IdentifierLevel1, IdentifierLevel2, IdentifierLevel3, IdentifierAdditionalMetaData,\r\n          CommitUsageBytes_Undelegated, CommitUsageBytes_Undelegated_Avg, CommitUsageBytes_Undelegated_Min, CommitUsageBytes_Undelegated_Max, CommitUsageBytes_Undelegated_LastObserved,\r\n          CommitUsageBytes_Total, CommitUsageBytes_Total_Avg, CommitUsageBytes_Total_Min, CommitUsageBytes_Total_Max, CommitUsageBytes_Total_LastObserved,\r\n          PhysicalUsageBytes_Undelegated, PhysicalUsageBytes_Undelegated_Avg, PhysicalUsageBytes_Undelegated_Min, PhysicalUsageBytes_Undelegated_Max, PhysicalUsageBytes_Undelegated_LastObserved,\r\n          PhysicalUsageBytes_Total, PhysicalUsageBytes_Total_Avg, PhysicalUsageBytes_Total_Min, PhysicalUsageBytes_Total_Max, PhysicalUsageBytes_Total_LastObserved,\r\n          AdditionalData",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.405Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

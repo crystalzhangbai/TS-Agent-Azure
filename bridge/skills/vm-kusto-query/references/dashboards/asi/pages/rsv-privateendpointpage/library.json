@@ -1,0 +1,296 @@
+{
+  "service": "Recovery Services Vaults",
+  "page": "PrivateEndpointPage",
+  "pageId": "44df4b03-88ff-4883-a1f8-241890fd60c2",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "26786e43-9e92-43a9-9f7a-343beea233c7",
+          "name": "PEDetails",
+          "groupId": "439b8893-3495-4163-bd8b-20dd51702be8",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "mabprod1.kusto.windows.net",
+          "database": "MABKustoProd1",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "RSVDeploymentName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "RSVResourceId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "PENameInput",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PEName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceId",
+              "type": "long"
+            },
+            {
+              "name": "PrivateEndpointConnectionsJson",
+              "type": "dynamic"
+            },
+            {
+              "name": "PEARMDetails",
+              "type": "dynamic"
+            },
+            {
+              "name": "PESubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "PEResourceGroupName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "RSVDeploymentName",
+              "externalSourceName": "RSVDeploymentName",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "RSVResourceId",
+              "externalSourceName": "RSVResourceId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "PENameInput",
+              "externalSourceName": "PEName",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "StartTime",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "EndTime",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "RegionalRPResourceAll\r\n| where ResourceId == RSVResourceId\r\n| where TIMESTAMP > StartTime and TIMESTAMP < EndTime\r\n| project TIMESTAMP, PrivateEndpointConnectionsBlobUri, ResourceId\r\n| where isempty(PrivateEndpointConnectionsBlobUri) == false and PrivateEndpointConnectionsBlobUri != \"null\" and PrivateEndpointConnectionsBlobUri != \"[]\"\r\n| extend PrivateEndpointConnectionsJson = parse_json(PrivateEndpointConnectionsBlobUri)\r\n| mv-expand PrivateEndpointConnectionsJson \r\n| parse PrivateEndpointConnectionsJson with *'/privateEndpoints/'PEName'\"'*\r\n| project TIMESTAMP, PEName, PrivateEndpointConnectionsJson, ResourceId\r\n| summarize arg_min(TIMESTAMP, *) by PEName, ResourceId\r\n| project TIMESTAMP, PEName , ResourceId, PrivateEndpointConnectionsJson\r\n| extend PEARMDetails = (parse_json(PrivateEndpointConnectionsJson)).properties.privateEndpoint.id\r\n| parse PEARMDetails with \"/subscriptions/\"PESubscriptionId\"/resourceGroups/\"PEResourceGroupName\"/providers/Microsoft.Network/privateEndpoints/\"PEName\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "6b565b34-2eae-4619-a23e-cd08b58f0922",
+          "name": "PETimeline",
+          "groupId": "895e0996-5777-4804-b46c-dd381d454b4e",
+          "majorVersion": 1,
+          "minorVersion": 7,
+          "cluster": "mabprod1.kusto.windows.net",
+          "database": "MABKustoProd1",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "RSVResourceId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "RSVPEName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "RSVDeploymentName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Properties",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "RSVResourceId",
+              "externalSourceName": "RSVResourceId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "RSVPEName",
+              "externalSourceName": "PEName",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "RSVDeploymentName",
+              "externalSourceName": "RSVDeploymentName",
+              "required": false
+            }
+          ],
+          "kustoQuery": "\r\nlet PEUpdateDetails = OperationStatsLocalAll\r\n| where OperationName contains \"BackupManagementPrivateEndpointNetAdminUpdate\"\r\n| where CompanyId == RSVResourceId\r\n| where ServiceName == \"BMS\"\r\n| where TIMESTAMP > queryFrom and TIMESTAMP < queryTo\r\n| where iff(isempty(RSVDeploymentName), true, DeploymentName == RSVDeploymentName)\r\n| distinct OpTaskId = TaskId, TIMESTAMP;\r\nlet PEUpdateOPTaskIds = PEUpdateDetails | distinct  OpTaskId;\r\nlet PEUpdateOPStartTime = PEUpdateDetails | summarize min(TIMESTAMP);\r\nlet PEUpdateOPEndTime = PEUpdateDetails | summarize max(TIMESTAMP);\r\nlet NRPOperations = TraceLogMessageAll\r\n    | where Message startswith \"HttpWebHelper: ExecuteRequest\"\r\n    | where ServiceName == \"BMS\"\r\n    | where Message contains \"PutPrivateLinkServiceProxy\"\r\n    | where Message contains RSVResourceId\r\n    | where TIMESTAMP > toscalar(PEUpdateOPStartTime | take 1) - 1h  and TIMESTAMP < toscalar(PEUpdateOPEndTime | take 1) + 1h\r\n    | project Message, TIMESTAMP, TaskId\r\n    | parse Message with *\"/privateLinkServiceProxies/\"PEName\".\"*\r\n    | extend Members = extract_all(@'\\\"memberName\\\":\\\"(.*?)\\\"', Message)\r\n    |  parse Message with *\"NRPRequestId =\"NRPRequestId\"}\"*\r\n    | project PEName, OperationName = \"PrivateEndpointRecreateRequest\", OperationTime = TIMESTAMP,  Members, AdditionalDetails = pack('NRPRequestId', NRPRequestId), TaskId \r\n    | where PEName =~ RSVPEName;\r\nlet PECreateDetails = OperationStatsLocalAll\r\n| where OperationName contains \"BackupManagementPrivateEndpointNetAdminUpdate\" or OperationName contains \"BackupManagementPrivateEndpointNetAdminCreate\"\r\n| where CompanyId == RSVResourceId\r\n| where ServiceName == \"BMS\"\r\n| where TIMESTAMP > queryFrom and TIMESTAMP < queryTo\r\n| where iff(isempty(RSVDeploymentName), true, DeploymentName == RSVDeploymentName)\r\n| distinct OpTaskId = TaskId, TIMESTAMP, OperationName;\r\nlet PECreateOPTaskIdOpMap = PECreateDetails |   extend map = bag_pack(OpTaskId, OperationName) | summarize make_bag(map);\r\nlet PECreateOPTaskIds = PECreateDetails |   distinct OpTaskId;\r\nlet PECreateOPStartTime = PECreateDetails | summarize min(TIMESTAMP);\r\nlet PECreateOPEndTime = PECreateDetails | summarize max(TIMESTAMP);\r\nlet RSVOperations = TraceLogMessageAll\r\n| where TaskId in(PECreateOPTaskIds)\r\n| where TIMESTAMP > toscalar(PECreateOPStartTime | take 1) - 1h  and TIMESTAMP < toscalar(PECreateOPEndTime | take 1)\r\n| where ServiceName == \"rrp\"\r\n| where Message startswith \"PutConnectionProxy called\"\r\n| parse Message with *\"/privateLinkServiceProxies/\"PEName\".\"*\r\n| extend Members =  (extract_all(@'\\\"memberName\\\":\\\"(.*?)\\\"', Message))\r\n| mv-expand Members\r\n| summarize Members = make_set(Members) by PEName, OperationName = \"BackupManagementPrivateEndpointNetAdminCreate\" , OperationTime = TIMESTAMP, TaskId\r\n| where PEName =~ RSVPEName;\r\nNRPOperations\r\n| union RSVOperations\r\n| order by OperationTime asc \r\n| project StartTime = OperationTime, Content  = OperationName, Properties = tostring( pack(\"PEName\", PEName, \"OperationName\",  OperationName, \"TaskId\",  TaskId, \"Members\",  Members, \"AdditionalDetails\", AdditionalDetails))",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.196Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

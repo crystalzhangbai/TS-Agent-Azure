@@ -1,0 +1,750 @@
+[
+  {
+    "id": "fc716b5e-b66f-4ebf-baab-6745742482aa",
+    "name": "Incoming Requests",
+    "groupId": "b4453598-8fe9-4146-a196-9ca9850e93cf",
+    "majorVersion": 3,
+    "minorVersion": 3,
+    "cluster": "armprodgbl.eastus",
+    "database": "ARMProd",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Requests').HttpIncomingRequests\n    | where TIMESTAMP between ((queryFrom - 12h) .. (queryTo + 12h))\n    | where correlationId == queryCorrelationId and isnotempty(queryCorrelationId)\n    | where httpStatusCode > -1\n    | extend duration = tostring(split(durationInMilliseconds * 1ms, '.')[0])\n    | project-reorder TIMESTAMP, ActivityId, correlationId, authorizationAction, operationName, httpStatusCode, targetUri, duration, RoleLocation, Role\n    | extend short_activity = substring(ActivityId, 0, 13)\n    | extend level = case(\n        httpStatusCode >= 500, 'error', \n        httpStatusCode >= 400, 'warning', \n        ''\n    )\n    | where not(qFilter == 'errors') or isnotempty(level)\n)\n| order by TIMESTAMP asc\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-07T10:17:11.113Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-05-08T10:17:11.113Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryCorrelationId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qFilter",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "ActivityId",
+        "type": "string"
+      },
+      {
+        "name": "correlationId",
+        "type": "string"
+      },
+      {
+        "name": "authorizationAction",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "httpStatusCode",
+        "type": "long"
+      },
+      {
+        "name": "targetUri",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "string"
+      },
+      {
+        "name": "RoleLocation",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Deployment",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "ReleaseVersion",
+        "type": "string"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "ProviderGuid",
+        "type": "string"
+      },
+      {
+        "name": "ProviderName",
+        "type": "string"
+      },
+      {
+        "name": "EventId",
+        "type": "long"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "TaskName",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "principalOid",
+        "type": "string"
+      },
+      {
+        "name": "principalPuid",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "authorizationSource",
+        "type": "string"
+      },
+      {
+        "name": "httpMethod",
+        "type": "string"
+      },
+      {
+        "name": "hostName",
+        "type": "string"
+      },
+      {
+        "name": "userAgent",
+        "type": "string"
+      },
+      {
+        "name": "clientRequestId",
+        "type": "string"
+      },
+      {
+        "name": "clientSessionId",
+        "type": "string"
+      },
+      {
+        "name": "clientIpAddress",
+        "type": "string"
+      },
+      {
+        "name": "clientApplicationId",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "contentLength",
+        "type": "long"
+      },
+      {
+        "name": "serviceRequestId",
+        "type": "string"
+      },
+      {
+        "name": "durationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "exceptionMessage",
+        "type": "string"
+      },
+      {
+        "name": "errorCode",
+        "type": "string"
+      },
+      {
+        "name": "failureCause",
+        "type": "string"
+      },
+      {
+        "name": "errorMessage",
+        "type": "string"
+      },
+      {
+        "name": "referer",
+        "type": "string"
+      },
+      {
+        "name": "commandName",
+        "type": "string"
+      },
+      {
+        "name": "parameterSetName",
+        "type": "string"
+      },
+      {
+        "name": "contentType",
+        "type": "string"
+      },
+      {
+        "name": "contentEncoding",
+        "type": "string"
+      },
+      {
+        "name": "armServiceRequestId",
+        "type": "string"
+      },
+      {
+        "name": "organizationId",
+        "type": "string"
+      },
+      {
+        "name": "activityVector",
+        "type": "string"
+      },
+      {
+        "name": "locale",
+        "type": "string"
+      },
+      {
+        "name": "realPuid",
+        "type": "string"
+      },
+      {
+        "name": "altSecId",
+        "type": "string"
+      },
+      {
+        "name": "additionalProperties",
+        "type": "string"
+      },
+      {
+        "name": "targetResourceProvider",
+        "type": "string"
+      },
+      {
+        "name": "targetResourceType",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "short_activity",
+        "type": "string"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      },
+      {
+        "name": "ClusterName",
+        "type": "string"
+      },
+      {
+        "name": "MonitoringApplication",
+        "type": "string"
+      },
+      {
+        "name": "ProviderNamespace",
+        "type": "string"
+      },
+      {
+        "name": "body",
+        "type": "string"
+      },
+      {
+        "name": "env_name",
+        "type": "string"
+      },
+      {
+        "name": "env_time",
+        "type": "datetime"
+      },
+      {
+        "name": "env_ver",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "severityNumber",
+        "type": "long"
+      },
+      {
+        "name": "severityText",
+        "type": "string"
+      }
+    ],
+    "serviceId": "ARM"
+  },
+  {
+    "id": "93ef1ca8-08ce-4c0e-b8d7-802dd8ddb039",
+    "name": "All or Errors",
+    "groupId": "0ee23170-706b-441b-83bc-75993d74b623",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "",
+    "database": "",
+    "type": "Filter",
+    "dataSource": "Browser",
+    "language": "JSON",
+    "kustoQuery": "[\r\n    {Value: \"all\", Description: \"All (default)\"},\r\n    {Value: \"errors\", Description:\"Errors only\"}\r\n]\r\n",
+    "params": [],
+    "schema": [
+      {
+        "name": "Value",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "serviceId": "ARM"
+  },
+  {
+    "id": "d6113337-8030-405b-87e1-8ce03f5310b1",
+    "name": "AsyncQoSEvents by correlationID",
+    "groupId": "e5ebf90b-b4b8-4537-8355-261167718cb5",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncQoSEvents\r\n| where correlationID == local_correlationID\r\n| order by PreciseTimeStamp desc",
+    "params": [
+      {
+        "name": "local_correlationID",
+        "description": "",
+        "type": "guid",
+        "userControl": {
+          "type": "TextBox",
+          "options": {
+            "userControlOptions": "{}"
+          }
+        },
+        "default": "a86c5bc6-a90c-43a6-898a-91628abc9153",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "ContainerName",
+        "type": "string"
+      },
+      {
+        "name": "NamespaceName",
+        "type": "string"
+      },
+      {
+        "name": "PodName",
+        "type": "string"
+      },
+      {
+        "name": "Node",
+        "type": "string"
+      },
+      {
+        "name": "correlationID",
+        "type": "string"
+      },
+      {
+        "name": "dequeueCount",
+        "type": "long"
+      },
+      {
+        "name": "expirationTime",
+        "type": "string"
+      },
+      {
+        "name": "insertionTime",
+        "type": "string"
+      },
+      {
+        "name": "latency",
+        "type": "long"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      },
+      {
+        "name": "messageID",
+        "type": "long"
+      },
+      {
+        "name": "msg",
+        "type": "string"
+      },
+      {
+        "name": "operationID",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "popReceipt",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "result",
+        "type": "string"
+      },
+      {
+        "name": "resultType",
+        "type": "long"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionID",
+        "type": "string"
+      },
+      {
+        "name": "timeNextVisible",
+        "type": "string"
+      },
+      {
+        "name": "FluentdIngestTimestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "Service",
+        "type": "string"
+      },
+      {
+        "name": "Host",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "errorDetails",
+        "type": "string"
+      },
+      {
+        "name": "resultCode",
+        "type": "string"
+      },
+      {
+        "name": "logtag",
+        "type": "string"
+      },
+      {
+        "name": "subResourceName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  },
+  {
+    "id": "99856041-e0bf-4b63-ade4-55aea54a216f",
+    "name": "AsyncContextActivity",
+    "groupId": "1c773d21-9176-44a2-8600-c1715b4b0b50",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "vmimagebuilder",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "AsyncContextActivity\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where correlationID == local_correlationID\r\n| order by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_correlationID",
+        "description": "",
+        "type": "guid",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "ContainerName",
+        "type": "string"
+      },
+      {
+        "name": "NamespaceName",
+        "type": "string"
+      },
+      {
+        "name": "PodName",
+        "type": "string"
+      },
+      {
+        "name": "Node",
+        "type": "string"
+      },
+      {
+        "name": "correlationID",
+        "type": "string"
+      },
+      {
+        "name": "dequeueCount",
+        "type": "long"
+      },
+      {
+        "name": "expirationTime",
+        "type": "string"
+      },
+      {
+        "name": "fileName",
+        "type": "string"
+      },
+      {
+        "name": "insertionTime",
+        "type": "string"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      },
+      {
+        "name": "lineNumber",
+        "type": "long"
+      },
+      {
+        "name": "messageID",
+        "type": "long"
+      },
+      {
+        "name": "msg",
+        "type": "string"
+      },
+      {
+        "name": "operationID",
+        "type": "string"
+      },
+      {
+        "name": "operationName",
+        "type": "string"
+      },
+      {
+        "name": "popReceipt",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroupName",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "serviceBuild",
+        "type": "string"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionID",
+        "type": "string"
+      },
+      {
+        "name": "timeNextVisible",
+        "type": "string"
+      },
+      {
+        "name": "FluentdIngestTimestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RPSector",
+        "type": "string"
+      },
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "Service",
+        "type": "string"
+      },
+      {
+        "name": "Host",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "logtag",
+        "type": "string"
+      },
+      {
+        "name": "subResourceName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure VM Image Builder"
+  }
+]

@@ -1,0 +1,124 @@
+[
+  {
+    "id": "e11b6c29-b94b-4af8-b0b5-2b734ed5a5ef",
+    "name": "Operations with NRS call",
+    "groupId": "7fa865d0-ae11-462a-a644-944e1a10defe",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let opidLst=FrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Message contains \"name reservation\"\r\n| distinct OperationId;\r\nFrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where OperationId in (opidLst)\r\n| summarize count() by bin(PreciseTimeStamp, 1h), Region",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "979fc1c4-59cc-46e5-b841-e964a5458bf4",
+    "name": "NRS call failures",
+    "groupId": "f650049d-6edc-4d3a-87a8-46945ab76c82",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let opidLst=WriteOperationResponseEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where Message contains \"name reservation\"\r\n| distinct OperationId;\r\nFrontendOperationEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where OperationId in (opidLst)\r\n| where EventCode contains \"NameReservationFailure\"\r\n| project OperationId, Region, Message, EventCode",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "Region",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

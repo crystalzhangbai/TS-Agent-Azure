@@ -1,0 +1,1 @@
+Write-Host "NaniteAgent session ready. Welcome to the Agency platform."

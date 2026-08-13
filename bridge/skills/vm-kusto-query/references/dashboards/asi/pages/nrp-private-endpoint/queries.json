@@ -1,0 +1,865 @@
+[
+  {
+    "id": "7f645c34-3a4d-498f-b016-155317ce011a",
+    "name": "Retrieve Resource \"Private Endpoint\"",
+    "groupId": "462e2a5f-bcdd-4d46-a7f8-57ca36c8c175",
+    "majorVersion": 4,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let idMatch = strcat(\"/subscriptions/\", local_subscriptionId, \"/resourceGroups/\", local_resourceGroup, \"/providers/Microsoft.Network/privateEndpoints/\", local_name);\r\nResources\r\n| where isempty(local_timestamp) or timestamp between(datetime_add('day', -1, local_timestamp) .. datetime_add('hour', 1, local_timestamp))\r\n| where resourceGroup =~ local_resourceGroup and subscriptionId =~ local_subscriptionId\r\n| where type == \"microsoft.network/privateendpoints\" and not(partial)\r\n| where id =~ idMatch and not(deleted)\r\n| top 1 by timestamp desc\r\n| extend resourceGuid = properties.resourceGuid\r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| extend subnet = tostring(properties.subnet.id)\r\n| parse subnet with \"/subscriptions/\" subSub \"/resourceGroups/\" subRg \"/providers/Microsoft.Network/virtualNetworks/\" subVnet \"/subnets/\" subName\r\n| extend ipConfigurations = properties.ipConfigurations\r\n| extend networkInterfaces = properties.networkInterfaces\r\n| extend privateLinkServiceConnections = properties.privateLinkServiceConnections\r\n| extend manualPrivateLinkServiceConnections = properties.manualPrivateLinkServiceConnections\r\n| extend customNetworkInterfaceName = tostring(properties.customNetworkInterfaceName)\r\n| extend customDnsConfigs = properties.customDnsConfigs\r\n| extend privateDnsZoneGroups = properties.privateDnsZoneGroups\r\n| project-away properties\r\n",
+    "params": [
+      {
+        "name": "local_name",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_resourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "resourceGuid",
+        "type": "dynamic"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "subnet",
+        "type": "string"
+      },
+      {
+        "name": "subSub",
+        "type": "string"
+      },
+      {
+        "name": "subRg",
+        "type": "string"
+      },
+      {
+        "name": "subVnet",
+        "type": "string"
+      },
+      {
+        "name": "subName",
+        "type": "string"
+      },
+      {
+        "name": "ipConfigurations",
+        "type": "dynamic"
+      },
+      {
+        "name": "networkInterfaces",
+        "type": "dynamic"
+      },
+      {
+        "name": "privateLinkServiceConnections",
+        "type": "dynamic"
+      },
+      {
+        "name": "manualPrivateLinkServiceConnections",
+        "type": "dynamic"
+      },
+      {
+        "name": "customNetworkInterfaceName",
+        "type": "string"
+      },
+      {
+        "name": "customDnsConfigs",
+        "type": "dynamic"
+      },
+      {
+        "name": "privateDnsZoneGroups",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "05a4513c-c406-4f40-9e03-1a90938f3c2d",
+    "name": "Private Endpoint IPs",
+    "groupId": "3bd0d562-4060-4b2a-86be-c63c9634e312",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let privateEndpointId = strcat('/subscriptions/', qSub, '/resourceGroups/', qRg, '/providers/Microsoft.Network/privateEndpoints/', qName);\r\nlet private_endpoint_to_nic_id = cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where id =~ privateEndpointId and type == 'microsoft.network/privateendpoints' \r\n| where not(deleted) and not(partial)\r\n| summarize arg_max(timestamp, properties) by id, name, resourceGroup, subscriptionId\r\n| mv-expand nic = properties.networkInterfaces\r\n| extend nic_id = tostring(nic.id)\r\n| project pe_id = id, pe_name = name, pe_rg = resourceGroup, pe_sub = subscriptionId, nic_id\r\n;\r\nlet nic_ids = private_endpoint_to_nic_id | distinct nic_id\r\n; \r\nprivate_endpoint_to_nic_id\r\n| join kind=inner (\r\n    cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n    | where id has_any(nic_ids) and type == \"microsoft.network/networkinterfaces\"\r\n    | where not(deleted) and not(partial)\r\n    | summarize arg_max(timestamp, properties) by id, name, resourceGroup, subscriptionId\r\n    | extend nic_id = id, nic_name = name, nic_rg = resourceGroup, nic_sub = subscriptionId\r\n) on nic_id\r\n| mv-expand ipConfig = properties.ipConfigurations\r\n| extend ipAddress = tostring(ipConfig.properties.privateIPAddress)\r\n| project pe_id, pe_name, pe_rg, pe_sub, nic_id, nic_name, nic_rg, nic_sub, ipAddress",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-10-12T01:46:10.362Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-10-13T01:46:10.362Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qSub",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qRg",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "qName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "pe_id",
+        "type": "string"
+      },
+      {
+        "name": "pe_name",
+        "type": "string"
+      },
+      {
+        "name": "pe_rg",
+        "type": "string"
+      },
+      {
+        "name": "pe_sub",
+        "type": "string"
+      },
+      {
+        "name": "nic_id",
+        "type": "string"
+      },
+      {
+        "name": "nic_name",
+        "type": "string"
+      },
+      {
+        "name": "nic_rg",
+        "type": "string"
+      },
+      {
+        "name": "nic_sub",
+        "type": "string"
+      },
+      {
+        "name": "ipAddress",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "71e4b541-ad2e-4dbd-a602-bfc2bcb668cd",
+    "name": "NRP PE Operations Logs - QosEtwEvent",
+    "groupId": "ba10f30c-4bc8-4e0b-8fde-82c4ae0462f1",
+    "majorVersion": 3,
+    "minorVersion": 2,
+    "cluster": "nrp",
+    "database": "mdsnrp",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where SubscriptionId == subscriptionIdParam and ResourceGroup == resourceGroupParam and ResourceType == 'privateEndpoints' and ResourceName == resourceNameParam\r\n| where HttpMethod != \"GET\"\r\n| summarize arg_max(TIMESTAMP, Region, ResourceName, OperationName, ErrorDetails) by OperationId",
+    "params": [
+      {
+        "name": "subscriptionIdParam",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroupParam",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceNameParam",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "dfd26298-0df9-4666-be32-cbbdcf2e5839",
+    "name": "NRP PE Operations Logs -FrontendOperationEtwEvent",
+    "groupId": "718cd623-ad68-4b60-9be8-b690a8b6a3c2",
+    "majorVersion": 9,
+    "minorVersion": 1,
+    "cluster": "nrp",
+    "database": "mdsnrp",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"nrp\").database(\"mdsnrp\").FrontendOperationEtwEvent\r\n| where OperationId == OperationIdParam\r\n| where OperationName == OperationNameParam\r\n| where Message contains \"error\" or Message contains \"exception\" // comment out this line to get full logs\r\n| where TIMESTAMP >= TimeStampParam - 1d and TIMESTAMP <= TimeStampParam + 1d // edit to match your desired timeframe\r\n| where ResourceGroup == ResourceGroupParam and ResourceName == ResourceNameParam\r\n| project TIMESTAMP, EventCode, Message, OperationName, OperationId, ResourceName, ResourceGroup, CorrelationRequestId\r\n| order by TIMESTAMP asc",
+    "params": [
+      {
+        "name": "OperationIdParam",
+        "description": "",
+        "type": "string",
+        "default": "68065c00-e95e-43a5-a3e1-20b881d93bd6",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "OperationNameParam",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "TimeStampParam",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "ResourceGroupParam",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "ResourceNameParam",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "56076061-7380-4918-b2c9-b7de87a655e0",
+    "name": "Find Vnet Id",
+    "groupId": "0e4a5aaf-ef9a-450e-86ff-229b59c48df0",
+    "majorVersion": 4,
+    "minorVersion": 2,
+    "cluster": "nrpbi.westus",
+    "database": "mdsnrpbi",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let VNetName = split(ArmUriParam, \"/\")[8];\r\nlet VNetUriFragment = strcat(\"/virtualNetworks/\", VNetName);\r\nNRP_Entities\r\n| where isempty(local_timestamp) or TimeStamp between(datetime_add('day', -1, local_timestamp) .. datetime_add('hour', 1, local_timestamp))\r\n| where SubscriptionId == SubscriptionIdParam\r\n| where Location == LocationParam\r\n| where Key has VNetUriFragment\r\n| extend JsonValue = parse_json(JsonValue)\r\n| where EntityType == 'virtualNetworks'\r\n| summarize arg_max(TimeStamp, *) by Key\r\n| project VNetId = ResourceGuid, DcmtRegion",
+    "params": [
+      {
+        "name": "SubscriptionIdParam",
+        "description": "",
+        "type": "string",
+        "default": "7adeba7f-4949-4201-b9c2-59283fcb5e11",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "LocationParam",
+        "description": "",
+        "type": "string",
+        "default": "eastus2",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "ArmUriParam",
+        "description": "",
+        "type": "string",
+        "default": "/subscriptions/7adeba7f-4949-4201-b9c2-59283fcb5e11/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/vnet-pe/subnets/default",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "VNetId",
+        "type": "string"
+      },
+      {
+        "name": "DcmtRegion",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "35b0c2f1-9339-4bcd-8af9-78ec8cc8751e",
+    "name": "RNM NSMPlus State Propagation",
+    "groupId": "9638f436-5b55-4fc6-a454-7a40bb3b3826",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "Aznwsdn",
+    "database": "aznwmds",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let region = strcat(\"PROD_\", DCMTRegionParam);\r\nlet vnetId = VNetIdParam;\r\nPrivateLinkEvents\r\n| where isempty(local_timestamp) or TIMESTAMP between(datetime_add('day', -1, local_timestamp) .. datetime_add('hour', 1, local_timestamp))\r\n| where Region =~ region\r\n| where Message contains \"Adding name records\"\r\n| where Message contains vnetId\r\n| project PreciseTimeStamp, Message\r\n| order by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "DCMTRegionParam",
+        "description": "",
+        "type": "string",
+        "default": "useast2",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "VNetIdParam",
+        "description": "",
+        "type": "string",
+        "default": "3ed9a823-9abf-4f0a-8f1a-4914a8d49ad2",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "c85a3438-c755-4cba-a51d-4400199e840d",
+    "name": "Grab all the resources tied to PE",
+    "groupId": "f73f899f-3bfd-4bff-8817-d89a5e227b04",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "nrpbi.westus",
+    "database": "mdsnrpbi",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "NRP_Entities\r\n| where TimeStamp > ago(26h)\r\n| where EntityType != 'children'\r\n| where isnotempty(JsonValue)\r\n| where Key has KeyParam or JsonValue contains KeyParam\r\n| extend JsonValue = parse_json(JsonValue)\r\n| extend JsonName = tostring(JsonValue.name)\r\n| summarize arg_max(TimeStamp, *) by Key\r\n| project TimeStamp, ResourceGuid, EntityType, Key, ResourceName = JsonName",
+    "params": [
+      {
+        "name": "KeyParam",
+        "description": "",
+        "type": "string",
+        "default": "/subscriptions/7adeba7f-4949-4201-b9c2-59283fcb5e11/resourceGroups/test-rg/providers/Microsoft.Network/privateEndpoints/private-endpoint",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "ResourceGuid",
+        "type": "string"
+      },
+      {
+        "name": "EntityType",
+        "type": "string"
+      },
+      {
+        "name": "Key",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "429eea55-4fce-4a7b-b3f1-7b7514fe3967",
+    "name": "FullResourceLogs",
+    "groupId": "080be172-4eaa-48e3-b58b-b1e2db1c765c",
+    "majorVersion": 8,
+    "minorVersion": 3,
+    "cluster": "nrp",
+    "database": "mdsnrp",
+    "type": "MultiRow",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where SubscriptionId == subscriptionIdParam and ResourceGroup == resourceGroupParam and ResourceName has_any(resourceNameParamArray)\r\n// | where CorrelationRequestId == correlationRequestIdParam\r\n| where HttpMethod != \"GET\"\r\n| project TIMESTAMP, OperationId, Region, ResourceName, OperationName, ErrorDetails, CorrelationRequestId, ParentOperationId",
+    "params": [
+      {
+        "name": "subscriptionIdParam",
+        "description": "",
+        "type": "string",
+        "default": "7adeba7f-4949-4201-b9c2-59283fcb5e11",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroupParam",
+        "description": "",
+        "type": "string",
+        "default": "test-rg",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "resourceNameParamArray",
+        "description": "",
+        "type": "array",
+        "default": "[\"private-endpoint\",\"private-link-service\",\"pe-nic\"]",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "ParentOperationId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "69b8110a-3464-47dc-a5be-b1b4b93cf4dd",
+    "name": "Get all resources tied to PE (name-only)",
+    "groupId": "852a3833-0373-4c25-8e34-05bf59e112be",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "nrpbi.westus",
+    "database": "mdsnrpbi",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let projectedTable = NRP_Entities\r\n| where TimeStamp > ago(26h)\r\n| where EntityType != 'children'\r\n| where isnotempty(JsonValue)\r\n| where Key has KeyParam or JsonValue contains KeyParam\r\n| extend JsonValue = parse_json(JsonValue)\r\n| extend JsonName = tostring(JsonValue.name)\r\n| summarize arg_max(TimeStamp, *) by Key\r\n| project TimeStamp, ResourceGuid, EntityType, Key, ResourceName = JsonName;\r\nprojectedTable\r\n| summarize ResourceNameArray = make_list(ResourceName)",
+    "params": [
+      {
+        "name": "KeyParam",
+        "description": "",
+        "type": "string",
+        "default": "/subscriptions/7adeba7f-4949-4201-b9c2-59283fcb5e11/resourceGroups/test-rg/providers/Microsoft.Network/privateEndpoints/private-endpoint",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ResourceNameArray",
+        "type": "array"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

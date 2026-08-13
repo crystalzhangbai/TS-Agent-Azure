@@ -1,0 +1,150 @@
+[
+  {
+    "id": "b9636f5b-962f-482e-a038-0af5a20073e2",
+    "name": "Retrieve Resource \"Private Link Service\"",
+    "groupId": "8c4bfd7f-968b-4639-80ae-dcbbeb9147dc",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "argwus2nrpone.westus2",
+    "database": "AzureResourceGraph",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "Resources\r\n| where isempty(local_timestamp) or timestamp between((local_timestamp-6h)..(local_timestamp+6h))\r\n| where \r\n    type == \"microsoft.network/privatelinkservices\" and\r\n    subscriptionId =~ local_subId and\r\n    resourceGroup =~ local_groupName and\r\n    name =~ local_name\r\n| top 1 by timestamp desc\r\n| extend \r\n    LoadBalancerFrontendIpConfigurations = properties.loadBalancerFrontendIpConfigurations,\r\n    IpConfigurations = properties.ipConfigurations,\r\n    PrivateEndpointConnections = properties.privateEndpointConnections,\r\n    PrivateEndpointConnectionProxies = properties.privateEndpointConnectionProxies,\r\n    NetworkInterfaces = properties.networkInterfaces,\r\n    Json = properties\r\n| project \r\n    PreciseTimeStamp = timestamp, \r\n    Name = name, \r\n    GroupName = resourceGroup, \r\n    SubscriptionId = subscriptionId, \r\n    key = id,\r\n    CreatedTime = timestamp, \r\n    ProvisioningState = properties.provisioningState, \r\n    Fqdns = properties.fqdns, \r\n    Alias = properties.alias, \r\n    EnableProxyProtocol = properties.enableProxyProtocol, \r\n    LoadBalancerFrontendIpConfigurations, \r\n    IpConfigurations, \r\n    PrivateEndpointConnections, \r\n    PrivateEndpointConnectionProxies, \r\n    NetworkInterfaces, \r\n    Json\r\n",
+    "params": [
+      {
+        "name": "local_groupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_subId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_name",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "GroupName",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "key",
+        "type": "string"
+      },
+      {
+        "name": "CreatedTime",
+        "type": "datetime"
+      },
+      {
+        "name": "ProvisioningState",
+        "type": "dynamic"
+      },
+      {
+        "name": "Fqdns",
+        "type": "dynamic"
+      },
+      {
+        "name": "Alias",
+        "type": "dynamic"
+      },
+      {
+        "name": "EnableProxyProtocol",
+        "type": "dynamic"
+      },
+      {
+        "name": "LoadBalancerFrontendIpConfigurations",
+        "type": "dynamic"
+      },
+      {
+        "name": "IpConfigurations",
+        "type": "dynamic"
+      },
+      {
+        "name": "PrivateEndpointConnections",
+        "type": "dynamic"
+      },
+      {
+        "name": "PrivateEndpointConnectionProxies",
+        "type": "dynamic"
+      },
+      {
+        "name": "NetworkInterfaces",
+        "type": "dynamic"
+      },
+      {
+        "name": "Json",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

@@ -1,0 +1,261 @@
+{
+  "properties": {
+    "alwaysExpandHeader": true
+  },
+  "entityType": "Page",
+  "id": "e45d472c-af8f-42d7-aeb7-72b32a4ae753",
+  "description": "All subscriptions with non zero exit codes\nCan sort by operation ",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "986501c1-6eb1-4468-ac43-8a75d44ee171",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "Subscriptions with Failures",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "c582cc93-b038-457e-86f7-3cb1df8c2c78",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "75769e6a-093a-4688-9620-be143a5851c1",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Table",
+                "id": "6ef44c29-5588-4331-93e9-8a03dee2ed4c",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Server Failures",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "Subscriptions",
+                    "props": {
+                      "pageServiceId": "ARM"
+                    },
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "12977d68-8097-4bbb-8e18-89eed66799af",
+                    "linkText": "{{ subscriptionID }}",
+                    "pageId": "ed47f7a9-43a2-4798-a9f4-e7162bf35cb7",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "8c953247-577f-42b9-81f9-bf13c95b2e22",
+                        "majorVersion": 2,
+                        "minorVersion": 2,
+                        "internalDestinationName": "SubscriptionId",
+                        "externalSourceName": "subscriptionID",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "operationName",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "8c953247-577f-42b9-81f9-bf13c95b2e22",
+                      "majorVersion": 2,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "operationName",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "operationName",
+                    "uuid": "f28cee78-3dc9-45b9-9142-f42de2b59412",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Failures",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "8c953247-577f-42b9-81f9-bf13c95b2e22",
+                      "majorVersion": 2,
+                      "minorVersion": 2,
+                      "internalDestinationName": "",
+                      "externalSourceName": "Failures",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "Failures",
+                    "uuid": "c2a9b41e-e6dd-4a0d-b832-49cc3cb8216c",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "c1fff0e8-ad46-497a-b665-b8f786728281",
+                    "idForPopups": "c1fff0e8-ad46-497a-b665-b8f786728281",
+                    "groupId": "8c953247-577f-42b9-81f9-bf13c95b2e22",
+                    "majorVersion": 2,
+                    "minorVersion": 2,
+                    "serviceId": "Azure VM Image Builder",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryFrom",
+                        "externalSourceName": "globalFrom",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryTo",
+                        "externalSourceName": "globalTo",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "searchOperation",
+                        "externalSourceName": "operation",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 6,
+  "basedOnVersionId": "2d4be4f3-7f85-4b20-a206-5e51a5d39a9d",
+  "groupId": "ae1233ae-8f51-46de-afbf-ace637a969c7",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "operation",
+      "description": "",
+      "type": "string",
+      "userControl": {
+        "type": "TextBox",
+        "options": {
+          "userControlOptions": "{}"
+        }
+      },
+      "optional": true,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "Azure VM Image Builder",
+      "groupId": "8c953247-577f-42b9-81f9-bf13c95b2e22",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Azure VM Image Builder",
+      "id": "ed47f7a9-43a2-4798-a9f4-e7162bf35cb7",
+      "groupId": "ed47f7a9-43a2-4798-a9f4-e7162bf35cb7",
+      "entityType": "Page"
+    }
+  ],
+  "serviceId": "Azure VM Image Builder",
+  "deleted": false,
+  "name": "Subscriptions with Failures",
+  "_ts": 1747077866,
+  "databaseSavedTimestamp": "2025-05-12T19:24:26+00:00",
+  "_etag": "\"c803d47c-0000-0100-0000-68224aea0000\"",
+  "createdAt": "2025-05-12T19:24:26.2333933+00:00",
+  "createdBy": "cwoehrle@microsoft.com",
+  "createdByUserType": "User",
+  "modifiedBy": "cwoehrle@microsoft.com",
+  "modifiedByUserType": "User",
+  "savedAt": "2025-05-12T19:24:26.2333933+00:00",
+  "tags": []
+}

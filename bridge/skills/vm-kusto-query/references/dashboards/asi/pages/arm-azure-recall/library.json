@@ -1,0 +1,274 @@
+{
+  "service": "ARM",
+  "page": "Azure Recall",
+  "pageId": "042ba24d-b6ac-4100-b7fe-8c667f13fde4",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "4f407331-5211-49e2-9091-71b3c11d7c25",
+          "name": "Kusto Query - Multi Row - Prod",
+          "groupId": "392290a3-52c4-4704-9d71-a27d89b43610",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "MultiRow",
+          "widgetType": "Table",
+          "widgetTitle": "Deleted resources in CSV",
+          "params": [
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "rgName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "resourceUri",
+              "type": "string"
+            },
+            {
+              "name": "targetResourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "targetResourceType",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "Subscription Id",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "rgName",
+              "externalSourceName": "Resource Group Name",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "startDate",
+              "externalSourceName": "StartDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "endDate",
+              "externalSourceName": "EndDate",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let targetSubscriptionId = subId; //Subscription ID\r\nlet rg = rgName; //RG Name\r\nlet startTime = datetime_add('hour', -1, startDate);\r\nlet endTime = datetime_add('hour', 1, endDate);\r\n\r\nmacro-expand isfuzzy=true ARMProdEG as X\r\n(\r\n    X.database('Requests').HttpOutgoingRequests\r\n    | where targetUri has rg\r\n    | where PreciseTimeStamp between(startTime..endTime) \r\n    | where subscriptionId == targetSubscriptionId\r\n    | where httpMethod == \"DELETE\"\r\n    | where httpStatusCode > 199 and httpStatusCode < 300\r\n    | extend resourceUri = strcat('/subscriptions/', split(tolower(split(targetUri, '/subscriptions/')[1]), '?')[0])\r\n    | distinct PreciseTimeStamp, resourceUri, targetResourceProvider, targetResourceType\r\n)",
+          "panelPath": []
+        },
+        {
+          "id": "18acdb94-829b-4d6f-a3a9-12656a2e4752",
+          "name": "CSV Transformation - Prod",
+          "groupId": "c9cbe582-c7c7-4d66-9f64-e082349bb522",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "",
+          "database": "",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Deleted resources in CSV",
+          "params": [
+            {
+              "name": "kustoInput",
+              "type": "array",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "CSVFormat",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_AllData",
+              "groupId": "392290a3-52c4-4704-9d71-a27d89b43610",
+              "majorVersion": 1,
+              "minorVersion": 1,
+              "internalDestinationName": "kustoInput",
+              "externalSourceName": "(All Data)",
+              "required": false,
+              "rowSelectionCriteria": "allRows",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "// Validate that 'kustoInput' exists and is an array\r\nif (!data || !data.kustoInput || !Array.isArray(data.kustoInput)) {\r\n  throw new Error(\"'kustoInput' parameter is missing or is not an array.\");\r\n}\r\n\r\n// Add headers for the CSV\r\nconst headers = `\"Resource id\",\"Resource Provider\",\"Resource Type\"`;\r\n\r\n// Escape values safely for CSV\r\nconst csvEscape = (v) => `\"${String(v).replace(/\"/g, '\"\"')}\"`;\r\n\r\n// Normalize, validate, dedupe by resource id, and sort\r\nconst uniqueRows = Array.from(\r\n  new Map(\r\n    data.kustoInput.map((item) => {\r\n      const resourceUri = item?.resourceUri ?? item?.Value;\r\n\r\n      const targetResourceProvider =\r\n        typeof item?.targetResourceProvider === \"string\"\r\n          ? item.targetResourceProvider.toUpperCase().trim()\r\n          : item?.targetResourceProvider;\r\n\r\n      const targetResourceType =\r\n        typeof item?.targetResourceType === \"string\"\r\n          ? item.targetResourceType.toUpperCase().trim()\r\n          : item?.targetResourceType;\r\n\r\n      // Validate required properties\r\n      if (\r\n        typeof resourceUri !== \"string\" ||\r\n        typeof targetResourceProvider !== \"string\" ||\r\n        typeof targetResourceType !== \"string\"\r\n      ) {\r\n        throw new Error(\r\n          `Invalid data: Expected 'resourceUri' (or 'Value'), 'targetResourceProvider', and 'targetResourceType' to be strings.`\r\n        );\r\n      }\r\n\r\n      const normalizedResourceUri = resourceUri.trim();\r\n\r\n      // Dedupe only by resource id\r\n      return [\r\n        normalizedResourceUri.toUpperCase(),\r\n        {\r\n          resourceUri: normalizedResourceUri,\r\n          targetResourceProvider,\r\n          targetResourceType\r\n        }\r\n      ];\r\n    })\r\n  ).values()\r\n).sort((a, b) => {\r\n  // Sort by Resource Type first, then Provider, then Resource id\r\n  return (\r\n    a.targetResourceType.localeCompare(b.targetResourceType) ||\r\n    a.targetResourceProvider.localeCompare(b.targetResourceProvider) ||\r\n    a.resourceUri.localeCompare(b.resourceUri)\r\n  );\r\n});\r\n\r\n// Build CSV rows\r\nconst csvData = uniqueRows\r\n  .map((item) =>\r\n    [\r\n      csvEscape(item.resourceUri),\r\n      csvEscape(item.targetResourceProvider),\r\n      csvEscape(item.targetResourceType)\r\n    ].join(\",\")\r\n  )\r\n  .join(\"\\r\\n\");\r\n\r\n// Combine headers and data\r\nconst completeCsv = `${headers}\\r\\n${csvData}`;\r\n\r\n// Return the data in a single cell\r\nreturn [{ CSVFormat: completeCsv }];",
+          "panelPath": []
+        },
+        {
+          "id": "f4397b7e-ef7c-439e-b4db-9e9d0be6b991",
+          "name": "Transform data per provider - Prod",
+          "groupId": "b5e11e2a-3945-4d41-84db-7e7af159023d",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "",
+          "database": "",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Deleted Resources per resource provider",
+          "params": [
+            {
+              "name": "kustoInput",
+              "type": "array",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "string"
+            },
+            {
+              "name": "ResourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "DeletedResourcesPerProvider",
+              "type": "string"
+            },
+            {
+              "name": "SAP",
+              "type": "string"
+            },
+            {
+              "name": "Notes",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_AllData",
+              "groupId": "392290a3-52c4-4704-9d71-a27d89b43610",
+              "majorVersion": 1,
+              "minorVersion": 1,
+              "internalDestinationName": "kustoInput",
+              "externalSourceName": "(All Data)",
+              "required": false,
+              "rowSelectionCriteria": "allRows",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "/* ============================================================================\r\n  Deleted Resource Grouper (Provider-Level View) — NEW SCHEMA\r\n  Input schema (each item in data.kustoInput):\r\n    - PreciseTimeStamp: string (ISO) or Date\r\n    - resourceUri: string (Azure resource id)\r\n    - targetResourceProvider: string (e.g., MICROSOFT.KEYVAULT)\r\n    - targetResourceType: string (e.g., VAULTS)\r\n\r\n  Output:\r\n    One row per provider with:\r\n      - latest timestamp seen for that provider\r\n      - resources grouped by type (plain text, ASI-friendly)\r\n      - SAP mapping\r\n      - Notes populated with recovery links/instructions (provider-driven)\r\n============================================================================ */\r\n\r\n/* --------------------------- [1] SAP MAPPING ----------------------------- */\r\nconst sapMapping = {\r\n  \"MICROSOFT.WEB\": \"Azure/Web App\",\r\n  \"MICROSOFT.STORAGE\": \"Azure/Storage Account Management/Deletion and Recovery/Recover deleted storage account\",\r\n  \"MICROSOFT.SERVICEBUS\": \"Azure/Service Bus\",\r\n  \"MICROSOFT.OPERATIONALINSIGHTS\": \"Azure/Log Analytics\",\r\n  \"MICROSOFT.NETWORK\": \"Azure/Virtual Network\",\r\n  \"MICROSOFT.DOCUMENTDB\": \"Azure/Cosmos DB\",\r\n  \"MICROSOFT.ALERTSMANAGEMENT\": \"Azure/Application Insights\",\r\n  \"MICROSOFT.SQL\": \"Azure/SQL Database/Connectivity: Configuration and How-To Questions/Private Link\",\r\n  \"MICROSOFT.SYNAPSE\": \"Azure/Azure Synapse Analytics Workspace\",\r\n  \"MICROSOFT.DATABRICKS\": \"Azure/Databricks/Workspace/Recover a deleted workspace\",\r\n  \"MICROSOFT.LOGIC\": \"Azure/Logic App/Connectors/A Connector Not Listed\",\r\n  \"MICROSOFT.MACHINELEARNINGSERVICES\": \"Azure/Machine Learning/Workspace Management, Configuration and Security/Issues to recover workspace and resources associated with workspace\",\r\n  \"MICROSOFT.INSIGHTS\": \"Azure/Application Insights/Deploy, Configure or Manage Application Insights Resources/Recover a Deleted Application Insights resource\",\r\n  \"MICROSOFT.DATAFACTORY\": \"Azure/Data Factory/Data Factory Administration (Factory Creation, Move, Limits, Backup or Restore, etc.)/How do I create a backup or restore an accidentally deleted Factory or Pipeline\",\r\n  \"MICROSOFT.CONTAINERREGISTRY\": \"Azure/Container Registry/Registry Configuration/Recovering deleted image/repository\",\r\n  \"MICROSOFT.CONTAINERSERVICE\": \"Azure/Container Instances/Management\",\r\n  \"MICROSOFT.RELAY\": \"Azure/Relay/Performance and Latency\",\r\n  \"MICROSOFT.KEYVAULT\": \"Azure/Key Vault/Key Vault Administration/Key Vault Recovery (Soft Delete & Purge Protection)\",\r\n  \"MICROSOFT.COMPUTE\": \"Azure/Disk Storage/Disk Recovery\",\r\n  \"MICROSOFT.OPERATIONSMANAGEMENT\": \"Azure/Log Analytics/Create and manage Log Analytics workspaces/Restore deleted workspace\",\r\n  \"MICROSOFT.APIMANAGEMENT\": \"Azure/API Management Service/Configuration and Management/Backup or Restore Service\",\r\n  \"MICROSOFT.APPPLATFORM\": \"Azure/Azure Spring Apps/Service/Failed to delete service\",\r\n  \"MICROSOFT.AUTOMATION\": \"Azure/Azure Automation/Automation Account/I am trying to delete or unlink an Automation Account\",\r\n  \"MICROSOFT.BOTSERVICE\": \"Azure/Bot Service/Manage a bot/Delete a bot\",\r\n  \"MICROSOFT.CACHE\": \"Azure/Cache for Redis/Cache Management/Delete\",\r\n  \"MICROSOFT.COGNITIVESERVICES\": \"Azure/Azure AI Foundry/Data and Indexes/Issues with Create, Read, Update, or Delete Indexes\",\r\n  \"MICROSOFT.DEVICES\": \"Azure/IoT Hub/Unable to create or delete IoT hub\",\r\n  \"MICROSOFT.EVENTHUBS\": \"Azure/Event Hubs/Create or Delete Operations\",\r\n  \"MICROSOFT.NETAPP\": \"Azure/Azure NetApp Files/NFS volume - Create, delete or mount issues/Mount issues\",\r\n  \"MICROSOFT.RECOVERYSERVICES\": \"Azure/Azure Backup/Vault delete and move\",\r\n  \"MICROSOFT.SERVICEFABRIC\": \"Azure/Fabric Data Engineering/Create, update, or delete items/Lakehouse SQL Endpoint is not created\"\r\n};\r\n\r\n/* ---------------------- [2] RECOVERY LINKS FOR NOTES --------------------- */\r\nconst recoveryMapping = {\r\n  \"MICROSOFT.KEYVAULT\": [\r\n    \"[Azure Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/key-vault-recovery?tabs=azure-portal)\",\r\n    \"[Azure Key Vault - PowerShell](https://learn.microsoft.com/en-us/powershell/module/az.keyvault/undo-azkeyvaultremoval?view=azps-9.7.1)\"\r\n  ],\r\n  \"MICROSOFT.OPERATIONALINSIGHTS\": [\r\n    \"[OperationalInsights](https://learn.microsoft.com/en-us/azure/azure-monitor/logs/delete-workspace?tabs=azure-portal#recover-workspace)\"\r\n  ],\r\n  \"MICROSOFT.STORAGE\": [\r\n    \"[Storage Account](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-recover)\"\r\n  ],\r\n  \"MICROSOFT.WEB\": [\r\n    \"[WebApps](https://learn.microsoft.com/en-us/azure/app-service/app-service-undelete)\"\r\n  ],\r\n  \"MICROSOFT.AUTOMATION\": [\r\n    \"[AutomationAccounts](https://learn.microsoft.com/en-in/azure/automation/delete-account?tabs=azure-portal#restore-a-deleted-automation-account)\"\r\n  ],\r\n  \"MICROSOFT.COGNITIVESERVICES\": [\r\n    \"[Azure AI](https://learn.microsoft.com/en-us/azure/ai-services/recover-purge-resources?tabs=azure-portal)\"\r\n  ],\r\n  \"MICROSOFT.MACHINELEARNINGSERVICES\": [\r\n    \"[Machine Learning Workspace](https://learn.microsoft.com/en-us/azure/machine-learning/concept-soft-delete?view=azureml-api-2)\"\r\n  ],\r\n  \"MICROSOFT.APIMANAGEMENT\": [\r\n    \"APIM Service:\",\r\n    \"List soft-deleted services (get name): [API](https://learn.microsoft.com/en-us/rest/api/resource-manager/apicenter/deleted-services/list-by-subscription?view=rest-resource-manager-apicenter-2024-03-15-preview&tabs=HTTP)\",\r\n    \"Restore using [REST API](https://learn.microsoft.com/en-us/rest/api/resource-manager/apicenter/services/create-or-update?view=rest-resource-manager-apicenter-2024-03-15-preview&tabs=HTTP#request-body) with `properties.restore`\"\r\n  ]\r\n};\r\n\r\n/* ----------------------------- [3] SETTINGS ------------------------------ */\r\n/*\r\n  Keep this to protect the UI from huge cells.\r\n  We will NOT print any \"... (+N more)\" line (copy/paste-friendly).\r\n*/\r\nconst MAX_IDS_PER_TYPE = 300;\r\n\r\n/* ------------------------------ [4] HELPERS ------------------------------ */\r\nif (!data || !Array.isArray(data.kustoInput)) {\r\n  throw new Error(\"'kustoInput' parameter is missing or is not an array.\");\r\n}\r\n\r\nconst asString = (x) => (x == null ? \"\" : String(x).trim());\r\nconst toUpper = (s) => asString(s).toUpperCase();\r\nconst toLower = (s) => asString(s).toLowerCase();\r\nconst cleanResourceId = (rid) => asString(rid).split(\"?\")[0].split(\"#\")[0];\r\n\r\nconst parseTs = (tsLike) => {\r\n  if (tsLike instanceof Date) return isNaN(tsLike) ? null : tsLike;\r\n  const s = asString(tsLike);\r\n  if (!s) return null;\r\n  const d = new Date(s);\r\n  return isNaN(d) ? null : d;\r\n};\r\n\r\n/* ------------------------- [5] MAIN AGGREGATION -------------------------- */\r\nconst providerMap = Object.create(null);\r\n\r\nfor (let i = 0; i < data.kustoInput.length; i++) {\r\n  const row = data.kustoInput[i] || {};\r\n\r\n  const provider = toUpper(row.targetResourceProvider);\r\n  const type = toLower(row.targetResourceType) || \"(unknown-type)\";\r\n  if (!provider) continue;\r\n\r\n  const rid = cleanResourceId(row.resourceUri);\r\n  if (!rid) continue;\r\n\r\n  if (!providerMap[provider]) {\r\n    providerMap[provider] = {\r\n      types: Object.create(null),\r\n      totals: Object.create(null), // still tracked (may help later)\r\n      latestTs: null\r\n    };\r\n  }\r\n  const bucket = providerMap[provider];\r\n\r\n  if (!bucket.types[type]) bucket.types[type] = new Set();\r\n\r\n  bucket.totals[type] = (bucket.totals[type] || 0) + 1;\r\n\r\n  // Print cap only (no truncation marker line)\r\n  if (bucket.types[type].size < MAX_IDS_PER_TYPE) {\r\n    bucket.types[type].add(rid);\r\n  }\r\n\r\n  const ts = parseTs(row.PreciseTimeStamp);\r\n  if (ts && (!bucket.latestTs || ts > bucket.latestTs)) {\r\n    bucket.latestTs = ts;\r\n  }\r\n}\r\n\r\n/* ------------------------------ [6] OUTPUT ------------------------------- */\r\nconst rows = Object.keys(providerMap).sort().map((provider) => {\r\n  const { types, totals, latestTs } = providerMap[provider];\r\n\r\n  // Plain formatting (no bullets, no divider)\r\n  const sections = Object.keys(types).sort().map((t) => {\r\n  const ids = Array.from(types[t]).sort();\r\n\r\n  // Count what you actually show: unique resource IDs\r\n  const uniqueCount = ids.length;\r\n\r\n  const header = `${t.toUpperCase()} (${uniqueCount})`;\r\n  const body = ids.map((id) => `  ${id}`).join(\"\\n\");\r\n\r\n  return body ? `${header}\\n${body}` : header;\r\n});\r\n\r\n\r\n  const recoveryLines = recoveryMapping[provider] || [];\r\n  const notes = recoveryLines.length\r\n  ? Array.from(new Set(recoveryLines)).join(\"\\n\\n\")\r\n  : \"\";\r\n\r\n  return {\r\n    PreciseTimeStamp: latestTs ? latestTs.toISOString() : \"\",\r\n    ResourceProvider: provider,\r\n    DeletedResourcesPerProvider: sections.join(\"\\n\\n\"),\r\n    SAP: sapMapping[provider] || \"\",\r\n    Notes: notes\r\n  };\r\n});\r\n\r\nreturn rows;\r\n",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:23:47.817Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 4
+  }
+}

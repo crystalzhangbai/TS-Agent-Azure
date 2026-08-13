@@ -1,0 +1,306 @@
+{
+  "service": "Aztec",
+  "page": "Availability Zones",
+  "pageId": "dec80982-e37b-4215-ba7e-7bcc9e386f74",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "b2a438fa-1a5c-426b-bde8-dae37c53071f",
+          "name": "Retrieve Resource \"Availability Zones\"",
+          "groupId": "bae0ffa4-944b-43bd-883d-339ae40c3e31",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azurecm",
+          "database": "azurecm",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_Region",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_AvailabilityZone",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "cloudType",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "buildVersion",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "clusterSku",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "availabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "hostingEnvironment",
+              "type": "string"
+            },
+            {
+              "name": "shoeboxMdmAccountName",
+              "type": "string"
+            },
+            {
+              "name": "IncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "virtualEnvironment",
+              "type": "string"
+            },
+            {
+              "name": "clusterDocumentVersion",
+              "type": "long"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_Region",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_AvailabilityZone",
+              "externalSourceName": "AvailabilityZone",
+              "required": false
+            }
+          ],
+          "kustoQuery": "LogClusterSnapshot \n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where Region == local_Region and AvailabilityZone == local_AvailabilityZone\n| top 1 by PreciseTimeStamp\n",
+          "panelPath": []
+        },
+        {
+          "id": "2246b6ae-f4d8-466d-89e3-808a9fbeadd2",
+          "name": "Availability Zone Data Centers",
+          "groupId": "0225d541-4cf2-4c43-b373-959c3241b664",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azurecm",
+          "database": "azurecm",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Data Centers",
+          "params": [
+            {
+              "name": "queryRegion",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryAvailabilityZone",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "Clusters",
+              "type": "long"
+            },
+            {
+              "name": "AzDataCenterName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "bae0ffa4-944b-43bd-883d-339ae40c3e31",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryRegion",
+              "externalSourceName": "Region",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "bae0ffa4-944b-43bd-883d-339ae40c3e31",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "queryAvailabilityZone",
+              "externalSourceName": "AvailabilityZone",
+              "required": false
+            }
+          ],
+          "kustoQuery": "LogClusterSnapshot \n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where Region == queryRegion and AvailabilityZone == queryAvailabilityZone\n| summarize Clusters = dcount(Tenant) by DataCenterName\n| order by DataCenterName asc\n| extend AzDataCenterName = DataCenterName",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:27.729Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

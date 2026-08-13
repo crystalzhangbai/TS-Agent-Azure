@@ -1,0 +1,278 @@
+{
+  "service": "NRP",
+  "page": "Customer Write Operations",
+  "pageId": "46be1cda-e43a-43b6-9ded-08c9d5de9a69",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "860a1033-110e-472f-89f9-a95ec6d1b727",
+          "name": "Retrieve Resource \"Customer Write Operations\"",
+          "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_SubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_resourceGroup",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_startDate",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_endDate",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroup",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_SubscriptionId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_resourceGroup",
+              "externalSourceName": "resourceGroup",
+              "required": false
+            },
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_startDate",
+              "externalSourceName": "startDate",
+              "required": false
+            },
+            {
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_endDate",
+              "externalSourceName": "endDate",
+              "required": false
+            }
+          ],
+          "kustoQuery": "print(\"\")\n| project startTime = local_startDate, endTime = local_endDate, SubscriptionId = local_SubscriptionId, resourceGroup = local_resourceGroup; ",
+          "panelPath": []
+        },
+        {
+          "id": "4001cc5a-c8f7-43e9-93cc-15b5a476302f",
+          "name": "CustomerWriteOperations",
+          "groupId": "af33475b-f194-4d91-b1d9-50e847183bbf",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "CoBeTimeline",
+          "widgetType": "CoBeTimeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "subId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "resourceGroup",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "startTime",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "endTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "EventId",
+              "type": "string"
+            },
+            {
+              "name": "ParentId",
+              "type": "string"
+            },
+            {
+              "name": "EventName",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Properties",
+              "type": "string"
+            },
+            {
+              "name": "DurationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "subId",
+              "externalSourceName": "SubscriptionId",
+              "required": false
+            },
+            {
+              "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "resourceGroup",
+              "externalSourceName": "resourceGroup",
+              "required": false
+            },
+            {
+              "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "startTime",
+              "externalSourceName": "startTime",
+              "required": false
+            },
+            {
+              "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+              "majorVersion": 1,
+              "minorVersion": 0,
+              "internalDestinationName": "endTime",
+              "externalSourceName": "endTime",
+              "required": false
+            }
+          ],
+          "kustoQuery": "NRPCustomerWriteOperations(subId, startTime, endTime, resourceGroup);",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:54.132Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

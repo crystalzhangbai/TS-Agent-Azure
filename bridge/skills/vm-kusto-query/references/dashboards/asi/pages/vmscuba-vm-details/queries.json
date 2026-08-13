@@ -1,0 +1,1622 @@
+[
+  {
+    "id": "80796f86-332b-4177-9583-f2e6a61d5a0e",
+    "name": "Get-Overlake Config",
+    "groupId": "5d0a57b0-f966-46cf-a5b9-309a9b3e0c4c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "gandalf.kusto.windows.net",
+    "database": "gandalf",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "CADDAILY\r\n| where RoleInstanceName == roleInstanceName\r\n| extend isOverlake = iff((NodeSS_PairId != \"00000000-0000-0000-0000-000000000000\" and isnotempty(NodeSS_PairId)), \"True\", \"False\") \r\n| summarize arg_max(PreciseTimeStamp,*) by RoleInstanceName, isOverlake\r\n| project PreciseTimeStamp, RoleInstanceName, Hardware_Generation, NodeSS_PairId, isOverlake",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-10T12:59:58.538Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-11T12:59:58.538Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "roleInstanceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "Hardware_Generation",
+        "type": "string"
+      },
+      {
+        "name": "NodeSS_PairId",
+        "type": "string"
+      },
+      {
+        "name": "isOverlake",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "1ff1f50b-f646-4f5e-8265-330ef9e01c81",
+    "name": "Get-VMDetails",
+    "groupId": "6c7a22f3-17f1-4292-805e-8733beb90b32",
+    "majorVersion": 2,
+    "minorVersion": 6,
+    "cluster": "moseisley.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('moseisley.kusto.windows.net').database('AzureCM').LogContainerSnapshot \r\n| where roleInstanceName == tolower(RoleInstanceName) \r\n|distinct subscriptionId,roleInstanceName, nodeId, containerId, virtualMachineUniqueId, tenantName",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-06-30T06:45:05.720Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-07-01T06:45:05.720Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "RoleInstanceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "nodeId",
+        "type": "string"
+      },
+      {
+        "name": "containerId",
+        "type": "string"
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "4be813e4-ed6d-42b3-bacb-a9885e48a66c",
+    "name": "Get-TOR",
+    "groupId": "5f494ce7-827d-4d12-a332-527b0090cd23",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "moseisley.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "LogContainerSnapshot\r\n//| where TIMESTAMP> datetime({startTime}) and TIMESTAMP <= datetime({endTime})\r\n| where subscriptionId == subscriptionId\r\n| where roleInstanceName == roleInstanceName\r\n| summarize arg_max(PreciseTimeStamp,*) by Tenant, containerId, containerType, nodeId, tenantName, subscriptionId, availabilitySetName, roleInstanceName, virtualMachineUniqueId\r\n| distinct containerId,nodeId,roleInstanceName, subscriptionId,containerType\r\n| join kind= inner\r\n    hint.strategy = shuffle ( cluster(\"azphynet\").database(\"azdhmds\").Servers\r\n    | project NodeId = tolower(NodeId) , DeviceName = tolower(DeviceName)\r\n)\r\non $left.nodeId == $right.NodeId\r\n| project NodeId, DeviceName,containerId,nodeId,roleInstanceName, subscriptionId ,containerType\r\n| join kind= inner\r\n    hint.strategy = shuffle (cluster(\"azphynet\").database(\"azdhmds\").DeviceInterfaceLinks)\r\non $left.DeviceName == $right.StartDevice\r\n| project containerId,nodeId,roleInstanceName,DeviceName = EndDevice, subscriptionId,containerType\r\n| join kind=inner\r\n(\r\n    cluster('aznwalerting.kusto.windows.net').database('aznwmds').Devices\r\n)\r\non DeviceName\r\n| distinct TOR= DeviceName",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-06-30T06:45:05.720Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-07-01T06:45:05.720Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "roleInstanceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TOR",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "54026441-0e95-4b19-bc12-2e310f7ed823",
+    "name": "Get-SessionId",
+    "groupId": "a2c233f6-c7d9-49c5-895f-1177e23f41e4",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "AzureCM.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"AzureCM\").database(\"AzureCM\").LiveMigrationContainerDetailsEventLog\r\n| where sourceContainerId == containerId\r\n|distinct sessionId",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-06-30T06:45:05.720Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-07-01T06:45:05.720Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "sessionId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "b932f70b-daee-4d7a-9cdf-f1f6847e3b46",
+    "name": "Get-VMSummary",
+    "groupId": "c0f58add-34d4-4bf9-baf7-6479f52332d5",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "azcrpbifollower.kusto.windows.net",
+    "database": "bi_allprod",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "VM\r\n | where VMId == virtualMachineUniqueId\r\n | distinct Region,VMName,VMTimeCreated,DesiredPowerState,VMSize,OSState,OSDiskOSType,ProvisionVMAgent",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-06-30T10:53:51.337Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-07-01T10:53:51.337Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "VMName",
+        "type": "string"
+      },
+      {
+        "name": "VMTimeCreated",
+        "type": "datetime"
+      },
+      {
+        "name": "DesiredPowerState",
+        "type": "string"
+      },
+      {
+        "name": "VMSize",
+        "type": "string"
+      },
+      {
+        "name": "OSState",
+        "type": "string"
+      },
+      {
+        "name": "OSDiskOSType",
+        "type": "string"
+      },
+      {
+        "name": "ProvisionVMAgent",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "5cd5e1ce-4b3d-4f4d-aafd-0f1bee4f3074",
+    "name": "Get-VMRestartEvents",
+    "groupId": "e7734dd3-32ec-4796-8942-0a3fa00c415c",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "moseisley.kusto.windows.net",
+    "database": "Air",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "//let VMuniqueID == virtualMachineUniqueId\r\ncluster('moseisley.kusto.windows.net').database('Air').GetVMRestartEvents(virtualMachineUniqueId,queryFrom,queryTo)\r\n| project Timestamp,SubscriptionId,RoleInstanceName,EventType,IsCustomerInitiated,ImpactBeginTimeStamp,ImpactEndTimeStamp,ImpactDurationTimeSpan",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "EventType",
+        "type": "string"
+      },
+      {
+        "name": "IsCustomerInitiated",
+        "type": "string"
+      },
+      {
+        "name": "ImpactBeginTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "ImpactEndTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "ImpactDurationTimeSpan",
+        "type": "timespan"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "55c1315f-ee50-45a0-8692-ca6a78281e54",
+    "name": "Get-VMInsights",
+    "groupId": "0557fa86-9c46-47c3-88e6-49aa2e877d46",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "rdosdata.kusto.windows.net",
+    "database": "rdosdatapath",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"rdosdata.kusto.windows.net\").database(\"rdosdatapath\").StorageClientInsightsForNode(nodeId,queryFrom,queryTo)\r\n| project PreciseTimeStamp, Message, EventName, ContainerId, level = case(EventName contains \"Update\", \"warning\", \"error\")\r\n| limit 5\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "e0c0fcee-be7f-4b16-9e85-df6414ab9bee",
+    "name": "Get-NodeUpdates",
+    "groupId": "fcd74543-3c40-413e-9c61-aa8250eef369",
+    "majorVersion": 3,
+    "minorVersion": 1,
+    "cluster": "minekraft.westus.kusto.windows.net",
+    "database": "crawler5",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "fEntityChangeEvents\r\n| where EntityId == nodeId\r\n| where ImpactDuration > 0\r\n| project Payload,StartTime,EntityId, ChangeType, ImpactDuration\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "Payload",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EntityId",
+        "type": "string"
+      },
+      {
+        "name": "ChangeType",
+        "type": "string"
+      },
+      {
+        "name": "ImpactDuration",
+        "type": "int"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "13e488a8-e5dc-4167-8d52-7275790e7de6",
+    "name": "Get-HostOSUpdates",
+    "groupId": "95c8b16e-8a75-47c8-9116-6578e80942a0",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "AzureCM.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "//cluster('AzureCM.kusto.windows.net').database('AzureCM').\r\nTMMgmtNodeEventsEtwTable  \r\n| where NodeId =~ nodeId  and (Message contains 'CreatePluginComplete' or Message contains 'UpdatePluginCompleted')\r\n| parse kind = regex Message with * ' = HostPluginName:' Component:string ', HostPluginSetupFile:' * 'HostPluginPackage:'package:string ', Action:'* \r\n| project PreciseTimeStamp=TIMESTAMP, Component, NewVersion=package\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Component",
+        "type": "string"
+      },
+      {
+        "name": "NewVersion",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "3ded1f7f-1cee-4f90-86d0-8c64f795c0a8",
+    "name": "Get-MaintenanceDetails",
+    "groupId": "96f19168-529d-496a-9f4e-7f74aa6c0e94",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "Azdeployer.kusto.windows.net",
+    "database": "AzDeployerKusto",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('Azdeployer').database('AzDeployerKusto').GetCurrentMaintenanceStatus_Batching(subscriptionId,roleInstanceName,tenantName) \r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "roleInstanceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "tenantName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "MaintenanceType",
+        "type": "string"
+      },
+      {
+        "name": "ImpactType",
+        "type": "string"
+      },
+      {
+        "name": "Status",
+        "type": "string"
+      },
+      {
+        "name": "ImpactDurationInSeconds",
+        "type": "string"
+      },
+      {
+        "name": "NotBefore",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "89e37351-baf5-4aff-9d5c-4d5f570f0f58",
+    "name": "Get-NodeStateChange",
+    "groupId": "964f01a4-4886-47d4-941f-cc5ed22a32c2",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "AzureCM.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"AzureCM\").database(\"AzureCM\").TMMgmtNodeStateChangedEtwTable  \r\n| where BladeID == nodeId\r\n| project PreciseTimeStamp, RoleInstance, Tenant, OldState, NewState, BladeID",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "OldState",
+        "type": "string"
+      },
+      {
+        "name": "NewState",
+        "type": "string"
+      },
+      {
+        "name": "BladeID",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "8e1b1b25-46e3-4e09-804b-10c546fd51ad",
+    "name": "Get-ContainerHealthStatus",
+    "groupId": "3e4cb690-e3d9-48f8-9ea3-f97f21f0f80f",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('azurecm.kusto.windows.net').database('AzureCM').LogContainerHealthSnapshot\r\n| where containerId == containerId\r\n| project PreciseTimeStamp, Tenant, roleInstanceName,tenantName, containerId, nodeId,containerState, containerLifecycleState, containerOsState, faultInfo\r\n| order by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "containerId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      },
+      {
+        "name": "containerId",
+        "type": "string"
+      },
+      {
+        "name": "nodeId",
+        "type": "string"
+      },
+      {
+        "name": "containerState",
+        "type": "string"
+      },
+      {
+        "name": "containerLifecycleState",
+        "type": "string"
+      },
+      {
+        "name": "containerOsState",
+        "type": "string"
+      },
+      {
+        "name": "faultInfo",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "8f9fd94c-57a3-4365-893d-9cdea996156b",
+    "name": "Get-ResourceHealth",
+    "groupId": "887affef-ed8b-4c58-a84f-4435fdfa1f2a",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "icmbrain.kusto.windows.net",
+    "database": "AzureResourceHealth",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"icmbrain.kusto.windows.net\").database('AzureResourceHealth').ResourceHealthAzureActivityLogEvent\r\n| where subscriptionId =~ subscriptionId and  resourceId has trim_start(\"_\",roleInstanceName) \r\n//| where  TIMESTAMP between (queryFrom .. queryTo)\r\n| extend resourceName = tolower(tostring(split(resourceId,'/')[-1])),reason =['title'], id = tostring(split((split(internalId, '/')[-1]), ':')[0])\r\n| project eventTimestamp, subscriptionId, resourceName, healthStatus, reason, healthEventType, healthEventCause, level, id, internalId, resourceId",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "roleInstanceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "eventTimestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "resourceName",
+        "type": "string"
+      },
+      {
+        "name": "healthStatus",
+        "type": "string"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "healthEventType",
+        "type": "string"
+      },
+      {
+        "name": "healthEventCause",
+        "type": "string"
+      },
+      {
+        "name": "level",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "internalId",
+        "type": "string"
+      },
+      {
+        "name": "resourceId",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "1b76d0f9-0355-4519-8d39-df0ad5655fde",
+    "name": "Get-TORHealth",
+    "groupId": "5bce1705-7143-49fb-9c23-4ddfc5efef8d",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azphynet.kusto.windows.net",
+    "database": "azdhmds",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let nodeIdlist = (cluster('azphynet').database('azdhmds').DeviceInterfaceLinks\r\n                | where EndDevice =~ '{TOR}' and LinkType =~ 'DeviceInterfaceLink'\r\n                | summarize by DeviceName = StartDevice\r\n                | join kind = inner (\r\n                    cluster('azphynet').database('azdhmds').Servers\r\n                ) on DeviceName\r\n                | summarize by NodeId);\r\n                cluster('aznwsdn').database('aznwmds').TorPingSendAggreEvent\r\n                | where TIMESTAMP >= bin(datetime({startTime}), 5m) and TIMESTAMP < datetime({endTime}) \r\n                | where NodeId in~ (nodeIdlist)\r\n                | summarize SendCount = max(SendCount) by TIMESTAMP, NodeId\r\n                | join kind = leftouter (\r\n                    cluster('aznwsdn').database('aznwmds').TorPingRecvAggreEvent\r\n                    | where TIMESTAMP >= bin(datetime({startTime}), 5m) and TIMESTAMP < datetime({endTime})  \r\n                    | where NodeId in~ (nodeIdlist)\r\n                    | summarize RecvCount = max(RecvCount) by TIMESTAMP, NodeId\r\n                ) on TIMESTAMP, NodeId\r\n                | extend RecvCount = iff(isnull(RecvCount), 0, RecvCount)\r\n                | project TIMESTAMP, rate = todouble(RecvCount)/todouble(SendCount) * 100, NodeId, RecvCount, SendCount\r\n                | summarize rate = max(rate) by TIMESTAMP\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "9bdf9c11-2f92-476f-80a8-46b00a612e2d",
+    "name": "Get-VMNodetoTORHealth",
+    "groupId": "da6b31c2-b3fa-4528-9709-9cc8050978df",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "aznwsdn.kusto.windows.net",
+    "database": "aznwmds",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('aznwsdn').database('aznwmds').TorPingSendAggreEvent\r\n                | where TIMESTAMP >= datetime({startTime}) and TIMESTAMP < datetime({endTime}) \r\n                | where NodeId =~ nodeId\r\n                | summarize SendCount = max(SendCount) by TIMESTAMP, NodeId\r\n                | join kind = leftouter\r\n                (\r\n                 cluster('aznwsdn').database('aznwmds').TorPingRecvAggreEvent\r\n                | where TIMESTAMP >= datetime({startTime}) and TIMESTAMP < datetime({endTime}) \r\n                | where NodeId =~ '{nodeId}'\r\n                | summarize RecvCount = max(RecvCount) by TIMESTAMP, NodeId\r\n                )on TIMESTAMP, NodeId\r\n                | extend RecvCount = iff(isnull(RecvCount), 0, RecvCount)\r\n                | project TIMESTAMP, NodeId, Availability = todouble(RecvCount) / todouble(SendCount) * 100",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nodeId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "cd167f99-cd67-421d-89e9-4dd9966c0a81",
+    "name": "Get-LiveMigrationsEvents",
+    "groupId": "1b511007-0b9d-414b-b0f2-734a05f8b645",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let LiveMigrationSessionCreated= cluster(\"AzureCM\").database(\"AzureCM\").LiveMigrationSessionCreatedLog\r\n| where sessionId == sessionId ;\r\nlet LiveMigrationSessionComplete =cluster(\"AzureCM\").database(\"AzureCM\").LiveMigrationSessionCompleteLog  \r\n| where sessionId == sessionId ;\r\nunion \r\nLiveMigrationSessionCreated,LiveMigrationSessionComplete",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "sessionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CloudName",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "DataCenterName",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "SourceNodeId",
+        "type": "string"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "traceCode",
+        "type": "string"
+      },
+      {
+        "name": "sessionId",
+        "type": "string"
+      },
+      {
+        "name": "sourceContainerId",
+        "type": "string"
+      },
+      {
+        "name": "destinationContainerId",
+        "type": "string"
+      },
+      {
+        "name": "isAutoRollout",
+        "type": "string"
+      },
+      {
+        "name": "migrationConstraint",
+        "type": "string"
+      },
+      {
+        "name": "preferredNode",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      },
+      {
+        "name": "triggerType",
+        "type": "string"
+      },
+      {
+        "name": "sourceHost",
+        "type": "string"
+      },
+      {
+        "name": "isRehydration",
+        "type": "string"
+      },
+      {
+        "name": "roleType",
+        "type": "string"
+      },
+      {
+        "name": "containerSizePolicy",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "containerState",
+        "type": "string"
+      },
+      {
+        "name": "containerLifecycleState",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "isLowPriority",
+        "type": "string"
+      },
+      {
+        "name": "isIsolationRequested",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceFamilyId",
+        "type": "string"
+      },
+      {
+        "name": "updateDomain",
+        "type": "string"
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "RegionFriendlyName",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "elapsedTime",
+        "type": "string"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "sourceNodeId",
+        "type": "string"
+      },
+      {
+        "name": "destinationNodeId",
+        "type": "string"
+      },
+      {
+        "name": "vmUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "resourceId",
+        "type": "string"
+      },
+      {
+        "name": "context",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  },
+  {
+    "id": "9c9f4cbd-da0b-4cf2-8b98-9aa8bd0897a6",
+    "name": "Get-LiveMigrationErrors",
+    "groupId": "d05bdeb1-366d-41e4-984c-2e66c624f7ad",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azurecm.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let LiveMigrationSessionCreated= cluster(\"AzureCM\").database(\"AzureCM\").LiveMigrationSessionCreatedLog\r\n| where sessionId == sessionId;\r\nlet LiveMigrationSessionComplete =cluster(\"AzureCM\").database(\"AzureCM\").LiveMigrationSessionCompleteLog  \r\n| where sessionId == sessionId;\r\nunion \r\nLiveMigrationSessionCreated,LiveMigrationSessionComplete",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-06T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-05T05:03:46.818Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "sessionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CloudName",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilityZone",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "DataCenterName",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "SourceNodeId",
+        "type": "string"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "traceCode",
+        "type": "string"
+      },
+      {
+        "name": "sessionId",
+        "type": "string"
+      },
+      {
+        "name": "sourceContainerId",
+        "type": "string"
+      },
+      {
+        "name": "destinationContainerId",
+        "type": "string"
+      },
+      {
+        "name": "isAutoRollout",
+        "type": "string"
+      },
+      {
+        "name": "migrationConstraint",
+        "type": "string"
+      },
+      {
+        "name": "preferredNode",
+        "type": "string"
+      },
+      {
+        "name": "message",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "tenantName",
+        "type": "string"
+      },
+      {
+        "name": "triggerType",
+        "type": "string"
+      },
+      {
+        "name": "sourceHost",
+        "type": "string"
+      },
+      {
+        "name": "isRehydration",
+        "type": "string"
+      },
+      {
+        "name": "roleType",
+        "type": "string"
+      },
+      {
+        "name": "containerSizePolicy",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "containerState",
+        "type": "string"
+      },
+      {
+        "name": "containerLifecycleState",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "isLowPriority",
+        "type": "string"
+      },
+      {
+        "name": "isIsolationRequested",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceFamilyId",
+        "type": "string"
+      },
+      {
+        "name": "updateDomain",
+        "type": "string"
+      },
+      {
+        "name": "virtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "RegionFriendlyName",
+        "type": "string"
+      },
+      {
+        "name": "__AuthType__",
+        "type": "string"
+      },
+      {
+        "name": "__AuthIdentity__",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "elapsedTime",
+        "type": "string"
+      },
+      {
+        "name": "reason",
+        "type": "string"
+      },
+      {
+        "name": "sourceNodeId",
+        "type": "string"
+      },
+      {
+        "name": "destinationNodeId",
+        "type": "string"
+      },
+      {
+        "name": "vmUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "resourceId",
+        "type": "string"
+      },
+      {
+        "name": "context",
+        "type": "string"
+      }
+    ],
+    "serviceId": "VM Scuba"
+  }
+]

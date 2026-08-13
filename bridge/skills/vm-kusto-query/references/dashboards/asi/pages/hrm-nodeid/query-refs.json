@@ -1,0 +1,342 @@
+[
+  {
+    "groupId": "bda64b6b-0111-41f9-89ef-3c3c0eb42c55",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "e3181840-0296-410c-a08e-dd2efdf8ac04",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "globalTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_NodeId",
+        "externalSourceName": "NodeId",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"NodeId\"",
+    "cluster": "wdgeventstore.kusto.windows.net",
+    "database": "KernelAgent",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "globalFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "globalTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_NodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Environment",
+        "type": "string"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "Hostname",
+        "type": "string"
+      },
+      {
+        "name": "SnapshotId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "f8c17346-3d56-4b50-851a-0c6b1ba6ccf6",
+    "majorVersion": 6,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Timeline",
+    "widgetTitle": "",
+    "queryId": "6338ad14-e440-465c-91e7-8cc390de4fa6",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "NodeId",
+        "required": false
+      }
+    ],
+    "name": "HRM snapshots",
+    "cluster": "wdgeventstore",
+    "database": "KernelAgent",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8e65488f-14ca-4427-95d1-c667249ce330",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "2a107f9d-4c63-4e34-92e4-f6d2bc53e0dd",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "bda64b6b-0111-41f9-89ef-3c3c0eb42c55",
+        "majorVersion": 2,
+        "minorVersion": 1,
+        "internalDestinationName": "snapshotId",
+        "externalSourceName": "SnapshotId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "nodeId",
+        "externalSourceName": "NodeId",
+        "required": false
+      }
+    ],
+    "name": "Entries for HRM snapshot",
+    "cluster": "wdgeventstore",
+    "database": "KernelAgent",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "nodeId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "snapshotId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "SnapshotId",
+        "type": "string"
+      },
+      {
+        "name": "IdentifierLevel1",
+        "type": "string"
+      },
+      {
+        "name": "IdentifierLevel2",
+        "type": "string"
+      },
+      {
+        "name": "IdentifierLevel3",
+        "type": "string"
+      },
+      {
+        "name": "IdentifierAdditionalMetaData",
+        "type": "string"
+      },
+      {
+        "name": "CommitUsageBytes_Undelegated",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Undelegated_Avg",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Undelegated_Min",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Undelegated_Max",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Undelegated_LastObserved",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Total",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Total_Avg",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Total_Min",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Total_Max",
+        "type": "long"
+      },
+      {
+        "name": "CommitUsageBytes_Total_LastObserved",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Undelegated",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Undelegated_Avg",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Undelegated_Min",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Undelegated_Max",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Undelegated_LastObserved",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Total",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Total_Avg",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Total_Min",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Total_Max",
+        "type": "long"
+      },
+      {
+        "name": "PhysicalUsageBytes_Total_LastObserved",
+        "type": "long"
+      },
+      {
+        "name": "AdditionalData",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

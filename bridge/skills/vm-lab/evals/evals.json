@@ -1,0 +1,63 @@
+{
+  "skill_name": "vm-lab",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "vm-lab: 客户问怎么统计一台 Linux VM 当前的 TCP 连接数,我想给个命令但先在 lab 验证一下。帮我在 Linux lab VM 上跑 `ss -tan | wc -l` 和 `ss -s`,确认哪个口径对、输出长什么样。",
+      "expected_output": "Treats this as Mode B command-validation: runs both commands on the lab Linux VM via az vm run-command (root, no SSH, no customer subscription), returns the real output, and explains the counting semantics so a correct command can be handed to the customer.",
+      "files": [],
+      "expectations": [
+        "Classifies the task as Mode B (Linux) and uses az vm run-command instead of connecting to any customer subscription",
+        "Executes both ss commands on a lab VM and reports the actual output",
+        "Explains the difference between the two counting methods so the engineer can pick the right one for the customer"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "vm-lab: 帮我复现一个问题——从 image 建一台源 VM 带 user-data 脚本,做 restore point,再用这个 restore point 建 OS disk + 新 VM 也带同样的 user-data,看新 VM 上 user-data 脚本到底跑没跑。",
+      "expected_output": "Runs the Scenario Lab build-experiment workflow in a dedicated rg-<slug>-lab with a teardown manifest, cheapest SKU, builds source VM -> restore point -> new disk -> new VM, verifies via run-command + a marker file which user-data path executed, and references the userData-vs-customData disk-shadowing root cause. Keeps resources and asks before teardown.",
+      "files": [],
+      "expectations": [
+        "Creates one dedicated resource group rg-<slug>-lab and maintains a teardown manifest from the first create",
+        "Builds the full image -> VM -> restore point -> disk -> new VM chain with az, passing scripts as LF-normalized @files",
+        "Verifies which user-data path executed via a marker file read back with az vm run-command",
+        "References the userData-vs-customData disk-shadowing root cause (recipe-userdata-script.md / gotchas.md)",
+        "Does not auto-delete or auto-deallocate; surfaces the manifest and asks before teardown"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "vm-lab: 我想在 lab 里演练一遍救援流程——故意把一台 Linux VM 的 /etc/fstab 写坏让它起不来,然后用 snapshot 把 OS disk 挂到一台 rescue VM 上修好 fstab,再换回去验证能正常启动。",
+      "expected_output": "Follows the rescue-VM repair recipe: snapshot the broken OS disk, create a disk from the snapshot, mount it as a data disk on a healthy rescue VM in the same region, fix fstab offline via run-command, detach, deallocate the problem VM and swap the disk back as its OS disk, start and verify boot. Works on a snapshot copy and keeps rollback artifacts.",
+      "files": [],
+      "expectations": [
+        "Works on a snapshot-derived copy of the OS disk, never the original in place",
+        "Mounts the repaired disk as a DATA disk on a rescue VM in the same region and fixes fstab via az vm run-command",
+        "Deallocates the problem VM before az vm update --os-disk swap-back, then verifies boot (VM running + fstab fixed)",
+        "Keeps the snapshot/original disk as rollback until boot is confirmed"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "vm-lab: 客户 case 里我打算建议把受 MANA/加速网络影响的 VM resize 到 Standard_D2as_v4,发出去前想在 lab 确认 resize 之后 VM 还能正常启动、加速网络状态也对。帮我验证一下。",
+      "expected_output": "Treats this as mitigation regression: on a lab VM/subscription only, performs az vm resize to Standard_D2as_v4, confirms the VM returns to running, and checks accelerated-networking state on the NIC -- proving the recommended fix applies cleanly before it goes to the customer. Warns on cost and keeps resources.",
+      "files": [],
+      "expectations": [
+        "Performs the resize on a LAB VM/subscription only, never the customer's subscription",
+        "Verifies the VM is running after the resize (az vm get-instance-view) -- the mitigation did not break boot",
+        "Checks the accelerated-networking state on the NIC as part of confirming the fix"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "vm-lab: 客户这台 VM 昨天 03:14 UTC unexpected reboot 了,帮我在 lab 里复现一下这个 reboot 看看根因。",
+      "expected_output": "Recognizes this as a platform/host-side event that a lab cannot manufacture (per the When-NOT-to-use boundary), declines to spin up lab resources to 'reproduce' it, and redirects to the correct path -- Kusto/RCA (vm-kusto-query + dashboards) to investigate the actual reboot.",
+      "files": [],
+      "expectations": [
+        "Does NOT build or spin up lab resources to 'reproduce' the platform reboot",
+        "Explains that unexpected reboot / host-side events are not lab-reproducible (the lab cannot manufacture a platform event)",
+        "Redirects to vm-kusto-query + dashboards (RCA) as the correct path"
+      ]
+    }
+  ]
+}

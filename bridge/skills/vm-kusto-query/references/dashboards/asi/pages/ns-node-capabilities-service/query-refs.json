@@ -1,0 +1,73 @@
+[
+  {
+    "groupId": "312d66ad-a119-4fde-bfa6-4336d2831b64",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "panelPath": [],
+    "widgetType": "Table",
+    "widgetTitle": "",
+    "queryId": "7d64ab51-6122-4c2c-9899-24cf89116d4e",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "NodeId",
+        "externalSourceName": "NodeId",
+        "required": false
+      }
+    ],
+    "name": "GRIP NodeCapabilitiesService Jobs",
+    "cluster": "pubsubinfra.eastus2.kusto.windows.net",
+    "database": "PubSubInfraLogs",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "NodeId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CriticalServicesUp",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeCapabilities",
+        "type": "dynamic"
+      }
+    ],
+    "missing": false
+  }
+]

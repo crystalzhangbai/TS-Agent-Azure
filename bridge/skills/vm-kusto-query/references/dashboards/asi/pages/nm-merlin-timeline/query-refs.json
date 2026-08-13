@@ -1,0 +1,240 @@
+[
+  {
+    "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "669a6082-4e16-4f4b-8b3e-cbdcc958864f",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_Tenant",
+        "externalSourceName": "Tenant",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_containerId",
+        "externalSourceName": "containerId",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_interfaceId",
+        "externalSourceName": "interfaceId",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_vmUniqueId",
+        "externalSourceName": "vmUniqueId",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "startTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "endTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"MerlinTimeline\"",
+    "cluster": "azurecm",
+    "database": "AzureCM",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "local_Tenant",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_containerId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_interfaceId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_vmUniqueId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "containerId",
+        "type": "string"
+      },
+      {
+        "name": "interfaceId",
+        "type": "string"
+      },
+      {
+        "name": "vmUniqueId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "661bba94-692f-44ee-ab18-583072a7a24b",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "panelPath": [
+      "Merlin Timeline"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Merlin Timeline",
+    "queryId": "2b5877a0-bdfc-471e-b0ee-1c13690f8b1f",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+        "majorVersion": 2,
+        "minorVersion": 1,
+        "internalDestinationName": "cluster",
+        "externalSourceName": "Tenant",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+        "majorVersion": 2,
+        "minorVersion": 1,
+        "internalDestinationName": "interfaceId",
+        "externalSourceName": "interfaceId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+        "majorVersion": 2,
+        "minorVersion": 1,
+        "internalDestinationName": "vmUniqueId",
+        "externalSourceName": "vmUniqueId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "query_BeginTime",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "query_EndTime",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "9ffe017d-7e7b-4106-b839-5a7a7d53a563",
+        "majorVersion": 2,
+        "minorVersion": 1,
+        "internalDestinationName": "query_containerId",
+        "externalSourceName": "containerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "MerlinTimelineFull",
+    "cluster": "azurecm",
+    "database": "AzureCM",
+    "type": "Table",
+    "params": [
+      {
+        "name": "cluster",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "query_containerId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "interfaceId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "vmUniqueId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "query_BeginTime",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "query_EndTime",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Event",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

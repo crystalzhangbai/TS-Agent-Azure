@@ -1,0 +1,152 @@
+[
+  {
+    "id": "d1c13fdd-520a-400c-9732-ddc2667ea2ad",
+    "name": "Global usage",
+    "groupId": "5f334a32-c6ee-4555-b578-9272df766bf3",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "ConnectorContainerActivity\r\n| where ['time'] > queryFrom\r\n| where ['time'] < queryTo\r\n| summarize dcount(sessionId) by startofday(TIMESTAMP)\r\n| render columnchart",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-11-18T22:40:43.988Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-11-25T22:40:43.988Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "dcount_sessionId",
+        "type": "int"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  },
+  {
+    "id": "59286bac-845a-454a-8ac3-20a181d57a93",
+    "name": "Successful connection count by RP region",
+    "groupId": "f3b51744-bbba-4055-a3a0-b44b03bc2d42",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "ConnectorContainerActivity\r\n| where TIMESTAMP > queryFrom\r\n| where TIMESTAMP <= queryTo\r\n| where cloudEnv == \"prod\"\r\n| where message startswith \"NodeInfo: \"\r\n| summarize CountByRpRegion = count() by rpRegion\r\n| project rpRegion, CountByRpRegion",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-11-18T22:40:43.988Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-11-25T22:40:43.988Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "rpRegion",
+        "type": "string"
+      },
+      {
+        "name": "CountByRpRegion",
+        "type": "decimal"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  },
+  {
+    "id": "edd6de90-17a2-4aae-b37e-56bbbea4c104",
+    "name": "Successful connection count by VM location",
+    "groupId": "d55ea87f-864e-4892-88d8-f2a15ffef36c",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "ConnectorContainerActivity\r\n| where TIMESTAMP > queryFrom\r\n| where TIMESTAMP <= queryTo\r\n| where cloudEnv == \"prod\"\r\n| where message startswith \"NodeInfo: \"\r\n| summarize CountByVMLocation = count() by vmLocation\r\n| project vmLocation, CountByVMLocation",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-11-18T22:40:43.988Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-11-25T22:40:43.988Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "vmLocation",
+        "type": "string"
+      },
+      {
+        "name": "CountByVMLocation",
+        "type": "long"
+      }
+    ],
+    "serviceId": "Azure Serial Console"
+  }
+]

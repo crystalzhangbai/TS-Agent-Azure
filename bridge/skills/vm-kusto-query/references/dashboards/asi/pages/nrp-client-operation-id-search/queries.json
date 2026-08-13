@@ -1,0 +1,282 @@
+[
+  {
+    "id": "771493b8-54ff-455a-8f17-9a39ba62b796",
+    "name": "Retrieve Resource \"ClientOperationId Search\"",
+    "groupId": "4577b17a-bf67-4cc4-af88-a3bac1af83df",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = datetime_add('hour', -12, local_PreciseTimeStamp);\nlet endTime = datetime_add('hour', 12, local_PreciseTimeStamp);\nFrontendOperationEtwEvent\n| where PreciseTimeStamp >= startTime and PreciseTimeStamp < endTime\n| where ClientOperationId == local_ClientOperationId\n| take 1",
+    "params": [
+      {
+        "name": "local_PreciseTimeStamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_ClientOperationId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "ProviderGuid",
+        "type": "string"
+      },
+      {
+        "name": "EventId",
+        "type": "long"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      },
+      {
+        "name": "Tid",
+        "type": "long"
+      },
+      {
+        "name": "ActivityId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ResourceType",
+        "type": "string"
+      },
+      {
+        "name": "ResourceName",
+        "type": "string"
+      },
+      {
+        "name": "ResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "HttpMethod",
+        "type": "string"
+      },
+      {
+        "name": "InternalCorrelationId",
+        "type": "string"
+      },
+      {
+        "name": "ComputeSubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ClientOperationId",
+        "type": "string"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "ParentOperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "ApiVersion",
+        "type": "string"
+      },
+      {
+        "name": "Environment",
+        "type": "string"
+      },
+      {
+        "name": "AzureRoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "PartitionId",
+        "type": "string"
+      },
+      {
+        "name": "ReplicaId",
+        "type": "long"
+      },
+      {
+        "name": "SourceAssemblyFileVersion",
+        "type": "string"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Sequence",
+        "type": "long"
+      },
+      {
+        "name": "Continuation",
+        "type": "bool"
+      },
+      {
+        "name": "OrigTS",
+        "type": "datetime"
+      },
+      {
+        "name": "TraceSource",
+        "type": "string"
+      },
+      {
+        "name": "SourceNamespace",
+        "type": "string"
+      },
+      {
+        "name": "SourceMoniker",
+        "type": "string"
+      },
+      {
+        "name": "SourceVersion",
+        "type": "string"
+      },
+      {
+        "name": "CultureName",
+        "type": "string"
+      },
+      {
+        "name": "OpcodeName",
+        "type": "string"
+      },
+      {
+        "name": "KeywordName",
+        "type": "string"
+      },
+      {
+        "name": "TaskName",
+        "type": "string"
+      },
+      {
+        "name": "EventMessage",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "b1a514ae-5c55-4388-8bc5-5f8fb2e3baee",
+    "name": "ClientOperationId",
+    "groupId": "25c061c9-fe44-4acb-867e-c5ea6dbf2d47",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "armprod.kusto.windows.net",
+    "database": "armprod",
+    "type": "CoBeTimeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let startTime = datetime_add('hour', -12, timestamp);\nlet endTime = datetime_add('hour', 12, timestamp);\nNRPClientOperationId(clientRequestId, startTime, endTime);",
+    "params": [
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "clientRequestId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "ParentId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

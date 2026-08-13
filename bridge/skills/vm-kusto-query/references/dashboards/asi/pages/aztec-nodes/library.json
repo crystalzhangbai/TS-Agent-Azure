@@ -1,0 +1,1137 @@
+{
+  "service": "Aztec",
+  "page": "Nodes",
+  "pageId": "7b3ad39f-9f40-4e77-aded-4a2a79fd6fb5",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "fb614f5d-a3dc-4aa1-b5be-2af44ba7705c",
+          "name": "Retrieve Resource \"Nodes\"",
+          "groupId": "a31c83e0-412d-41c2-a393-8b9d35f57866",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "nodeState",
+              "type": "string"
+            },
+            {
+              "name": "nodeAvailabilityState",
+              "type": "string"
+            },
+            {
+              "name": "containerCount",
+              "type": "string"
+            },
+            {
+              "name": "faultInfo",
+              "type": "string"
+            },
+            {
+              "name": "hostingEnvironment",
+              "type": "string"
+            },
+            {
+              "name": "cmNodeChannelHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "cmNodeWasChannelHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "cmNodeWillBeChannelHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "cmNodeChannelAggregatedHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "faultDomain",
+              "type": "string"
+            },
+            {
+              "name": "nfcContainerWorkflowsEnabled",
+              "type": "string"
+            },
+            {
+              "name": "ipAddress",
+              "type": "string"
+            },
+            {
+              "name": "lastStateChangeTime",
+              "type": "string"
+            },
+            {
+              "name": "nsProgressHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "isIsolated",
+              "type": "string"
+            },
+            {
+              "name": "isOffline",
+              "type": "string"
+            },
+            {
+              "name": "isProtected",
+              "type": "string"
+            },
+            {
+              "name": "diskConfiguration",
+              "type": "string"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "machinePoolName",
+              "type": "string"
+            },
+            {
+              "name": "aliveContainerCount",
+              "type": "long"
+            },
+            {
+              "name": "torId",
+              "type": "string"
+            },
+            {
+              "name": "pduId",
+              "type": "string"
+            },
+            {
+              "name": "tipNodeSessionId",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedNodeGroupName",
+              "type": "string"
+            },
+            {
+              "name": "rootUpdateAllocationType",
+              "type": "string"
+            },
+            {
+              "name": "vlanId",
+              "type": "string"
+            },
+            {
+              "name": "pfClientHealthSignalsEnabled",
+              "type": "bool"
+            },
+            {
+              "name": "isMaintenanceOs",
+              "type": "string"
+            },
+            {
+              "name": "alivePreemptibleContainerCount",
+              "type": "long"
+            },
+            {
+              "name": "healthSignals",
+              "type": "string"
+            },
+            {
+              "name": "IsProcessorSpeculationControlEnabled",
+              "type": "string"
+            },
+            {
+              "name": "t1NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "t2NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedHostId",
+              "type": "string"
+            },
+            {
+              "name": "tmNodeDocumentVersion",
+              "type": "long"
+            },
+            {
+              "name": "isPeriodic",
+              "type": "string"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "hostName",
+              "type": "string"
+            },
+            {
+              "name": "isNodeBugCheckIsolated",
+              "type": "string"
+            },
+            {
+              "name": "nodeServiceIncarnation",
+              "type": "string"
+            },
+            {
+              "name": "imageStagingStatus",
+              "type": "string"
+            },
+            {
+              "name": "azCiMDeployedContainersCount",
+              "type": "long"
+            },
+            {
+              "name": "isNodeServiceWasPollingBlocked",
+              "type": "string"
+            },
+            {
+              "name": "nodeServiceMadariPublisherHealth",
+              "type": "string"
+            },
+            {
+              "name": "nodeServiceMadariSubscriberHealth",
+              "type": "string"
+            },
+            {
+              "name": "nodeServiceMadariAggregatedHealth",
+              "type": "string"
+            },
+            {
+              "name": "isHostContextSelectorCreated",
+              "type": "bool"
+            },
+            {
+              "name": "socId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\n| where nodeId == local_nodeId\n| top 1 by PreciseTimeStamp desc",
+          "panelPath": []
+        },
+        {
+          "id": "cec72359-3cc6-447f-8513-0d3759749c9b",
+          "name": "Node Flags",
+          "groupId": "832af424-313f-4f3c-89c5-012b2d12d4d5",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "FeatureList",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "FeatureName",
+              "type": "string"
+            },
+            {
+              "name": "Enabled",
+              "type": "bool"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\n| where nodeId == queryNodeId\n| top 1 by PreciseTimeStamp desc\n| project isIsolated, isOffline, isProtected, isMaintenanceOs, isPeriodic, IsProcessorSpeculationControlEnabled\n| project features = pack(\n    \"Isolated\", isIsolated, \n    \"Offline\", isOffline, \n    \"Protected\", isProtected, \n    \"MaintenanceOs\", isMaintenanceOs,\n    \"Periodic\", isPeriodic,\n    \"ProcessorSpeculationControlEnabled\", IsProcessorSpeculationControlEnabled\n    )\n| mv-expand bagexpansion=array features\n| project FeatureName = tostring(features[0]), Enabled = tobool(features[1])",
+          "panelPath": []
+        },
+        {
+          "id": "2ec4ab48-c3d1-44b8-82ed-2d60b94c5fc8",
+          "name": "Node Hosting Environment",
+          "groupId": "a6d82f5a-64ca-4b39-8142-64a0aa924a7d",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "azurecm",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Hosting Environment",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Name",
+              "type": "string"
+            },
+            {
+              "name": "Value",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\n| where PreciseTimeStamp > ago(28d)\n| where nodeId == queryNodeId\n| top 1 by PreciseTimeStamp desc\n| project hostingEnvironment\n| extend json = parse_json(hostingEnvironment)\n| mv-expand bagexpansion=array json\n| project Name = tostring(json[0]), Value = tostring(json[1])",
+          "panelPath": []
+        },
+        {
+          "id": "743dab75-34f3-4543-9a3a-80696983425c",
+          "name": "Node State",
+          "groupId": "931667e9-6461-4991-96e1-989d0a4a1aa1",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Node State and Health",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "a31c83e0-412d-41c2-a393-8b9d35f57866",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where nodeId == queryNodeId \n| extend Resource = nodeState\n| project PreciseTimeStamp, Resource\n| order by PreciseTimeStamp asc\n| extend PrevTime = prev(PreciseTimeStamp)\n| extend NextTime = next(PreciseTimeStamp)\n| extend PrevResource = prev(Resource)\n| extend NextResource = next(Resource)\n| where \nisnull(PrevTime) or \nisnull(NextTime) or \n(Resource != PrevResource or Resource != NextResource) \n| extend StartTime = PreciseTimeStamp\n| extend EndTime = next(PreciseTimeStamp)\n| where NextResource == Resource\n| project StartTime, EndTime, Content = Resource\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 1, StartTime), EndTime)",
+          "panelPath": []
+        },
+        {
+          "id": "0b2cc0b7-a95e-4cbc-8d64-297279e291a5",
+          "name": "Node Availability State",
+          "groupId": "ec8a1f6d-6eaf-4356-abcf-3c47320d8636",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Node State and Health",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "a31c83e0-412d-41c2-a393-8b9d35f57866",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where nodeId == queryNodeId \n| extend Resource = nodeAvailabilityState\n| project PreciseTimeStamp, Resource, faultInfo\n| order by PreciseTimeStamp asc\n| extend PrevTime = prev(PreciseTimeStamp)\n| extend NextTime = next(PreciseTimeStamp)\n| extend PrevResource = prev(Resource)\n| extend NextResource = next(Resource)\n| where \nisnull(PrevTime) or \nisnull(NextTime) or \n(Resource != PrevResource or Resource != NextResource) \n| extend StartTime = PreciseTimeStamp\n| extend EndTime = next(PreciseTimeStamp)\n| where NextResource == Resource\n| extend Tooltip = faultInfo\n| extend Health = iif(Resource == \"Available\", \"Healthy\", \"Unhealthy\")\n| project StartTime, EndTime, Content = Resource, Tooltip, Health\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 1, StartTime), EndTime)",
+          "panelPath": []
+        },
+        {
+          "id": "1e4db6f2-17c6-41f6-bb46-1959d631b4bf",
+          "name": "Node OS Image",
+          "groupId": "b598a407-19bd-404d-8682-911273a8b721",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Node State and Health",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "a31c83e0-412d-41c2-a393-8b9d35f57866",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where nodeId == queryNodeId \n| extend hostEnv = parse_json(hostingEnvironment)\n| extend osBaseImage = tostring(hostEnv.OSBaseImageName)\n| extend osTargetImage = tostring(hostEnv.OSTargetImageName)\n//| extend Resource = strcat(\"Base: \", osBaseImage, \"<br/>Target: \", osTargetImage)\n| extend Resource = osBaseImage\n| project PreciseTimeStamp, Resource, faultInfo\n| order by PreciseTimeStamp asc\n| extend PrevTime = prev(PreciseTimeStamp)\n| extend NextTime = next(PreciseTimeStamp)\n| extend PrevResource = prev(Resource)\n| extend NextResource = next(Resource)\n| where \nisnull(PrevTime) or \nisnull(NextTime) or \n(Resource != PrevResource or Resource != NextResource) \n| extend StartTime = PreciseTimeStamp\n| extend EndTime = next(PreciseTimeStamp)\n| where NextResource == Resource\n| project StartTime, EndTime, Content = Resource\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 1, StartTime), EndTime)",
+          "panelPath": []
+        },
+        {
+          "id": "79713d78-a486-4fc4-af5d-7b1d2dbc7591",
+          "name": "Node Disk Configuration",
+          "groupId": "3760dd42-907d-4b7f-bcaf-d82dfa8c05d4",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Node State and Health",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "a31c83e0-412d-41c2-a393-8b9d35f57866",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where nodeId == queryNodeId \n| extend Resource = diskConfiguration\n| project PreciseTimeStamp, Resource\n| order by PreciseTimeStamp asc\n| extend PrevTime = prev(PreciseTimeStamp)\n| extend NextTime = next(PreciseTimeStamp)\n| extend PrevResource = prev(Resource)\n| extend NextResource = next(Resource)\n| where \nisnull(PrevTime) or \nisnull(NextTime) or \n(Resource != PrevResource or Resource != NextResource) \n| extend StartTime = PreciseTimeStamp\n| extend EndTime = next(PreciseTimeStamp)\n| where NextResource == Resource\n| project StartTime, EndTime, Content = Resource\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 1, StartTime), EndTime)",
+          "panelPath": []
+        },
+        {
+          "id": "a5529109-63fc-4154-b2eb-2cb740724770",
+          "name": "Node VMA",
+          "groupId": "d869e1ab-0a7e-47b5-a9de-5249b13436f7",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "vmainsight",
+          "database": "vmadb",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Node State and Health",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "a31c83e0-412d-41c2-a393-8b9d35f57866",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "VmImpactingEventsV1\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where NodeId == queryNodeId and RCAEngineCategory != \"CustomerInitiated\"\n| extend Content = strcat(RCAEngineCategory, \" - \", RCALevel1)\n| extend Tooltip = strcat(\"RCALevel2: \", RCALevel2, \"<br/>RCALevel3: \", RCALevel3, \"<br/>Detail: \", Detail)\n| project StartTime = PreciseTimeStamp, Content, Tooltip",
+          "panelPath": []
+        }
+      ]
+    },
+    "Containers > Containers > Container Time Series": {
+      "panelPath": [
+        "Containers",
+        "Containers",
+        "Container Time Series"
+      ],
+      "queries": [
+        {
+          "id": "e30610c8-6a03-4250-b345-700b83d673c1",
+          "name": "Node container counts",
+          "groupId": "de36f3cc-6b13-4d7c-9a16-87fde80fd2e2",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Container Time Series",
+          "params": [
+            {
+              "name": "qFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "containers",
+              "type": "int"
+            },
+            {
+              "name": "aliveContainers",
+              "type": "int"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "\r\nLogNodeSnapshot\r\n| where PreciseTimeStamp between(qFrom .. qTo)\r\n| where isnotempty(qNodeId) and nodeId == qNodeId\r\n| summarize \r\n    containers = max(toint(containerCount)), \r\n    aliveContainers = max(toint(aliveContainerCount)) \r\n    by bin(PreciseTimeStamp, 5m)\r\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "Containers",
+            "Containers",
+            "Container Time Series"
+          ]
+        }
+      ]
+    },
+    "Containers > Containers > Container Timeline": {
+      "panelPath": [
+        "Containers",
+        "Containers",
+        "Container Timeline"
+      ],
+      "queries": [
+        {
+          "id": "5bec1529-8ab8-40e5-aac9-a0ca44c30049",
+          "name": "Host Node Container Timeline",
+          "groupId": "995905a6-1139-4101-9d20-c13f56cb4442",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus",
+          "database": "AzureCP",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "Container Timeline",
+          "params": [
+            {
+              "name": "qFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "qHostNode",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "qHostNode",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('azcore.centralus').database('AzureCP').MycroftContainerSnapshot\r\n| where PreciseTimeStamp between(qFrom .. qTo) and NodeId == qHostNode\r\n| project PreciseTimeStamp, NodeId, ContainerId, VirtualMachineUniqueId, RoleInstanceName, CreationTime\r\n| extend StartTime = PreciseTimeStamp\r\n| order by CreationTime asc, StartTime asc \r\n| where (ContainerId != next(ContainerId) or ContainerId != prev(ContainerId)) \r\n| extend EndTime = next(StartTime)\r\n| where ContainerId != prev(ContainerId)\r\n| extend Content = ContainerId\r\n| extend Tooltip = strcat(\r\n    Content,\r\n    \"<br/>Node: \", NodeId\r\n)\r\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 5, StartTime), EndTime)\r\n| extend GroupBy = ContainerId\r\n| project StartTime, EndTime, Content, Tooltip, GroupBy",
+          "panelPath": [
+            "Containers",
+            "Containers",
+            "Container Timeline"
+          ]
+        }
+      ]
+    },
+    "Containers > Table View > Containers": {
+      "panelPath": [
+        "Containers",
+        "Table View",
+        "Containers"
+      ],
+      "queries": [
+        {
+          "id": "e2137da1-5eb9-4964-8107-0e6678a983b6",
+          "name": "Node Containers",
+          "groupId": "bf73703a-9ac5-4cc1-934e-ae505fb58887",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Containers",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "containerId",
+              "type": "string"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "containerId1",
+              "type": "string"
+            },
+            {
+              "name": "containerType",
+              "type": "string"
+            },
+            {
+              "name": "creationTime",
+              "type": "datetime"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "virtualMachineUniqueId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogContainerSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where nodeId == queryNodeId\n| summarize take_any(nodeId, containerId, containerType, creationTime, roleInstanceName, tenantName, virtualMachineUniqueId) by containerId\n| extend creationTime = todatetime(creationTime)\n| order by creationTime desc ",
+          "panelPath": [
+            "Containers",
+            "Table View",
+            "Containers"
+          ]
+        }
+      ]
+    },
+    "Disk Health > Disk Health Status": {
+      "panelPath": [
+        "Disk Health",
+        "Disk Health Status"
+      ],
+      "queries": [
+        {
+          "id": "fa85b09e-c39f-4133-a4eb-89317d8a19d0",
+          "name": "Node Disk Health",
+          "groupId": "cb0e1d0e-e93f-448a-b757-ac0da9316165",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcore.centralus",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Disk Health Status",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "TotalDisks",
+              "type": "long"
+            },
+            {
+              "name": "HealthyDisks",
+              "type": "long"
+            },
+            {
+              "name": "OnlineDisks",
+              "type": "long"
+            },
+            {
+              "name": "TotalNonVhdDisks",
+              "type": "long"
+            },
+            {
+              "name": "HealthyNonVhdDisks",
+              "type": "long"
+            },
+            {
+              "name": "OnlineNonVhdDisks",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "NodeDiskHealthStatusEtwTable  \n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where NodeId == queryNodeId\n| summarize \n    TotalDisks = max(TotalDisks), \n    HealthyDisks = min(HealthyDisks), \n    OnlineDisks = min(OnlineDisks), \n    TotalNonVhdDisks = max(TotalNonVhdDisks), \n    HealthyNonVhdDisks = min(HealthyNonVhdDisks), \n    OnlineNonVhdDisks = min(OnlineNonVhdDisks)\n    by bin(PreciseTimeStamp, 30m)\n| order by PreciseTimeStamp asc\n",
+          "panelPath": [
+            "Disk Health",
+            "Disk Health Status"
+          ]
+        }
+      ]
+    },
+    "High CPU > High CPU": {
+      "panelPath": [
+        "High CPU",
+        "High CPU"
+      ],
+      "queries": [
+        {
+          "id": "438b465d-cdda-4422-b71b-906c1770d061",
+          "name": "Node High CPU",
+          "groupId": "05e6408d-4fda-4876-a356-be421abd0268",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "High CPU",
+          "params": [
+            {
+              "name": "queryNodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "CounterName",
+              "type": "string"
+            },
+            {
+              "name": "Count",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "a31c83e0-412d-41c2-a393-8b9d35f57866",
+              "majorVersion": 2,
+              "minorVersion": 1,
+              "internalDestinationName": "queryNodeId",
+              "externalSourceName": "nodeId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "HighCpuCounterNodeTable\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where NodeId == queryNodeId\n| summarize Count = max(CounterValue) by CounterName, bin(PreciseTimeStamp, 15m)\n| extend CounterName = replace(\"\\\\\\\\Hyper-V Hypervisor Root \", \"\", CounterName)\n| project PreciseTimeStamp, CounterName, Count",
+          "panelPath": [
+            "High CPU",
+            "High CPU"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T11:19:29.766Z",
+    "totalPanels": 6,
+    "totalUniqueQueries": 13,
+    "totalWidgetRefs": 13
+  }
+}

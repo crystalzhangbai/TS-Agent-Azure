@@ -1,0 +1,187 @@
+[
+  {
+    "id": "40e08bfb-dedd-43cb-a209-6a606ba0e708",
+    "name": "Retrieve Resource \"FastAttachDetachOperations\"",
+    "groupId": "3603c091-2d19-4f98-969d-62dbc7c6c797",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "print local_vMId",
+    "params": [
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_vMId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "print_0",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "3573e4dd-6c9b-4369-9f4e-76593911ef4d",
+    "name": "Timeline query",
+    "groupId": "ade84dd4-4997-4cb3-9177-fd11bfbe5217",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let crpLogs = cluster('azcrp.kusto.windows.net').database('crp_allprod').VMApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where vMId == vmid\r\n| extend startTimeStamp = PreciseTimeStamp - (durationInMilliseconds * 1ms);\r\nlet resourceName = crpLogs | take 1 | project resourceName;\r\nlet operationIds = crpLogs | project operationId;\r\nlet correlationIds = crpLogs | project correlationId;\r\nlet crpPostGoalStateLogs = ContextActivity\r\n| union VmssVMGoalSeekingActivity\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where activityId in (operationIds)\r\n| where message contains \"posting\" and message contains toscalar(resourceName)\r\n| where vMName == \"\" or vMName == toscalar(resourceName)\r\n| project PreciseTimeStamp, Message=message, Source=\"CRPPostGoalStateEvents\";\r\nlet crpNotificationLogs = ApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where requestEntity == vmid\r\n| where operationName contains \"OnNodeGoalComplementsStatus\" and operationName !contains \"Detached\"\r\n| extend req = parse_json(requestEntity)\r\n| extend\r\n    GoalAchieved                = tobool(req.GoalAchieved),\r\n    GoalStateLocatorsRevision   = toint(req.GoalStateLocatorsRevision),\r\n    SvdVersion                  = toint(req.SvdVersion),\r\n    VMIncarnationNumber         = toint(req.VMIncarnationNumber),\r\n    ContainerId                 = tostring(req.ContainerId),\r\n    MessageTick                 = tolong(req.MessageTick)\r\n| mv-apply meta = req.CorrelationMetadata to typeof(dynamic) on (\r\n    where meta.Key == \"CRPActivityId\"\r\n    | summarize CRPActivityId = any(meta.Value)\r\n)\r\n| project\r\n    PreciseTimeStamp, Message=requestEntity, Source=\"CRPNotificationEvents\";\r\nlet correlationId = correlationIds | take 1;\r\nlet nodeServiceLogs = cluster('azcore.centralus').database('Fa').NodeServiceEventEtwTable\r\n//| where Message contains vmid\r\n| where NodeId == \"62d56ee0-21a5-af5e-5574-cc9dc4498c75\"\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where (Message contains vmid and Message contains \"Updating locator path\" or Message contains \"Updated goal locators on - \") or (Message contains toscalar(correlationId))\r\n| project PreciseTimeStamp, Message, Source=\"NodeServiceEvents\";\r\nlet nodeServiceMadariLogs = cluster('azcore.centralus').database('Fa').NodeServiceMadariEventsEtwTable\r\n//| where Message contains vmid\r\n| where ContextSelector contains vmid\r\n| where NodeId == \"62d56ee0-21a5-af5e-5574-cc9dc4498c75\"\r\n| where Message contains \"Type:\"\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| project PreciseTimeStamp, Message=strcat(\"ctxsel: \", ContextSelector, \" relpath: \", RelativePath, \" | Message: \" , Message), Source=\"NodeServiceMadariEvents\";\r\n//| where Message contains \"Updating locator path\" or Message contains \"Updated goal locators on - \"\r\n//| project PreciseTimeStamp, Pid, NodeId, Message;\r\ncrpPostGoalStateLogs\r\n| union crpNotificationLogs\r\n| union nodeServiceLogs\r\n| union nodeServiceMadariLogs\r\n| project StartTime=PreciseTimeStamp, Content=Message, Message, GroupBy=Source",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "vmid",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  },
+  {
+    "id": "9ff26827-d673-4a50-937b-743d84491d9e",
+    "name": "Unioned Logs",
+    "groupId": "42114d2f-d06c-4e6f-9802-c2cfb4c7c0ae",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let nodeid = toscalar(cluster('azcore.centralus').database('AzureCP').MycroftContainerSnapshot\r\n| where VirtualMachineUniqueId == vmid\r\n| take 1\r\n| project NodeId);\r\nlet crpLogs = cluster('azcrp.kusto.windows.net').database('crp_allprod').VMApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where vMId == vmid\r\n| extend startTimeStamp = PreciseTimeStamp - (durationInMilliseconds * 1ms);\r\nlet resourceName = crpLogs | take 1 | project resourceName;\r\nlet operationIds = crpLogs | project operationId;\r\nlet correlationIds = crpLogs | project correlationId;\r\nlet crpPostGoalStateLogs = ContextActivity\r\n| union VmssVMGoalSeekingActivity\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where activityId in (operationIds)\r\n| where message contains \"posting\" and message contains toscalar(resourceName)\r\n| where vMName == \"\" or vMName == toscalar(resourceName)\r\n| project PreciseTimeStamp, Message=message, Source=\"CRPPostGoalStateEvents\";\r\nlet crpNotificationLogs = ApiQosEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where requestEntity == vmid\r\n| where operationName contains \"OnNodeGoalComplementsStatus\" and operationName !contains \"Detached\"\r\n| extend req = parse_json(requestEntity)\r\n| extend\r\n    GoalAchieved                = tobool(req.GoalAchieved),\r\n    GoalStateLocatorsRevision   = toint(req.GoalStateLocatorsRevision),\r\n    SvdVersion                  = toint(req.SvdVersion),\r\n    VMIncarnationNumber         = toint(req.VMIncarnationNumber),\r\n    ContainerId                 = tostring(req.ContainerId),\r\n    MessageTick                 = tolong(req.MessageTick)\r\n| mv-apply meta = req.CorrelationMetadata to typeof(dynamic) on (\r\n    where meta.Key == \"CRPActivityId\"\r\n    | summarize CRPActivityId = any(meta.Value)\r\n)\r\n| project\r\n    PreciseTimeStamp, Message=requestEntity, Source=\"CRPNotificationEvents\";\r\nlet correlationId = correlationIds | take 1;\r\nlet nodeServiceLogs = cluster('azcore.centralus').database('Fa').NodeServiceEventEtwTable\r\n| where NodeId == nodeid\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| where (Message contains vmid and Message contains \"Updating locator path\" or Message contains \"Updated goal locators on - \") or (Message contains toscalar(correlationId))\r\n| project PreciseTimeStamp, Message, Source=\"NodeServiceEvents\";\r\nlet nodeServiceMadariLogs = cluster('azcore.centralus').database('Fa').NodeServiceMadariEventsEtwTable\r\n| where ContextSelector contains vmid\r\n| where NodeId == nodeid\r\n| where Message contains \"Type:\"\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| project PreciseTimeStamp, Message=strcat(\"ctxsel: \", ContextSelector, \" relpath: \", RelativePath, \" | Message: \" , Message), Source=\"NodeServiceMadariEvents\";\r\nlet nodeServiceHostProxyEnqueueRawLogs = cluster('azcore.centralus').database('Fa').NodeServiceHostProxyEtwTable\r\n| where Message contains vmid\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| parse Message with * \"[request_id=\" RequestId \"][\" *;\r\nlet nodeServiceHostProxyEnqueueLogs = nodeServiceHostProxyEnqueueRawLogs\r\n| project PreciseTimeStamp, Message, Source=\"NodeServiceHostProxyEtwTable\";\r\nlet requestIds = nodeServiceHostProxyEnqueueRawLogs | project RequestId;\r\nlet nodeServiceHostProxySentLogs = cluster('azcore.centralus').database('Fa').NodeServiceHostProxyEtwTable\r\n| where Message contains \"Successfully sent\"\r\n| where NodeId == nodeid\r\n| where PreciseTimeStamp between (queryFrom..queryTo)\r\n| parse Message with * \"[request_id=\" RequestId \"][\" *\r\n| where RequestId in (requestIds)\r\n| project PreciseTimeStamp, Message, Source=\"NodeServiceHostProxyEtwTable\";\r\ncrpPostGoalStateLogs\r\n| union crpNotificationLogs\r\n| union nodeServiceLogs\r\n| union nodeServiceMadariLogs\r\n| union nodeServiceHostProxyEnqueueLogs\r\n| union nodeServiceHostProxySentLogs\r\n| project PreciseTimeStamp, Source, Message",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "vmid",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Source",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NodeService"
+  }
+]

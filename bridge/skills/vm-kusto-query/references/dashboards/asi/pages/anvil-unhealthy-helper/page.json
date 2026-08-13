@@ -1,0 +1,407 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "dd752853-73fe-428e-ba31-9637a6b1147c",
+  "description": "page to capture all the common telemetry used to analyze unhealthy instance.",
+  "parentGroupId": "1aa650f9-0ce2-46b9-a8b9-ee80f2f4ccb0",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "948d7202-87bc-4a1f-b61f-7238c651a90a",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "Unhealthy Reason",
+      "gridColumns": 12
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "975af58f-b4da-485b-9f8a-7f080e71e952",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": ""
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "f2e7a8f2-29ec-4699-9090-e7d78e478efe",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12
+            },
+            "children": [
+              {
+                "type": "Timeline",
+                "id": "5bfc3f4d-5b42-4f2d-9174-58b2c1f7ec7d",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Node Timeline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "1e4707da-befb-4912-a6be-1c95ca0ca9d2",
+                    "idForPopups": "1e4707da-befb-4912-a6be-1c95ca0ca9d2",
+                    "groupId": "96dbbe51-0310-4d2b-a53b-86fd82f9f612",
+                    "majorVersion": 2,
+                    "minorVersion": 0,
+                    "serviceId": "Anvil Unhealthy",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "global_time_selector",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "st",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "global_time_selector",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "et",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "nId",
+                        "externalSourceName": "NodeId",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "Timeline",
+                "id": "7c373389-0b40-44d6-953c-7c80edd991e3",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Anvil Request Timeline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "a0983b29-55a0-4152-80c1-b2fc0c726f96",
+                    "idForPopups": "a0983b29-55a0-4152-80c1-b2fc0c726f96",
+                    "groupId": "fefe5b27-9174-4593-92ae-7462e756aa92",
+                    "majorVersion": 2,
+                    "minorVersion": 0,
+                    "serviceId": "Anvil Unhealthy",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "global_time_selector",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "st",
+                        "externalSourceName": "globalFrom",
+                        "required": false
+                      },
+                      {
+                        "source": "global_time_selector",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "et",
+                        "externalSourceName": "globalTo",
+                        "required": false
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "nId",
+                        "externalSourceName": "NodeId",
+                        "required": false
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "DelayedLoader",
+                "id": "875ef526-c404-419e-9870-aa798de1090b",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": ""
+                },
+                "children": [
+                  {
+                    "type": "Table",
+                    "id": "1551bb08-54af-48ea-82eb-a727faa51e46",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Node snapshot"
+                    },
+                    "children": [],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [
+                      {
+                        "id": "b29f8ab5-9c52-4898-a833-b61c740f5f76",
+                        "idForPopups": "b29f8ab5-9c52-4898-a833-b61c740f5f76",
+                        "groupId": "00d7b105-1f3f-4122-adda-bb2739194b08",
+                        "majorVersion": 2,
+                        "minorVersion": 0,
+                        "serviceId": "Anvil Unhealthy",
+                        "allowMultipleSelection": false,
+                        "inputMappings": [
+                          {
+                            "source": "global_time_selector",
+                            "majorVersion": 0,
+                            "minorVersion": 0,
+                            "internalDestinationName": "st",
+                            "externalSourceName": "globalFrom",
+                            "required": false
+                          },
+                          {
+                            "source": "global_time_selector",
+                            "majorVersion": 0,
+                            "minorVersion": 0,
+                            "internalDestinationName": "et",
+                            "externalSourceName": "globalTo",
+                            "required": false
+                          },
+                          {
+                            "source": "page",
+                            "majorVersion": 0,
+                            "minorVersion": 0,
+                            "internalDestinationName": "nId",
+                            "externalSourceName": "NodeId",
+                            "required": false
+                          }
+                        ],
+                        "aggregationRule": {
+                          "type": "Append"
+                        }
+                      }
+                    ],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {
+                  "text": "Fabric Node details"
+                },
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "DelayedLoader",
+                "id": "6cdd1051-2131-44ee-9e32-0962020e75f8",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": ""
+                },
+                "children": [
+                  {
+                    "type": "Table",
+                    "id": "4becdbd0-3cd2-4bb3-aa12-c1f7baa9f0d0",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Anvil Resource Events"
+                    },
+                    "children": [],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [
+                      {
+                        "id": "996d793c-3e31-471e-bbe5-012b4ca5fb77",
+                        "idForPopups": "996d793c-3e31-471e-bbe5-012b4ca5fb77",
+                        "groupId": "72489ddf-3e50-4ff3-b5e7-b71dff9f3521",
+                        "majorVersion": 1,
+                        "minorVersion": 0,
+                        "serviceId": "Anvil Unhealthy",
+                        "allowMultipleSelection": false,
+                        "inputMappings": [
+                          {
+                            "source": "global_time_selector",
+                            "majorVersion": 0,
+                            "minorVersion": 0,
+                            "internalDestinationName": "st",
+                            "externalSourceName": "globalFrom",
+                            "required": false
+                          },
+                          {
+                            "source": "global_time_selector",
+                            "majorVersion": 0,
+                            "minorVersion": 0,
+                            "internalDestinationName": "et",
+                            "externalSourceName": "globalTo",
+                            "required": false
+                          },
+                          {
+                            "source": "page",
+                            "majorVersion": 0,
+                            "minorVersion": 0,
+                            "internalDestinationName": "nId",
+                            "externalSourceName": "NodeId",
+                            "required": false
+                          }
+                        ],
+                        "aggregationRule": {
+                          "type": "Append"
+                        }
+                      }
+                    ],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {
+                  "text": "Anvil Node Details"
+                },
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 15,
+  "basedOnVersionId": "6bb80b82-b3ce-4838-9115-33b229e7f9c2",
+  "groupId": "d05d587f-2feb-4750-af12-6b3991b7c7ec",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "NodeId",
+      "description": "Azure Node Id",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "Anvil Unhealthy",
+      "groupId": "96dbbe51-0310-4d2b-a53b-86fd82f9f612",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Anvil Unhealthy",
+      "groupId": "fefe5b27-9174-4593-92ae-7462e756aa92",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Anvil Unhealthy",
+      "groupId": "00d7b105-1f3f-4122-adda-bb2739194b08",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "Anvil Unhealthy",
+      "groupId": "72489ddf-3e50-4ff3-b5e7-b71dff9f3521",
+      "entityType": "Query"
+    }
+  ],
+  "serviceId": "Anvil Unhealthy",
+  "deleted": false,
+  "name": "Unhealthy Helper",
+  "_ts": 1691190039,
+  "databaseSavedTimestamp": "2023-08-04T23:00:39+00:00",
+  "_etag": "\"0100ffe5-0000-0800-0000-64cd83170000\"",
+  "createdAt": "2023-08-04T23:00:39.475499+00:00",
+  "createdBy": "sheagra@microsoft.com",
+  "createdByUserType": "Unknown",
+  "modifiedBy": "sheagra@microsoft.com",
+  "modifiedByUserType": "Unknown",
+  "savedAt": "2023-08-04T23:00:39.475499+00:00",
+  "tags": [
+    "Unhealth",
+    "aplat",
+    "livesite",
+    "node"
+  ]
+}

@@ -1,0 +1,1691 @@
+[
+  {
+    "id": "49533fa8-8552-46cc-90a9-595b1494e694",
+    "name": "Retrieve Resource \"Load Balancer\"",
+    "groupId": "3edfd948-edf1-4801-99f5-0c1ac912f42b",
+    "majorVersion": 1,
+    "minorVersion": 5,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let idMatch = strcat(\"/subscriptions/\", local_subscriptionId, \"/resourceGroups/\", local_resourceGroup, \"/providers/Microsoft.Network/loadBalancers/\", local_name);\r\ncluster('argwus2nrpone.westus2.kusto.windows.net').database('AzureResourceGraph').Resources\r\n| where isempty(local_timestamp) or timestamp between(datetime_add('hour', -1, local_timestamp) .. datetime_add('hour', 1, local_timestamp))\r\n| where resourceGroup =~ local_resourceGroup and subscriptionId =~ local_subscriptionId\r\n| where type == \"microsoft.network/loadbalancers\" and not(partial)\r\n| where id =~ idMatch and not(deleted)\r\n| top 1 by timestamp desc\r\n| extend provisioningState = properties.provisioningState\r\n| extend resourceGuid = properties.resourceGuid\r\n| project-away properties\r\n",
+    "params": [
+      {
+        "name": "local_name",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_resourceGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_timestamp",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "provisioningState",
+        "type": "dynamic"
+      },
+      {
+        "name": "resourceGuid",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "8fcdd948-7dd4-481d-8243-450268616ccb",
+    "name": "SLB - Front End IP Configurations",
+    "groupId": "178647fe-c9c7-4d75-a9f1-29caf8cf4e39",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let idMatch = strcat(\"/subscriptions/\", querySub, \"/resourceGroups/\", queryGroup, \"/providers/Microsoft.Network/loadBalancers/\", queryName);\r\ncluster('argwus2nrpone.westus2.kusto.windows.net').database('AzureResourceGraph').Resources\r\n| where isempty(queryTime) or timestamp between(datetime_add('hour', -1, queryTime) .. datetime_add('hour', 1, queryTime))\r\n| where resourceGroup =~ queryGroup and subscriptionId =~ querySub\r\n| where type == \"microsoft.network/loadbalancers\" and not(partial)\r\n| where id =~ idMatch and not(deleted)\r\n| top 1 by timestamp desc\r\n| mv-expand fe_ip = properties.frontendIPConfigurations\r\n| extend id = fe_ip.id\r\n| extend name = fe_ip.name\r\n| extend etag = fe_ip.etag\r\n| extend type = fe_ip.type\r\n| extend fe_props = fe_ip.properties\r\n| extend provisioningState = fe_props.provisioningState\r\n| extend privateIPAllocationMethod = fe_props.privateIPAllocationMethod\r\n| extend publicIPAddress_id = fe_props.publicIPAddress.id\r\n| parse publicIPAddress_id with \"/subscriptions/\" publicIPAddress_sub \"/resourceGroups/\" publicIPAddress_rg \"/providers/Microsoft.Network/publicIPAddresses/\" publicIPAddress_name\r\n| extend loadBalancingRules = fe_props.loadBalancingRules\r\n| extend outboundRules = fe_props.outboundRules\r\n| project-away fe_ip, properties, fe_props",
+    "params": [
+      {
+        "name": "querySub",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "id",
+        "type": "dynamic"
+      },
+      {
+        "name": "name",
+        "type": "dynamic"
+      },
+      {
+        "name": "type",
+        "type": "dynamic"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "etag",
+        "type": "dynamic"
+      },
+      {
+        "name": "provisioningState",
+        "type": "dynamic"
+      },
+      {
+        "name": "privateIPAllocationMethod",
+        "type": "dynamic"
+      },
+      {
+        "name": "publicIPAddress_id",
+        "type": "dynamic"
+      },
+      {
+        "name": "publicIPAddress_sub",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddress_rg",
+        "type": "string"
+      },
+      {
+        "name": "publicIPAddress_name",
+        "type": "string"
+      },
+      {
+        "name": "loadBalancingRules",
+        "type": "dynamic"
+      },
+      {
+        "name": "outboundRules",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "68111dd1-e54f-42f1-8879-646f2bface5b",
+    "name": "SLB - Probes",
+    "groupId": "9737beeb-2c28-4413-84b3-147839023f86",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let idMatch = strcat(\"/subscriptions/\", querySub, \"/resourceGroups/\", queryGroup, \"/providers/Microsoft.Network/loadBalancers/\", queryName);\r\ncluster('argwus2nrpone.westus2.kusto.windows.net').database('AzureResourceGraph').Resources\r\n| where isempty(queryTime) or timestamp between(datetime_add('hour', -1, queryTime) .. datetime_add('hour', 1, queryTime))\r\n| where resourceGroup =~ queryGroup and subscriptionId =~ querySub\r\n| where type == \"microsoft.network/loadbalancers\" and not(partial)\r\n| where id =~ idMatch and not(deleted)\r\n| top 1 by timestamp desc\r\n| mv-expand probe = properties.probes\r\n| extend id = tostring(probe.id)\r\n| extend name = tostring(probe.name)\r\n| extend etag = tostring(probe.etag)\r\n| extend type = tostring(probe.type)\r\n| extend probe_props = probe.properties\r\n| extend provisioningState = tostring(probe_props.provisioningState)\r\n| extend protocol = tostring(probe_props.protocol)\r\n| extend loadBalancingRules = probe_props.loadBalancingRules\r\n| extend port = toint(probe_props.port)\r\n| extend intervalInSeconds = toint(probe_props.intervalInSeconds)\r\n| extend numberOfProbes = toint(probe_props.numberOfProbes)\r\n| extend probeThreshold = toint(probe_props.probeThreshold)\r\n| project-away probe, probe_props, properties\r\n",
+    "params": [
+      {
+        "name": "querySub",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "etag",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "protocol",
+        "type": "string"
+      },
+      {
+        "name": "loadBalancingRules",
+        "type": "dynamic"
+      },
+      {
+        "name": "port",
+        "type": "int"
+      },
+      {
+        "name": "intervalInSeconds",
+        "type": "int"
+      },
+      {
+        "name": "numberOfProbes",
+        "type": "int"
+      },
+      {
+        "name": "probeThreshold",
+        "type": "int"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "0b9e369f-61d2-475a-8fec-46ab790e1cde",
+    "name": "SLB - Outbound Rules",
+    "groupId": "f6e63b42-fd8e-4b4d-a9f0-d820bf682a34",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let idMatch = strcat(\"/subscriptions/\", querySub, \"/resourceGroups/\", queryGroup, \"/providers/Microsoft.Network/loadBalancers/\", queryName);\r\ncluster('argwus2nrpone.westus2.kusto.windows.net').database('AzureResourceGraph').Resources\r\n| where isempty(queryTime) or timestamp between(datetime_add('hour', -1, queryTime) .. datetime_add('hour', 1, queryTime))\r\n| where resourceGroup =~ queryGroup and subscriptionId =~ querySub\r\n| where type == \"microsoft.network/loadbalancers\" and not(partial)\r\n| where id =~ idMatch and not(deleted)\r\n| top 1 by timestamp desc\r\n| mv-expand rule = properties.outboundRules\r\n| extend id = tostring(rule.id)\r\n| extend name = tostring(rule.name)\r\n| extend etag = tostring(rule.etag)\r\n| extend type = tostring(rule.type)\r\n| extend rule_props = rule.properties\r\n| extend provisioningState = tostring(rule_props.provisioningState)\r\n| extend idleTimeoutInMinutes = toint(rule_props.idleTimeoutInMinutes)\r\n| extend protocol = tostring(rule_props.protocol)\r\n| extend enableTcpReset = tobool(rule_props.enableTcpReset)\r\n| extend allocatedOutboundPorts = toint(rule_props.allocatedOutboundPorts)\r\n| extend backendAddressPool_id = tostring(rule_props.backendAddressPool.id)\r\n| extend backendAddressPool_name= tostring(split(backendAddressPool_id, \"/\")[-1])\r\n| extend frontendIPConfigurations = rule_props.frontendIPConfigurations\r\n| project-away rule, rule_props, properties\r\n",
+    "params": [
+      {
+        "name": "querySub",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "etag",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "int"
+      },
+      {
+        "name": "protocol",
+        "type": "string"
+      },
+      {
+        "name": "enableTcpReset",
+        "type": "bool"
+      },
+      {
+        "name": "allocatedOutboundPorts",
+        "type": "int"
+      },
+      {
+        "name": "backendAddressPool_id",
+        "type": "string"
+      },
+      {
+        "name": "backendAddressPool_name",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfigurations",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "280c749e-677e-4218-b376-03f1d0920ba2",
+    "name": "SLB - Load Balancing Rules",
+    "groupId": "18b6d41d-5eaf-4448-aa4b-8407199cc032",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let idMatch = strcat(\"/subscriptions/\", querySub, \"/resourceGroups/\", queryGroup, \"/providers/Microsoft.Network/loadBalancers/\", queryName);\r\ncluster('argwus2nrpone.westus2.kusto.windows.net').database('AzureResourceGraph').Resources\r\n| where isempty(queryTime) or timestamp between(datetime_add('hour', -1, queryTime) .. datetime_add('hour', 1, queryTime))\r\n| where resourceGroup =~ queryGroup and subscriptionId =~ querySub\r\n| where type == \"microsoft.network/loadbalancers\" and not(partial)\r\n| where id =~ idMatch and not(deleted)\r\n| top 1 by timestamp desc\r\n| mv-expand rule = properties.loadBalancingRules\r\n| extend id = tostring(rule.id)\r\n| extend name = tostring(rule.name)\r\n| extend etag = tostring(rule.etag)\r\n| extend type = tostring(rule.type)\r\n| extend rule_props = rule.properties\r\n| extend provisioningState = tostring(rule_props.provisioningState)\r\n| extend idleTimeoutInMinutes = toint(rule_props.idleTimeoutInMinutes)\r\n| extend backendAddressPools = rule_props.backendAddressPools\r\n| extend protocol = tostring(rule_props.protocol)\r\n| extend enableTcpReset = tobool(rule_props.enableTcpReset)\r\n| extend backendAddressPool_id = tostring(rule_props.backendAddressPool.id)\r\n| extend backendAddressPool_name= tostring(split(backendAddressPool_id, \"/\")[-1])\r\n| extend frontendIPConfiguration_id = tostring(rule_props.frontendIPConfiguration.id)\r\n| extend frontendIPConfiguration_name= tostring(split(frontendIPConfiguration_id, \"/\")[-1])\r\n| extend frontendPort = toint(rule_props.frontendPort)\r\n| extend backendPort = toint(rule_props.backendPort)\r\n| extend enableFloatingIP = tobool(rule_props.enableFloatingIP)\r\n| extend enableDestinationServiceEndpoint = tobool(rule_props.enableDestinationServiceEndpoint)\r\n| extend allowBackendPortConflict = tobool(rule_props.allowBackendPortConflict)\r\n| extend loadDistribution = tostring(rule_props.loadDistribution)\r\n| extend probe_id = tostring(rule_props.probe.id)\r\n| extend probe_name= tostring(split(probe_id, \"/\")[-1])\r\n| project-away rule, rule_props, properties\r\n",
+    "params": [
+      {
+        "name": "querySub",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "etag",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "int"
+      },
+      {
+        "name": "backendAddressPools",
+        "type": "dynamic"
+      },
+      {
+        "name": "protocol",
+        "type": "string"
+      },
+      {
+        "name": "enableTcpReset",
+        "type": "bool"
+      },
+      {
+        "name": "backendAddressPool_id",
+        "type": "string"
+      },
+      {
+        "name": "backendAddressPool_name",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfiguration_id",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfiguration_name",
+        "type": "string"
+      },
+      {
+        "name": "frontendPort",
+        "type": "int"
+      },
+      {
+        "name": "backendPort",
+        "type": "int"
+      },
+      {
+        "name": "enableFloatingIP",
+        "type": "bool"
+      },
+      {
+        "name": "enableDestinationServiceEndpoint",
+        "type": "bool"
+      },
+      {
+        "name": "allowBackendPortConflict",
+        "type": "bool"
+      },
+      {
+        "name": "loadDistribution",
+        "type": "string"
+      },
+      {
+        "name": "probe_id",
+        "type": "string"
+      },
+      {
+        "name": "probe_name",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "a4e4fa51-4029-46ad-b9be-2db609beb750",
+    "name": "SLB - Inbound Nat Rules",
+    "groupId": "2fda73d5-3273-43b7-9343-dc02b1b57b52",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let idMatch = strcat(\"/subscriptions/\", querySub, \"/resourceGroups/\", queryGroup, \"/providers/Microsoft.Network/loadBalancers/\", queryName);\r\ncluster('argwus2nrpone.westus2.kusto.windows.net').database('AzureResourceGraph').Resources\r\n| where isempty(queryTime) or timestamp between(datetime_add('hour', -1, queryTime) .. datetime_add('hour', 1, queryTime))\r\n| where resourceGroup =~ queryGroup and subscriptionId =~ querySub\r\n| where type == \"microsoft.network/loadbalancers\" and not(partial)\r\n| where id =~ idMatch and not(deleted)\r\n| top 1 by timestamp desc\r\n| project JSON = parse_json(properties)\r\n| mv-expand rule = JSON.inboundNatRules\r\n| extend id = tostring(rule.id)\r\n| extend name = tostring(rule.name)\r\n| extend etag = tostring(rule.etag)\r\n| extend type = tostring(rule.type)\r\n| extend properties = rule.properties\r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| extend idleTimeoutInMinutes = toint(properties.idleTimeoutInMinutes)\r\n| extend protocol = tostring(properties.protocol)\r\n| extend frontendIPConfiguration_id = tostring(properties.frontendIPConfiguration.id)\r\n| extend frontendIPConfiguration_name= tostring(split(frontendIPConfiguration_id, \"/\")[-1])\r\n| extend frontendPort = toint(properties.frontendPort)\r\n| extend backendPort = toint(properties.backendPort)\r\n| extend enableFloatingIP = tobool(properties.enableFloatingIP)\r\n| extend enableDestinationServiceEndpoint = tobool(properties.enableDestinationServiceEndpoint)\r\n| extend enableTcpReset = tobool(properties.enableTcpReset)\r\n| extend allowBackendPortConflict = tobool(properties.allowBackendPortConflict)\r\n| project-away rule, JSON, properties",
+    "params": [
+      {
+        "name": "querySub",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryGroup",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "etag",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "int"
+      },
+      {
+        "name": "protocol",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfiguration_id",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfiguration_name",
+        "type": "string"
+      },
+      {
+        "name": "frontendPort",
+        "type": "int"
+      },
+      {
+        "name": "backendPort",
+        "type": "int"
+      },
+      {
+        "name": "enableFloatingIP",
+        "type": "bool"
+      },
+      {
+        "name": "enableDestinationServiceEndpoint",
+        "type": "bool"
+      },
+      {
+        "name": "enableTcpReset",
+        "type": "bool"
+      },
+      {
+        "name": "allowBackendPortConflict",
+        "type": "bool"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "5ed65413-15a2-4d7f-8e17-1806a918cced",
+    "name": "SLB - Inbound NAT Pools",
+    "groupId": "6d6a0160-031b-4060-baa8-a3da92e1b2cf",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let idMatch = strcat(\"/subscriptions/\", querySub, \"/resourceGroups/\", queryGroup, \"/providers/Microsoft.Network/loadBalancers/\", queryName);\r\ncluster('argwus2nrpone.westus2.kusto.windows.net').database('AzureResourceGraph').Resources\r\n| where isempty(queryTime) or timestamp between(datetime_add('hour', -1, queryTime) .. datetime_add('hour', 1, queryTime))\r\n| where resourceGroup =~ queryGroup and subscriptionId =~ querySub\r\n| where type == \"microsoft.network/loadbalancers\" and not(partial)\r\n| where id =~ idMatch and not(deleted)\r\n| top 1 by timestamp desc\r\n| project JSON = parse_json(properties)\r\n| mv-expand rule = JSON.inboundNatPools\r\n| extend id = tostring(rule.id)\r\n| extend name = tostring(rule.name)\r\n| extend etag = tostring(rule.etag)\r\n| extend type = tostring(rule.type)\r\n| extend properties = rule.properties\r\n| extend provisioningState = tostring(properties.provisioningState)\r\n| extend idleTimeoutInMinutes = toint(properties.idleTimeoutInMinutes)\r\n| extend protocol = tostring(properties.protocol)\r\n| extend frontendIPConfiguration_id = tostring(properties.frontendIPConfiguration.id)\r\n| extend frontendIPConfiguration_name= tostring(split(frontendIPConfiguration_id, \"/\")[-1])\r\n| extend backendPort = toint(properties.backendPort)\r\n| extend enableFloatingIP = tobool(properties.enableFloatingIP)\r\n| extend enableDestinationServiceEndpoint = tobool(properties.enableDestinationServiceEndpoint)\r\n| extend enableTcpReset = tobool(properties.enableTcpReset)\r\n| extend allowBackendPortConflict = tobool(properties.allowBackendPortConflict)\r\n| extend frontendPortRangeStart = toint(properties.frontendPortRangeStart)\r\n| extend frontendPortRangeEnd = toint(properties.frontendPortRangeEnd)\r\n| project-away rule, JSON, properties\r\n",
+    "params": [
+      {
+        "name": "querySub",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryGroup",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryName",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "etag",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "idleTimeoutInMinutes",
+        "type": "int"
+      },
+      {
+        "name": "protocol",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfiguration_id",
+        "type": "string"
+      },
+      {
+        "name": "frontendIPConfiguration_name",
+        "type": "string"
+      },
+      {
+        "name": "backendPort",
+        "type": "int"
+      },
+      {
+        "name": "enableFloatingIP",
+        "type": "bool"
+      },
+      {
+        "name": "enableDestinationServiceEndpoint",
+        "type": "bool"
+      },
+      {
+        "name": "enableTcpReset",
+        "type": "bool"
+      },
+      {
+        "name": "allowBackendPortConflict",
+        "type": "bool"
+      },
+      {
+        "name": "frontendPortRangeStart",
+        "type": "int"
+      },
+      {
+        "name": "frontendPortRangeEnd",
+        "type": "int"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "beeaa55e-596f-48f6-819e-37e715d809d7",
+    "name": "SLB - Backend Address Pools",
+    "groupId": "29674c01-e188-4d44-af39-ff89e9385b52",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "argwus2nrpone.westus2.kusto.windows.net",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let idMatch = strcat(\"/subscriptions/\", querySub, \"/resourceGroups/\", queryGroup, \"/providers/Microsoft.Network/loadBalancers/\", queryName);\r\ncluster('argwus2nrpone.westus2.kusto.windows.net').database('AzureResourceGraph').Resources\r\n| where isempty(queryTime) or timestamp between(datetime_add('hour', -1, queryTime) .. datetime_add('hour', 1, queryTime))\r\n| where resourceGroup =~ queryGroup and subscriptionId =~ querySub\r\n| where type == \"microsoft.network/loadbalancers\" and not(partial)\r\n| where id =~ idMatch and not(deleted)\r\n| top 1 by timestamp desc\r\n| mv-expand pool = properties.backendAddressPools\r\n| extend id = tostring(pool.id)\r\n| extend name = tostring(pool.name)\r\n| extend etag = tostring(pool.etag)\r\n| extend type = tostring(pool.type)\r\n| extend pool_props = pool.properties\r\n| extend provisioningState = tostring(pool_props.provisioningState)\r\n| extend loadBalancerBackendAddresses = pool_props.loadBalancerBackendAddresses\r\n| extend backendIPConfigurations = pool_props.backendIPConfigurations\r\n| extend loadBalancingRules = pool_props.loadBalancingRules\r\n| project-away pool, properties, pool_props\r\n",
+    "params": [
+      {
+        "name": "querySub",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryGroup",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTime",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "tenantId",
+        "type": "string"
+      },
+      {
+        "name": "kind",
+        "type": "string"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "managedBy",
+        "type": "string"
+      },
+      {
+        "name": "apiVersion",
+        "type": "string"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "plan",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "subResourceGroup",
+        "type": "string"
+      },
+      {
+        "name": "aliases",
+        "type": "dynamic"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "storeUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "routingType",
+        "type": "int"
+      },
+      {
+        "name": "partial",
+        "type": "bool"
+      },
+      {
+        "name": "identity",
+        "type": "dynamic"
+      },
+      {
+        "name": "zones",
+        "type": "dynamic"
+      },
+      {
+        "name": "scopeType",
+        "type": "int"
+      },
+      {
+        "name": "scopeId",
+        "type": "string"
+      },
+      {
+        "name": "extendedLocation",
+        "type": "dynamic"
+      },
+      {
+        "name": "systemData",
+        "type": "dynamic"
+      },
+      {
+        "name": "rowSize",
+        "type": "long"
+      },
+      {
+        "name": "etag",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "string"
+      },
+      {
+        "name": "loadBalancerBackendAddresses",
+        "type": "dynamic"
+      },
+      {
+        "name": "backendIPConfigurations",
+        "type": "dynamic"
+      },
+      {
+        "name": "loadBalancingRules",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "7a5e1fc8-0696-4e9c-86f7-c786098ce3c9",
+    "name": "Load Balancer Operation Timeline",
+    "groupId": "51ce16f1-649a-46a7-9f69-acdc26bd69c7",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp",
+    "database": "mdsnrp",
+    "type": "Timeline",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"nrp.kusto.windows.net\").database(\"mdsnrp\").QosEtwEvent\r\n| where PreciseTimeStamp between(queryFrom..queryTo) \r\n| where ResourceName =~ queryResourceName and ResourceGroup =~ queryResourceGroupName and SubscriptionId == querySubscriptionId \r\n| where ResourceType == \"loadBalancers\" and HttpMethod != \"GET\"\r\n| project todatetime(StartTime), Content = OperationName, OperationId, CorrelationRequestId, NRPGatewayRequestId, ClientOperationId, \r\n    DurationInMilliseconds, Success, ErrorCode, ErrorDetails, InternalErrorCode\r\n| summarize take_any(*) by OperationId\r\n| extend Health = iff(Success, \"\", \"Unhealthy\")",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-12T07:00:00.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-09-14T01:09:06.518Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "querySubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryResourceGroupName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryResourceName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "NRPGatewayRequestId",
+        "type": "string"
+      },
+      {
+        "name": "ClientOperationId",
+        "type": "string"
+      },
+      {
+        "name": "DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "InternalErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "63dd6b68-c7b4-412b-98af-45d181b2a5dd",
+    "name": "Load Balancer Snapshots",
+    "groupId": "db9eb51c-241b-4a91-b645-1d84da716622",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "argwus2nrpone.westus2",
+    "database": "AzureResourceGraph",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster(\"argwus2nrpone.westus2.kusto.windows.net\").database(\"AzureResourceGraph\").Resources\r\n| where timestamp between(datetime_add('day', -1, queryFrom) .. queryTo)\r\n| where id =~ queryId and subscriptionId =~ querySubscriptionId\r\n| where not(partial)\r\n| extend JSON = properties\r\n| extend provisioningState = JSON.provisioningState\r\n| extend resourceGuid = JSON.resourceGuid\r\n| order by timestamp desc\r\n// because we are descending, we need next instead\r\n| extend PreviousJSON = next(properties)\r\n| project-away properties\r\n| project timestamp, deleted, source, provisioningState, type, rowId, JSON, PreviousJSON, sku, tags\r\n| where strlen(tostring(JSON)) != strlen(tostring(PreviousJSON))",
+    "params": [
+      {
+        "name": "querySubscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "timestamp",
+        "type": "datetime"
+      },
+      {
+        "name": "deleted",
+        "type": "bool"
+      },
+      {
+        "name": "source",
+        "type": "string"
+      },
+      {
+        "name": "provisioningState",
+        "type": "dynamic"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "rowId",
+        "type": "string"
+      },
+      {
+        "name": "JSON",
+        "type": "dynamic"
+      },
+      {
+        "name": "PreviousJSON",
+        "type": "dynamic"
+      },
+      {
+        "name": "sku",
+        "type": "dynamic"
+      },
+      {
+        "name": "tags",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

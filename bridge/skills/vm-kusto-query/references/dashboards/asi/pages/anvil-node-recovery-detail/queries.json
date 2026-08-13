@@ -1,0 +1,415 @@
+[
+  {
+    "id": "85259c6d-deec-4de7-9c7b-04256cba9d1a",
+    "name": "LogNodeSnapshot Query",
+    "groupId": "00d7b105-1f3f-4122-adda-bb2739194b08",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('hawkeyekustocluster.centralus.kusto.windows.net').database('AzureCM').LogNodeSnapshot\r\n| where PreciseTimeStamp between (st ..et ) and nodeId == nId\r\n| project PreciseTimeStamp, nodeState, nodeAvailabilityState, aliveContainerCount, containerCount, isNodeBugCheckIsolated, isIsolated, isOffline, isMaintenanceOs, faultInfo\r\n| sort by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "st",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-02T21:28:38.093Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "et",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-08-03T21:28:38.093Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "nodeState",
+        "type": "string"
+      },
+      {
+        "name": "nodeAvailabilityState",
+        "type": "string"
+      },
+      {
+        "name": "aliveContainerCount",
+        "type": "long"
+      },
+      {
+        "name": "containerCount",
+        "type": "string"
+      },
+      {
+        "name": "isNodeBugCheckIsolated",
+        "type": "string"
+      },
+      {
+        "name": "isIsolated",
+        "type": "string"
+      },
+      {
+        "name": "isOffline",
+        "type": "string"
+      },
+      {
+        "name": "isMaintenanceOs",
+        "type": "string"
+      },
+      {
+        "name": "faultInfo",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Anvil Unhealthy"
+  },
+  {
+    "id": "327afa28-b3c6-4376-8654-721c1c37e96d",
+    "name": "Anvil Repair events",
+    "groupId": "d378b9e8-6584-4c54-a686-fdbf6103697d",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('aplat.westcentralus.kusto.windows.net').database('APlat').AnvilRepairServiceForgeEvents\r\n| where PreciseTimeStamp between (st ..et ) and ResourceDependencies contains nId\r\n| project PreciseTimeStamp, TreeNodeKey, TreeActionName, Message, RequestIdentifier, Tenant\r\n| where isnotempty(Message)\r\n| sort by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "st",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-05T22:51:34.467Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "et",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-06T22:51:34.467Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "TreeNodeKey",
+        "type": "string"
+      },
+      {
+        "name": "TreeActionName",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Anvil Unhealthy"
+  },
+  {
+    "id": "6181da50-d539-4d5f-854b-fd046e89856b",
+    "name": "Node events",
+    "groupId": "44cf92eb-1d00-4874-bfc4-2cbe5d915cf3",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('hawkeyekustocluster.centralus.kusto.windows.net').database('AzureCM').TMMgmtNodeEventsEtwTable\r\n| where PreciseTimeStamp between (st ..et ) and NodeId == nId\r\n| where Message !contains \"[FCPEStateSync] \"\r\n| project PreciseTimeStamp, Message\r\n| sort by PreciseTimeStamp asc",
+    "params": [
+      {
+        "name": "st",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-30T22:05:35.487Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "et",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-31T00:05:35.487Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Anvil Unhealthy"
+  },
+  {
+    "id": "f602ee02-595c-4ec6-87d3-53e71092edc6",
+    "name": "Container Snapshot",
+    "groupId": "b68f1998-ea00-4331-84b3-d01593c940ee",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "hawkeyekustocluster.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('hawkeyekustocluster.centralus.kusto.windows.net').database('AzureCM').LogContainerHealthSnapshot\r\n| where PreciseTimeStamp between (st ..et ) and nodeId == nId\r\n| summarize arg_max(PreciseTimeStamp, *) by containerId\r\n| project PreciseTimeStamp, Tenant, containerId, nodeId, tenantName, roleInstanceName, virtualMachineUniqueId, containerState, containerOsState, containerLifecycleState, containerIsolationState, actualOperationalState\r\n| join kind=inner (cluster('hawkeyekustocluster.centralus.kusto.windows.net').database('AzureCM').LogContainerSnapshot\r\n| where PreciseTimeStamp between (st ..et ) and nodeId == nId\r\n| summarize arg_max(PreciseTimeStamp, *) by containerId\r\n| project containerId, nodeId, subscriptionId, priority, containerType) on containerId, nodeId\r\n| project PreciseTimeStamp, containerId, nodeId, roleInstanceName, subscriptionId, priority, containerType, containerState, containerOsState, containerLifecycleState, containerIsolationState, actualOperationalState\r\n",
+    "params": [
+      {
+        "name": "st",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-30T22:05:35.487Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "et",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-31T00:05:35.487Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "containerId",
+        "type": "string"
+      },
+      {
+        "name": "nodeId",
+        "type": "string"
+      },
+      {
+        "name": "roleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "subscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "priority",
+        "type": "string"
+      },
+      {
+        "name": "containerType",
+        "type": "string"
+      },
+      {
+        "name": "containerState",
+        "type": "string"
+      },
+      {
+        "name": "containerOsState",
+        "type": "string"
+      },
+      {
+        "name": "containerLifecycleState",
+        "type": "string"
+      },
+      {
+        "name": "containerIsolationState",
+        "type": "string"
+      },
+      {
+        "name": "actualOperationalState",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Anvil Unhealthy"
+  },
+  {
+    "id": "59cf54f0-a613-4a0e-8760-3ff1dc8cdbd7",
+    "name": "Node Diagnostic Detail",
+    "groupId": "1ccceca7-81f2-4a85-b4e6-bac6bcee30ea",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "aplat.westcentralus.kusto.windows.net",
+    "database": "APlat",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('aplat.westcentralus.kusto.windows.net').database('APlat').AnvilRepairServiceForgeEvents\r\n| where PreciseTimeStamp between (st ..et ) and ResourceDependencies contains nId\r\n| where TreeActionName == \"ExecuteAnvilNodeDiagnosticsAction\" and Message contains \"HasUnCorrectableErrorsInSel\"\r\n| extend Message = parse_json(Message)\r\n| project PreciseTimeStamp, TreeNodeKey, TreeActionName, Message, RequestIdentifier, Tenant, ResourceId\r\n| summarize arg_min(PreciseTimeStamp, *) by ResourceId\r\n| where isnotempty(Message)\r\n| sort by PreciseTimeStamp asc ",
+    "params": [
+      {
+        "name": "st",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-01-30T00:56:57.000Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "et",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-02-07T00:56:57.637Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "nId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "ResourceId",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "TreeNodeKey",
+        "type": "string"
+      },
+      {
+        "name": "TreeActionName",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "dynamic"
+      },
+      {
+        "name": "RequestIdentifier",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Anvil Unhealthy"
+  }
+]

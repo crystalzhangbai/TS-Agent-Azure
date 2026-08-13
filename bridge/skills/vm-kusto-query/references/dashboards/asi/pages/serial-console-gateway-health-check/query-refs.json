@@ -1,0 +1,62 @@
+[
+  {
+    "groupId": "fb9f90ab-0656-41f7-9240-0ba5057d7d00",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Gateway Health Check Failure Percentage"
+    ],
+    "widgetType": "TimeSeries",
+    "widgetTitle": "Gateway Health Check Failure Percentage",
+    "queryId": "103f6301-bc12-4788-b99b-202e52f12579",
+    "inputMappings": [
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "asi_values",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      }
+    ],
+    "name": "Gateway To RP Healthcheck",
+    "cluster": "azlinux.kusto.windows.net",
+    "database": "SerialConsole",
+    "type": "TimeSeries",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "RPTenant",
+        "type": "string"
+      },
+      {
+        "name": "ratio",
+        "type": "real"
+      },
+      {
+        "name": "healthy_time_bin",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  }
+]

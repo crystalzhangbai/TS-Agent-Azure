@@ -1,0 +1,1378 @@
+{
+  "service": "Aztec",
+  "page": "Clusters",
+  "pageId": "f7342d9c-7e6e-4453-bc02-64dc0ecea28e",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "0ba53f98-759a-4f2b-af40-48ccf9f77372",
+          "name": "Retrieve Resource \"Clusters\"",
+          "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcsupfollower",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_Tenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "cloudType",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "buildVersion",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "clusterSku",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "CloudName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "DataCenterName",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "region",
+              "type": "string"
+            },
+            {
+              "name": "availabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "SourceNodeId",
+              "type": "string"
+            },
+            {
+              "name": "hostingEnvironment",
+              "type": "string"
+            },
+            {
+              "name": "shoeboxMdmAccountName",
+              "type": "string"
+            },
+            {
+              "name": "IncarnationId",
+              "type": "string"
+            },
+            {
+              "name": "virtualEnvironment",
+              "type": "string"
+            },
+            {
+              "name": "clusterDocumentVersion",
+              "type": "long"
+            },
+            {
+              "name": "RegionFriendlyName",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "isKsrSupported",
+              "type": "string"
+            },
+            {
+              "name": "isAsmContainerAuthoritySupported",
+              "type": "string"
+            },
+            {
+              "name": "isBarbera",
+              "type": "string"
+            },
+            {
+              "name": "isAzPEEnabled",
+              "type": "string"
+            },
+            {
+              "name": "jarvisQueryStartTime",
+              "type": "long"
+            },
+            {
+              "name": "jarvisQueryEndTime",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_Tenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogClusterSnapshot \n| where Tenant =~ local_Tenant\n| top 1 by PreciseTimeStamp desc\n| extend jarvisQueryStartTime = datetime_diff('millisecond', globalFrom, datetime(1970-01-01 00:00:00))\n| extend jarvisQueryEndTime = datetime_diff('millisecond', globalTo, datetime(1970-01-01 00:00:00))",
+          "panelPath": []
+        },
+        {
+          "id": "f1ccb681-c994-4583-8506-088d817c670c",
+          "name": "Cluster Hosting Env",
+          "groupId": "5001b124-afdd-45a5-9be7-5bf0c0fe5cec",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Hosting Environment",
+          "params": [
+            {
+              "name": "queryTenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Name",
+              "type": "string"
+            },
+            {
+              "name": "Value",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogClusterSnapshot \n| where PreciseTimeStamp > ago(28d)\n| where Tenant == queryTenant\n| top 1 by PreciseTimeStamp desc\n| project hostingEnvironment\n| extend json = parse_json(hostingEnvironment)\n| mv-expand bagexpansion=array json\n| project Name = tostring(json[0]), Value = tostring(json[1])",
+          "panelPath": []
+        },
+        {
+          "id": "79692101-d320-4c28-9ce9-27bb1184ade3",
+          "name": "Cluster Setting Deletions",
+          "groupId": "fa0e7419-b7b9-4b86-b4f7-5fcad63816e4",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "azurecm",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryCluster",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCluster",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogSettingDeletionEvent\n| where PreciseTimeStamp > ago(2d)\n| where Tenant == queryCluster\n| extend Tooltip = strcat(\n    \"Message: \", eventMessage,\n    \"<br/>Setting: \", settingName,\n    \"<br/>Value: \", settingValue\n)\n| project StartTime = PreciseTimeStamp, Content = settingName, Tooltip",
+          "panelPath": []
+        },
+        {
+          "id": "c7965ab0-894f-4086-a06b-59fbee20db8f",
+          "name": "Cluster Incarnations",
+          "groupId": "5063e227-f573-4db8-acc8-32bb18e7f49a",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryTenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Tooltip",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogClusterSnapshot \n| where Tenant == queryTenant \n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| summarize StartTime = min(PreciseTimeStamp), EndTime = max(PreciseTimeStamp) by IncarnationId, RoleInstance, buildVersion \n| extend UpTime = EndTime - StartTime\n| extend Content = strcat(IncarnationId, \" - \", RoleInstance)\n| extend Tooltip = strcat(\n    \"IncarnationId: \", IncarnationId,\n    \"<br/>RoleInstance: \", RoleInstance,\n    \"<br/>Build: \", buildVersion,\n    \"<br/>Start: \", StartTime,\n    \"<br/>End: \", EndTime,\n    \"<br/>UpTime: \", UpTime\n)\n| project StartTime, EndTime, Content, Tooltip",
+          "panelPath": []
+        },
+        {
+          "id": "ced6921b-db01-4f9c-ba25-6732bea2c16e",
+          "name": "LEGO DC Health Status",
+          "groupId": "1f0dc479-e517-421a-a3d8-101ebcba32c1",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "silverstonepcs.eastus.kusto.windows.net",
+          "database": "silverstonepcsdb",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryRegion",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryCluster",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryRegion",
+              "externalSourceName": "Region",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCluster",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "fDataCenterManagerHealthStatus(queryRegion, queryCluster, queryFrom, queryTo)\n| extend Resource = Status\n| extend Timestamp = todatetime(Timestamp)\n| project Timestamp, Resource\n| order by Timestamp asc\n| extend PrevTime = prev(Timestamp)\n| extend NextTime = next(Timestamp)\n| extend PrevState = prev(Resource)\n| extend NextState = next(Resource)\n| where isnull(PrevTime) or isnull(NextTime) or (Resource != PrevState or Resource != NextState) \n| extend StartTime = Timestamp\n| extend EndTime = next(Timestamp)\n| project StartTime, EndTime, Content = Resource, Health = Resource\n| extend EndTime = iif(isnull(EndTime), datetime_add('minute', 1, StartTime), EndTime)",
+          "panelPath": []
+        },
+        {
+          "id": "4808044b-7e88-462d-a404-2173c516449a",
+          "name": "FC Downtime",
+          "groupId": "6af21c0d-aa42-4600-ba1f-13815296cd6d",
+          "majorVersion": 2,
+          "minorVersion": 3,
+          "cluster": "azcore.centralus",
+          "database": "Fc",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTenantName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "DurationInMs",
+              "type": "long"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenantName",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let clusters =  (LogTenantSnapshot\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where tenantName == queryTenantName\r\n| distinct Tenant);\r\ncluster('azurecm').database('azurecm').FabricFailoverDowtimeRawData(queryFrom, queryTo)\r\n| where Tenant in (clusters)\r\n| project Tenant, StartTime = DownTimeStart, EndTime = DownTimeEnd, Content = strcat(tostring(DurationInMs/1000), \" secs\"), DurationInMs, Health = \"Unhealthy\"\r\n| order by StartTime asc\r\n| extend GroupBy = strcat(\"FC Downtime - \", Tenant)\r\n| order by GroupBy asc, StartTime asc\r\n\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "1eebba0a-058e-4e64-9fd6-f0b9b7cd540f",
+          "name": "FC Failover",
+          "groupId": "2c41cfda-2eec-4217-829b-297e14dad9bb",
+          "majorVersion": 2,
+          "minorVersion": 3,
+          "cluster": "azcore.centralus",
+          "database": "Fc",
+          "type": "Timeline",
+          "widgetType": "Timeline",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTenantName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "roleInstanceName",
+              "type": "string"
+            },
+            {
+              "name": "flag",
+              "type": "string"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Content",
+              "type": "string"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenantName",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let clusters = (LogTenantSnapshot\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where tenantName == queryTenantName\r\n| summarize by tenantName, tenantId, Tenant\r\n| distinct Tenant);\r\ncluster('azurecm').database('azurecm').LogClusterSnapshot\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where tenantName in (clusters)\r\n| order by tenantName asc, PreciseTimeStamp asc \r\n| project StartTime = PreciseTimeStamp, tenantName, roleInstanceName\r\n| extend flag = case (prev(roleInstanceName) <> roleInstanceName, \"changed\", \"\")\r\n| where flag <> \"\"\r\n| extend flag = case ((prev(tenantName) == tenantName) or (next(tenantName) == tenantName), \"changed\", \"\")\r\n| where flag <> \"\"\r\n| extend EndTime = case ((next(tenantName) == tenantName) and isnotempty(next(StartTime)), next(StartTime), queryTo)\r\n| extend Content = roleInstanceName\r\n| extend GroupBy = strcat(\"FC Failover - \", tenantName)\r\n| order by GroupBy asc, StartTime asc",
+          "panelPath": []
+        }
+      ]
+    },
+    "Allocation Activity > Allocation Activity": {
+      "panelPath": [
+        "Allocation Activity",
+        "Allocation Activity"
+      ],
+      "queries": [
+        {
+          "id": "2f3c5a2b-3021-4726-9fb5-fa28e69450e9",
+          "name": "Stamp Allocation Activity ",
+          "groupId": "a74a0fd1-ad18-461b-a189-15f3be1edeaf",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Allocation Activity",
+          "params": [
+            {
+              "name": "queryStamp",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "activityName",
+              "type": "string"
+            },
+            {
+              "name": "capacityReservationName",
+              "type": "string"
+            },
+            {
+              "name": "errorType",
+              "type": "string"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "resultDetails",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryStamp",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "CapacityReservationAllocationActivity \r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where computeStamp =~ queryStamp\r\n| project PreciseTimeStamp, activityName, capacityReservationName, errorType, errorCode, resultDetails\r\n| order by PreciseTimeStamp desc\r\n| take 1000",
+          "panelPath": [
+            "Allocation Activity",
+            "Allocation Activity"
+          ]
+        }
+      ]
+    },
+    "Core Capacity > Cores": {
+      "panelPath": [
+        "Core Capacity",
+        "Cores"
+      ],
+      "queries": [
+        {
+          "id": "ef50c9c3-b7f7-49d7-88ef-555407b0da5b",
+          "name": "Cluster Cores",
+          "groupId": "72058f1b-9c5d-4a67-b1ed-a71d98062fac",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Cores",
+          "params": [
+            {
+              "name": "queryTenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "TotalCores",
+              "type": "real"
+            },
+            {
+              "name": "UsedCores",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogClusterCapacity\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where Tenant == queryTenant\n| summarize TotalCores = max(totalCores), UsedCores = max(usedCores) by bin(PreciseTimeStamp, 15m)\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "Core Capacity",
+            "Cores"
+          ]
+        }
+      ]
+    },
+    "Gateway Service > GatewayServiceTraceEvent ": {
+      "panelPath": [
+        "Gateway Service",
+        "GatewayServiceTraceEvent "
+      ],
+      "queries": [
+        {
+          "id": "35cebff3-3306-4ce5-b47f-4429c96112c7",
+          "name": "Check GatewayServiceTraceEvent by Cluster",
+          "groupId": "5ea78e1f-f330-41f3-90ff-ce30efe2f3f0",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcpplatform.westcentralus.kusto.windows.net",
+          "database": "azcpplatform",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "GatewayServiceTraceEvent ",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryClusterTenantName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            },
+            {
+              "name": "componentName",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryClusterTenantName",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "GatewayServiceTraceEvent\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where Tenant =~ queryClusterTenantName\r\n| where level in (\"Error\", \"Warning\") or \r\n  message has_any(\"primary replica\", \"replica primary information\", \"Not a successful response\", \"Primary check request was faulted \", \"Could not find primary for \") \r\n  or componentName contains \"FabricPrimaryChaserV2\"\r\n| project PreciseTimeStamp, ActivityId, level, componentName, message\r\n",
+          "panelPath": [
+            "Gateway Service",
+            "GatewayServiceTraceEvent "
+          ]
+        }
+      ]
+    },
+    "LEGO EKG & Vitals > EKG & Vitals": {
+      "panelPath": [
+        "LEGO EKG & Vitals",
+        "EKG & Vitals"
+      ],
+      "queries": [
+        {
+          "id": "ad588528-6e80-439f-bd39-47aaa588c5f3",
+          "name": "LEGO - EKG & Vitals",
+          "groupId": "e3c7fd5d-d763-47ab-a66f-9a51a8fa8f00",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "silverstonepcs.eastus.kusto.windows.net",
+          "database": "silverstonepcsdb",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "EKG & Vitals",
+          "params": [
+            {
+              "name": "queryRegion",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryCluster",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "SnapshotTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Resource",
+              "type": "string"
+            },
+            {
+              "name": "HealthIndicator",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryRegion",
+              "externalSourceName": "Region",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCluster",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let startTimeStr=\"2020/09/14 10:00:00\";\nlet endTimeStr = \"2020/09/15 02:00:00\";\nlet baseStartTimeStr=\"2020/09/13 00:00:00\";\nlet baseEndTimeStr = \"2020/09/13 12:00:00\";\nlet functionTable = datatable(functionname:string)\n[\n    'fFabricatorUptimeStatus',\n    'fDataCenterManagerHealthStatus',\n    'fFcClusterNodeStatus',\n    'fFcClusterVmHealth',\n    'fFcClusterTorStatus',\n    'fSlbv1ManagerRoleStatus',\n    'fXStoreStatus',\n    'fPfDMHealth'\n];\nfStateEngineV1(functionTable, queryRegion, queryCluster, queryFrom, queryTo, queryFrom, queryTo)\n| extend Resource = strcat(\"ResourceType:\", ResourceType, \", Resource:\", Resource, \", Feature:\", Feature)\n| project SnapshotTime, Resource, HealthIndicator\n| order by SnapshotTime asc",
+          "panelPath": [
+            "LEGO EKG & Vitals",
+            "EKG & Vitals"
+          ]
+        }
+      ]
+    },
+    "Node Capacity > Nodes": {
+      "panelPath": [
+        "Node Capacity",
+        "Nodes"
+      ],
+      "queries": [
+        {
+          "id": "fad38dc1-10ec-45a3-bac6-39c6e39d7303",
+          "name": "Cluster Nodes",
+          "groupId": "173a017a-e14f-48c9-a288-cedd122a6dda",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Nodes",
+          "params": [
+            {
+              "name": "queryTenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "TotalNodes",
+              "type": "long"
+            },
+            {
+              "name": "AllocatableNodes",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogClusterCapacity\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where Tenant == queryTenant\n| summarize TotalNodes = max(totalNodes), AllocatableNodes = max(allocatableNodes) by bin(PreciseTimeStamp, 30m)\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "Node Capacity",
+            "Nodes"
+          ]
+        }
+      ]
+    },
+    "Nodes > Nodes": {
+      "panelPath": [
+        "Nodes",
+        "Nodes"
+      ],
+      "queries": [
+        {
+          "id": "78529888-4c0b-498d-86af-8c05a131f3d2",
+          "name": "Cluster Nodes",
+          "groupId": "bc3a7530-91d0-4a66-a82f-8712b4097273",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Nodes",
+          "params": [
+            {
+              "name": "queryCluster",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "LastSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "nodeId",
+              "type": "string"
+            },
+            {
+              "name": "nodeState",
+              "type": "string"
+            },
+            {
+              "name": "nodeAvailabilityState",
+              "type": "string"
+            },
+            {
+              "name": "ipAddress",
+              "type": "string"
+            },
+            {
+              "name": "dedicatedNodeGroupName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCluster",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\n| where PreciseTimeStamp between(global_startTime..global_endTime)\n| where Tenant == queryCluster\n| summarize LastSeen = arg_max(PreciseTimeStamp, *) by nodeId\n| project LastSeen, nodeId, nodeState, nodeAvailabilityState, ipAddress, dedicatedNodeGroupName\n",
+          "panelPath": [
+            "Nodes",
+            "Nodes"
+          ]
+        }
+      ]
+    },
+    "Tenants > Tenants": {
+      "panelPath": [
+        "Tenants",
+        "Tenants"
+      ],
+      "queries": [
+        {
+          "id": "b1cbca72-583c-41be-a409-b4e463df7da5",
+          "name": "Cluster Tenants",
+          "groupId": "e8dcaf96-6bbf-4bb1-a339-58368a86b36a",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azurecm",
+          "database": "AzureCM",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Tenants",
+          "params": [
+            {
+              "name": "queryCluster",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "dateCreated",
+              "type": "datetime"
+            },
+            {
+              "name": "state",
+              "type": "string"
+            },
+            {
+              "name": "tenantOwners",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "eb02bb30-de1d-45c8-b154-032677834c18",
+              "majorVersion": 2,
+              "minorVersion": 0,
+              "internalDestinationName": "queryCluster",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "LogTenantSnapshot\n| where PreciseTimeStamp between(queryFrom..queryTo)\n| where Tenant == queryCluster\n| summarize arg_max(PreciseTimeStamp, *) by tenantName\n| project tenantName, AvailabilityZone, subscriptionId, todatetime(dateCreated), state, tenantOwners",
+          "panelPath": [
+            "Tenants",
+            "Tenants"
+          ]
+        }
+      ]
+    },
+    "Utilization % > Utilization %": {
+      "panelPath": [
+        "Utilization %",
+        "Utilization %"
+      ],
+      "queries": [
+        {
+          "id": "46c495bd-13f0-424d-bd87-678ab292533e",
+          "name": "Tenant Utilization Percent TimeSeries ",
+          "groupId": "13a1a3dc-0d55-40a2-983a-eee6173e9f66",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "AzureCM",
+          "database": "AzureCM",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Utilization %",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Utilization",
+              "type": "real"
+            },
+            {
+              "name": "Available",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "componentFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "componentTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "\r\nLogClusterCapacity\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where Tenant == queryTenant\r\n| summarize TotalCores = max(totalCores), UsedCores = max(usedCores) by bin(PreciseTimeStamp, 15m)\r\n| extend Utilization = round(todouble(UsedCores) / todouble(TotalCores) * 100, 2)\r\n| extend Available = round(100.00 - Utilization, 2)\r\n| project PreciseTimeStamp, Utilization, Available\r\n| order by PreciseTimeStamp asc\r\n",
+          "panelPath": [
+            "Utilization %",
+            "Utilization %"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:20:33.064Z",
+    "totalPanels": 9,
+    "totalUniqueQueries": 15,
+    "totalWidgetRefs": 15
+  }
+}

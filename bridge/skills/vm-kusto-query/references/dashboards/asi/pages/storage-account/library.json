@@ -1,0 +1,1433 @@
+{
+  "service": "Storage Tools",
+  "page": "Storage Account",
+  "pageId": "d019903b-f5af-4302-a304-4bb0be828b5c",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "0b068f46-2221-4fcf-a4b6-281b3120b2c4",
+          "name": "Retrieve Resource \"Storage Account\"",
+          "groupId": "77f74f45-0ba3-4890-81f5-a830629433a8",
+          "majorVersion": 22,
+          "minorVersion": 4,
+          "cluster": "azcore.centralus",
+          "database": "Xstore",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "{{StorageAccountName}}",
+          "params": [
+            {
+              "name": "local_StorageAccountName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Account",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            },
+            {
+              "name": "AccountType",
+              "type": "long"
+            },
+            {
+              "name": "ResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "ProviderGuid",
+              "type": "string"
+            },
+            {
+              "name": "ProviderName",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "OpcodeName",
+              "type": "string"
+            },
+            {
+              "name": "KeywordName",
+              "type": "string"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "ChannelName",
+              "type": "string"
+            },
+            {
+              "name": "EventMessage",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "TimePeriod",
+              "type": "datetime"
+            },
+            {
+              "name": "Redundancy",
+              "type": "string"
+            },
+            {
+              "name": "BilledSubscription",
+              "type": "string"
+            },
+            {
+              "name": "Experiment",
+              "type": "string"
+            },
+            {
+              "name": "AccessTier",
+              "type": "string"
+            },
+            {
+              "name": "AccessPermissions",
+              "type": "long"
+            },
+            {
+              "name": "State",
+              "type": "long"
+            },
+            {
+              "name": "ProcessRequestType",
+              "type": "long"
+            },
+            {
+              "name": "IsSrp",
+              "type": "bool"
+            },
+            {
+              "name": "IsXio",
+              "type": "bool"
+            },
+            {
+              "name": "IsPrimaryReplica",
+              "type": "bool"
+            },
+            {
+              "name": "BillingTypeOption",
+              "type": "string"
+            },
+            {
+              "name": "BillingVersion",
+              "type": "string"
+            },
+            {
+              "name": "PartnerTags",
+              "type": "string"
+            },
+            {
+              "name": "AccountFailoverStage",
+              "type": "long"
+            },
+            {
+              "name": "AccountMigrationStage",
+              "type": "long"
+            },
+            {
+              "name": "IsLifecycleManagementEnabled",
+              "type": "bool"
+            },
+            {
+              "name": "IsChangeFeedEnabled",
+              "type": "bool"
+            },
+            {
+              "name": "IsBlobInventoryEnabled",
+              "type": "bool"
+            },
+            {
+              "name": "IsHnsEnabled",
+              "type": "bool"
+            },
+            {
+              "name": "AvailabilitySetName",
+              "type": "string"
+            },
+            {
+              "name": "T2Spine",
+              "type": "string"
+            },
+            {
+              "name": "Properties",
+              "type": "dynamic"
+            },
+            {
+              "name": "XlsServiceMetadata",
+              "type": "dynamic"
+            },
+            {
+              "name": "Quota",
+              "type": "long"
+            },
+            {
+              "name": "BillingStreamNumber",
+              "type": "long"
+            },
+            {
+              "name": "IsValidForBilling",
+              "type": "bool"
+            },
+            {
+              "name": "IsAccountBillingDisabled",
+              "type": "bool"
+            },
+            {
+              "name": "LastModificationTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ExpiryTime",
+              "type": "datetime"
+            },
+            {
+              "name": "IsEmittedFromRegionalStamp",
+              "type": "long"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "AccountHash",
+              "type": "long"
+            },
+            {
+              "name": "GeoRegion",
+              "type": "string"
+            },
+            {
+              "name": "ArmLocation",
+              "type": "string"
+            },
+            {
+              "name": "SecretKeys",
+              "type": "string"
+            },
+            {
+              "name": "TrustedDirectory",
+              "type": "string"
+            },
+            {
+              "name": "Tags",
+              "type": "string"
+            },
+            {
+              "name": "TimeTakenForBillingInMicroseconds",
+              "type": "long"
+            },
+            {
+              "name": "BillingLatencyInMicroseconds",
+              "type": "long"
+            },
+            {
+              "name": "__IsTrusted__",
+              "type": "string"
+            },
+            {
+              "name": "ContainsSecretsInTags",
+              "type": "long"
+            },
+            {
+              "name": "AzCoreCluster",
+              "type": "string"
+            },
+            {
+              "name": "Unit",
+              "type": "string"
+            },
+            {
+              "name": "Pool",
+              "type": "string"
+            },
+            {
+              "name": "ServiceDeployment",
+              "type": "string"
+            },
+            {
+              "name": "PFEnvironment",
+              "type": "string"
+            },
+            {
+              "name": "ServiceFabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "FleetType",
+              "type": "string"
+            },
+            {
+              "name": "StorageAccountName",
+              "type": "dynamic"
+            },
+            {
+              "name": "ResourceUri",
+              "type": "string"
+            },
+            {
+              "name": "TenantName",
+              "type": "dynamic"
+            },
+            {
+              "name": "IsSoftDeleteEnabled",
+              "type": "dynamic"
+            },
+            {
+              "name": "SoftDeleteRetentionDays",
+              "type": "dynamic"
+            },
+            {
+              "name": "BlobStaticWebsiteEnabled",
+              "type": "dynamic"
+            },
+            {
+              "name": "IsManagedBySrp",
+              "type": "dynamic"
+            },
+            {
+              "name": "allowBlobPublicAccess",
+              "type": "dynamic"
+            },
+            {
+              "name": "allowKeyBasedAccess",
+              "type": "dynamic"
+            },
+            {
+              "name": "IsContainerSoftDeleteEnabled",
+              "type": "dynamic"
+            },
+            {
+              "name": "ContainerSoftDeleteRetentionDays",
+              "type": "dynamic"
+            },
+            {
+              "name": "minimumTlsVersion",
+              "type": "dynamic"
+            },
+            {
+              "name": "isLargeFileSharesEnabled",
+              "type": "dynamic"
+            },
+            {
+              "name": "publicNetworkAccess",
+              "type": "dynamic"
+            },
+            {
+              "name": "IsRegionalAccount",
+              "type": "bool"
+            },
+            {
+              "name": "supportsHttpsTrafficOnly",
+              "type": "dynamic"
+            },
+            {
+              "name": "offsetTimeInMinutes",
+              "type": "string"
+            },
+            {
+              "name": "HeaderMsg",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_StorageAccountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let offsetTimeInMinutes = datetime_diff('minute', globalTo, globalFrom);\r\ncluster('azcore.centralus').database('Xstore').XStoreAccountProperties\r\n| where TIMESTAMP between(globalFrom .. globalTo) \r\n| where Account startswith strcat(trim(@\"[\\s]+\", local_StorageAccountName), \";\") \r\n| where IsPrimaryReplica == 1\r\n| summarize arg_max(TIMESTAMP, *) by Account, Subscription, AccountType, ResourceGroup\r\n| extend StorageAccountName= split(Account, ';')[0]\r\n| extend ResourceUri=strcat(\"/subscriptions/\",Subscription,\"/resourceGroups/\",ResourceGroup,\"/providers/\",iff(IsSrp == 1, \"Microsoft.Storage\", \"Microsoft.ClassicStorage\"),\"/storageAccounts/\",StorageAccountName)\r\n| extend TenantName = split(Tenant, \"-\")[1]\r\n| extend IsSrp = iff(IsSrp == 1, true, false), IsXio = iff(IsXio == 1, true, false), IsPrimaryReplica = iff(IsPrimaryReplica == 1, true, false), IsLifecycleManagementEnabled = iff(IsLifecycleManagementEnabled == 1, true, false),\r\nIsChangeFeedEnabled = iff(IsChangeFeedEnabled == 1, true, false), IsBlobInventoryEnabled = iff(IsBlobInventoryEnabled == 1, true, false), IsHnsEnabled = iff(IsHnsEnabled == 1, true, false), IsValidForBilling = iff(IsValidForBilling == 1, true, false),\r\nIsAccountBillingDisabled = iff(IsAccountBillingDisabled == 1, true, false)\r\n| extend Properties = todynamic(Properties)\r\n| extend XlsServiceMetadata = todynamic(XlsServiceMetadata)\r\n| extend IsSoftDeleteEnabled = Properties.BlobDeleteRetentionEnabled\r\n| extend SoftDeleteRetentionDays = Properties.BlobDeleteRetentionDays\r\n| extend BlobStaticWebsiteEnabled = Properties.BlobStaticWebsiteEnabled\r\n| extend IsManagedBySrp = Properties.IsManagedBySrp\r\n| extend allowBlobPublicAccess = XlsServiceMetadata.allowBlobPublicAccess\r\n| extend allowKeyBasedAccess = XlsServiceMetadata.allowSharedKeyAccess\r\n| extend IsContainerSoftDeleteEnabled = XlsServiceMetadata.containerDeleteRetentionPolicy.enabled\r\n| extend ContainerSoftDeleteRetentionDays = XlsServiceMetadata.containerDeleteRetentionPolicy.retentionDays\r\n| extend minimumTlsVersion = XlsServiceMetadata.minimumTlsVersion\r\n| extend isLargeFileSharesEnabled = XlsServiceMetadata.isLargeFileSharesEnabled\r\n| extend publicNetworkAccess = XlsServiceMetadata.publicNetworkAccess\r\n| extend IsRegionalAccount = (XlsServiceMetadata.virtualizationType contains \"RegionalFE\")\r\n| extend supportsHttpsTrafficOnly = XlsServiceMetadata.supportsHttpsTrafficOnly\r\n| extend offsetTimeInMinutes = offsetTimeInMinutes\r\n// Build Header msg\r\n| extend HeaderMsg = strcat(\"<span style='color: orange'>PLEASE NOTE: The metadata listed below last updated at \", TIMESTAMP, \"</span>\")\r\n// if Account not found, retuns empty line instead of ASI resource was found error and cat image, with a red header msg\r\n| union (        \r\n    print Account=\"\", HeaderMsg = strcat(\"<span style='color:red'><b>\",trim(@\"[\\s]+\", local_StorageAccountName),\"</b> Account Name not found</span>\")\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1",
+          "panelPath": []
+        }
+      ]
+    },
+    "Account Limits & Usage (99% Percentile)": {
+      "panelPath": [
+        "Account Limits & Usage (99% Percentile)"
+      ],
+      "queries": [
+        {
+          "id": "0508ab10-f3b8-4a9d-a5bb-3bd87f13e10c",
+          "name": "Get Account Limit",
+          "groupId": "982ad60f-731b-40d4-9304-05fabd39b561",
+          "majorVersion": 2,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Xstore",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Account Limits & Usage (99% Percentile)",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "AccountName",
+              "type": "string"
+            },
+            {
+              "name": "IngressUsed",
+              "type": "real"
+            },
+            {
+              "name": "IngressLimit",
+              "type": "real"
+            },
+            {
+              "name": "EgressUsed",
+              "type": "real"
+            },
+            {
+              "name": "EgressLimit",
+              "type": "real"
+            },
+            {
+              "name": "TpsUsed",
+              "type": "real"
+            },
+            {
+              "name": "TpsLimit",
+              "type": "real"
+            },
+            {
+              "name": "Tenants",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let zero = toreal(\"0\");\r\nlet gbpscoefficient=8/exp2(30);\r\nlet ktpscoefficient=1/1000.0;\r\nlet metrics = print metric = pack_array(\r\n    pack(\"metric\", \"TotalEgress\", \"coefficient\", gbpscoefficient),\r\n    pack(\"metric\", \"InternalEgress\", \"coefficient\", gbpscoefficient),\r\n    pack(\"metric\", \"TotalIngress\", \"coefficient\", gbpscoefficient),\r\n    pack(\"metric\", \"Entities\", \"coefficient\", ktpscoefficient)\r\n)\r\n| mv-expand metric\r\n| evaluate bag_unpack(metric);\r\ncluster('azcore.centralus.kusto.windows.net').database('Xstore').XAggAccountUsageMetric\r\n| where TIMESTAMP between (queryFrom..queryTo)\r\n| where AccountName == trim(@\"[\\s]+\", accountName)\r\n| join kind=inner (metrics) on $left.UsageCategory == $right.metric\r\n| project TIMESTAMP, Tenant, UsageCategory, AdjustedUsagePerSec=MeasuredUsagePerSec*coefficient, AdjustedLimit=TargetUsageThreshold*coefficient, AccountName\r\n| summarize AdjustedUsagePerSec=percentiles(AdjustedUsagePerSec, 99),\r\n    AdjustedLimit=round(max(AdjustedLimit), 0)\r\n    by AccountName, UsageCategory, Tenant\r\n| extend AdjustedUsagePerSec=round(AdjustedUsagePerSec, 0)\r\n| extend IngressUsed=iif(UsageCategory==\"TotalIngress\", AdjustedUsagePerSec, zero),\r\n         IngressLimit=iif(UsageCategory==\"TotalIngress\", AdjustedLimit, zero),\r\n         EgressUsed=iif(UsageCategory==\"TotalEgress\", AdjustedUsagePerSec, zero),\r\n         EgressLimit=iif(UsageCategory==\"TotalEgress\", AdjustedLimit, zero),\r\n         InternalEgressUsed=iif(UsageCategory==\"InternalEgress\", AdjustedUsagePerSec, zero),\r\n         InternalEgressLimit=iif(UsageCategory==\"InternalEgress\", AdjustedLimit, zero),         \r\n         TpsUsed=iif(UsageCategory==\"Entities\", AdjustedUsagePerSec, zero),\r\n         TpsLimit=iif(UsageCategory==\"Entities\", AdjustedLimit, zero)\r\n| summarize IngressUsed=max(IngressUsed),\r\n            IngressLimit=max(IngressLimit),\r\n            EgressUsed=max(EgressUsed),\r\n            EgressLimit=max(EgressLimit),\r\n            InternalEgressUsed=max(InternalEgressUsed),\r\n            InternalEgressLimit=max(InternalEgressLimit),\r\n            TpsUsed=max(TpsUsed),\r\n            TpsLimit=max(TpsLimit)\r\n            by AccountName, Tenant\r\n| summarize IngressUsed=sum(IngressUsed),\r\n            IngressLimit=sum(IngressLimit),\r\n            EgressUsed=sum(EgressUsed),\r\n            EgressLimit=sum(EgressLimit),\r\n            //InternalEgressUsed=sum(InternalEgressUsed),\r\n            //InternalEgressLimit=sum(InternalEgressLimit),            \r\n            TpsUsed=sum(TpsUsed),\r\n            TpsLimit=sum(TpsLimit),\r\n            Tenants=sum(1)\r\n            by AccountName\r\n| order by AccountName",
+          "panelPath": [
+            "Account Limits & Usage (99% Percentile)"
+          ]
+        }
+      ]
+    },
+    "Account Usage Metrics (Beta)": {
+      "panelPath": [
+        "Account Usage Metrics (Beta)"
+      ],
+      "queries": [
+        {
+          "id": "657e00d4-9e54-4ca0-9641-f1ec2cd36b72",
+          "name": "Get Usage Metrics",
+          "groupId": "ba3061e9-dfac-4799-aecb-bd147ee2b0a8",
+          "majorVersion": 3,
+          "minorVersion": 6,
+          "cluster": "azcore.centralus",
+          "database": "Xstore",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Account Usage Metrics (Beta)",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "usageType",
+              "type": "enum",
+              "optional": false
+            },
+            {
+              "name": "tenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "AccountName",
+              "type": "string"
+            },
+            {
+              "name": "UsageCategory",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Threshold",
+              "type": "real"
+            },
+            {
+              "name": "PeakMeasuredUsagePerMin",
+              "type": "real"
+            },
+            {
+              "name": "EstimatedAttemptedUsage",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "node_input",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "usageType",
+              "externalSourceName": "UsageType",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "77f74f45-0ba3-4890-81f5-a830629433a8",
+              "majorVersion": 22,
+              "minorVersion": 4,
+              "internalDestinationName": "tenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let maxEst = cluster('azcore.centralus').database('Xstore').XAggAccountUsageMetric\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Tenant == tenant\r\n| where AccountName == trim(@\"[\\s]+\", accountName)\r\n| where UsageCategory == usageType\r\n| project TIMESTAMP, EstimatedAttemptedUsage\r\n| summarize arg_max(EstimatedAttemptedUsage, *) by bin(TIMESTAMP,1m);\r\ncluster('azcore.centralus').database('Xstore').XAggAccountUsageMetric\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where Tenant == tenant\r\n| where AccountName == trim(@\"[\\s]+\", accountName)\r\n| where UsageCategory == usageType\r\n| summarize arg_max(MeasuredUsagePerSec, *) by bin(TIMESTAMP,1m)\r\n| join maxEst on TIMESTAMP\r\n| project TIMESTAMP, AccountName, UsageCategory, Tenant, \r\nThreshold = iff(usageType == 'Entities', TargetUsageThreshold/1000, TargetUsageThreshold*8/(1024*1024*1024)) , \r\nThresholdinGbps_DCConfig = DefaultUsageThreshold*8/(1024*1024*1024), \r\nEstimatedAttemptedUsage = iff(usageType == 'Entities', EstimatedAttemptedUsage1/1000, EstimatedAttemptedUsage1*8/(1024*1024*1024)),\r\nPeakMeasuredUsagePerMin = iff(usageType == 'Entities', MeasuredUsagePerSec/1000, MeasuredUsagePerSec*8/(1024*1024*1024)),\r\nRawMeasuredUsagePerMin = RawMeasuredUsagePerSec*8/(1024*1024*1024)\r\n| project TIMESTAMP, AccountName, UsageCategory, Tenant, Threshold, PeakMeasuredUsagePerMin, EstimatedAttemptedUsage ",
+          "panelPath": [
+            "Account Usage Metrics (Beta)"
+          ]
+        }
+      ]
+    },
+    "ASI Pages > Pages - Storage Tools": {
+      "panelPath": [
+        "ASI Pages",
+        "Pages - Storage Tools"
+      ],
+      "queries": [
+        {
+          "id": "f13fec28-2acc-4ba7-af79-37be3cab900f",
+          "name": "Get Tenant Info by Account",
+          "groupId": "b760a659-e8eb-4ff6-ac4b-2614f64bc29c",
+          "majorVersion": 1,
+          "minorVersion": 4,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "Subscription",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "XStoreAccountPropertiesHourly()\r\n| where TimePeriod > ago(3d)\r\n| where Account startswith strcat(trim(@\"[\\s]+\", accountName),\";\")\r\n| order by TimePeriod desc \r\n| take 1\r\n| project Tenant, Subscription\r\n// if Account not found, retuns empty Tenant instead of ASI error\r\n| union (        \r\n    print Tenant=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1\r\n",
+          "panelPath": [
+            "ASI Pages",
+            "Pages - Storage Tools"
+          ]
+        },
+        {
+          "id": "2bc22049-e59c-45fe-8074-40dfea9dac00",
+          "name": "TrimStorageName",
+          "groupId": "013910c6-a3a7-4a35-8c20-8591d0282342",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Pages - Storage Tools",
+          "params": [
+            {
+              "name": "local_StorageNameName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StorageName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_StorageNameName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let trimmed_StorageName = trim(@\"[\\s]+\", local_StorageNameName);\r\nprint StorageName = trimmed_StorageName ;",
+          "panelPath": [
+            "ASI Pages",
+            "Pages - Storage Tools"
+          ]
+        }
+      ]
+    },
+    "DGrep Links > DGrep Links": {
+      "panelPath": [
+        "DGrep Links",
+        "DGrep Links"
+      ],
+      "queries": [
+        {
+          "id": "ae665384-c31d-4121-83a5-311af06521f8",
+          "name": "Get Tenant RSRP name",
+          "groupId": "43d9370e-bb4b-4992-945d-a34e631783fb",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "DGrep Links",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "tenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "MDMShoeboxAccountName",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringGcsStorageResourceTagValue",
+              "type": "string"
+            },
+            {
+              "name": "RsrpName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "77f74f45-0ba3-4890-81f5-a830629433a8",
+              "majorVersion": 22,
+              "minorVersion": 4,
+              "internalDestinationName": "tenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster('xstore.kusto.windows.net').database('xstore').GetTenantCatalogLatest()\r\n| where Tenant == tenant\r\n| project Tenant, MDMShoeboxAccountName,MonitoringGcsStorageResourceTagValue,RsrpName\r\n// if Region not found, retuns empty line, instead of ASI exception\r\n| union (       \r\n    print Tenant=\"\", MDMShoeboxAccountName=\"\",MonitoringGcsStorageResourceTagValue=\"\",RsrpName=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1",
+          "panelPath": [
+            "DGrep Links",
+            "DGrep Links"
+          ]
+        },
+        {
+          "id": "5259c9d5-1c84-4aff-a0a2-e705beb4ca73",
+          "name": "Storage_Regions",
+          "groupId": "6dbb4247-592e-4e5a-b7c1-58fccf87283b",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus",
+          "database": "Xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "DGrep Links",
+          "params": [
+            {
+              "name": "location_withoutSpace",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "AltRegion",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "77f74f45-0ba3-4890-81f5-a830629433a8",
+              "majorVersion": 22,
+              "minorVersion": 4,
+              "internalDestinationName": "location_withoutSpace",
+              "externalSourceName": "ArmLocation",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "// Any cluster / Database can be used - using the same as to get Redis details - supportrptwus3prod.westus3 / KPISupportData\r\nlet RegionMap = case(\r\nlocation_withoutSpace == \"apacsoutheast2\", \"APAC Southeast 2\",\r\nlocation_withoutSpace == \"australiacentral\", \"Australia Central\",\r\nlocation_withoutSpace == \"australiacentral2\", \"Australia Central 2\",\r\nlocation_withoutSpace == \"australiaeast\", \"Australia East\",\r\nlocation_withoutSpace == \"australiasoutheast\", \"Australia Southeast\",\r\nlocation_withoutSpace == \"austriaeast\", \"Austria East\",\r\nlocation_withoutSpace == \"belgiumcentral\", \"Belgium Central\",\r\nlocation_withoutSpace == \"brazilsouth\", \"Brazil South\",\r\nlocation_withoutSpace == \"brazilsoutheast\", \"Brazil Southeast\",\r\nlocation_withoutSpace == \"canadacentral\", \"Canada Central\",\r\nlocation_withoutSpace == \"canadaeast\", \"Canada East\",\r\nlocation_withoutSpace == \"centralindia\", \"Central India\",\r\nlocation_withoutSpace == \"centralus\", \"Central US\",\r\nlocation_withoutSpace == \"centraluseuap\", \"Central US EUAP\",\r\nlocation_withoutSpace == \"chilecentral\", \"Chile Central\",\r\nlocation_withoutSpace == \"denmarkeast\", \"Denmark East\",\r\nlocation_withoutSpace == \"eastasia\", \"East Asia\",\r\nlocation_withoutSpace == \"eastus\", \"East US\",\r\nlocation_withoutSpace == \"eastus2\", \"East US 2\",\r\nlocation_withoutSpace == \"eastus2euap\", \"East US 2 EUAP\",\r\nlocation_withoutSpace == \"francecentral\", \"France Central\",\r\nlocation_withoutSpace == \"francesouth\", \"France South\",\r\nlocation_withoutSpace == \"germanycentral\", \"Germany Central\",\r\nlocation_withoutSpace == \"germanynortheast\", \"Germany Northeast\",\r\nlocation_withoutSpace == \"germanynorth\", \"Germany North\",\r\nlocation_withoutSpace == \"germanywestcentral\", \"Germany West Central\",\r\nlocation_withoutSpace == \"indonesiacentral\", \"Indonesia Central\",\r\nlocation_withoutSpace == \"indiacentral\", \"India Central\",\r\nlocation_withoutSpace == \"indiasouthcentral\", \"India South Central\",\r\nlocation_withoutSpace == \"israelcentral\", \"Israel Central\",\r\nlocation_withoutSpace == \"israelnorthwest\", \"Israel Northwest\",\r\nlocation_withoutSpace == \"italynorth\", \"Italy North\",\r\nlocation_withoutSpace == \"japaneast\", \"Japan East\",\r\nlocation_withoutSpace == \"japanwest\", \"Japan West\",\r\nlocation_withoutSpace == \"jioindiacentral\", \"Jio India Central\",\r\nlocation_withoutSpace == \"jioindiawest\", \"Jio India West\",\r\nlocation_withoutSpace == \"koreacentral\", \"Korea Central\",\r\nlocation_withoutSpace == \"koreasouth\", \"Korea South\",\r\nlocation_withoutSpace == \"malaysiasouth\", \"Malaysia South\",\r\nlocation_withoutSpace == \"malaysiawest\", \"Malaysia West\",\r\nlocation_withoutSpace == \"mexicocentral\", \"Mexico Central\",\r\nlocation_withoutSpace == \"newzealandnorth\", \"New Zealand North\",\r\nlocation_withoutSpace == \"northcentralus\", \"North Central US\",\r\nlocation_withoutSpace == \"northeurope\", \"North Europe\",\r\nlocation_withoutSpace == \"norwayeast\", \"Norway East\",\r\nlocation_withoutSpace == \"norwaywest\", \"Norway West\",\r\nlocation_withoutSpace == \"polandcentral\", \"Poland Central\",\r\nlocation_withoutSpace == \"qatarcentral\", \"Qatar Central\",\r\nlocation_withoutSpace == \"southafricanorth\", \"South Africa North\",\r\nlocation_withoutSpace == \"southafricawest\", \"South Africa West\",\r\nlocation_withoutSpace == \"southcentralus\", \"South Central US\",\r\nlocation_withoutSpace == \"southcentralus2\", \"South Central US 2\",\r\nlocation_withoutSpace == \"southeastasia\", \"Southeast Asia\",\r\nlocation_withoutSpace == \"southeastus5\", \"Southeast US 5\",\r\nlocation_withoutSpace == \"southindia\", \"South India\",\r\nlocation_withoutSpace == \"spaincentral\", \"Spain Central\",\r\nlocation_withoutSpace == \"swedencentral\", \"Sweden Central\",\r\nlocation_withoutSpace == \"swedensouth\", \"Sweden South\",\r\nlocation_withoutSpace == \"switzerlandnorth\", \"Switzerland North\",\r\nlocation_withoutSpace == \"switzerlandwest\", \"Switzerland West\",\r\nlocation_withoutSpace == \"taiwannorth\", \"Taiwan North\",\r\nlocation_withoutSpace == \"taiwannorthwest\", \"Taiwan Northwest\",\r\nlocation_withoutSpace == \"uaecentral\", \"UAE Central\",\r\nlocation_withoutSpace == \"uaenorth\", \"UAE North\",\r\nlocation_withoutSpace == \"uknorth\", \"UK North\",\r\nlocation_withoutSpace == \"uksouth\", \"UK South\",\r\nlocation_withoutSpace == \"uksouth2\", \"UK South 2\",\r\nlocation_withoutSpace == \"ukwest\", \"UK West\",\r\nlocation_withoutSpace == \"westcentralus\", \"West Central US\",\r\nlocation_withoutSpace == \"westeurope\", \"West Europe\",\r\nlocation_withoutSpace == \"westindia\", \"West India\",\r\nlocation_withoutSpace == \"westus\", \"West US\",\r\nlocation_withoutSpace == \"westus2\", \"West US 2\",\r\nlocation_withoutSpace == \"westus3\", \"West US 3\",\r\n\"UNKNOWN REGION\"\r\n);\r\nprint AltRegion=RegionMap",
+          "panelPath": [
+            "DGrep Links",
+            "DGrep Links"
+          ]
+        }
+      ]
+    },
+    "MDM Dashboards > MDM Dashboards": {
+      "panelPath": [
+        "MDM Dashboards",
+        "MDM Dashboards"
+      ],
+      "queries": [
+        {
+          "id": "138ea406-0234-4903-b07d-04951f77494e",
+          "name": "Get Account Tenant Info",
+          "groupId": "8e2dc14b-0de4-4668-bf75-b4b469637933",
+          "majorVersion": 1,
+          "minorVersion": 5,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "MDM Dashboards",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "tenant",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "MDMShoeboxAccountName",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringGcsStorageResourceTagValue",
+              "type": "string"
+            },
+            {
+              "name": "GeoRegion",
+              "type": "string"
+            },
+            {
+              "name": "RsrpName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "77f74f45-0ba3-4890-81f5-a830629433a8",
+              "majorVersion": 22,
+              "minorVersion": 4,
+              "internalDestinationName": "tenant",
+              "externalSourceName": "Tenant",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "GetTenantCatalogLatest()\r\n| where Tenant == tenant\r\n| project Tenant, MDMShoeboxAccountName,MonitoringGcsStorageResourceTagValue,GeoRegion,RsrpName\r\n// if Tenant not found, retuns empty results, instead of ASI exception\r\n| union (       \r\n    print MDMShoeboxAccountName=\"\", MonitoringGcsStorageResourceTagValue=\"\",GeoRegion=\"\",RsrpName=\"\"\r\n)\r\n| sort by Tenant nulls last\r\n| limit 1",
+          "panelPath": [
+            "MDM Dashboards",
+            "MDM Dashboards"
+          ]
+        },
+        {
+          "id": "35d0bb3a-d73f-497f-b9a3-bb5440f4ab59",
+          "name": "UnixTimeFormat_Converter",
+          "groupId": "51a820e8-0d6b-4b33-bb76-26b1928a080e",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus",
+          "database": "Xstore",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "MDM Dashboards",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "unixTime_queryFrom",
+              "type": "long"
+            },
+            {
+              "name": "unixTime_queryTo",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "// Any cluster / Database can be used - using the same as to get Redis details - azcore.centralus / Xstore\r\nlet unixTime_queryFrom = datetime_diff('millisecond', queryFrom, datetime(1970-01-01));\r\nlet unixTime_queryTo = datetime_diff('millisecond', queryTo, datetime(1970-01-01));\r\nprint unixTime_queryFrom=unixTime_queryFrom, unixTime_queryTo=unixTime_queryTo;",
+          "panelPath": [
+            "MDM Dashboards",
+            "MDM Dashboards"
+          ]
+        }
+      ]
+    },
+    "Regional Account Distribution": {
+      "panelPath": [
+        "Regional Account Distribution"
+      ],
+      "queries": [
+        {
+          "id": "a962778a-4885-45b5-bf36-e8b89c0f53e5",
+          "name": "Get Regional Accounts Distribution",
+          "groupId": "1421ca81-56c0-47bf-afce-fb649fc409cd",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "https://xdeployment.westcentralus.kusto.windows.net",
+          "database": "Deployment",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Regional Account Distribution",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "AccountName",
+              "type": "string"
+            },
+            {
+              "name": "HomeCluster",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            },
+            {
+              "name": "GroupName",
+              "type": "string"
+            },
+            {
+              "name": "IngressThresholdInGbps",
+              "type": "string"
+            },
+            {
+              "name": "EgressThresholdInGbps",
+              "type": "string"
+            },
+            {
+              "name": "InternalEgressThresholdInGbps",
+              "type": "string"
+            },
+            {
+              "name": "TPSThresholdInKtps",
+              "type": "string"
+            },
+            {
+              "name": "IngestionWeight",
+              "type": "int"
+            },
+            {
+              "name": "StampDefault_IngressThresholdInGbps",
+              "type": "string"
+            },
+            {
+              "name": "StampDefault_EgressThresholdInGbps",
+              "type": "string"
+            },
+            {
+              "name": "StampDefault_TPSThresholdInKtps",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "StorageAccountName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let LatestRegionalAccountsDate = cluster('xdataanalytics.westcentralus.kusto.windows.net').database('XDataAnalytics').RegionalAccountsLimits_BW_V2 | summarize TimePeriod=max(TimePeriod);\r\nlet RALimits = cluster('xdataanalytics.westcentralus.kusto.windows.net').database('XDataAnalytics').RegionalAccountsLimits_BW_V2\r\n    | join kind=inner (LatestRegionalAccountsDate) on TimePeriod\r\n| where AccountName =~ accountName;\r\nlet strAccName = strcat(accountName, \"\\\\\");\r\nlet AccountConfigs = cluster('xtableserver.westcentralus.kusto.windows.net').database('ClusterResourceManager').AccountVirtualizationMetrics\r\n| where AccountName contains strAccName \r\n| summarize arg_max(env_time, *) by AccountName;\r\nlet TenantConfigs = cluster('xtableserver.westcentralus.kusto.windows.net').database('ClusterResourceManager').TenantVirtualizationMetrics\r\n| summarize arg_max(env_time, *) by GroupName, WeightedTenant;\r\nlet ThresholdsSnapshot = cluster('xdeployment.westcentralus.kusto.windows.net').database('Deployment').GetAccountThrottlingThresholdsSnapshot()\r\n| where Account =~ accountName\r\n| project Tenant=tolower(Tenant), InternalEgressThresholdInGbps;\r\nlet IngestionWeights = AccountConfigs\r\n| join TenantConfigs on $left.IngestionGroupName == $right.GroupName\r\n| project AccountName, GroupName, WeightedTenant, Weight;\r\nlet Limits = IngestionWeights\r\n| join RALimits on $left.WeightedTenant == $right.Tenant;\r\nLimits \r\n| join kind=leftouter ThresholdsSnapshot on Tenant\r\n| project AccountName, HomeCluster, Tenant, GroupName, IngressThresholdInGbps, EgressThresholdInGbps, InternalEgressThresholdInGbps, TPSThresholdInKtps, IngestionWeight=Weight, StampDefault_IngressThresholdInGbps, StampDefault_EgressThresholdInGbps, StampDefault_TPSThresholdInKtps;",
+          "panelPath": [
+            "Regional Account Distribution"
+          ]
+        }
+      ]
+    },
+    "Transactions by Request Type": {
+      "panelPath": [
+        "Transactions by Request Type"
+      ],
+      "queries": [
+        {
+          "id": "22fc0d33-fcab-452b-b83f-351f0e789b30",
+          "name": "Get Storage Account Transactions By RequestType",
+          "groupId": "e4aa2e6a-d762-4af2-b6f4-e459ddd083ee",
+          "majorVersion": 1,
+          "minorVersion": 5,
+          "cluster": "xstore.westcentralus.kusto.windows.net",
+          "database": "xdataanalytics",
+          "type": "CategoryChart",
+          "widgetType": "CategoryChart",
+          "widgetTitle": "Transactions by Request Type",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "accountName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "RequestType",
+              "type": "string"
+            },
+            {
+              "name": "sum_TransactionCount",
+              "type": "long"
+            },
+            {
+              "name": "sum_BillableTransactionCount",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "componentFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "component_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "componentTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "77f74f45-0ba3-4890-81f5-a830629433a8",
+              "majorVersion": 22,
+              "minorVersion": 4,
+              "internalDestinationName": "accountName",
+              "externalSourceName": "Account",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AccountTransactionsDaily\r\n| where TimePeriod >= queryFrom and TimePeriod < queryTo\r\n| where AccountName startswith trim(@\"[\\s]+\", accountName)\r\n| where TransactionType == \"user\"\r\n| where RequestType !in (\"XBlobFE_All\", \"XFileFE_All\", \"XQueueFE_All\", \"XTableFE_All\")\r\n| extend TotalIngressInGB = TotalIngress / (1024 * 1024 * 1024)\r\n| extend TotalEgressInGB = TotalEgress / (1024 * 1024 * 1024)\r\n| project TimePeriod, AccountName, Tenant, RequestType, TransactionType, TransactionCount, BillableTransactionCount, TotalEgressInGB, TotalIngressInGB\r\n| summarize sum(TransactionCount), sum(BillableTransactionCount) by RequestType",
+          "panelPath": [
+            "Transactions by Request Type"
+          ]
+        }
+      ]
+    },
+    "User Guide": {
+      "panelPath": [
+        "User Guide"
+      ],
+      "queries": [
+        {
+          "id": "84653f90-1b09-47fc-b0f6-59d86175ed48",
+          "name": "Get_ServiceID",
+          "groupId": "9d44684c-3812-4939-862e-0b82e57ec5bb",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcore.centralus",
+          "database": "Xstore",
+          "type": "Single",
+          "widgetType": "Markdown",
+          "widgetTitle": "User Guide",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryServiceId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "queryServiceId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryServiceId",
+              "externalSourceName": "ServiceId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "// Any cluster / Database can be used - using the same as to get Redis details - azcore.centralus / Xstore\r\nprint queryServiceId = queryServiceId",
+          "panelPath": [
+            "User Guide"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:54:44.276Z",
+    "totalPanels": 9,
+    "totalUniqueQueries": 12,
+    "totalWidgetRefs": 12
+  }
+}

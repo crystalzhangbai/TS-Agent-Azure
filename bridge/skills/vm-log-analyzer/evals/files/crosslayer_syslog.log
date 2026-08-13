@@ -1,0 +1,14 @@
+Mar 15 09:15:00 prod-web-03 kernel: [452500.000000] java invoked oom-killer: gfp_mask=0x6200ca(GFP_HIGHUSER_MOVABLE), order=0
+Mar 15 09:15:00 prod-web-03 kernel: [452500.000100] Mem-Info:
+Mar 15 09:15:00 prod-web-03 kernel: [452500.000200]  active_anon:3900000 inactive_anon:10000
+Mar 15 09:15:00 prod-web-03 kernel: [452500.000300]  free:512 free_pcp:64 free_cma:0
+Mar 15 09:15:00 prod-web-03 kernel: [452500.000400] Out of memory: Kill process 22841 (gunicorn) score 750 or sacrifice child
+Mar 15 09:15:00 prod-web-03 kernel: [452500.000500] Killed process 22841 (gunicorn) total-vm:8388608kB, anon-rss:7800000kB, file-rss:2048kB
+Mar 15 09:15:01 prod-web-03 systemd[1]: gunicorn.service: Main process exited, code=killed, signal=KILL
+Mar 15 09:15:01 prod-web-03 systemd[1]: gunicorn.service: Failed with result 'signal'.
+Mar 15 09:15:02 prod-web-03 kernel: [452502.123456] oom_reaper: reaped process 22841 (gunicorn), now anon-rss:0kB
+Mar 15 09:15:05 prod-web-03 systemd[1]: gunicorn.service: Scheduled restart job, restart counter is at 1.
+Mar 15 09:15:10 prod-web-03 systemd[1]: Started Gunicorn WSGI Server.
+Mar 15 09:15:15 prod-web-03 gunicorn[23100]: [INFO] Booting worker with pid: 23100
+Mar 15 09:15:16 prod-web-03 gunicorn[23101]: [INFO] Booting worker with pid: 23101
+Mar 15 09:15:20 prod-web-03 gunicorn[23100]: [INFO] Listening on 127.0.0.1:8000

@@ -1,0 +1,847 @@
+{
+  "service": "CRP",
+  "page": "VM Start Troubleshooter",
+  "pageId": "a7bf8c60-3d7a-474f-9401-4f923d880833",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "05aa2ceb-ef18-4b8a-9cff-7a618dd89399",
+          "name": "Retrieve Resource \"VM Start Troubleshooter\"",
+          "groupId": "0def3805-daa2-42a8-845a-a0a5127e86b0",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_vMId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "resultType",
+              "type": "long"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "wFAppName",
+              "type": "string"
+            },
+            {
+              "name": "partitionId",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "vMId",
+              "type": "string"
+            },
+            {
+              "name": "isManaged",
+              "type": "string"
+            },
+            {
+              "name": "vMSize",
+              "type": "string"
+            },
+            {
+              "name": "oSType",
+              "type": "string"
+            },
+            {
+              "name": "oSDiskStorageAccountType",
+              "type": "string"
+            },
+            {
+              "name": "userVMImage",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySet",
+              "type": "string"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            },
+            {
+              "name": "allocationAction",
+              "type": "string"
+            },
+            {
+              "name": "oSProvisionDurationInSeconds",
+              "type": "long"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "physicalAvailablityZone",
+              "type": "string"
+            },
+            {
+              "name": "preprovisionedVMReuse",
+              "type": "string"
+            },
+            {
+              "name": "proximityPlacementGroup",
+              "type": "string"
+            },
+            {
+              "name": "networkSpineIds",
+              "type": "string"
+            },
+            {
+              "name": "galleryImage",
+              "type": "string"
+            },
+            {
+              "name": "extraVMProperties",
+              "type": "string"
+            },
+            {
+              "name": "platformImage",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySetKind",
+              "type": "string"
+            },
+            {
+              "name": "vCPUsAvailable",
+              "type": "string"
+            },
+            {
+              "name": "vCPUsPerCore",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_vMId",
+              "externalSourceName": "vMId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "VMApiQosEvent\n| where PreciseTimeStamp between(globalFrom..globalTo)\n| where vMId =~ local_vMId\n| take 1",
+          "panelPath": []
+        },
+        {
+          "id": "1b6ca427-f71e-485f-8643-4adcbd56e06a",
+          "name": "Start Operations",
+          "groupId": "9b0a3ec4-678f-4af5-bc24-b196ee83f37c",
+          "majorVersion": 2,
+          "minorVersion": 3,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Filter",
+          "widgetType": "Row",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryVmId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Value",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "global_time_selector",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "0def3805-daa2-42a8-845a-a0a5127e86b0",
+              "majorVersion": 1,
+              "minorVersion": 1,
+              "internalDestinationName": "queryVmId",
+              "externalSourceName": "vMId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "VMApiQosEvent\n| where PreciseTimeStamp between(queryFrom..queryTo)\n| where vMId =~ queryVmId and operationName in (\"VirtualMachines.Start.POST\")\n| extend RequestStartTime = datetime_add(\"Millisecond\", durationInMilliseconds * -1, PreciseTimeStamp)\n| distinct RequestStartTime, correlationId, operationId, fabricTenantName\n| extend Value = strcat(RequestStartTime, \" - \", correlationId)\n| extend \n    StartTime = datetime_add(\"Minute\", -1, RequestStartTime),\n    EndTime = datetime_add(\"Minute\", 15, RequestStartTime)\n| order by RequestStartTime asc\n| project Value, StartTime, EndTime, correlationId, operationId, fabricTenantName",
+          "panelPath": []
+        }
+      ]
+    },
+    "Component and Compute Allocations for {{operationId}}": {
+      "panelPath": [
+        "Component and Compute Allocations for {{operationId}}"
+      ],
+      "queries": [
+        {
+          "id": "177bb388-b517-4af5-ae13-e3b7c7305df6",
+          "name": "CRP Allocation and Component Events",
+          "groupId": "22797349-bc7d-4db7-a8d9-0a13ad80d734",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "azcrp",
+          "database": "crp_allprod",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Component and Compute Allocations for {{operationId}}",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryOperationId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "componentName",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "operationResult",
+              "type": "string"
+            },
+            {
+              "name": "resultDetails",
+              "type": "string"
+            },
+            {
+              "name": "durationInMs",
+              "type": "real"
+            },
+            {
+              "name": "relativeQpcTimeInMs",
+              "type": "real"
+            },
+            {
+              "name": "callLogicalId",
+              "type": "string"
+            },
+            {
+              "name": "fabricCluster",
+              "type": "string"
+            },
+            {
+              "name": "fabricTenantName",
+              "type": "string"
+            },
+            {
+              "name": "contextInCsv",
+              "type": "string"
+            },
+            {
+              "name": "serverRequestId",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "SourceTable",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "activityName",
+              "type": "string"
+            },
+            {
+              "name": "physicalAvailabilityZone",
+              "type": "string"
+            },
+            {
+              "name": "computeStamp",
+              "type": "string"
+            },
+            {
+              "name": "tenantName",
+              "type": "string"
+            },
+            {
+              "name": "activitySuccess",
+              "type": "bool"
+            },
+            {
+              "name": "overallAllocationSuccess",
+              "type": "bool"
+            },
+            {
+              "name": "timeTakenInMS",
+              "type": "long"
+            },
+            {
+              "name": "errorType",
+              "type": "string"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "errorMessage",
+              "type": "string"
+            },
+            {
+              "name": "errorStringRepresentation",
+              "type": "string"
+            },
+            {
+              "name": "networkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "extraInfo",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "9b0a3ec4-678f-4af5-bc24-b196ee83f37c",
+              "majorVersion": 2,
+              "minorVersion": 3,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "StartTime",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "9b0a3ec4-678f-4af5-bc24-b196ee83f37c",
+              "majorVersion": 2,
+              "minorVersion": 3,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "EndTime",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "9b0a3ec4-678f-4af5-bc24-b196ee83f37c",
+              "majorVersion": 2,
+              "minorVersion": 3,
+              "internalDestinationName": "queryOperationId",
+              "externalSourceName": "operationId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "let components = ComponentQoSEvent\n| where PreciseTimeStamp between(queryFrom..queryTo)\n| where activityId == queryOperationId\n| extend SourceTable = \"ComponentQoSEvent\";\nlet compute = ComputeAllocationActivity\n| where PreciseTimeStamp between(queryFrom..queryTo)\n| where activityId == queryOperationId\n| extend SourceTable = \"ComputeAllocationActivity\";\nunion components, compute\n| order by PreciseTimeStamp asc",
+          "panelPath": [
+            "Component and Compute Allocations for {{operationId}}"
+          ]
+        }
+      ]
+    },
+    "Control Plane Traces": {
+      "panelPath": [
+        "Control Plane Traces"
+      ],
+      "queries": [
+        {
+          "id": "69123f3f-93b0-4e2e-9883-773480f06d7b",
+          "name": "Ocular Summary Logs with Resource Name",
+          "groupId": "10ad5f43-6414-4f4c-96f8-c5aee8e69341",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "ocularcentralus.centralus.kusto.windows.net",
+          "database": "FunctionDB",
+          "type": "CoBeTimeline",
+          "widgetType": "CoBeTimeline",
+          "widgetTitle": "Control Plane Traces",
+          "params": [
+            {
+              "name": "querySubscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Component",
+              "type": "string"
+            },
+            {
+              "name": "EventName",
+              "type": "string"
+            },
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "ResourceName",
+              "type": "string"
+            },
+            {
+              "name": "RequestFullUri",
+              "type": "string"
+            },
+            {
+              "name": "ArmServiceRequestId",
+              "type": "string"
+            },
+            {
+              "name": "RPActivityId",
+              "type": "string"
+            },
+            {
+              "name": "HttpClientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGuid",
+              "type": "dynamic"
+            },
+            {
+              "name": "RequestBody",
+              "type": "string"
+            },
+            {
+              "name": "FinalStatus",
+              "type": "string"
+            },
+            {
+              "name": "FinalStatusSubCode",
+              "type": "string"
+            },
+            {
+              "name": "FinalStatusMessage",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "EventId",
+              "type": "string"
+            },
+            {
+              "name": "ParentId",
+              "type": "string"
+            },
+            {
+              "name": "CorelationId",
+              "type": "string"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Tooltip",
+              "type": "dynamic"
+            },
+            {
+              "name": "_DeepAz",
+              "type": "dynamic"
+            },
+            {
+              "name": "LogsLink",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            },
+            {
+              "name": "Properties",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "compound_widget",
+              "groupId": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubscriptionId",
+              "externalSourceName": "querySubscriptionId",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "groupId": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroupName",
+              "externalSourceName": "queryResourceGroupName",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "groupId": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceName",
+              "externalSourceName": "queryResourceName",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "groupId": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "queryFrom",
+              "required": false
+            },
+            {
+              "source": "compound_widget",
+              "groupId": "compound_widget",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "queryTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "GetOcularSummaryLogs(\r\n    querySubscriptionId, \r\n    queryResourceGroupName, \r\n    queryResourceName, \r\n    queryFrom, \r\n    queryTo)",
+          "panelPath": [
+            "Control Plane Traces"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:18:21.284Z",
+    "totalPanels": 3,
+    "totalUniqueQueries": 4,
+    "totalWidgetRefs": 4
+  }
+}

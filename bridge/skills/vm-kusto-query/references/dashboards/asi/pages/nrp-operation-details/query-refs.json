@@ -1,0 +1,91 @@
+[
+  {
+    "groupId": "e585d00c-09ea-4cc2-95e7-b4537eaa1bba",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Operation logs"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Operation logs",
+    "queryId": "2807cc18-5eb0-41c4-85b5-b9fe5a50392d",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "operationId",
+        "externalSourceName": "operationId",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "subscriptionId",
+        "externalSourceName": "subscriptionId",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "timestamp",
+        "externalSourceName": "timestamp",
+        "required": false
+      }
+    ],
+    "name": "nrp operation details",
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "params": [
+      {
+        "name": "operationId",
+        "type": "guid",
+        "optional": false
+      },
+      {
+        "name": "subscriptionId",
+        "type": "guid",
+        "optional": false
+      },
+      {
+        "name": "timestamp",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "SourceAssemblyFileVersion",
+        "type": "string"
+      },
+      {
+        "name": "Pid",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  }
+]

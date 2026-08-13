@@ -1,0 +1,35 @@
+# Trimmed multi-boot cloud-init.log from a Rocky Linux 9.7 VM (cloud-init 24.4-7.el9_7.1).
+# Same OS disk booted several times. Two boots shown below:
+#   BOOT 6 (2026-06-02) = source/template VM, FRESH provisioning ISO on /dev/sr0, CustomData injected (168 bytes).
+#   BOOT 7 (2026-06-15) = NEW VM created from a VM Restore Point of that disk. No fresh ISO; cloud-init falls
+#                         back to the disk-cached OVF and re-runs the STALE CustomData script.
+# The reported symptom: "user-data not honored" — VM ran the OLD init script instead of the new user-data
+# supplied at create time.
+
+# ============================ BOOT 6 — 2026-06-02 (source VM, fresh ISO) ============================
+2026-06-02 04:06:08,512 - util.py[DEBUG]: Cloud-init v. 24.4-7.el9_7.1.rocky.0.1 running 'init-local' at Mon, 02 Jun 2026 04:06:08 +0000. Up 16.94 seconds.
+2026-06-02 04:06:08,907 - DataSourceAzure.py[DEBUG]: Found provisioning metadata in /dev/sr0
+2026-06-02 04:06:09,001 - DataSourceAzure.py[DEBUG]: read_azure_ovf: SUCCESS: read_azure_ovf
+2026-06-02 04:06:09,002 - DataSourceAzure.py[DEBUG]: ovf-env.xml: CustomData present (168 bytes)
+2026-06-02 04:06:09,140 - DataSourceAzure.py[DEBUG]: Datasource DataSourceAzure [seed=/dev/sr0]
+2026-06-02 04:06:12,233 - util.py[DEBUG]: Writing to /var/lib/cloud/instances/3b1f0c22-7a55-4e9d-9b21-aa0102030405/user-data.txt - wb: [600] 168 bytes
+2026-06-02 04:06:14,880 - subp.py[DEBUG]: Running command ['/var/lib/cloud/instance/scripts/part-001'] with allowed return codes [0] (shell=False, capture=False)
+
+# ============================ BOOT 7 — 2026-06-15 (NEW VM from Restore Point) ============================
+2026-06-15 17:36:54,799 - util.py[DEBUG]: Cloud-init v. 24.4-7.el9_7.1.rocky.0.1 running 'init-local' at Sun, 15 Jun 2026 17:36:54 +0000. Up 17.36 seconds.
+2026-06-15 17:36:54,953 - DataSourceAzure.py[DEBUG]: cache invalid in datasource: DataSourceAzure [seed=/dev/sr0]
+2026-06-15 17:36:54,968 - DataSourceAzure.py[DEBUG]: Update datasource metadata and network config due to events: boot-new-instance
+2026-06-15 17:36:54,969 - DataSourceAzure.py[DEBUG]: Detected platform: DataSourceAzure [seed=None]
+2026-06-15 17:36:55,241 - util.py[DEBUG]: Failed to mount device: '/dev/sr0'; Stderr: mount: /run/cloud-init/tmp/tmphpxjmhgu: special device /dev/sr0 does not exist.
+2026-06-15 17:36:55,241 - DataSourceAzure.py[DEBUG]: /dev/sr0 was not mountable
+2026-06-15 17:36:55,276 - DataSourceAzure.py[DEBUG]: start: azure-ds/read_azure_ovf: read_azure_ovf
+2026-06-15 17:36:55,277 - handlers.py[DEBUG]: finish: azure-ds/read_azure_ovf: SUCCESS: read_azure_ovf
+2026-06-15 17:36:55,277 - DataSourceAzure.py[DEBUG]: Found provisioning metadata in /var/lib/waagent
+2026-06-15 17:36:55,509 - DataSourceAzure.py[DEBUG]: Crawl of IMDS: GET http://169.254.169.254/metadata/instance?api-version=2021-08-01 (200, 3194b)
+2026-06-15 17:36:55,618 - DataSourceAzure.py[DEBUG]: Retrieved 0 keys from IMDS
+2026-06-15 17:36:55,617 - DataSourceAzure.py[DEBUG]: using files cached in /var/lib/waagent
+2026-06-15 17:36:55,620 - DataSourceAzure.py[DEBUG]: PPS type: None
+2026-06-15 17:36:56,002 - DataSourceAzure.py[DEBUG]: Datasource DataSourceAzure [seed=/var/lib/waagent]
+2026-06-15 17:36:58,114 - util.py[DEBUG]: Writing to /var/lib/cloud/instances/7033bf4b-2c19-4a77-8f0e-1781544926358/user-data.txt - wb: [600] 168 bytes
+2026-06-15 17:37:01,455 - subp.py[DEBUG]: Running command ['/var/lib/cloud/instance/scripts/part-001'] with allowed return codes [0] (shell=False, capture=False)
+2026-06-15 17:38:40,902 - util.py[DEBUG]: cloud-init mode 'modules' took 105.331 seconds (105.33)

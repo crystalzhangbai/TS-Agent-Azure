@@ -1,0 +1,394 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "81a64b28-69d0-4282-a447-0210052a270d",
+  "description": "",
+  "hideGlobalTime": true,
+  "root": {
+    "type": "Container",
+    "id": "31c57255-a4bf-4420-b585-8128fb0339ca",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "54b4db6d-9429-43fd-b327-a7d55b521f4b",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "48e75703-633b-4f37-bd13-c2625c6d5186",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Card",
+                "id": "81b150f9-b788-4374-a471-797ff768fd36",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Test Plan Details",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "Table",
+                "id": "240ab301-e292-4e76-afcb-6b6b6df46d7f",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "CRP Logs (For debugging VM deployment)",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "5e65e01f-8efb-4222-9802-c243e4668908",
+                    "idForPopups": "5e65e01f-8efb-4222-9802-c243e4668908",
+                    "groupId": "56821d70-9d22-4fb6-a515-198d9d066e1f",
+                    "majorVersion": 1,
+                    "minorVersion": 1,
+                    "serviceId": "NodeService",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+                        "majorVersion": 2,
+                        "minorVersion": 6,
+                        "internalDestinationName": "_startTime",
+                        "externalSourceName": "StartTime",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+                        "majorVersion": 2,
+                        "minorVersion": 6,
+                        "internalDestinationName": "_endTime",
+                        "externalSourceName": "EndTime",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+                        "majorVersion": 2,
+                        "minorVersion": 6,
+                        "internalDestinationName": "_resourceGroup",
+                        "externalSourceName": "ResourceGroupName",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+                        "majorVersion": 2,
+                        "minorVersion": 6,
+                        "internalDestinationName": "_cpAvailabilityZone",
+                        "externalSourceName": "CPAvailabilityZone",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+                        "majorVersion": 2,
+                        "minorVersion": 6,
+                        "internalDestinationName": "_clusterName",
+                        "externalSourceName": "ClusterName",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "These are logs from CRP regarding the VM deployment (if there are any during the Cumulus test). If there are CRP failures, they will appear here.\n\nAlso, there are also errors from AzSM here as well. These errors are only relevant if you're trying to do an AzCiM deployment but it is going through Fabric instead.",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "Table",
+                "id": "68556582-1b41-48e3-bd0f-e645fe6c418c",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Links to Node/Container page (For debugging host level issues during VM deployment)",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "18f5e46d-d7fd-4906-a6cc-597e7ec9a82f",
+                    "idForPopups": "18f5e46d-d7fd-4906-a6cc-597e7ec9a82f",
+                    "groupId": "ae3c4c0b-b4fa-4ab8-8574-b0b3203f1180",
+                    "majorVersion": 1,
+                    "minorVersion": 0,
+                    "serviceId": "NodeService",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+                        "majorVersion": 2,
+                        "minorVersion": 6,
+                        "internalDestinationName": "_startTime",
+                        "externalSourceName": "StartTime",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+                        "majorVersion": 2,
+                        "minorVersion": 6,
+                        "internalDestinationName": "_endTime",
+                        "externalSourceName": "EndTime",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+                        "majorVersion": 2,
+                        "minorVersion": 6,
+                        "internalDestinationName": "_nodeId",
+                        "externalSourceName": "NodeId",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "Table",
+                "id": "82ad164b-171b-46a6-bfa8-43a45ae28881",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "EG links",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "53854767-9323-4dc0-9b28-d01613f5b954",
+                    "idForPopups": "53854767-9323-4dc0-9b28-d01613f5b954",
+                    "groupId": "e99814b7-7ba3-4de0-a168-70108f24d565",
+                    "majorVersion": 1,
+                    "minorVersion": 2,
+                    "serviceId": "NodeService",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+                        "majorVersion": 2,
+                        "minorVersion": 6,
+                        "internalDestinationName": "rgName",
+                        "externalSourceName": "ResourceGroupName",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [
+      {
+        "id": "bddf6cbf-3d3b-499b-ac3a-c365c8c5f24a",
+        "idForPopups": "bddf6cbf-3d3b-499b-ac3a-c365c8c5f24a",
+        "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+        "majorVersion": 2,
+        "minorVersion": 6,
+        "serviceId": "NodeService",
+        "allowMultipleSelection": false,
+        "inputMappings": [
+          {
+            "source": "asi_values",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "globalFrom",
+            "externalSourceName": "globalFrom",
+            "required": false,
+            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+          },
+          {
+            "source": "asi_values",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "globalTo",
+            "externalSourceName": "globalTo",
+            "required": false,
+            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+          },
+          {
+            "source": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_TestSuiteId",
+            "externalSourceName": "TestSuiteId",
+            "required": false,
+            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+          }
+        ],
+        "aggregationRule": {
+          "type": "Append"
+        }
+      }
+    ],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "None"
+  },
+  "queries": [],
+  "versionNumber": 19,
+  "basedOnVersionId": "2adcd42f-dabe-411d-a8aa-d77fc5adf42a",
+  "groupId": "fcbd9b14-ed27-4fd8-aa70-716461de0bef",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "TestSuiteId",
+      "description": "",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "NodeService",
+      "groupId": "48ab02e7-da82-468d-8bc9-5bf94a390977",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NodeService",
+      "groupId": "56821d70-9d22-4fb6-a515-198d9d066e1f",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NodeService",
+      "groupId": "ae3c4c0b-b4fa-4ab8-8574-b0b3203f1180",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NodeService",
+      "groupId": "e99814b7-7ba3-4de0-a168-70108f24d565",
+      "entityType": "Query"
+    }
+  ],
+  "serviceId": "NodeService",
+  "deleted": false,
+  "name": "CumulusTestSuite",
+  "_ts": 1752536026,
+  "databaseSavedTimestamp": "2025-07-14T23:33:46+00:00",
+  "_etag": "\"bc02e199-0000-0800-0000-687593da0000\"",
+  "createdAt": "2025-07-14T23:33:46.5314854+00:00",
+  "createdBy": "joechee@microsoft.com",
+  "createdByUserType": "User",
+  "modifiedBy": "joechee@microsoft.com",
+  "modifiedByUserType": "User",
+  "savedAt": "2025-07-14T23:33:46.5314854+00:00",
+  "tags": []
+}

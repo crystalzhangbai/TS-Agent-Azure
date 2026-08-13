@@ -1,0 +1,558 @@
+{
+  "service": "NRP",
+  "page": "LongRunningOperations",
+  "pageId": "1397401a-e5bc-4026-b2ac-019a3e50668c",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "GridViewByOperationName": {
+      "panelPath": [
+        "GridViewByOperationName"
+      ],
+      "queries": [
+        {
+          "id": "1643dd16-e70e-49b2-b9c7-7caf304102f6",
+          "name": "operationDurationGrid",
+          "groupId": "bc1b9418-2a79-48ba-a602-d7c5f12efa8d",
+          "majorVersion": 7,
+          "minorVersion": 0,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "GridViewByOperationName",
+          "params": [
+            {
+              "name": "operationName_query_",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region_query_",
+              "type": "enum",
+              "optional": false
+            },
+            {
+              "name": "duration_threshold",
+              "type": "long",
+              "optional": false
+            },
+            {
+              "name": "lookback_days",
+              "type": "long",
+              "optional": false
+            },
+            {
+              "name": "apply_knownOperations",
+              "type": "bool",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "TeamName",
+              "type": "string"
+            },
+            {
+              "name": "max_DurationInHours",
+              "type": "timespan"
+            },
+            {
+              "name": "retry_err_Count",
+              "type": "long"
+            },
+            {
+              "name": "user_err_Count",
+              "type": "long"
+            },
+            {
+              "name": "err_Count",
+              "type": "long"
+            },
+            {
+              "name": "max_CorrelationRequestId",
+              "type": "string"
+            },
+            {
+              "name": "02.0hr",
+              "type": "long"
+            },
+            {
+              "name": "03.0hr",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationName_query_",
+              "externalSourceName": "operationName_query",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region_query_",
+              "externalSourceName": "region_query",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "duration_threshold",
+              "externalSourceName": "min_OperationDurationThreshold_hr",
+              "required": false
+            },
+            {
+              "source": "node_input",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "lookback_days",
+              "externalSourceName": "lookback_days",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "apply_knownOperations",
+              "externalSourceName": "apply_knownOperations",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let region_query=iff(isempty(region_query_) or region_query_==\"all\", '', region_query_);\r\nlet knownOperations=dynamic([\r\n  \"DeleteNicOperation\",\r\n  \"GetPublishedResourceDataOperation\",\r\n  \"BackupOperation\",\r\n  \"PutVMScaleSetOperation\",\r\n  \"PutNetworkSecurityGroupOperation\",\r\n  \"PutPrivateEndpointOperation\",\r\n  \"PutLoadBalancerOperation\",\r\n  \"PutSubscriptionOperation\",\r\n  \"DeletePacketCaptureOperation\",\r\n  \"DeleteTenantOperation\",\r\n  \"PutKeyValueItemOperation\",\r\n  \"DeleteLoadBalancerOperation\",\r\n  \"PutSecurityRuleOperation\",\r\n  \"AllocateTenantNetworkResourcesOperation\",\r\n  \"ValidateVMScaleSetOperation\",\r\n  \"GetNicEffectiveRouteTableOperation\",\r\n  \"PutPrivateDnsZoneGroupOperation\",\r\n  \"DeleteFlowLogOperation\",\r\n  \"GetTenantClustersOperation\",\r\n  \"PutFlowLogOperation\",\r\n  \"PutNicOperation\"\r\n]);\r\nlet operationName_query_list=iff(apply_knownOperations, knownOperations, iff(isempty(operationName_query_) or operationName_query_ startswith (\"Test\"), dynamic(null), split(operationName_query_, ',')));\r\n//\r\nlet safe_time_window=1d;\r\nlet queryFrom=now()-lookback_days*1d;\r\nlet queryTo=now();\r\n//\r\nQosEtwEvent\r\n    | where PreciseTimeStamp between(queryFrom..queryTo)\r\n    | where isempty(region_query) or Region==region_query\r\n   | where isempty(operationName_query_list) or OperationName in (operationName_query_list)\r\n    | where isnotempty(CorrelationRequestId) and isnotempty(SubscriptionId)\r\n    | extend DurationInHours=round(DurationInMilliseconds/1000.0/60.0/60.0, 2)*1h\r\n    | where DurationInHours>duration_threshold*1h\r\n    | where SourceAssemblyFileVersion contains \"release/\"\r\n    //\r\n    | extend DurationInHours_hr=DurationInHours/1h\r\n    | summarize n=dcount(OperationId),\r\n                max_DurationInHours=arg_max(DurationInHours, max_CorrelationRequestId=CorrelationRequestId),\r\n                retry_err_Count=dcountif(OperationId, ErrorCode contains \"Retr\"),\r\n                user_err_Count=dcountif(OperationId, Success==false and UserError==true),\r\n                err_Count=dcountif(OperationId, Success==false and UserError==false)\r\n                by OperationName, TeamName, duration_bin=iff(DurationInHours_hr<10, bin(DurationInHours_hr, 1.0), bin(DurationInHours_hr, 10))\r\n    | sort by duration_bin asc\r\n    | extend duration_bin=DigitFormat_real(duration_bin, zeros=2)\r\n    | summarize\r\n                d=make_bag(bag_pack(strcat(duration_bin, 'hr'), n)),\r\n                max_DurationInHours=arg_max(max_DurationInHours, retry_err_Count, user_err_Count, err_Count, max_CorrelationRequestId)\r\n                by OperationName, TeamName\r\n    | evaluate bag_unpack(d)\r\n    | sort by max_DurationInHours desc",
+          "panelPath": [
+            "GridViewByOperationName"
+          ]
+        }
+      ]
+    },
+    "LongRunningOperations": {
+      "panelPath": [
+        "LongRunningOperations"
+      ],
+      "queries": [
+        {
+          "id": "9a9751b6-64bf-4cd3-a753-16b3214aecd0",
+          "name": "LongRunningOperations",
+          "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+          "majorVersion": 4,
+          "minorVersion": 1,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "LongRunningOperations",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "operationName_query_",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "region_query_",
+              "type": "enum",
+              "optional": false
+            },
+            {
+              "name": "min_OpertionDurationTHreshold_hr",
+              "type": "long",
+              "optional": false
+            },
+            {
+              "name": "apply_knownOperations",
+              "type": "bool",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "CorrelationRequestId",
+              "type": "string"
+            },
+            {
+              "name": "max_DurationInHrs",
+              "type": "real"
+            },
+            {
+              "name": "max_OperationName",
+              "type": "string"
+            },
+            {
+              "name": "querylink_kusto",
+              "type": "string"
+            },
+            {
+              "name": "sum_DurationInHrs",
+              "type": "real"
+            },
+            {
+              "name": "OperationNames",
+              "type": "dynamic"
+            },
+            {
+              "name": "op_dict",
+              "type": "dynamic"
+            },
+            {
+              "name": "sum_opid_Duration",
+              "type": "real"
+            },
+            {
+              "name": "min_TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "max_TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "SubscriptionName",
+              "type": "string"
+            },
+            {
+              "name": "correl_Log_Duration",
+              "type": "real"
+            },
+            {
+              "name": "TimeRange",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationName_query_",
+              "externalSourceName": "operationName_query",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "region_query_",
+              "externalSourceName": "region_query",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "min_OpertionDurationTHreshold_hr",
+              "externalSourceName": "min_OperationDurationThreshold_hr",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "apply_knownOperations",
+              "externalSourceName": "apply_knownOperations",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let groupBy=\"\";\r\nlet region_query=iff(isempty(region_query_) or region_query_==\"all\", '', region_query_);\r\nlet knownOperations=dynamic([\r\n  \"DeleteNicOperation\",\r\n  \"GetPublishedResourceDataOperation\",\r\n  \"BackupOperation\",\r\n  \"PutVMScaleSetOperation\",\r\n  \"PutNetworkSecurityGroupOperation\",\r\n  \"PutPrivateEndpointOperation\",\r\n  \"PutLoadBalancerOperation\",\r\n  \"PutSubscriptionOperation\",\r\n  \"DeletePacketCaptureOperation\",\r\n  \"DeleteTenantOperation\",\r\n  \"PutKeyValueItemOperation\",\r\n  \"DeleteLoadBalancerOperation\",\r\n  \"PutSecurityRuleOperation\",\r\n  \"AllocateTenantNetworkResourcesOperation\",\r\n  \"ValidateVMScaleSetOperation\",\r\n  \"GetNicEffectiveRouteTableOperation\",\r\n  \"PutPrivateDnsZoneGroupOperation\",\r\n  \"DeleteFlowLogOperation\",\r\n  \"GetTenantClustersOperation\",\r\n  \"PutFlowLogOperation\",\r\n  \"PutNicOperation\"\r\n]);\r\nlet operationName_query_list=iff(apply_knownOperations, knownOperations, iff(isempty(operationName_query_) or operationName_query_ startswith (\"Test\"), dynamic(null), split(operationName_query_, ',')));\r\nlet safe_time_window=1d;\r\n//\r\nlet UseSafeWindow=isempty(region_query) or isempty(operationName_query_list);\r\nlet starttime=queryFrom;//iff(UseSafeWindow, queryTo-safe_time_window, queryFrom);\r\nlet endtime=queryTo;//iff(UseSafeWindow, starttime+safe_time_window, queryTo);\r\n//\r\nlet projectString=\"SourceAssemblyFileVersion, TIMESTAMP, SubscriptionId, OperationName, CorrelationRequestId, OperationId, Tid, EventCode, Sequence, Continuation, msg_sz=string_size(Message), Message, group=strcat(CorrelationRequestId)\";\r\nlet duration_threshold=min_OpertionDurationTHreshold_hr*1000.0*60.0*60.0;\r\nlet toprecs=QosEtwEvent\r\n    | where PreciseTimeStamp between(starttime..endtime)\r\n    | where isempty(region_query) or Region==region_query\r\n    | where isempty(operationName_query_list) or OperationName in (operationName_query_list)\r\n    | where isnotempty(CorrelationRequestId) and isnotempty(SubscriptionId)\r\n    | where DurationInMilliseconds>duration_threshold\r\n    | where SourceAssemblyFileVersion contains \"release/\"\r\n    | join kind = leftouter (ClientAppIds) on $left.ClientAppId == $right.ApplicationId\r\n    | extend Slice=SliceNum(SourceAssemblyFileVersion)\r\n    | summarize count()\r\n                by Region, \r\n                    Slice, rb=ReleaseBuild(SourceAssemblyFileVersion),\r\n                    SubscriptionId,  OperationName, CorrelationRequestId, OperationId, \r\n                    ApplicationName, \r\n                    opDurationInHours=DurationInMilliseconds/1000.0/60.0/60.0\r\n    | order by count_ desc;\r\nlet correlids=toscalar(toprecs|summarize make_set(CorrelationRequestId));\r\nQosEtwEvent\r\n    | where PreciseTimeStamp between(starttime..endtime)\r\n    | where isempty(region_query) or Region==region_query\r\n    | where CorrelationRequestId in  (correlids) \r\n    | extend DurationInHrs=DurationInMilliseconds/1000.0/60.0/60.0\r\n    | invoke QosToFE(project_str=projectString, time_window=1d)\r\n    | summarize max_DurationInHrs=arg_max(DurationInHrs, querylink_kusto),\r\n                sum_DurationInHrs=sum(DurationInHrs),\r\n                n=count(),\r\n                min(TIMESTAMP), max(TIMESTAMP)\r\n           by Region, SubscriptionId, OperationName, OperationId, CorrelationRequestId\r\n    | extend opid_Duration=sum_DurationInHrs//datetime_diff(\"minute\", max_TIMESTAMP, min_TIMESTAMP)/60.0\r\n    | summarize Operation_max_DurationInHrs=arg_max(max_DurationInHrs, querylink_kusto),\r\n                sum_DurationInHrs=sum(sum_DurationInHrs),\r\n                n=sum(n),\r\n                dcount(OperationId),\r\n                max(opid_Duration),\r\n                sum(opid_Duration),\r\n                min_TIMESTAMP=min(min_TIMESTAMP), max_TIMESTAMP=max(max_TIMESTAMP)\r\n          by Region, SubscriptionId, CorrelationRequestId, OperationName\r\n    | extend d=bag_pack_columns(dcount_OperationId, sum_opid_Duration, querylink_kusto)      \r\n    | summarize max_DurationInHrs=arg_max(Operation_max_DurationInHrs, max_OperationName=OperationName, querylink_kusto),\r\n                sum_DurationInHrs=sum(sum_DurationInHrs),\r\n                OperationNames=make_bag_if(bag_pack(OperationName, strcat('opids:', dcount_OperationId, ' max_duration_hrs:', round(Operation_max_DurationInHrs, 1))), Operation_max_DurationInHrs>0.5),\r\n                op_dict=make_bag(bag_pack(OperationName, d)),\r\n                sum_opid_Duration=sum(sum_opid_Duration),\r\n                min_TIMESTAMP=min(min_TIMESTAMP), max_TIMESTAMP=max(max_TIMESTAMP)\r\n          by Region, SubscriptionId, CorrelationRequestId\r\n    | join kind = leftouter (cluster('executiongraph.kusto.windows.net').database('eg').SubscriptionMetadata| project SubscriptionId, SubscriptionName)  on SubscriptionId| project-away *1\r\n    | extend correl_Log_Duration=round(datetime_diff(\"minute\", max_TIMESTAMP, min_TIMESTAMP)/60.0,1)\r\n    | extend TimeRange=strcat(substring(min_TIMESTAMP, 0, 16), '\\n\\r', substring(max_TIMESTAMP, 0, 16))\r\n    | extend max_DurationInHrs=round(max_DurationInHrs,1)\r\n    | sort by max_DurationInHrs",
+          "panelPath": [
+            "LongRunningOperations"
+          ]
+        }
+      ]
+    },
+    "LongRunningOperations > OperationId_Timings": {
+      "panelPath": [
+        "LongRunningOperations",
+        "OperationId_Timings"
+      ],
+      "queries": [
+        {
+          "id": "6a2b7f74-993b-47de-8daa-cc3a34154940",
+          "name": "opidTimings",
+          "groupId": "2e857c52-8492-4e39-a152-06ec499bd43f",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "OperationId_Timings",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "correlationRequestId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "OperationId",
+              "type": "string"
+            },
+            {
+              "name": "mint",
+              "type": "datetime"
+            },
+            {
+              "name": "maxt",
+              "type": "datetime"
+            },
+            {
+              "name": "duration_hrs",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+              "majorVersion": 4,
+              "minorVersion": 1,
+              "internalDestinationName": "correlationRequestId",
+              "externalSourceName": "CorrelationRequestId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "FrontendOperationEtwEvent|union  FrontendReadOperationEtwEvent\r\n| where TIMESTAMP between(queryFrom..queryTo)\r\n| where CorrelationRequestId==correlationRequestId\r\n| summarize mint=min(PreciseTimeStamp), maxt=max(PreciseTimeStamp) by OperationName, OperationId\r\n| extend duration_hrs=round(datetime_diff(\"minute\", maxt, mint)/60.0,2)",
+          "panelPath": [
+            "LongRunningOperations",
+            "OperationId_Timings"
+          ]
+        }
+      ]
+    },
+    "LongRunningOperations > OperationNames": {
+      "panelPath": [
+        "LongRunningOperations",
+        "OperationNames"
+      ],
+      "queries": [
+        {
+          "id": "3c84aa2e-20c6-44b5-b848-608a7a9a644c",
+          "name": "expand",
+          "groupId": "a38c1bb4-ed38-43ce-8d0f-981a3da86035",
+          "majorVersion": 4,
+          "minorVersion": 1,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "OperationNames",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "op_dict",
+              "type": "dynamic",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "OperationName",
+              "type": "string"
+            },
+            {
+              "name": "dcount_OperationId",
+              "type": "long"
+            },
+            {
+              "name": "sum_opid_Duration",
+              "type": "real"
+            },
+            {
+              "name": "querylink_kusto",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "b17a3258-0886-436b-ba92-0c268c77f432",
+              "majorVersion": 4,
+              "minorVersion": 1,
+              "internalDestinationName": "op_dict",
+              "externalSourceName": "op_dict",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "print ops=todynamic(op_dict)\r\n| mv-expand ops\r\n| extend OperationName=bag_keys(ops)\r\n| mv-expand OperationName\r\n| extend OperationName=tostring(OperationName)\r\n| extend d=parse_json(ops)[OperationName]\r\n| project OperationName, dcount_OperationId=tolong(d['dcount_OperationId']), sum_opid_Duration=round(toreal(d['sum_opid_Duration']), 4), querylink_kusto=tostring(d['querylink_kusto'])\r\n| sort by sum_opid_Duration",
+          "panelPath": [
+            "LongRunningOperations",
+            "OperationNames"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:54.161Z",
+    "totalPanels": 4,
+    "totalUniqueQueries": 4,
+    "totalWidgetRefs": 4
+  }
+}

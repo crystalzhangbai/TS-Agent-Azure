@@ -1,0 +1,1036 @@
+[
+  {
+    "id": "1b320295-6d50-42fa-9758-705635eef98f",
+    "name": "ElasticNic Query",
+    "groupId": "ce9f2835-607b-4fbc-813a-c7bb68d9fd5f",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where OperationName == \"PutNicOperation\"\r\n| where Request contains \"\\\"nictype\\\": \\\"Elastic\\\"\"\r\n| where ErrorCode != \"\"\r\n| summarize count() by OperationName, Region, SubscriptionId, ErrorCode",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "f0fb5534-6d06-439b-b985-48b1a0784eb9",
+    "name": "Parent Nic",
+    "groupId": "e0233a44-899c-4bc3-b187-c7cfa01c07af",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where OperationName == \"PutNicOperation\"\r\n| where Request contains \"\\\"elasticNetworkInterfaceLinks\\\"\"\r\n| where ErrorCode != \"\"\r\n| summarize count() by OperationName, Region, SubscriptionId, ErrorCode\r\n",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "5be863b4-f6a6-4402-8d7f-5afadf4f8a34",
+    "name": "VMSS with Mgmt Nic",
+    "groupId": "e60126b3-1119-47d2-806a-ee5a8bd28bda",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where (PreciseTimeStamp > startTime and PreciseTimeStamp < endTime)\r\n| where OperationName == \"PutVMScaleSetOperation\" or OperationName == \"ValidateVMScaleSetOperation\"\r\n| where Request contains \"\\\"elasticNetworkInterfaceLinkConfigurations\\\"\"\r\n| where ErrorCode != \"\"\r\n| summarize count() by OperationName, Region, SubscriptionId, ErrorCode",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "ffe1527f-2d59-44d7-9508-303b539705f6",
+    "name": "Enic Change Distibution",
+    "groupId": "db35be5f-fa9b-4efa-a556-6730665769db",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(5d)\r\n| where OperationName == \"PutNicOperation\"\r\n| where Request contains \"\\\"nictype\\\": \\\"Elastic\\\"\"\r\n| summarize uc = count() by OperationName, Region, bin(TIMESTAMP, 1h)\r\n| summarize UpdateCount = sum(uc)/1.0 by OperationName, Region, bin(TIMESTAMP, 5m)\r\n| project TIMESTAMP, UpdateCount, Region",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "UpdateCount",
+        "type": "real"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "2bbb77bb-0f8c-46a0-a6be-8d41139a9ee6",
+    "name": "Parent Nic Usage",
+    "groupId": "3215f4e0-de17-4f5a-960a-fb7d5bb6ab45",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(5d)\r\n| where OperationName == \"PutNicOperation\"\r\n| where Request contains \"\\\"elasticNetworkInterfaceLinks\\\"\"\r\n| summarize uc = count() by OperationName, Region, bin(TIMESTAMP, 1h)\r\n| summarize UpdateCount = sum(uc)/1.0 by OperationName, Region, bin(TIMESTAMP, 1h)\r\n| project TIMESTAMP, UpdateCount, Region",
+    "params": [
+      {
+        "name": "region",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "UpdateCount",
+        "type": "real"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "e9dd9ab4-e8b2-4409-a2f7-9f20775ddfde",
+    "name": "VMSS Enic Hourly Summarize",
+    "groupId": "c842a4f7-5ade-4b97-a786-a0dc7f35b39e",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(8d)\r\n| where OperationName == \"PutVMScaleSetOperation\" or OperationName == \"ValidateVMScaleSetOperation\"\r\n| where Request contains \"\\\"elasticNetworkInterfaceLinkConfigurations\\\"\"\r\n| summarize uc = count() by OperationName, Region, bin(TIMESTAMP, 1h)\r\n| summarize UpdateCount = sum(uc)/1.0 by OperationName, Region, bin(TIMESTAMP, 5m)\r\n| project TIMESTAMP, UpdateCount, Region",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "UpdateCount",
+        "type": "real"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "20fd3227-bd7b-43df-8bd4-94d53fb89ae5",
+    "name": "Enic Usage",
+    "groupId": "bc2c30e9-13cf-42e5-9fd4-dee07e55092d",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(30d)\r\n| where OperationName == \"PutNicOperation\"\r\n| where Request contains \"\\\"nictype\\\": \\\"Elastic\\\"\"\r\n| summarize uc = count() by ResourceName, Region, bin(TIMESTAMP, 1d)\r\n| summarize UpdateCount = sum(uc)/1.0 by ResourceName, Region, bin(TIMESTAMP, 1d)\r\n| project TIMESTAMP, UpdateCount, Region\r\n",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "UpdateCount",
+        "type": "real"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "90c1cb3e-4df8-4349-af30-f7dceeb1d258",
+    "name": "Pnic Usage",
+    "groupId": "4b87e09e-115d-4c5f-afd7-1961f4c79483",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(30d)\r\n| where OperationName == \"PutNicOperation\"\r\n| where Request contains \"\\\"elasticNetworkInterfaceLinks\\\"\"\r\n| summarize uc = count() by ResourceName, Region, bin(TIMESTAMP, 1d)\r\n| summarize UpdateCount = sum(uc)/1.0 by ResourceName, Region, bin(TIMESTAMP, 1d)\r\n| project TIMESTAMP, UpdateCount, Region",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "UpdateCount",
+        "type": "real"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "c28ef9f3-818e-4e56-ac5f-e461d334f125",
+    "name": "Enic Usage per Customer",
+    "groupId": "9fed498e-558e-4dc0-9cfb-11694e936534",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "let d = datatable (SubscriptionId:string, Customer:string)\r\n[\"640e2d9e-8d9a-40d1-b51a-d84db4969ee0\", \"Dell\", \r\n\"0629574c-1c80-4365-b0c6-3f5fdde6518e\", \"Dell\", \r\n\"ee920d60-90f3-4a92-b5e7-bb284c3a6ce2\", \"NGINX\", \r\n\"c1ce8002-e944-43ae-bbe2-33481e2c9928\", \"NGINX\",\r\n\"8f4765e6-7c9f-4e06-a881-8b9e1aa5d646\", \"Palo Alto\", \r\n\"1adc902d-2621-40cb-8109-6ab72c2c26c8\", \"Palo Alto\", \r\n\"474240ee-c2a4-4373-bc0d-bd2e3dba4714\", \"Liftr\", \r\n\"af20b225-d632-4791-97a0-2b33fa486420\", \"Liftr\"\r\n];\r\nWriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(90d)\r\n| where OperationName == \"PutNicOperation\"\r\n| where Request contains \"\\\"nictype\\\": \\\"Elastic\\\"\"\r\n| join kind = leftouter d on SubscriptionId\r\n| where Customer != \"\"\r\n| summarize uc = count() by ResourceName, Customer, bin(TIMESTAMP, 1d)\r\n| summarize UpdateCount = sum(uc)/1.0 by Customer, bin(TIMESTAMP, 1d)\r\n| project TIMESTAMP, UpdateCount, Customer",
+    "params": [
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "UpdateCount",
+        "type": "real"
+      },
+      {
+        "name": "Customer",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "9dd26c1a-b3e4-410d-a2b3-d8447002f78c",
+    "name": "Monthly Active Enic",
+    "groupId": "791c7cf6-2894-4f09-8f2e-a7ee266a4602",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(90d)\r\n| where OperationName == \"PutNicOperation\"\r\n| where Request contains \"\\\"nictype\\\": \\\"Elastic\\\"\"\r\n| summarize uc = count() by ResourceName, bin(TIMESTAMP, 30d)\r\n| summarize ct = count() by bin(TIMESTAMP, 30d)\r\n| summarize ActiveEnic = sum(ct)/1.0 by bin(TIMESTAMP, 30d)\r\n| project TIMESTAMP, ActiveEnic",
+    "params": [],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "ActiveEnic",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "e7515a3b-4e57-4f05-8205-1ce9844a8e44",
+    "name": "F5 Enic Usage",
+    "groupId": "5941a847-0469-4f75-9dac-fbff113f3d06",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(90d)\r\n| where OperationName == \"PutNicOperation\"\r\n| where Request contains \"\\\"nictype\\\": \\\"Elastic\\\"\"\r\n| where Request contains \"faf1f7e1-8522-498c-a7f9-6a7f1a17f873\" //Lftr app id\r\n| summarize uc = count() by ResourceName, bin(TIMESTAMP, 1d)\r\n| summarize UpdateCount = sum(uc)/1.0 by ResourceName, bin(TIMESTAMP, 1d)\r\n| project TIMESTAMP, UpdateCount",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-06-23T17:47:23.810Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-06-24T17:47:23.810Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "UpdateCount",
+        "type": "real"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "1ac8cd3e-db19-4337-937f-6abfb0906639",
+    "name": "F5 Enic Error Summary",
+    "groupId": "45ba25f4-8fb0-4ab8-8fab-bafabefba5db",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "WriteOperationResponseEtwEvent\r\n| where TIMESTAMP > ago(90d)\r\n| where OperationName == \"PutNicOperation\"\r\n| where Request contains \"faf1f7e1-8522-498c-a7f9-6a7f1a17f873\"\r\n| where Request contains \"\\\"nictype\\\": \\\"Elastic\\\"\"\r\n| where ErrorCode != \"\"\r\n| summarize count() by OperationName, Region, SubscriptionId, ErrorCode",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-06-23T17:47:23.810Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-06-24T17:47:23.810Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "97316a80-437e-4631-9c1f-a5ae12046ea8",
+    "name": "NIC - Notifications fetched",
+    "groupId": "406db8e5-a78a-456f-b67a-6451217ea603",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "BillingManagerEtwEvent\r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where Message contains \"Fetching elastic network interface\" and Message contains \"from parent network interface\"\r\n| where Tenant == tenantName\r\n| summarize count() by bin(PreciseTimeStamp, 1h)",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-30T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-31T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "tenantName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "364c0fcd-d24f-49a7-b807-88d5de9fe312",
+    "name": "NIC- Notifications started being processed",
+    "groupId": "9d3ccbe1-319d-4997-9703-b85da72157be",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "BillingManagerEtwEvent \r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where EventCode == \"NetworkInterfaceBillingEntityStartedBeingProcessed\"\r\n| where Tenant == tenantName\r\n| summarize count() by bin(PreciseTimeStamp, 1h)",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-30T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-31T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "tenantName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "3625e8a6-ed68-4a06-bf78-cb9b8cf055d7",
+    "name": "NIC- Notifications Processed",
+    "groupId": "ee0586a9-49c6-4054-99f0-83c69eeb5e4a",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "BillingManagerEtwEvent \r\n| where PreciseTimeStamp > ago(1d)\r\n| where EventCode == \"NetworkInterfaceBillingEntityProcessed\"\r\n| where Tenant == tenantName\r\n| summarize count() by bin(PreciseTimeStamp, 1h)",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-30T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-31T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "tenantName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "bee9bee4-e13b-4054-aa63-4ad14d23e684",
+    "name": "NIC- Create or Update",
+    "groupId": "629ec4a2-b03b-4333-8c7d-9730b2bd207e",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "BillingManagerEtwEvent\r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where EventCode == \"NetworkInterfaceBillingEntityCreatedOrUpdated\"\r\n| where Tenant == tenantName\r\n| summarize count() by bin(PreciseTimeStamp, 1h)",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-30T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-31T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "tenantName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "6aa585a5-c088-4fd4-a0ea-4cc548198305",
+    "name": "NIC - Delete",
+    "groupId": "8513c7d7-cac0-4713-bd64-5ee4b9d51e47",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "TimeSeries",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "BillingManagerEtwEvent \r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where EventCode == \"NetworkInterfaceBillingEntityDeleted\"\r\n| where Tenant == tenantName\r\n| summarize count() by bin(PreciseTimeStamp, 1h)",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-30T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-31T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "tenantName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "count_",
+        "type": "long"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "6d5ce157-18c4-433e-8a40-73057da87984",
+    "name": " NIC- Resource not exist but entry not deleted2",
+    "groupId": "9c12820d-ba15-4f13-b481-7ae0c5183a32",
+    "majorVersion": 2,
+    "minorVersion": 2,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "BillingManagerEtwEvent \r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where Tenant == tenantName\r\n| where Message contains \"Failed to retrieve the ParentNic information for networkInterfaceRef\" or Message contains \"The enic id passed to generate URI in NetworkInterfaceBillingEntity is invalid \"\r\n| project PreciseTimeStamp, Message, EventCode, CorrelationRequestId, OperationId, Tenant, SourceAssemblyFileVersion",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-30T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-01-31T19:30:03.609Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "tenantName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "SourceAssemblyFileVersion",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "45cdf7ca-ba35-4775-981d-e731db0df43f",
+    "name": "invalidEnic",
+    "groupId": "95c5039c-c14f-4eaf-a541-8188bcefb269",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "https://nrp.kusto.windows.net/",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "FrontendOperationEtwEvent\r\n| where PreciseTimeStamp > startTime and PreciseTimeStamp < endTime\r\n| where Tenant == tenantName\r\n| where Message contains \"The enic id passed to generate URI in TenantOperation.cs is invalid\" or Message contains \"The enic id passed to generate URI in DeleteNicOperation.cs is invalid\" or Message contains \"The enic id passed to generate URI in BillingManager.cs is invalid\"\r\n| project PreciseTimeStamp, Message, EventCode",
+    "params": [
+      {
+        "name": "startTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-19T23:49:16.325Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2023-02-26T23:49:16.325Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "tenantName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "Message",
+        "type": "string"
+      },
+      {
+        "name": "EventCode",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

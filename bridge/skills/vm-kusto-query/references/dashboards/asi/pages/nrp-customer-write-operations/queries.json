@@ -1,0 +1,146 @@
+[
+  {
+    "id": "4001cc5a-c8f7-43e9-93cc-15b5a476302f",
+    "name": "CustomerWriteOperations",
+    "groupId": "af33475b-f194-4d91-b1d9-50e847183bbf",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "CoBeTimeline",
+    "kustoQuery": "NRPCustomerWriteOperations(subId, startTime, endTime, resourceGroup);",
+    "params": [
+      {
+        "name": "subId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "startTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "endTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "ParentId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "DurationInMilliseconds",
+        "type": "long"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  },
+  {
+    "id": "860a1033-110e-472f-89f9-a95ec6d1b727",
+    "name": "Retrieve Resource \"Customer Write Operations\"",
+    "groupId": "655e8506-7cc1-420f-8c0d-65eb1019e3e3",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "ResourceGet",
+    "kustoQuery": "print(\"\")\n| project startTime = local_startDate, endTime = local_endDate, SubscriptionId = local_SubscriptionId, resourceGroup = local_resourceGroup; ",
+    "params": [
+      {
+        "name": "local_SubscriptionId",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_resourceGroup",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_startDate",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "local_endDate",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "startTime",
+        "type": "datetime"
+      },
+      {
+        "name": "endTime",
+        "type": "datetime"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "resourceGroup",
+        "type": "string"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

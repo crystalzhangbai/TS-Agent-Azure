@@ -1,0 +1,1724 @@
+{
+  "service": "Managed Disk",
+  "page": "Disks",
+  "pageId": "09fd460f-654b-4505-a400-7c17bd8ee2e8",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "b2886f7d-69a6-464d-aaf5-6728261d438d",
+          "name": "Retrieve Resource \"Disks\"",
+          "groupId": "59fc1dc8-020e-4458-aae2-efdc5d887044",
+          "majorVersion": 1,
+          "minorVersion": 11,
+          "cluster": "disksbi",
+          "database": "disksbi",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_diskName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_DisksId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_resourceGroup",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_subscriptionId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "SnapshotTime",
+              "type": "datetime"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "BackupId",
+              "type": "string"
+            },
+            {
+              "name": "Key",
+              "type": "string"
+            },
+            {
+              "name": "DisksId",
+              "type": "string"
+            },
+            {
+              "name": "DisksName",
+              "type": "string"
+            },
+            {
+              "name": "DiskResourceType",
+              "type": "string"
+            },
+            {
+              "name": "IsARMResource",
+              "type": "string"
+            },
+            {
+              "name": "CreationData",
+              "type": "string"
+            },
+            {
+              "name": "OwnershipState",
+              "type": "string"
+            },
+            {
+              "name": "SASTokenExpirationTime",
+              "type": "datetime"
+            },
+            {
+              "name": "AccountType",
+              "type": "string"
+            },
+            {
+              "name": "BlobUrl",
+              "type": "string"
+            },
+            {
+              "name": "SyncLinkUrl",
+              "type": "string"
+            },
+            {
+              "name": "IsRegisteredWithArm",
+              "type": "string"
+            },
+            {
+              "name": "DiskSizeBytes",
+              "type": "long"
+            },
+            {
+              "name": "InitialCreationComplete",
+              "type": "string"
+            },
+            {
+              "name": "DisableBilling",
+              "type": "string"
+            },
+            {
+              "name": "CrpDiskId",
+              "type": "string"
+            },
+            {
+              "name": "BillingUriOverride",
+              "type": "string"
+            },
+            {
+              "name": "StorageAccountName",
+              "type": "string"
+            },
+            {
+              "name": "OwnerReferenceUriKey",
+              "type": "string"
+            },
+            {
+              "name": "LastModifiedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "TotalOperationsPerSecond",
+              "type": "long"
+            },
+            {
+              "name": "TotalBytesPerSecond",
+              "type": "long"
+            },
+            {
+              "name": "EncryptionSettings",
+              "type": "string"
+            },
+            {
+              "name": "PhysicalZone",
+              "type": "string"
+            },
+            {
+              "name": "NetworkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "HyperVGeneration",
+              "type": "string"
+            },
+            {
+              "name": "MaxShares",
+              "type": "long"
+            },
+            {
+              "name": "TotalOperationsPerSecondReadOnly",
+              "type": "long"
+            },
+            {
+              "name": "TotalBytesPerSecondReadOnly",
+              "type": "long"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "OwnerReferenceUri",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "DiskEncryptionSetId",
+              "type": "string"
+            },
+            {
+              "name": "TimeCreated",
+              "type": "datetime"
+            },
+            {
+              "name": "BatchId",
+              "type": "long"
+            },
+            {
+              "name": "DiskArmId",
+              "type": "string"
+            },
+            {
+              "name": "OwnerReferenceKey",
+              "type": "string"
+            },
+            {
+              "name": "OsType",
+              "type": "string"
+            },
+            {
+              "name": "DiskEncryptionSetKey",
+              "type": "string"
+            },
+            {
+              "name": "StorageAccountKey",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionKey",
+              "type": "string"
+            },
+            {
+              "name": "IncrementalSnapshotFamilyKey",
+              "type": "string"
+            },
+            {
+              "name": "UploadComplete",
+              "type": "string"
+            },
+            {
+              "name": "WriteSasPolicy",
+              "type": "string"
+            },
+            {
+              "name": "LastOwnershipUpdateTime",
+              "type": "datetime"
+            },
+            {
+              "name": "BackupTime",
+              "type": "datetime"
+            },
+            {
+              "name": "ToBeDeleted",
+              "type": "string"
+            },
+            {
+              "name": "GeoLocation",
+              "type": "string"
+            },
+            {
+              "name": "ExtendedLocation",
+              "type": "string"
+            },
+            {
+              "name": "ReadSasPolicy",
+              "type": "string"
+            },
+            {
+              "name": "AttachableSAS",
+              "type": "string"
+            },
+            {
+              "name": "BlobSnapshotUrl",
+              "type": "string"
+            },
+            {
+              "name": "IsHighBandwidth",
+              "type": "string"
+            },
+            {
+              "name": "Tier",
+              "type": "string"
+            },
+            {
+              "name": "LastTierChangeTime",
+              "type": "datetime"
+            },
+            {
+              "name": "UnknownUpdateProperties",
+              "type": "string"
+            },
+            {
+              "name": "OsState",
+              "type": "string"
+            },
+            {
+              "name": "DetachData",
+              "type": "string"
+            },
+            {
+              "name": "Error",
+              "type": "string"
+            },
+            {
+              "name": "EncryptionSettingsCollection",
+              "type": "string"
+            },
+            {
+              "name": "Bookmarks",
+              "type": "string"
+            },
+            {
+              "name": "ReservedOwnerUri",
+              "type": "string"
+            },
+            {
+              "name": "ReserveComplete",
+              "type": "string"
+            },
+            {
+              "name": "CommitComplete",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilitySetKnownStateKey",
+              "type": "string"
+            },
+            {
+              "name": "ActiveBlobKey",
+              "type": "string"
+            },
+            {
+              "name": "DiskEncryptionKeyVaultReferencekey",
+              "type": "string"
+            },
+            {
+              "name": "KekVaultReferenceKey",
+              "type": "string"
+            },
+            {
+              "name": "AssociatedXstoreEntitiesKey",
+              "type": "string"
+            },
+            {
+              "name": "DiskBookmarksKey",
+              "type": "string"
+            },
+            {
+              "name": "DiskAccessKey",
+              "type": "string"
+            },
+            {
+              "name": "SASPolicyId",
+              "type": "string"
+            },
+            {
+              "name": "ReadOnly",
+              "type": "string"
+            },
+            {
+              "name": "NetworkAccessPolicy",
+              "type": "string"
+            },
+            {
+              "name": "IncrementalSnapshotFamiliesByDiskListkey",
+              "type": "string"
+            },
+            {
+              "name": "PurchasePlanName",
+              "type": "string"
+            },
+            {
+              "name": "PurchasePlanProduct",
+              "type": "string"
+            },
+            {
+              "name": "PurchasePlanPublisher",
+              "type": "string"
+            },
+            {
+              "name": "PurchasePlanPromotionCode",
+              "type": "string"
+            },
+            {
+              "name": "BurstingEnabled",
+              "type": "string"
+            },
+            {
+              "name": "BurstingEnabledTime",
+              "type": "datetime"
+            },
+            {
+              "name": "SupportsHibernation",
+              "type": "string"
+            },
+            {
+              "name": "SupportedCapabilities",
+              "type": "string"
+            },
+            {
+              "name": "SecurityProfile",
+              "type": "string"
+            },
+            {
+              "name": "PurchasePlan",
+              "type": "string"
+            },
+            {
+              "name": "DataAccessAuthMode",
+              "type": "string"
+            },
+            {
+              "name": "PublicNetworkAccess",
+              "type": "string"
+            },
+            {
+              "name": "AllowUnalignedAttach",
+              "type": "string"
+            },
+            {
+              "name": "ownerVM",
+              "type": "string"
+            },
+            {
+              "name": "owernVMSubId",
+              "type": "string"
+            },
+            {
+              "name": "owernVMResourceGroup",
+              "type": "string"
+            },
+            {
+              "name": "owernVMName",
+              "type": "string"
+            },
+            {
+              "name": "jarvisActionGetDisk",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_diskName",
+              "externalSourceName": "diskName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_DisksId",
+              "externalSourceName": "DisksId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_resourceGroup",
+              "externalSourceName": "resourceGroup",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "Disk\r\n| where PreciseTimeStamp between (globalFrom .. globalTo)\r\n| where DisksId == local_DisksId\r\n| where SubscriptionId =~ local_subscriptionId\r\n| where ResourceGroup =~ local_resourceGroup\r\n| where DisksName =~ local_diskName \r\n| summarize SnapshotTime = arg_max(PreciseTimeStamp, *)\r\n| extend ownerVM = tolower(url_decode(substring(OwnerReferenceKey, 69)))\r\n| extend owernVMSubId  =  tostring(split(ownerVM, \"/\")[2])\r\n| extend owernVMResourceGroup  =  tostring(split(ownerVM, \"/\")[4])\r\n| extend owernVMName  =  tostring(split(ownerVM, \"/\")[8])\r\n| extend jarvisActionGetDisk = strcat('https://portal.microsoftgeneva.com/?page=actions&acisEndpoint=',\r\n 'Public', \r\n '&managementOpen=false&selectedNodeType=3&extension=Compute%20Platform%20Disks&group=Disk%20Operations&operationId=GetDisk&operationName=Get%20Disk&inputMode=single&params='\r\n '{\"wellknownsubscriptionid\":\"', local_subscriptionId,\r\n '\",\"smeregionarmnameparameter\":\"', GeoLocation, \r\n '\",\"smeresourcegroupnameparameter\":\"', local_resourceGroup, \r\n '\",\"smedisknameparameter\":\"', local_diskName, \r\n '\",\"smeapiversionparameter\":\"\"}&actionEndpoint=Prod&genevatraceguid=ddf95797-99a9-4f9e-b0ab-4868cd877d8b\")')\r\n",
+          "panelPath": []
+        },
+        {
+          "id": "6f3d0591-20fb-4939-ab91-88aa215790d6",
+          "name": "Query DiskEncryptionSet",
+          "groupId": "ea161d6b-efbe-4aaf-8fdb-fe30dbcbc5df",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "disksbi",
+          "database": "DisksBi",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Disk Encryption Set",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryDESKey",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "BatchId",
+              "type": "long"
+            },
+            {
+              "name": "BackupId",
+              "type": "string"
+            },
+            {
+              "name": "Key",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "Name",
+              "type": "string"
+            },
+            {
+              "name": "ActiveKey",
+              "type": "string"
+            },
+            {
+              "name": "TimeCreated",
+              "type": "datetime"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "BackupTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Id",
+              "type": "string"
+            },
+            {
+              "name": "ToBeDeleted",
+              "type": "string"
+            },
+            {
+              "name": "GeoLocation",
+              "type": "string"
+            },
+            {
+              "name": "Tags",
+              "type": "string"
+            },
+            {
+              "name": "Plan",
+              "type": "string"
+            },
+            {
+              "name": "ETag",
+              "type": "string"
+            },
+            {
+              "name": "ResourceIdentity",
+              "type": "string"
+            },
+            {
+              "name": "PreviousKeys",
+              "type": "string"
+            },
+            {
+              "name": "EncryptionType",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionKey",
+              "type": "string"
+            },
+            {
+              "name": "PreviousIdentity",
+              "type": "string"
+            },
+            {
+              "name": "Error",
+              "type": "string"
+            },
+            {
+              "name": "RotationToLatestKeyVersionEnabled",
+              "type": "string"
+            },
+            {
+              "name": "FederatedClientId",
+              "type": "string"
+            },
+            {
+              "name": "UserAssignedIdentity",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "59fc1dc8-020e-4458-aae2-efdc5d887044",
+              "majorVersion": 1,
+              "minorVersion": 11,
+              "internalDestinationName": "queryDESKey",
+              "externalSourceName": "DiskEncryptionSetKey",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "DiskEncryptionSet\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where Key =~ queryDESKey\r\n| top 1 by PreciseTimeStamp desc",
+          "panelPath": []
+        },
+        {
+          "id": "0f5e5740-cf41-48a8-a15d-79fb87ed7196",
+          "name": "Query Goal State of Managed Disk",
+          "groupId": "cbe32264-55e1-4700-ae5b-94c2c188a107",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrpbifollower.kusto.windows.net",
+          "database": "bi_allprod",
+          "type": "Single",
+          "widgetType": "Card",
+          "widgetTitle": "Goal State - CRP BI",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryDiskId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "SnapshotTime",
+              "type": "datetime"
+            },
+            {
+              "name": "applicationName",
+              "type": "string"
+            },
+            {
+              "name": "BackupId",
+              "type": "string"
+            },
+            {
+              "name": "bIServiceBuildVersion",
+              "type": "string"
+            },
+            {
+              "name": "bIServiceInstanceInfo",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "PartitionId",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "int"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "serviceBuildNumber",
+              "type": "string"
+            },
+            {
+              "name": "serviceName",
+              "type": "string"
+            },
+            {
+              "name": "serviceType",
+              "type": "string"
+            },
+            {
+              "name": "Tid",
+              "type": "int"
+            },
+            {
+              "name": "Key",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "ResourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "AvailabilitySetName",
+              "type": "string"
+            },
+            {
+              "name": "VMId",
+              "type": "string"
+            },
+            {
+              "name": "DiskName",
+              "type": "string"
+            },
+            {
+              "name": "BlobLocation",
+              "type": "string"
+            },
+            {
+              "name": "PseudoSubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "CsmResourceId",
+              "type": "string"
+            },
+            {
+              "name": "LastCommittedModelHash",
+              "type": "string"
+            },
+            {
+              "name": "DiskId",
+              "type": "string"
+            },
+            {
+              "name": "SystemKeyName",
+              "type": "string"
+            },
+            {
+              "name": "DsasSecretId",
+              "type": "string"
+            },
+            {
+              "name": "LeaseId",
+              "type": "string"
+            },
+            {
+              "name": "LeaseAcquired",
+              "type": "bool"
+            },
+            {
+              "name": "BillingCode",
+              "type": "string"
+            },
+            {
+              "name": "CachingType",
+              "type": "string"
+            },
+            {
+              "name": "LastKnownGoodBlobSizeInBytes",
+              "type": "long"
+            },
+            {
+              "name": "BillingValidationValidated",
+              "type": "bool"
+            },
+            {
+              "name": "BillingValidationTagInVhdTagGuid",
+              "type": "string"
+            },
+            {
+              "name": "BillingValidationTagInVhdPartNumber",
+              "type": "string"
+            },
+            {
+              "name": "BillingValidationPurchaseInfoFromCSMPartNumber",
+              "type": "string"
+            },
+            {
+              "name": "BillingValidationPurchaseInfoFromCSMOrderNumber",
+              "type": "string"
+            },
+            {
+              "name": "DiskEncryptionKeyKmsObjectUrl",
+              "type": "string"
+            },
+            {
+              "name": "DiskEncryptionKeySourceVaultVaultId",
+              "type": "string"
+            },
+            {
+              "name": "KeyEncryptionKeyKmsObjectUrl",
+              "type": "string"
+            },
+            {
+              "name": "KeyEncryptionKeySourceVaultVaultId",
+              "type": "string"
+            },
+            {
+              "name": "IsMigrated",
+              "type": "bool"
+            },
+            {
+              "name": "LastGoalSeekingCompletionTime",
+              "type": "datetime"
+            },
+            {
+              "name": "State",
+              "type": "string"
+            },
+            {
+              "name": "Error",
+              "type": "string"
+            },
+            {
+              "name": "Lens_IngestionTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Lens_Originator",
+              "type": "string"
+            },
+            {
+              "name": "Lens_JobId",
+              "type": "string"
+            },
+            {
+              "name": "Lens_SessionId",
+              "type": "string"
+            },
+            {
+              "name": "Lens_BatchId",
+              "type": "string"
+            },
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "LastModifiedTime",
+              "type": "datetime"
+            },
+            {
+              "name": "StorageAccountType",
+              "type": "string"
+            },
+            {
+              "name": "BillingValidationTagInVhdPublicPartNumber",
+              "type": "string"
+            },
+            {
+              "name": "LastGoalSeekingActivityId",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "BackupTime",
+              "type": "datetime"
+            },
+            {
+              "name": "CommitSequenceNumber",
+              "type": "long"
+            },
+            {
+              "name": "LeasingOnNode",
+              "type": "string"
+            },
+            {
+              "name": "AttachDetachPath",
+              "type": "string"
+            },
+            {
+              "name": "CrpDiskId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryDiskId",
+              "externalSourceName": "DisksId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let CrpDiskId = toscalar(cluster(\"DisksBi\").database(\"DisksBi\").Disk\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where DisksId == queryDiskId\r\n| summarize arg_max(PreciseTimeStamp, CrpDiskId)\r\n| project CrpDiskId);\r\nVMManagedDisksAllocationInfo\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where DiskId == CrpDiskId\r\n| summarize SnapshotTime = arg_max(PreciseTimeStamp, *) \r\n| extend CrpDiskId = DiskId\r\n",
+          "panelPath": []
+        }
+      ]
+    },
+    "DiskManagerApiQoSEvent": {
+      "panelPath": [
+        "DiskManagerApiQoSEvent"
+      ],
+      "queries": [
+        {
+          "id": "0afee252-64a6-4dc4-8af8-b01f7a0b8ef1",
+          "name": "Query DiskManagerApiQoSEvent",
+          "groupId": "8c96c95c-3310-41a7-820f-2799c1d229d7",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "Disks",
+          "database": "Disks",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "DiskManagerApiQoSEvent",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroupName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryDiskName",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryOpsFilter",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "operationId",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "e2eMin",
+              "type": "real"
+            },
+            {
+              "name": "resultCode",
+              "type": "string"
+            },
+            {
+              "name": "resultType",
+              "type": "string"
+            },
+            {
+              "name": "errorDetails",
+              "type": "string"
+            },
+            {
+              "name": "exceptionType",
+              "type": "string"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "requestEntity",
+              "type": "dynamic"
+            },
+            {
+              "name": "clientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroupName",
+              "externalSourceName": "resourceGroup",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryDiskName",
+              "externalSourceName": "diskName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "1787929d-edc8-4f69-ae2d-61ebfa5a5a32",
+              "majorVersion": 1,
+              "minorVersion": 1,
+              "internalDestinationName": "queryOpsFilter",
+              "externalSourceName": "Value",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster(\"Disks\").database(\"Disks\").DiskManagerApiQoSEvent\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n| where subscriptionId == querySubId\r\n| where resourceGroupName =~ queryResourceGroupName\r\n| where resourceName =~ queryDiskName or requestEntity contains queryDiskName\r\n| extend fitlerOperationType =  case (\r\n  operationName contains \"get\", 0,\r\n  operationName contains \"Callback\", 1, \r\n  operationName has_any(\"notify\"), 2, \r\n  3)\r\n| where fitlerOperationType >= case (queryOpsFilter == \"All\", 0, queryOpsFilter == \"NonGet\", 1, queryOpsFilter == \"ExcludeCallbacks\", 2, queryOpsFilter == \"Critical\", 3,  1)\r\n| extend StartTime = datetime_add('millisecond', -e2EDurationInMilliseconds, PreciseTimeStamp)\r\n| extend requestEntity = parse_json(requestEntity)\r\n| extend e2eMin = ceiling((e2EDurationInMilliseconds/1000/60.0))\r\n| project StartTime, PreciseTimeStamp, operationName, operationId, clientRequestId, correlationId, resourceName,  e2eMin, resultCode, resultType, errorDetails, exceptionType, httpStatusCode,  requestEntity, clientApplicationId  \r\n| extend level = iif(resultType == 0, iif(httpStatusCode < 300, \"Info\", \"Error\" ), \"Error\")\r\n| extend resultType = case(resultType == 0, \"Success\", \r\n                       resultType == 1, \"Client Failure\", \r\n                       resultType == 2, \"Server Failure\",\r\n                       \"Unknown\")\r\n| order by StartTime  asc",
+          "panelPath": [
+            "DiskManagerApiQoSEvent"
+          ]
+        },
+        {
+          "id": "92525002-acc8-4b82-9a62-ff8e802b5257",
+          "name": "FilterOperations",
+          "groupId": "1787929d-edc8-4f69-ae2d-61ebfa5a5a32",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "Azcrp",
+          "database": "crp_allprod",
+          "type": "Filter",
+          "widgetType": "Table",
+          "widgetTitle": "DiskManagerApiQoSEvent",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Value",
+              "type": "string"
+            },
+            {
+              "name": "Description",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "datatable (Value:string, Description:string)\r\n[\r\n    \"Critical\", \"Critical NonGet Operations\",\r\n    \"ExcludeCallbacks\", \"NonGet Operations without Callbacks\",\r\n    \"NonGet\", \"NonGet Operations (default)\",    \r\n    \"All\", \"All Operations\"    \r\n]",
+          "panelPath": [
+            "DiskManagerApiQoSEvent"
+          ]
+        }
+      ]
+    },
+    "DiskRPResourceLifecycleEvent": {
+      "panelPath": [
+        "DiskRPResourceLifecycleEvent"
+      ],
+      "queries": [
+        {
+          "id": "8ab727a7-de59-481c-8532-617f2fec9e87",
+          "name": "Query DiskRPResourceLifecycleEvent",
+          "groupId": "2726d04a-5e8d-4fd4-9993-cd499c5b859c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "Disks",
+          "database": "Disks",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "DiskRPResourceLifecycleEvent",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "querySubId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryResourceGroup",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "queryDiskName",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "Node",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "traceLevel",
+              "type": "long"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "activityId",
+              "type": "string"
+            },
+            {
+              "name": "traceCode",
+              "type": "long"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "callerName",
+              "type": "string"
+            },
+            {
+              "name": "sourceFile",
+              "type": "string"
+            },
+            {
+              "name": "lineNumber",
+              "type": "long"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "resourceName",
+              "type": "string"
+            },
+            {
+              "name": "diskType",
+              "type": "string"
+            },
+            {
+              "name": "diskEvent",
+              "type": "string"
+            },
+            {
+              "name": "stage",
+              "type": "string"
+            },
+            {
+              "name": "state",
+              "type": "string"
+            },
+            {
+              "name": "hasActiveSASToken",
+              "type": "string"
+            },
+            {
+              "name": "storageAccountType",
+              "type": "string"
+            },
+            {
+              "name": "pseudosubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "availabilitySetId",
+              "type": "string"
+            },
+            {
+              "name": "storageAvailabilitySetPath",
+              "type": "string"
+            },
+            {
+              "name": "faultDomain",
+              "type": "long"
+            },
+            {
+              "name": "faultDomainCount",
+              "type": "long"
+            },
+            {
+              "name": "diskSizeBytes",
+              "type": "long"
+            },
+            {
+              "name": "blobUrl",
+              "type": "string"
+            },
+            {
+              "name": "isRegisteredWithArm",
+              "type": "string"
+            },
+            {
+              "name": "isHydrated",
+              "type": "string"
+            },
+            {
+              "name": "networkSpineId",
+              "type": "string"
+            },
+            {
+              "name": "physicalZone",
+              "type": "string"
+            },
+            {
+              "name": "storageAccountName",
+              "type": "string"
+            },
+            {
+              "name": "diskOwner",
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "type": "string"
+            },
+            {
+              "name": "moveUri",
+              "type": "string"
+            },
+            {
+              "name": "crpDiskId",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "hyperVGeneration",
+              "type": "string"
+            },
+            {
+              "name": "importBlobUri",
+              "type": "string"
+            },
+            {
+              "name": "totalOperationsPerSecond",
+              "type": "long"
+            },
+            {
+              "name": "totalBytesPerSecond",
+              "type": "long"
+            },
+            {
+              "name": "sourcePersistedCorId",
+              "type": "string"
+            },
+            {
+              "name": "timeCreated",
+              "type": "string"
+            },
+            {
+              "name": "incrementalSnapshotFamily",
+              "type": "string"
+            },
+            {
+              "name": "incrementalSnapshotFamiliesForDisk",
+              "type": "string"
+            },
+            {
+              "name": "diskEncryptionSetId",
+              "type": "string"
+            },
+            {
+              "name": "tier",
+              "type": "string"
+            },
+            {
+              "name": "lastTierDowngradeTime",
+              "type": "string"
+            },
+            {
+              "name": "lastTierChangeTime",
+              "type": "string"
+            },
+            {
+              "name": "extendedLocation",
+              "type": "string"
+            },
+            {
+              "name": "plan",
+              "type": "string"
+            },
+            {
+              "name": "networkAccessPolicy",
+              "type": "string"
+            },
+            {
+              "name": "diskAccessId",
+              "type": "string"
+            },
+            {
+              "name": "purchasePlan",
+              "type": "string"
+            },
+            {
+              "name": "supportsHibernation",
+              "type": "string"
+            },
+            {
+              "name": "supportedCapabilities",
+              "type": "string"
+            },
+            {
+              "name": "colocationZone",
+              "type": "string"
+            },
+            {
+              "name": "ddSnapshotState",
+              "type": "string"
+            },
+            {
+              "name": "ddSnapshotToken",
+              "type": "string"
+            },
+            {
+              "name": "storageStampName",
+              "type": "string"
+            },
+            {
+              "name": "availabilityPolicy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "querySubId",
+              "externalSourceName": "subscriptionId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryResourceGroup",
+              "externalSourceName": "resourceGroup",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryDiskName",
+              "externalSourceName": "diskName",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "cluster(\"Disks\").database(\"Disks\").DiskRPResourceLifecycleEvent\r\n| where PreciseTimeStamp between(queryFrom .. queryTo)\r\n| where subscriptionId == querySubId\r\n| where resourceGroupName =~ queryResourceGroup\r\n| where resourceName =~ queryDiskName\r\n// | project PreciseTimeStamp, activityId, message,  diskEvent, stage, state,, crpDiskId, diskOwner, storageAccountName\r\n| order by PreciseTimeStamp asc\r\n\t\r\n",
+          "panelPath": [
+            "DiskRPResourceLifecycleEvent"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.072Z",
+    "totalPanels": 3,
+    "totalUniqueQueries": 6,
+    "totalWidgetRefs": 6
+  }
+}

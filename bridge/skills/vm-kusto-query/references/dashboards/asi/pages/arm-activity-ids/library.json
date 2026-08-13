@@ -1,0 +1,918 @@
+{
+  "service": "ARM",
+  "page": "Activity Ids",
+  "pageId": "f14f164a-5809-4524-94c0-9a6eb449c9e2",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "31a82741-01f1-4bbc-b8e4-e51215c48d2d",
+          "name": "Retrieve Resource \"Activity Ids\"",
+          "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+          "majorVersion": 3,
+          "minorVersion": 0,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_timestamp",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_ActivityId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Deployment",
+              "type": "string"
+            },
+            {
+              "name": "RoleLocation",
+              "type": "string"
+            },
+            {
+              "name": "Role",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "ReleaseVersion",
+              "type": "string"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "ProviderGuid",
+              "type": "string"
+            },
+            {
+              "name": "ProviderName",
+              "type": "string"
+            },
+            {
+              "name": "EventId",
+              "type": "long"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            },
+            {
+              "name": "Tid",
+              "type": "long"
+            },
+            {
+              "name": "TaskName",
+              "type": "string"
+            },
+            {
+              "name": "ActivityId",
+              "type": "string"
+            },
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            },
+            {
+              "name": "principalOid",
+              "type": "string"
+            },
+            {
+              "name": "principalPuid",
+              "type": "string"
+            },
+            {
+              "name": "tenantId",
+              "type": "string"
+            },
+            {
+              "name": "authorizationSource",
+              "type": "string"
+            },
+            {
+              "name": "authorizationAction",
+              "type": "string"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "httpMethod",
+              "type": "string"
+            },
+            {
+              "name": "hostName",
+              "type": "string"
+            },
+            {
+              "name": "targetUri",
+              "type": "string"
+            },
+            {
+              "name": "userAgent",
+              "type": "string"
+            },
+            {
+              "name": "clientRequestId",
+              "type": "string"
+            },
+            {
+              "name": "clientSessionId",
+              "type": "string"
+            },
+            {
+              "name": "clientIpAddress",
+              "type": "string"
+            },
+            {
+              "name": "clientApplicationId",
+              "type": "string"
+            },
+            {
+              "name": "apiVersion",
+              "type": "string"
+            },
+            {
+              "name": "contentLength",
+              "type": "long"
+            },
+            {
+              "name": "serviceRequestId",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            },
+            {
+              "name": "exceptionMessage",
+              "type": "string"
+            },
+            {
+              "name": "errorCode",
+              "type": "string"
+            },
+            {
+              "name": "failureCause",
+              "type": "string"
+            },
+            {
+              "name": "errorMessage",
+              "type": "string"
+            },
+            {
+              "name": "referer",
+              "type": "string"
+            },
+            {
+              "name": "commandName",
+              "type": "string"
+            },
+            {
+              "name": "parameterSetName",
+              "type": "string"
+            },
+            {
+              "name": "contentType",
+              "type": "string"
+            },
+            {
+              "name": "contentEncoding",
+              "type": "string"
+            },
+            {
+              "name": "armServiceRequestId",
+              "type": "string"
+            },
+            {
+              "name": "organizationId",
+              "type": "string"
+            },
+            {
+              "name": "activityVector",
+              "type": "string"
+            },
+            {
+              "name": "locale",
+              "type": "string"
+            },
+            {
+              "name": "realPuid",
+              "type": "string"
+            },
+            {
+              "name": "altSecId",
+              "type": "string"
+            },
+            {
+              "name": "additionalProperties",
+              "type": "string"
+            },
+            {
+              "name": "targetResourceProvider",
+              "type": "string"
+            },
+            {
+              "name": "targetResourceType",
+              "type": "string"
+            },
+            {
+              "name": "__AuthType__",
+              "type": "string"
+            },
+            {
+              "name": "__AuthIdentity__",
+              "type": "string"
+            },
+            {
+              "name": "SourceNamespace",
+              "type": "string"
+            },
+            {
+              "name": "SourceMoniker",
+              "type": "string"
+            },
+            {
+              "name": "SourceVersion",
+              "type": "string"
+            },
+            {
+              "name": "ClusterName",
+              "type": "string"
+            },
+            {
+              "name": "MonitoringApplication",
+              "type": "string"
+            },
+            {
+              "name": "ProviderNamespace",
+              "type": "string"
+            },
+            {
+              "name": "body",
+              "type": "string"
+            },
+            {
+              "name": "env_name",
+              "type": "string"
+            },
+            {
+              "name": "env_time",
+              "type": "datetime"
+            },
+            {
+              "name": "env_ver",
+              "type": "string"
+            },
+            {
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "name": "severityNumber",
+              "type": "long"
+            },
+            {
+              "name": "severityText",
+              "type": "string"
+            },
+            {
+              "name": "fuzzyStartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "fuzzyEndTime",
+              "type": "datetime"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_timestamp",
+              "externalSourceName": "timestamp",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_ActivityId",
+              "externalSourceName": "ActivityId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let startTime = datetime_add('hour', -1, local_timestamp);\nlet endTime = datetime_add('hour', 1, local_timestamp);\nmacro-expand isfuzzy=true ARMProdEG as X\n(\n    union \n        X.database('Requests').HttpIncomingRequests,\n        X.database('Requests').HttpOutgoingRequests\n    | where PreciseTimeStamp between(startTime..endTime)\n    | where ActivityId == local_ActivityId\n    | take 1\n)\n| extend fuzzyStartTime = startTime, fuzzyEndTime = endTime",
+          "panelPath": []
+        },
+        {
+          "id": "def7e47d-fdb3-412f-9220-abaa4671354b",
+          "name": "Deployments for Activity Id",
+          "groupId": "f7faaf76-d546-4c8e-91a8-1d4cfdb0bc3f",
+          "majorVersion": 2,
+          "minorVersion": 2,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Deployment",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryActivityId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "subscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "resourceGroupName",
+              "type": "string"
+            },
+            {
+              "name": "deploymentName",
+              "type": "string"
+            },
+            {
+              "name": "startTime",
+              "type": "datetime"
+            },
+            {
+              "name": "endTime",
+              "type": "datetime"
+            },
+            {
+              "name": "correlationId",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "fuzzyStartTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "fuzzyEndTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryActivityId",
+              "externalSourceName": "ActivityId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Deployments').DeploymentOperations\n    | where PreciseTimeStamp between (queryFrom .. queryTo)\n    | where isnotempty(queryActivityId) and ActivityId == queryActivityId\n)\n| distinct subscriptionId, resourceGroupName, deploymentName, todatetime(startTime), todatetime(endTime), correlationId",
+          "panelPath": []
+        }
+      ]
+    },
+    "CoBe Timeline": {
+      "panelPath": [
+        "CoBe Timeline"
+      ],
+      "queries": [
+        {
+          "id": "9685a820-18a8-42b6-a238-7d3347bc7dd4",
+          "name": "ARMActivityId",
+          "groupId": "6ba283b6-0af6-46d8-a0c5-cf4f3c305f38",
+          "majorVersion": 3,
+          "minorVersion": 6,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "CoBeTimeline",
+          "widgetType": "CoBeTimeline",
+          "widgetTitle": "CoBe Timeline",
+          "params": [
+            {
+              "name": "timeStamp",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "activityId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "EventId",
+              "type": "string"
+            },
+            {
+              "name": "ParentId",
+              "type": "string"
+            },
+            {
+              "name": "EventName",
+              "type": "string"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Properties",
+              "type": "string"
+            },
+            {
+              "name": "Health",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "activityId",
+              "externalSourceName": "ActivityId",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "timeStamp",
+              "externalSourceName": "PreciseTimeStamp",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "let startTime = datetime_add('hour', -12, timeStamp);\nlet endTime = datetime_add('hour', 12, timeStamp);\nlet clusterName = \"Armprod\";\nlet dbName = \"ARMProd\";\nARMActivityId(activityId, startTime, endTime, clusterName, dbName);",
+          "panelPath": [
+            "CoBe Timeline"
+          ]
+        }
+      ]
+    },
+    "Errors": {
+      "panelPath": [
+        "Errors"
+      ],
+      "queries": [
+        {
+          "id": "83748864-4d88-4271-9840-bf70e0137fd5",
+          "name": "Activity Id Errors",
+          "groupId": "f8ddba7c-a38a-4825-abe9-817597612157",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Errors",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryActivityId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "exception",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "fuzzyStartTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "fuzzyEndTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryActivityId",
+              "externalSourceName": "ActivityId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    union X.database('Traces').Errors, X.database('Jobs').JobErrors\n    | where PreciseTimeStamp between (queryFrom .. queryTo)\n    | where isnotempty(queryActivityId) and ActivityId == queryActivityId\n    | extend level = iif(isnotempty(exception) and exception != \"<null>\", \"Error\", \"\")\n    | project TIMESTAMP, operationName, message, exception, level\n)\n| order by TIMESTAMP asc ",
+          "panelPath": [
+            "Errors"
+          ]
+        }
+      ]
+    },
+    "Storage Requests": {
+      "panelPath": [
+        "Storage Requests"
+      ],
+      "queries": [
+        {
+          "id": "01446cff-2c28-4170-ba7a-dbc45059acbc",
+          "name": "Storage Requests for Activity Id",
+          "groupId": "922122f8-f34f-40a4-930d-c31ca627aeed",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Storage Requests",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryActivityId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "accountName",
+              "type": "string"
+            },
+            {
+              "name": "type",
+              "type": "string"
+            },
+            {
+              "name": "source",
+              "type": "string"
+            },
+            {
+              "name": "durationInMilliseconds",
+              "type": "long"
+            },
+            {
+              "name": "httpStatusCode",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "fuzzyStartTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "fuzzyEndTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryActivityId",
+              "externalSourceName": "ActivityId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    X.database('Storage').StorageRequests\n    | where PreciseTimeStamp between (queryFrom .. queryTo)\n    | where isnotempty(queryActivityId) and ActivityId == queryActivityId\n    | where httpStatusCode > -1\n    | project TIMESTAMP, operationName, accountName, type = resourceType, source = resourceName, durationInMilliseconds, httpStatusCode\n)\n| order by TIMESTAMP asc ",
+          "panelPath": [
+            "Storage Requests"
+          ]
+        }
+      ]
+    },
+    "Traces": {
+      "panelPath": [
+        "Traces"
+      ],
+      "queries": [
+        {
+          "id": "ad364758-e12c-428d-a16e-08f4a83c83ad",
+          "name": "Activity Id Traces",
+          "groupId": "a9e2d91b-9e22-4bad-9862-8aab56d89b47",
+          "majorVersion": 1,
+          "minorVersion": 3,
+          "cluster": "armprodgbl.eastus",
+          "database": "ARMProd",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Traces",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryActivityId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "TIMESTAMP",
+              "type": "datetime"
+            },
+            {
+              "name": "operationName",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "type": "string"
+            },
+            {
+              "name": "exception",
+              "type": "string"
+            },
+            {
+              "name": "level",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "fuzzyStartTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "c508e0a0-f9ec-4561-9d4b-420011eba7ff",
+              "majorVersion": 3,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "fuzzyEndTime",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryActivityId",
+              "externalSourceName": "ActivityId",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "macro-expand isfuzzy=true ARMProdEG as X\n(\n    union X.database('Traces').Traces //, X.database('Jobs').JobTraces\n    | where PreciseTimeStamp between (queryFrom .. queryTo)\n    | where isnotempty(queryActivityId) and ActivityId == queryActivityId\n    | extend level = iif(isnotempty(exception) and exception != \"<null>\", \"Error\", \"\")\n    | project TIMESTAMP, operationName, message, exception, level\n)\n| order by TIMESTAMP asc ",
+          "panelPath": [
+            "Traces"
+          ]
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T10:23:49.166Z",
+    "totalPanels": 5,
+    "totalUniqueQueries": 6,
+    "totalWidgetRefs": 6
+  }
+}

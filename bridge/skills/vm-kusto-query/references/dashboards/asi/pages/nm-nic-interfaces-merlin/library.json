@@ -1,0 +1,182 @@
+{
+  "service": "Network Manager",
+  "page": "Nic Interfaces (Merlin)",
+  "pageId": "d7951a7d-0d10-4a66-b5a2-01d541bbff41",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "153f673c-a3c2-4564-bb83-cc5cb5d22e81",
+          "name": "Retrieve Resource \"Nic Interfaces (Merlin)\"",
+          "groupId": "124229f8-39f9-49ea-9479-ff7fe3e5d3d1",
+          "majorVersion": 5,
+          "minorVersion": 1,
+          "cluster": "azurecm.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_NicId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "local_StartTime",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "data_Published_Timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "data_Published_NicId",
+              "type": "string"
+            },
+            {
+              "name": "data_Published_ContainerInterfaceId",
+              "type": "string"
+            },
+            {
+              "name": "data_Published_BladeId",
+              "type": "string"
+            },
+            {
+              "name": "data_Published_NicId1",
+              "type": "string"
+            },
+            {
+              "name": "data_Expected_Timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "data_Expected_VmId",
+              "type": "string"
+            },
+            {
+              "name": "data_Expected_Nics",
+              "type": "string"
+            },
+            {
+              "name": "data_Persisted_Timestamp",
+              "type": "datetime"
+            },
+            {
+              "name": "data_Persisted_ContainerInterfaceId",
+              "type": "string"
+            },
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "Tenant",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_NicId",
+              "externalSourceName": "NicId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "groupId": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_StartTime",
+              "externalSourceName": "StartTime",
+              "required": false
+            }
+          ],
+          "kustoQuery": "NetworkServiceManagerEvents\n| where TIMESTAMP > local_StartTime - 1d\n| where Message contains local_NicId\n| where TaskName in ('LogMerlinNetworkInterfaceInstanceConfigAddToPublish', 'LogMerlinNotificationHandled', 'LogNetworkInterfacePersistedForContainerInterface') \n| project \n    TIMESTAMP,\n    Region,\n    Tenant,\n    data1 = extract_all('containerInterfaceId=\"(.*?)\" bladeId=\"(.*?)\".*NetworkInterfaceId\\\\\\\\\": (.*?),', Message)[0],\n    data2 = extract_all('Received NIC list for container with VmUniqueId: (.*), Expected NIC list: (.*)\"', Message)[0],\n    data3 = iff(TaskName  == 'LogNetworkInterfacePersistedForContainerInterface', extract('containerInterfaceId=\"(.*)\"', 1, Message) , '')\n| where isnotempty(data1) or isnotempty(data2) or isnotempty(data3)\n| project \n    Region,\n    Tenant,\n    PublishedData = tostring(pack (\"Published_Timestamp\", TIMESTAMP, \"Published_ContainerInterfaceId\", tostring(data1[0]), \"Published_BladeId\",tostring(data1[1]) , \"Published_NicId\", tostring(data1[2]))),\n    ExpectedData = tostring(pack (\"Expected_Timestamp\", TIMESTAMP, \"Expected_VmId\", tostring(data2[0]), \"Expected_Nics\",  tostring(data2[1]))),\n    PersistedData = tostring(pack (\"Persisted_Timestamp\", TIMESTAMP, \"Persisted_ContainerInterfaceId\",  tostring(data3))),\n    ContentSelector = case (\n                        isnotempty(tostring(data1[0])), 0,\n                        isnotempty(tostring(data2[0])), 1,\n                        2)\n| summarize \n    PublishedData = todynamic(anyif(PublishedData, ContentSelector == 0)), \n    ExpectedData = todynamic(anyif(ExpectedData, ContentSelector == 1)), \n    PersistedData = todynamic(anyif(PersistedData, ContentSelector == 2)),\n    Region = any(Region),\n    Tenant = any(Tenant)\n| project data = bag_merge(PublishedData, ExpectedData, PersistedData), Region, Tenant\n| project \n    todatetime(data.Published_Timestamp),\n    tostring(data.Published_NicId),\n    tostring(data.Published_ContainerInterfaceId),\n    tostring(data.Published_BladeId),\n    tostring(data.Published_NicId),\n    todatetime(data.Expected_Timestamp),\n    tostring(data.Expected_VmId),\n    tostring(data.Expected_Nics),\n    todatetime(data.Persisted_Timestamp),\n    tostring(data.Persisted_ContainerInterfaceId),\n    Region,\n    Tenant",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:12:40.227Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

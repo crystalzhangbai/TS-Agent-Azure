@@ -1,0 +1,173 @@
+{
+  "service": "NRP",
+  "page": "NRP Operation details",
+  "pageId": "d3c60a10-2ccb-4461-95cc-450b1951e287",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "bff82e4c-a3bb-4741-b2e8-4bc2014bdf9f",
+          "name": "nrp operation details",
+          "groupId": "e585d00c-09ea-4cc2-95e7-b4537eaa1bba",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "https://nrp.kusto.windows.net",
+          "database": "mdsnrp",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "Operation logs",
+          "params": [
+            {
+              "name": "operationId",
+              "type": "guid",
+              "optional": false
+            },
+            {
+              "name": "subscriptionId",
+              "type": "guid",
+              "optional": false
+            },
+            {
+              "name": "timestamp",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "Level",
+              "type": "long"
+            },
+            {
+              "name": "EventCode",
+              "type": "string"
+            },
+            {
+              "name": "Message",
+              "type": "string"
+            },
+            {
+              "name": "RoleInstance",
+              "type": "string"
+            },
+            {
+              "name": "SourceAssemblyFileVersion",
+              "type": "string"
+            },
+            {
+              "name": "Pid",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "operationId",
+              "externalSourceName": "operationId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "subscriptionId",
+              "externalSourceName": "subscriptionId",
+              "required": false
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "timestamp",
+              "externalSourceName": "timestamp",
+              "required": false
+            }
+          ],
+          "kustoQuery": "let readTable = (FrontendReadOperationEtwEvent\r\n| where PreciseTimeStamp between (datetime_add('day', -1, timestamp) .. datetime_add('day', 1, timestamp))\r\n| where OperationId == operationId\r\n| where SubscriptionId == subscriptionId\r\n| project PreciseTimeStamp, Level, EventCode, Message, RoleInstance, SourceAssemblyFileVersion, Pid\r\n| order by PreciseTimeStamp asc);\r\nlet writeTable = (FrontendOperationEtwEvent\r\n| where PreciseTimeStamp between (datetime_add('day', -1, timestamp) .. datetime_add('day', 1, timestamp))\r\n| where OperationId == operationId\r\n| where SubscriptionId == subscriptionId\r\n| project PreciseTimeStamp, Level, EventCode, Message, RoleInstance, SourceAssemblyFileVersion, Pid\r\n| order by PreciseTimeStamp asc);\r\nreadTable\r\n| union writeTable",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:49:54.054Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

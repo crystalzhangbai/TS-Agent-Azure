@@ -1,0 +1,128 @@
+[
+  {
+    "id": "5c771c52-56b9-4f12-b0ef-0700f4585202",
+    "name": "PLS_QosEtw",
+    "groupId": "2f1e4714-43cb-41eb-9088-2acf890700dc",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "cluster": "nrp.kusto.windows.net",
+    "database": "mdsnrp",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "QosEtwEvent\r\n| where TIMESTAMP between (queryFrom .. queryTo)\r\n| where SubscriptionId =~ PLS_Subscription\r\n| where ResourceGroup =~ PLS_ResourceGroup\r\n| where ResourceName =~ PLS_ResourceName\r\n| where HttpMethod != \"GET\"\r\n| project TIMESTAMP, OperationName, OperationId, CorrelationRequestId, ErrorCode, ErrorDetails, Region, Success, UserError\r\n| sort by TIMESTAMP desc\r\n| take 4 // Remove for all operations ran",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-09-19T11:35:23.542Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2024-09-21T11:35:23.542Z",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "PLS_Subscription",
+        "description": "",
+        "type": "string",
+        "default": "\"\"",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "PLS_ResourceGroup",
+        "description": "",
+        "type": "string",
+        "default": "\"\"",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "PLS_ResourceName",
+        "description": "",
+        "type": "string",
+        "default": "\"\"",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "PLS_Key",
+        "description": "",
+        "type": "string",
+        "default": "\"\"",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "TIMESTAMP",
+        "type": "datetime"
+      },
+      {
+        "name": "OperationName",
+        "type": "string"
+      },
+      {
+        "name": "OperationId",
+        "type": "string"
+      },
+      {
+        "name": "CorrelationRequestId",
+        "type": "string"
+      },
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "ErrorDetails",
+        "type": "string"
+      },
+      {
+        "name": "Region",
+        "type": "string"
+      },
+      {
+        "name": "Success",
+        "type": "bool"
+      },
+      {
+        "name": "UserError",
+        "type": "bool"
+      }
+    ],
+    "serviceId": "NRP"
+  }
+]

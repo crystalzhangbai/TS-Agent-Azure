@@ -1,0 +1,2778 @@
+[
+  {
+    "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "eff19646-cb18-4080-a91c-0dd8922876d3",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_HSRNameGivenInPreRegScript",
+        "externalSourceName": "HSRNameGivenInPreRegScript",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_LogicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false
+      },
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_SubscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"HSR\"",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "local_HSRNameGivenInPreRegScript",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_LogicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "local_SubscriptionId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "LogicalContainerId",
+        "type": "long"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b26ce0eb-1306-4d7a-ac9c-3694b268ceff",
+    "majorVersion": 1,
+    "minorVersion": 3,
+    "panelPath": [
+      "Backup Stats"
+    ],
+    "widgetType": "DataSummary",
+    "widgetTitle": "Backup Stats",
+    "queryId": "a25ff6f6-3329-47f6-a0d6-e3d588dd8576",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Backup Success Without user error",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "DataSummary",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "CountPrev",
+        "type": "long"
+      },
+      {
+        "name": "CountNow",
+        "type": "long"
+      },
+      {
+        "name": "PercentagePrev",
+        "type": "real"
+      },
+      {
+        "name": "PercentageNow",
+        "type": "real"
+      },
+      {
+        "name": "PercentageChange",
+        "type": "real"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "ValueContext",
+        "type": "string"
+      },
+      {
+        "name": "Trend",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "f40ab010-1eda-4f4e-9023-c04e570ee998",
+    "majorVersion": 1,
+    "minorVersion": 4,
+    "panelPath": [
+      "Restore Stats"
+    ],
+    "widgetType": "DataSummary",
+    "widgetTitle": "Restore Stats",
+    "queryId": "500a0603-4850-493e-97c7-5f0db9ee6f18",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Restore stats",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "DataSummary",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "CountPrev",
+        "type": "long"
+      },
+      {
+        "name": "CountNow",
+        "type": "long"
+      },
+      {
+        "name": "PercentagePrev",
+        "type": "real"
+      },
+      {
+        "name": "PercentageNow",
+        "type": "real"
+      },
+      {
+        "name": "PercentageChange",
+        "type": "real"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "ValueContext",
+        "type": "string"
+      },
+      {
+        "name": "Trend",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "a3ffef06-3496-4a43-85f4-de12478dd3f8",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Protection Stats"
+    ],
+    "widgetType": "DataSummary",
+    "widgetTitle": "Protection Stats",
+    "queryId": "1414dd0f-c0e0-4655-adf9-895d6417f1a9",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Protection Stats",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "DataSummary",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "CountPrev",
+        "type": "long"
+      },
+      {
+        "name": "CountNow",
+        "type": "long"
+      },
+      {
+        "name": "PercentagePrev",
+        "type": "real"
+      },
+      {
+        "name": "PercentageNow",
+        "type": "real"
+      },
+      {
+        "name": "PercentageChange",
+        "type": "real"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "ValueContext",
+        "type": "string"
+      },
+      {
+        "name": "Trend",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "1d0a3b40-8b9b-45fe-b394-947f0361927b",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Registration Stats"
+    ],
+    "widgetType": "DataSummary",
+    "widgetTitle": "Registration Stats",
+    "queryId": "29f8ec2a-6fbc-4a03-b051-0cbacc16ef6b",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Registration Stats",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "DataSummary",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ErrorCode",
+        "type": "string"
+      },
+      {
+        "name": "CountPrev",
+        "type": "long"
+      },
+      {
+        "name": "CountNow",
+        "type": "long"
+      },
+      {
+        "name": "PercentagePrev",
+        "type": "real"
+      },
+      {
+        "name": "PercentageNow",
+        "type": "real"
+      },
+      {
+        "name": "PercentageChange",
+        "type": "real"
+      },
+      {
+        "name": "Value",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "ValueContext",
+        "type": "string"
+      },
+      {
+        "name": "Trend",
+        "type": "string"
+      },
+      {
+        "name": "Description",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "bbdd53ff-f7b5-4573-8cfa-be04cc4621a9",
+    "majorVersion": 4,
+    "minorVersion": 0,
+    "panelPath": [
+      "Active Node Tracking as per HDBnsutil tool"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "Active Node Tracking as per HDBnsutil tool",
+    "queryId": "17b7e88b-80d8-4f6e-9510-e682d393714b",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "cdaeb9a5-4905-4303-805e-b1457e3ab43d",
+        "majorVersion": 1,
+        "minorVersion": 2,
+        "internalDestinationName": "alltaskids",
+        "externalSourceName": "TaskId",
+        "required": false,
+        "rowSelectionCriteria": "allRows"
+      }
+    ],
+    "name": "hdbnsutil tool mode value",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "alltaskids",
+        "type": "array",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "mode",
+        "type": "dynamic"
+      },
+      {
+        "name": "topology",
+        "type": "dynamic"
+      },
+      {
+        "name": "isSystemOnline",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "TimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "topologyUpdatedByNode",
+        "type": "dynamic"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "cdaeb9a5-4905-4303-805e-b1457e3ab43d",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Active Node Tracking as per HDBnsutil tool"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "Active Node Tracking as per HDBnsutil tool",
+    "queryId": "3aa6f0b8-86d1-405e-994e-bf7caae395e7",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "get all backup task id queries",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TaskId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "c52fa17f-0e2f-40b9-9b9c-6daf9be053cd",
+    "majorVersion": 3,
+    "minorVersion": 10,
+    "panelPath": [
+      "Backup Birds Eye View"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "Backup Birds Eye View",
+    "queryId": "ad1af75f-df97-4a10-a787-25ddfcc93746",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "active node tracking for Log Backups",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "f96c4288-1a3b-4b8d-9c5e-4cf4b33cdcd4",
+    "majorVersion": 4,
+    "minorVersion": 3,
+    "panelPath": [
+      "Backup Timelines detailed view"
+    ],
+    "widgetType": "CoBeTimeline",
+    "widgetTitle": "Backup Timelines detailed view",
+    "queryId": "655e2449-a984-4c53-a006-e78a0e20a867",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFromC",
+        "externalSourceName": "componentFrom",
+        "required": false
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryToC",
+        "externalSourceName": "componentTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "69e7a05d-2b03-45e7-ac35-461dfd949a5a",
+        "majorVersion": 1,
+        "minorVersion": 2,
+        "internalDestinationName": "local_taskids",
+        "externalSourceName": "TaskId",
+        "required": false,
+        "rowSelectionCriteria": "allRows"
+      }
+    ],
+    "name": "Backup Timelines from extension POV",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "CoBeTimeline",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_taskids",
+        "type": "array",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "ParentId",
+        "type": "string"
+      },
+      {
+        "name": "TimeStamp",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "69e7a05d-2b03-45e7-ac35-461dfd949a5a",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Backup Timelines detailed view"
+    ],
+    "widgetType": "CoBeTimeline",
+    "widgetTitle": "Backup Timelines detailed view",
+    "queryId": "ebef7ef6-081a-4577-8ba9-7eea647e4de5",
+    "inputMappings": [
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "componentFrom",
+        "required": false
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "componentTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "get log backup Task id queries",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TaskId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 3,
+    "panelPath": [
+      "Backup Chaining"
+    ],
+    "widgetType": "Graph",
+    "widgetTitle": "Backup Chaining",
+    "queryId": "dc50393f-c93c-48ea-887d-0e42b24340be",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFromC",
+        "externalSourceName": "componentFrom",
+        "required": false
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryToC",
+        "externalSourceName": "componentTo",
+        "required": false
+      }
+    ],
+    "name": "Backup Chaining query",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "panelPath": [
+      "Backup Chaining"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Type",
+    "name": "Backup Chaining query",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "panelPath": [
+      "Backup Chaining"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Name",
+    "name": "Backup Chaining query",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "panelPath": [
+      "Backup Chaining"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Id",
+    "name": "Backup Chaining query",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "panelPath": [
+      "Backup Chaining"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Health",
+    "name": "Backup Chaining query",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "panelPath": [
+      "Backup Chaining"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Category",
+    "name": "Backup Chaining query",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "panelPath": [
+      "Backup Chaining"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "StartId",
+    "name": "Backup Chaining query",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "panelPath": [
+      "Backup Chaining"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "EndId",
+    "name": "Backup Chaining query",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "panelPath": [
+      "Backup Chaining"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "Properties",
+    "name": "Backup Chaining query",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "2d647a23-2945-4eff-bd91-0091b1da620e",
+    "majorVersion": 2,
+    "minorVersion": 5,
+    "panelPath": [
+      "Backup Chaining"
+    ],
+    "widgetType": "Card",
+    "widgetTitle": "",
+    "via": "selectedProperty",
+    "propertyName": "TaskId",
+    "name": "Backup Chaining query",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Graph",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "Type",
+        "type": "string"
+      },
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "Id",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Category",
+        "type": "string"
+      },
+      {
+        "name": "StartId",
+        "type": "string"
+      },
+      {
+        "name": "EndId",
+        "type": "string"
+      },
+      {
+        "name": "Properties",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "82391ce6-8c80-41cf-995f-56e3d4b104a1",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Restore Bird Eye View"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "Restore Bird Eye View",
+    "queryId": "9c4bbc57-b10e-4169-bf5f-8d2ce7a7ef68",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "Recovery bird eye view",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "RestoreToPitId",
+        "type": "long"
+      },
+      {
+        "name": "RestoreToTime",
+        "type": "datetime"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "3b2866c6-8c2b-4713-916d-fcf2d90e7613",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [
+      "Pits View w.r.t Service and Datasource"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "Pits View w.r.t Service and Datasource",
+    "queryId": "bdc2f834-e3d9-4d89-8db4-1cbb6c7483e8",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFromC",
+        "externalSourceName": "componentFrom",
+        "required": false
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryToC",
+        "externalSourceName": "componentTo",
+        "required": false
+      }
+    ],
+    "name": "Pit view for pit ids",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "PiTRelationShip",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "861bd20d-af8e-4340-9af7-ed5c7b1a6e58",
+    "majorVersion": 1,
+    "minorVersion": 2,
+    "panelPath": [
+      "Pits View w.r.t Service and Datasource"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "Pits View w.r.t Service and Datasource",
+    "queryId": "c2425a3e-b5a9-46f0-80ca-463bbd77e3a9",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFromC",
+        "externalSourceName": "componentFrom",
+        "required": false
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryToC",
+        "externalSourceName": "componentTo",
+        "required": false
+      }
+    ],
+    "name": "view by service machine and ds",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "TimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "GroupBy",
+        "type": "string"
+      },
+      {
+        "name": "IsAdhoc",
+        "type": "dynamic"
+      },
+      {
+        "name": "isCordTriggered",
+        "type": "dynamic"
+      },
+      {
+        "name": "LsnMapping",
+        "type": "string"
+      },
+      {
+        "name": "BackupType",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "7be30722-3911-4653-a72e-7c85f59c2298",
+    "majorVersion": 1,
+    "minorVersion": 0,
+    "panelPath": [
+      "Restore Timelines detailed View"
+    ],
+    "widgetType": "CoBeTimeline",
+    "widgetTitle": "Restore Timelines detailed View",
+    "queryId": "44213e4c-f781-43f2-90e1-0b71515a87b8",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "SubscriptionId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "d7cc6fa7-3361-4c12-a7fd-a7603e2f3fc4",
+        "majorVersion": 2,
+        "minorVersion": 3,
+        "internalDestinationName": "local_logicalContainerId",
+        "externalSourceName": "LogicalContainerId",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      }
+    ],
+    "name": "get machines where recovery is done from hsr ds",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "MultiRow",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_logicalContainerId",
+        "type": "long",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "ContainerName",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "d27825e5-ece5-4bbc-a4b4-c9a938eccae3",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Restore Timelines detailed View"
+    ],
+    "widgetType": "CoBeTimeline",
+    "widgetTitle": "Restore Timelines detailed View",
+    "queryId": "85c57aee-5819-4039-9932-09f37a8a5e92",
+    "inputMappings": [
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFrom",
+        "externalSourceName": "globalFrom",
+        "required": false
+      },
+      {
+        "source": "global_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryTo",
+        "externalSourceName": "globalTo",
+        "required": false
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "7be30722-3911-4653-a72e-7c85f59c2298",
+        "majorVersion": 1,
+        "minorVersion": 2,
+        "internalDestinationName": "local_subscriptionId",
+        "externalSourceName": "ContainerName",
+        "required": false,
+        "rowSelectionCriteria": "default"
+      },
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "7be30722-3911-4653-a72e-7c85f59c2298",
+        "majorVersion": 1,
+        "minorVersion": 2,
+        "internalDestinationName": "local_containerNames",
+        "externalSourceName": "ContainerName",
+        "required": false,
+        "rowSelectionCriteria": "allRows"
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryFromC",
+        "externalSourceName": "componentFrom",
+        "required": false
+      },
+      {
+        "source": "component_time_selector",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryToC",
+        "externalSourceName": "componentTo",
+        "required": false
+      }
+    ],
+    "name": "get component restore timings",
+    "cluster": "https://mabprod1.kusto.windows.net",
+    "database": "MABKustoProd1",
+    "type": "CoBeTimeline",
+    "params": [
+      {
+        "name": "queryFrom",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryTo",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "local_subscriptionId",
+        "type": "string",
+        "optional": false
+      },
+      {
+        "name": "local_containerNames",
+        "type": "array",
+        "optional": false
+      },
+      {
+        "name": "queryFromC",
+        "type": "datetime",
+        "optional": false
+      },
+      {
+        "name": "queryToC",
+        "type": "datetime",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PitRestoreStartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "PitRestoreEndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "PitID",
+        "type": "string"
+      },
+      {
+        "name": "EBID",
+        "type": "string"
+      },
+      {
+        "name": "componentToRestore",
+        "type": "string"
+      },
+      {
+        "name": "restorePath",
+        "type": "string"
+      },
+      {
+        "name": "ReadMBps",
+        "type": "long"
+      },
+      {
+        "name": "WriteMBps",
+        "type": "long"
+      },
+      {
+        "name": "restoreSizeInMb",
+        "type": "real"
+      },
+      {
+        "name": "Level",
+        "type": "long"
+      },
+      {
+        "name": "TaskId",
+        "type": "string"
+      },
+      {
+        "name": "ContainerName",
+        "type": "string"
+      },
+      {
+        "name": "CacheHitPercentage",
+        "type": "real"
+      },
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Health",
+        "type": "string"
+      },
+      {
+        "name": "service",
+        "type": "string"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      },
+      {
+        "name": "EventName",
+        "type": "string"
+      },
+      {
+        "name": "EventId",
+        "type": "string"
+      },
+      {
+        "name": "Tooltip",
+        "type": "string"
+      },
+      {
+        "name": "FilterCategory",
+        "type": "string"
+      },
+      {
+        "name": "ParentId",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

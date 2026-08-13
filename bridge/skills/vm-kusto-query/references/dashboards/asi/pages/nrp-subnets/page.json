@@ -1,0 +1,1571 @@
+{
+  "properties": {
+    "alwaysExpandHeader": false
+  },
+  "entityType": "Page",
+  "id": "1281a830-b188-49b5-a9e8-d90137634b15",
+  "description": "",
+  "hideGlobalTime": false,
+  "root": {
+    "type": "Container",
+    "id": "c6a5f1fa-c2da-4165-a881-76777c2de705",
+    "dateSelectEnabled": false,
+    "props": {
+      "title": "",
+      "gridColumns": 12,
+      "helpTextLocation": "Inline"
+    },
+    "children": [
+      {
+        "type": "Row",
+        "id": "a930fbd0-a604-4b6f-906c-95c2a5207255",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "5897441e-952a-46a5-8925-59556b2e48bd",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 6,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Card",
+                "id": "41bd0d86-724a-424d-95fc-ebd5f049cff0",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Subnet - {{name}}",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "Subnet",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                      "majorVersion": 2,
+                      "minorVersion": 14,
+                      "internalDestinationName": "",
+                      "externalSourceName": "name",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "name",
+                    "uuid": "a66483a0-9eac-4e74-9673-bb37fc7e0c15",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Virtual Network",
+                    "props": {},
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "2e4e8bb6-6576-46ca-aae8-29e63c1ffbcd",
+                    "linkText": "{{virtualNetworkName}}",
+                    "pageId": "26e2e70d-748f-46c2-9a65-eff24b5c1ec4",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                        "majorVersion": 2,
+                        "minorVersion": 14,
+                        "internalDestinationName": "name",
+                        "externalSourceName": "virtualNetworkName",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                        "majorVersion": 2,
+                        "minorVersion": 14,
+                        "internalDestinationName": "resourceGroupName",
+                        "externalSourceName": "resourceGroupName",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                        "majorVersion": 2,
+                        "minorVersion": 14,
+                        "internalDestinationName": "subscriptionId",
+                        "externalSourceName": "subscriptionId",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                        "majorVersion": 2,
+                        "minorVersion": 14,
+                        "internalDestinationName": "timestamp",
+                        "externalSourceName": "PreciseTimeStamp",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Subscription",
+                    "props": {},
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "d3ee7734-598f-44cc-95a2-556adfeb7bba",
+                    "linkText": "{{subscriptionId}}",
+                    "pageId": "2a2f8c91-66ef-48ed-bc1f-d870379d89bb",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                        "majorVersion": 2,
+                        "minorVersion": 14,
+                        "internalDestinationName": "subscriptionId",
+                        "externalSourceName": "subscriptionId",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Resource Group",
+                    "props": {},
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "f01edfed-0d17-42b2-8248-25784dffb685",
+                    "linkText": "{{resourceGroupName}}",
+                    "pageId": "236527d6-e9f8-428f-b212-67b6096be63c",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "subscriptionId",
+                        "externalSourceName": "subscriptionId",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "resourceGroupName",
+                        "externalSourceName": "resourceGroupName",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Resource ID",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                      "majorVersion": 2,
+                      "minorVersion": 14,
+                      "internalDestinationName": "",
+                      "externalSourceName": "id",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "id",
+                    "uuid": "42b08ea4-5f54-4739-baa7-841f890ddb0d",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Provisioning State",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                      "majorVersion": 2,
+                      "minorVersion": 14,
+                      "internalDestinationName": "",
+                      "externalSourceName": "provisioningState",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "provisioningState",
+                    "uuid": "776d7252-c395-470e-9dc6-3f393090535e",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Address Prefixes",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                      "majorVersion": 2,
+                      "minorVersion": 14,
+                      "internalDestinationName": "",
+                      "externalSourceName": "addressPrefixes",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "addressPrefixes",
+                    "uuid": "a01786ef-4d3c-440d-b0c4-6de5531931b9",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "IP Address Owner Dict",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                      "majorVersion": 2,
+                      "minorVersion": 14,
+                      "internalDestinationName": "",
+                      "externalSourceName": "ipAddressOwnerDict",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "ipAddressOwnerDict",
+                    "uuid": "9e30f0b9-5904-47fb-bb11-0ce47b862e99",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "NAT Gateway",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                      "majorVersion": 2,
+                      "minorVersion": 14,
+                      "internalDestinationName": "",
+                      "externalSourceName": "natGateway",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "natGateway",
+                    "uuid": "e7bc6b22-84a7-4ba5-b28a-795e5c21a08b",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "IP Configurations",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                      "majorVersion": 2,
+                      "minorVersion": 14,
+                      "internalDestinationName": "",
+                      "externalSourceName": "ipConfigurations",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "ipConfigurations",
+                    "uuid": "25f702a2-c1c0-4594-bfd4-4a58ddad4b74",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Features",
+                    "props": {},
+                    "type": "FeatureList",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "a1be12f5-f266-4f3a-9e0d-538b77bc6d25",
+                    "linkToPageInputMapping": [],
+                    "queryReference": {
+                      "id": "2c303b53-4561-4cc0-beba-d39f3df29a07",
+                      "idForPopups": "2c303b53-4561-4cc0-beba-d39f3df29a07",
+                      "groupId": "68e635ce-e5d2-4066-80fd-0526a6b7ecd5",
+                      "majorVersion": 2,
+                      "minorVersion": 0,
+                      "serviceId": "NRP",
+                      "allowMultipleSelection": false,
+                      "inputMappings": [
+                        {
+                          "source": "Query_ColumnFromSingleRow",
+                          "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                          "majorVersion": 2,
+                          "minorVersion": 14,
+                          "internalDestinationName": "queryVNetResourceId",
+                          "externalSourceName": "vnetResourceId",
+                          "required": false,
+                          "rowSelectionCriteria": "default",
+                          "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                        },
+                        {
+                          "source": "Query_ColumnFromSingleRow",
+                          "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                          "majorVersion": 2,
+                          "minorVersion": 14,
+                          "internalDestinationName": "querySubnetName",
+                          "externalSourceName": "name",
+                          "required": false,
+                          "rowSelectionCriteria": "default",
+                          "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                        },
+                        {
+                          "source": "Query_ColumnFromSingleRow",
+                          "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                          "majorVersion": 2,
+                          "minorVersion": 14,
+                          "internalDestinationName": "queryTimestampHint",
+                          "externalSourceName": "PreciseTimeStamp",
+                          "required": false,
+                          "rowSelectionCriteria": "default",
+                          "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                        }
+                      ],
+                      "aggregationRule": {
+                        "type": "Append"
+                      }
+                    },
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "2c303b53-4561-4cc0-beba-d39f3df29a07",
+                    "idForPopups": "2c303b53-4561-4cc0-beba-d39f3df29a07",
+                    "groupId": "68e635ce-e5d2-4066-80fd-0526a6b7ecd5",
+                    "majorVersion": 2,
+                    "minorVersion": 0,
+                    "serviceId": "NRP",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                        "majorVersion": 2,
+                        "minorVersion": 14,
+                        "internalDestinationName": "queryVNetResourceId",
+                        "externalSourceName": "vnetResourceId",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                        "majorVersion": 2,
+                        "minorVersion": 14,
+                        "internalDestinationName": "querySubnetName",
+                        "externalSourceName": "name",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                        "majorVersion": 2,
+                        "minorVersion": 14,
+                        "internalDestinationName": "queryTimestampHint",
+                        "externalSourceName": "PreciseTimeStamp",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "FloatBottomRight"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "FloatBottomRight"
+          },
+          {
+            "type": "Column",
+            "id": "be5a4499-ad8e-453f-952d-d1688e80d7f9",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 6,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "Table",
+                "id": "8d3116f6-49ce-4763-a8cb-962367c527a0",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "Private Endpoints",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [
+                  {
+                    "friendlyName": "Private Endpoint",
+                    "props": {
+                      "pageServiceId": "NRP"
+                    },
+                    "type": "LinkToPage",
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "uuid": "6dcf3a0b-ebfb-4e75-84f5-33f78453e2e2",
+                    "linkText": "{{name}}",
+                    "pageId": "eb73e12d-166d-432a-86cc-ede1efcad8e9",
+                    "linkToPageInputMapping": [
+                      {
+                        "source": "constant_value_selector",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "timestamp",
+                        "externalSourceName": "null_datetime",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "914253ff-fbfd-4e83-ae3d-06bd0dceda8e",
+                        "majorVersion": 1,
+                        "minorVersion": 1,
+                        "internalDestinationName": "subscriptionId",
+                        "externalSourceName": "subscriptionId",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "914253ff-fbfd-4e83-ae3d-06bd0dceda8e",
+                        "majorVersion": 1,
+                        "minorVersion": 1,
+                        "internalDestinationName": "resourceGroup",
+                        "externalSourceName": "resourceGroup",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "Query_ColumnFromSingleRow",
+                        "groupId": "914253ff-fbfd-4e83-ae3d-06bd0dceda8e",
+                        "majorVersion": 1,
+                        "minorVersion": 1,
+                        "internalDestinationName": "name",
+                        "externalSourceName": "name",
+                        "required": false,
+                        "rowSelectionCriteria": "default",
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "conditions": []
+                  },
+                  {
+                    "friendlyName": "Resource Group",
+                    "props": {},
+                    "type": "Kusto",
+                    "mapping": {
+                      "source": "Query_ColumnFromSingleRow",
+                      "groupId": "914253ff-fbfd-4e83-ae3d-06bd0dceda8e",
+                      "majorVersion": 1,
+                      "minorVersion": 1,
+                      "internalDestinationName": "",
+                      "externalSourceName": "resourceGroup",
+                      "required": false,
+                      "rowSelectionCriteria": "default",
+                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                    },
+                    "groupMajorVersion": 0,
+                    "groupMinorVersion": 0,
+                    "required": false,
+                    "paramName": "resourceGroup",
+                    "uuid": "95522bd1-f47c-44af-832f-f44aab731aba",
+                    "linkToPageInputMapping": [],
+                    "conditions": []
+                  }
+                ],
+                "inputs": [],
+                "queries": [
+                  {
+                    "id": "a10538d6-e086-4b33-985e-57751ce884dd",
+                    "idForPopups": "a10538d6-e086-4b33-985e-57751ce884dd",
+                    "groupId": "914253ff-fbfd-4e83-ae3d-06bd0dceda8e",
+                    "majorVersion": 1,
+                    "minorVersion": 1,
+                    "serviceId": "NRP",
+                    "allowMultipleSelection": false,
+                    "inputMappings": [
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryFrom",
+                        "externalSourceName": "globalFrom",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "asi_values",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "queryTo",
+                        "externalSourceName": "globalTo",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "qVnetName",
+                        "externalSourceName": "virtualNetworkName",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "qRG",
+                        "externalSourceName": "resourceGroupName",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "qSubId",
+                        "externalSourceName": "subscriptionId",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      },
+                      {
+                        "source": "page",
+                        "majorVersion": 0,
+                        "minorVersion": 0,
+                        "internalDestinationName": "qSubnetName",
+                        "externalSourceName": "subnetName",
+                        "required": false,
+                        "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                      }
+                    ],
+                    "aggregationRule": {
+                      "type": "Append"
+                    }
+                  }
+                ],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              },
+              {
+                "type": "CompoundWidgetContainer",
+                "id": "1fe9c83b-8a8b-4a7e-8a29-aab849870770",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {
+                  "compoundWidgetId": "04d6d360-a5b7-47b1-b413-bd8b5319fdfb"
+                },
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "FloatBottomRight"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "FloatBottomRight"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "FloatBottomRight"
+      },
+      {
+        "type": "Row",
+        "id": "b0d88796-ded6-4ec8-828a-cc03b38c466c",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "f2632e14-c667-454b-9f6f-c8be9e09219d",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "ComponentRelationshipContainer",
+                "id": "4f21837e-5758-4272-980a-7461865d5f04",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [],
+                "mapping": [
+                  {
+                    "source": "Query_ColumnFromSingleRow",
+                    "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                    "majorVersion": 2,
+                    "minorVersion": 14,
+                    "internalDestinationName": "resourceGroupName",
+                    "externalSourceName": "resourceGroupName",
+                    "required": false,
+                    "rowSelectionCriteria": "default",
+                    "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                  },
+                  {
+                    "source": "Query_ColumnFromSingleRow",
+                    "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                    "majorVersion": 2,
+                    "minorVersion": 14,
+                    "internalDestinationName": "subnetName",
+                    "externalSourceName": "name",
+                    "required": false,
+                    "rowSelectionCriteria": "default",
+                    "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                  },
+                  {
+                    "source": "Query_ColumnFromSingleRow",
+                    "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                    "majorVersion": 2,
+                    "minorVersion": 14,
+                    "internalDestinationName": "subscriptionId",
+                    "externalSourceName": "subscriptionId",
+                    "required": false,
+                    "rowSelectionCriteria": "default",
+                    "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                  },
+                  {
+                    "source": "Query_ColumnFromSingleRow",
+                    "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                    "majorVersion": 2,
+                    "minorVersion": 14,
+                    "internalDestinationName": "virtualNetworkName",
+                    "externalSourceName": "virtualNetworkName",
+                    "required": false,
+                    "rowSelectionCriteria": "default",
+                    "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                  }
+                ],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {
+                  "componentId": "5b0fc325-1d91-497e-bd35-23d91a2ae0d1",
+                  "expansionConfiguration": "{\"expanded\":false,\"expandedRelationships\":[{\"nodeId\":\"6e9a846c-41e2-4877-9665-cbd24ed63396\",\"expanded\":true,\"expandedRelationships\":[],\"containers\":[{\"nodeId\":\"6e9a846c-41e2-4877-9665-cbd24ed63396-gen-0-root-4f21837e-5758-4272-980a-7461865d5f04\",\"expanded\":false,\"expandedRelationships\":[],\"containers\":[]}],\"defaultInstanceExpansion\":{\"nodeId\":\"6e9a846c-41e2-4877-9665-cbd24ed63396-gen-0-root-4f21837e-5758-4272-980a-7461865d5f04\",\"expanded\":false,\"expandedRelationships\":[],\"containers\":[]}}],\"containers\":[]}",
+                  "layout": "Horizontal"
+                },
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "None"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "None"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "None"
+      },
+      {
+        "type": "Row",
+        "id": "f42d85e7-1457-4d24-a7e1-fd89d8ce9501",
+        "dateSelectEnabled": false,
+        "props": {
+          "title": "",
+          "helpTextLocation": "Inline"
+        },
+        "children": [
+          {
+            "type": "Column",
+            "id": "c8faf265-7562-4e78-8a83-f7f1d0e2ea80",
+            "dateSelectEnabled": false,
+            "props": {
+              "title": "",
+              "gridColumns": 12,
+              "helpTextLocation": "Inline"
+            },
+            "children": [
+              {
+                "type": "TabPane",
+                "id": "6962aaf6-7bbf-4592-85b7-f9c4a5c0f3b0",
+                "dateSelectEnabled": false,
+                "props": {
+                  "title": "",
+                  "helpTextLocation": "Inline"
+                },
+                "children": [
+                  {
+                    "type": "Tab",
+                    "id": "2e532060-69db-457b-b906-b0ddb9065f86",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "NSG",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "def9316b-7094-40d0-a4b3-363db0dc79dc",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "NSG",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "3157323b-d512-4cdb-99bf-20a870765b57",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Row",
+                                "id": "45c788c7-4d8c-4b4d-a03e-73566d263718",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [
+                                  {
+                                    "type": "Column",
+                                    "id": "4cf8d69f-788e-4799-945d-fec003e00e04",
+                                    "dateSelectEnabled": false,
+                                    "props": {
+                                      "title": "",
+                                      "gridColumns": 12,
+                                      "helpTextLocation": "Inline"
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "CompoundWidgetContainer",
+                                        "id": "0529e95e-fd54-4946-920e-5ec4ecbb7609",
+                                        "dateSelectEnabled": false,
+                                        "props": {
+                                          "title": "",
+                                          "helpTextLocation": "Inline"
+                                        },
+                                        "children": [],
+                                        "mapping": [
+                                          {
+                                            "source": "Query_ColumnFromSingleRow",
+                                            "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                                            "majorVersion": 2,
+                                            "minorVersion": 14,
+                                            "internalDestinationName": "querySubscriptionId",
+                                            "externalSourceName": "nsgSubscriptionId",
+                                            "required": false,
+                                            "rowSelectionCriteria": "default",
+                                            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                          },
+                                          {
+                                            "source": "Query_ColumnFromSingleRow",
+                                            "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                                            "majorVersion": 2,
+                                            "minorVersion": 14,
+                                            "internalDestinationName": "queryResourceGroupName",
+                                            "externalSourceName": "nsgResourceGroupName",
+                                            "required": false,
+                                            "rowSelectionCriteria": "default",
+                                            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                          },
+                                          {
+                                            "source": "Query_ColumnFromSingleRow",
+                                            "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                                            "majorVersion": 2,
+                                            "minorVersion": 14,
+                                            "internalDestinationName": "queryNSGName",
+                                            "externalSourceName": "networkSecurityGroupName",
+                                            "required": false,
+                                            "rowSelectionCriteria": "default",
+                                            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                          },
+                                          {
+                                            "source": "constant_value_selector",
+                                            "majorVersion": 0,
+                                            "minorVersion": 0,
+                                            "internalDestinationName": "queryOptionalHintTime",
+                                            "externalSourceName": "null",
+                                            "required": false,
+                                            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                          }
+                                        ],
+                                        "selectedProperties": [],
+                                        "inputs": [],
+                                        "queries": [],
+                                        "conditions": [],
+                                        "widgetProperties": {
+                                          "compoundWidgetId": "43fb63e9-99b2-46f0-847c-c2e364abf097"
+                                        },
+                                        "header": "",
+                                        "footer": "",
+                                        "helpText": "",
+                                        "popupDisplayStrategy": "FloatBottomRight"
+                                      }
+                                    ],
+                                    "mapping": [],
+                                    "selectedProperties": [],
+                                    "inputs": [],
+                                    "queries": [],
+                                    "conditions": [],
+                                    "widgetProperties": {},
+                                    "header": "",
+                                    "footer": "",
+                                    "helpText": "",
+                                    "popupDisplayStrategy": "FloatBottomRight"
+                                  }
+                                ],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [],
+                                "conditions": [
+                                  {
+                                    "from": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                                      "majorVersion": 2,
+                                      "minorVersion": 14,
+                                      "internalDestinationName": "dummyDestination",
+                                      "externalSourceName": "networkSecurityGroupId",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default",
+                                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                    },
+                                    "comparison": "notEqual",
+                                    "value": ""
+                                  }
+                                ],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Row",
+                                "id": "23e4d617-9179-41f1-ac00-17d8c6a4c179",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [
+                                  {
+                                    "type": "Column",
+                                    "id": "839900e1-60bc-4e5f-b803-043280a6f237",
+                                    "dateSelectEnabled": false,
+                                    "props": {
+                                      "title": "",
+                                      "gridColumns": 12,
+                                      "helpTextLocation": "Inline"
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "Markdown",
+                                        "id": "65871196-a943-40e7-a28f-8c18f4f443fe",
+                                        "dateSelectEnabled": false,
+                                        "props": {
+                                          "title": "No NSG specified for the Subnet",
+                                          "helpTextLocation": "Inline"
+                                        },
+                                        "children": [],
+                                        "mapping": [],
+                                        "selectedProperties": [],
+                                        "inputs": [],
+                                        "queries": [],
+                                        "conditions": [],
+                                        "widgetProperties": {},
+                                        "header": "",
+                                        "footer": "",
+                                        "helpText": "",
+                                        "popupDisplayStrategy": "FloatBottomRight"
+                                      }
+                                    ],
+                                    "mapping": [],
+                                    "selectedProperties": [],
+                                    "inputs": [],
+                                    "queries": [],
+                                    "conditions": [],
+                                    "widgetProperties": {},
+                                    "header": "",
+                                    "footer": "",
+                                    "helpText": "",
+                                    "popupDisplayStrategy": "FloatBottomRight"
+                                  }
+                                ],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [],
+                                "conditions": [
+                                  {
+                                    "from": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                                      "majorVersion": 2,
+                                      "minorVersion": 14,
+                                      "internalDestinationName": "dummyDestination",
+                                      "externalSourceName": "networkSecurityGroupId",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default",
+                                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                    },
+                                    "comparison": "equals",
+                                    "value": ""
+                                  }
+                                ],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  },
+                  {
+                    "type": "Tab",
+                    "id": "40ea4088-6780-4ee1-8500-0f6d88f03ac4",
+                    "dateSelectEnabled": false,
+                    "props": {
+                      "title": "Route Table",
+                      "helpTextLocation": "Inline"
+                    },
+                    "children": [
+                      {
+                        "type": "Row",
+                        "id": "2ab72f02-ef5b-464e-95a1-959641f9f633",
+                        "dateSelectEnabled": false,
+                        "props": {
+                          "title": "Route Table",
+                          "helpTextLocation": "Inline"
+                        },
+                        "children": [
+                          {
+                            "type": "Column",
+                            "id": "5032be27-a44e-4b45-9b94-0217d97166cd",
+                            "dateSelectEnabled": false,
+                            "props": {
+                              "title": "",
+                              "gridColumns": 12,
+                              "helpTextLocation": "Inline"
+                            },
+                            "children": [
+                              {
+                                "type": "Row",
+                                "id": "a3e84650-246b-4c6a-864d-9f5b363f97da",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [
+                                  {
+                                    "type": "Column",
+                                    "id": "cfece068-5294-4079-b0c6-b2025a51d4a0",
+                                    "dateSelectEnabled": false,
+                                    "props": {
+                                      "title": "",
+                                      "gridColumns": 12,
+                                      "helpTextLocation": "Inline"
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "CompoundWidgetContainer",
+                                        "id": "a297c70f-b75d-479f-84b8-6a65fa27b802",
+                                        "dateSelectEnabled": false,
+                                        "props": {
+                                          "title": "",
+                                          "helpTextLocation": "Inline"
+                                        },
+                                        "children": [],
+                                        "mapping": [
+                                          {
+                                            "source": "Query_ColumnFromSingleRow",
+                                            "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                                            "majorVersion": 2,
+                                            "minorVersion": 14,
+                                            "internalDestinationName": "querySubscriptionId",
+                                            "externalSourceName": "rtSubscriptionId",
+                                            "required": false,
+                                            "rowSelectionCriteria": "default",
+                                            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                          },
+                                          {
+                                            "source": "Query_ColumnFromSingleRow",
+                                            "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                                            "majorVersion": 2,
+                                            "minorVersion": 14,
+                                            "internalDestinationName": "queryResourceGroupName",
+                                            "externalSourceName": "rtResourceGroupName",
+                                            "required": false,
+                                            "rowSelectionCriteria": "default",
+                                            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                          },
+                                          {
+                                            "source": "Query_ColumnFromSingleRow",
+                                            "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                                            "majorVersion": 2,
+                                            "minorVersion": 14,
+                                            "internalDestinationName": "queryRouteTableName",
+                                            "externalSourceName": "routeTableName",
+                                            "required": false,
+                                            "rowSelectionCriteria": "default",
+                                            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                          },
+                                          {
+                                            "source": "constant_value_selector",
+                                            "majorVersion": 0,
+                                            "minorVersion": 0,
+                                            "internalDestinationName": "queryOptionalHintTime",
+                                            "externalSourceName": "null",
+                                            "required": false,
+                                            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                          }
+                                        ],
+                                        "selectedProperties": [],
+                                        "inputs": [],
+                                        "queries": [],
+                                        "conditions": [],
+                                        "widgetProperties": {
+                                          "compoundWidgetId": "bdc7e233-4006-42fa-8863-93d67cef2ac5"
+                                        },
+                                        "header": "",
+                                        "footer": "",
+                                        "helpText": "",
+                                        "popupDisplayStrategy": "FloatBottomRight"
+                                      }
+                                    ],
+                                    "mapping": [],
+                                    "selectedProperties": [],
+                                    "inputs": [],
+                                    "queries": [],
+                                    "conditions": [],
+                                    "widgetProperties": {},
+                                    "header": "",
+                                    "footer": "",
+                                    "helpText": "",
+                                    "popupDisplayStrategy": "FloatBottomRight"
+                                  }
+                                ],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [],
+                                "conditions": [],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              },
+                              {
+                                "type": "Row",
+                                "id": "98068e64-ee50-4062-9cbd-9f34c88832f8",
+                                "dateSelectEnabled": false,
+                                "props": {
+                                  "title": "",
+                                  "helpTextLocation": "Inline"
+                                },
+                                "children": [
+                                  {
+                                    "type": "Column",
+                                    "id": "9e0f8d0a-3248-4a18-ba87-26ab1d38f3a2",
+                                    "dateSelectEnabled": false,
+                                    "props": {
+                                      "title": "",
+                                      "gridColumns": 12,
+                                      "helpTextLocation": "Inline"
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "Markdown",
+                                        "id": "8c1fb1e8-76bd-45eb-aad5-c2b98b6cfee2",
+                                        "dateSelectEnabled": false,
+                                        "props": {
+                                          "title": "No Route Table specified",
+                                          "helpTextLocation": "Inline"
+                                        },
+                                        "children": [],
+                                        "mapping": [],
+                                        "selectedProperties": [],
+                                        "inputs": [],
+                                        "queries": [],
+                                        "conditions": [],
+                                        "widgetProperties": {},
+                                        "header": "",
+                                        "footer": "",
+                                        "helpText": "",
+                                        "popupDisplayStrategy": "FloatBottomRight"
+                                      }
+                                    ],
+                                    "mapping": [],
+                                    "selectedProperties": [],
+                                    "inputs": [],
+                                    "queries": [],
+                                    "conditions": [],
+                                    "widgetProperties": {},
+                                    "header": "",
+                                    "footer": "",
+                                    "helpText": "",
+                                    "popupDisplayStrategy": "FloatBottomRight"
+                                  }
+                                ],
+                                "mapping": [],
+                                "selectedProperties": [],
+                                "inputs": [],
+                                "queries": [],
+                                "conditions": [
+                                  {
+                                    "from": {
+                                      "source": "Query_ColumnFromSingleRow",
+                                      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+                                      "majorVersion": 2,
+                                      "minorVersion": 14,
+                                      "internalDestinationName": "dummyDestination",
+                                      "externalSourceName": "routeTableId",
+                                      "required": false,
+                                      "rowSelectionCriteria": "default",
+                                      "multipleValuesProcessingMode": "PassValuesIntoOneField"
+                                    },
+                                    "comparison": "equals",
+                                    "value": ""
+                                  }
+                                ],
+                                "widgetProperties": {},
+                                "header": "",
+                                "footer": "",
+                                "helpText": "",
+                                "popupDisplayStrategy": "FloatBottomRight"
+                              }
+                            ],
+                            "mapping": [],
+                            "selectedProperties": [],
+                            "inputs": [],
+                            "queries": [],
+                            "conditions": [],
+                            "widgetProperties": {},
+                            "header": "",
+                            "footer": "",
+                            "helpText": "",
+                            "popupDisplayStrategy": "FloatBottomRight"
+                          }
+                        ],
+                        "mapping": [],
+                        "selectedProperties": [],
+                        "inputs": [],
+                        "queries": [],
+                        "conditions": [],
+                        "widgetProperties": {},
+                        "header": "",
+                        "footer": "",
+                        "helpText": "",
+                        "popupDisplayStrategy": "FloatBottomRight"
+                      }
+                    ],
+                    "mapping": [],
+                    "selectedProperties": [],
+                    "inputs": [],
+                    "queries": [],
+                    "conditions": [],
+                    "widgetProperties": {},
+                    "header": "",
+                    "footer": "",
+                    "helpText": "",
+                    "popupDisplayStrategy": "None"
+                  }
+                ],
+                "mapping": [],
+                "selectedProperties": [],
+                "inputs": [],
+                "queries": [],
+                "conditions": [],
+                "widgetProperties": {},
+                "header": "",
+                "footer": "",
+                "helpText": "",
+                "popupDisplayStrategy": "FloatBottomRight"
+              }
+            ],
+            "mapping": [],
+            "selectedProperties": [],
+            "inputs": [],
+            "queries": [],
+            "conditions": [],
+            "widgetProperties": {},
+            "header": "",
+            "footer": "",
+            "helpText": "",
+            "popupDisplayStrategy": "FloatBottomRight"
+          }
+        ],
+        "mapping": [],
+        "selectedProperties": [],
+        "inputs": [],
+        "queries": [],
+        "conditions": [],
+        "widgetProperties": {},
+        "header": "",
+        "footer": "",
+        "helpText": "",
+        "popupDisplayStrategy": "FloatBottomRight"
+      }
+    ],
+    "mapping": [],
+    "selectedProperties": [],
+    "inputs": [],
+    "queries": [
+      {
+        "id": "c06f1a67-96d1-40a3-a8d8-a9aadef1a0bc",
+        "idForPopups": "c06f1a67-96d1-40a3-a8d8-a9aadef1a0bc",
+        "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+        "majorVersion": 2,
+        "minorVersion": 14,
+        "serviceId": "NRP",
+        "allowMultipleSelection": false,
+        "inputMappings": [
+          {
+            "source": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_subnetName",
+            "externalSourceName": "subnetName",
+            "required": false,
+            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+          },
+          {
+            "source": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_subscriptionId",
+            "externalSourceName": "subscriptionId",
+            "required": false,
+            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+          },
+          {
+            "source": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_resourceGroupName",
+            "externalSourceName": "resourceGroupName",
+            "required": false,
+            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+          },
+          {
+            "source": "page",
+            "majorVersion": 0,
+            "minorVersion": 0,
+            "internalDestinationName": "local_virtualNetworkName",
+            "externalSourceName": "virtualNetworkName",
+            "required": false,
+            "multipleValuesProcessingMode": "PassValuesIntoOneField"
+          }
+        ],
+        "aggregationRule": {
+          "type": "Append"
+        }
+      }
+    ],
+    "conditions": [],
+    "widgetProperties": {},
+    "header": "",
+    "footer": "",
+    "helpText": "",
+    "popupDisplayStrategy": "FloatBottomRight"
+  },
+  "queries": [],
+  "versionNumber": 29,
+  "basedOnVersionId": "939db191-7e1c-4707-a8d6-ed9e11f8a237",
+  "groupId": "7d5717f5-2e24-4169-84c6-3736be2478dc",
+  "status": "active",
+  "inputs": [
+    {
+      "name": "subnetName",
+      "description": "",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "subscriptionId",
+      "description": "",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "resourceGroupName",
+      "description": "",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    },
+    {
+      "name": "virtualNetworkName",
+      "description": "",
+      "type": "string",
+      "optional": false,
+      "useTestValueAsDefault": false,
+      "typeSpecificOptions": {
+        "enumTypeData": "[]"
+      },
+      "displayConditions": []
+    }
+  ],
+  "testParameters": [],
+  "references": [
+    {
+      "serviceId": "NRP",
+      "groupId": "7db1406b-19c7-467f-98ae-4b5f1b61030f",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "68e635ce-e5d2-4066-80fd-0526a6b7ecd5",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "68e635ce-e5d2-4066-80fd-0526a6b7ecd5",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "groupId": "914253ff-fbfd-4e83-ae3d-06bd0dceda8e",
+      "entityType": "Query"
+    },
+    {
+      "serviceId": "NRP",
+      "id": "26e2e70d-748f-46c2-9a65-eff24b5c1ec4",
+      "groupId": "26e2e70d-748f-46c2-9a65-eff24b5c1ec4",
+      "entityType": "Page"
+    },
+    {
+      "serviceId": "NRP",
+      "id": "2a2f8c91-66ef-48ed-bc1f-d870379d89bb",
+      "groupId": "2a2f8c91-66ef-48ed-bc1f-d870379d89bb",
+      "entityType": "Page"
+    },
+    {
+      "serviceId": "NRP",
+      "id": "236527d6-e9f8-428f-b212-67b6096be63c",
+      "groupId": "236527d6-e9f8-428f-b212-67b6096be63c",
+      "entityType": "Page"
+    },
+    {
+      "serviceId": "NRP",
+      "id": "eb73e12d-166d-432a-86cc-ede1efcad8e9",
+      "groupId": "eb73e12d-166d-432a-86cc-ede1efcad8e9",
+      "entityType": "Page"
+    },
+    {
+      "id": "5b0fc325-1d91-497e-bd35-23d91a2ae0d1",
+      "groupId": "5b0fc325-1d91-497e-bd35-23d91a2ae0d1",
+      "entityType": "Component"
+    },
+    {
+      "serviceId": "NRP",
+      "id": "04d6d360-a5b7-47b1-b413-bd8b5319fdfb",
+      "groupId": "04d6d360-a5b7-47b1-b413-bd8b5319fdfb",
+      "entityType": "CompoundWidget"
+    },
+    {
+      "serviceId": "NRP",
+      "id": "43fb63e9-99b2-46f0-847c-c2e364abf097",
+      "groupId": "43fb63e9-99b2-46f0-847c-c2e364abf097",
+      "entityType": "CompoundWidget"
+    },
+    {
+      "serviceId": "NRP",
+      "id": "bdc7e233-4006-42fa-8863-93d67cef2ac5",
+      "groupId": "bdc7e233-4006-42fa-8863-93d67cef2ac5",
+      "entityType": "CompoundWidget"
+    }
+  ],
+  "serviceId": "NRP",
+  "deleted": false,
+  "name": "Subnets",
+  "_ts": 1770767593,
+  "databaseSavedTimestamp": "2026-02-10T23:53:13+00:00",
+  "_etag": "\"34015f32-0000-0800-0000-698bc4e90000\"",
+  "createdAt": "2026-02-10T23:53:12.4773338+00:00",
+  "createdBy": "ascobie@microsoft.com",
+  "createdByUserType": "User",
+  "modifiedBy": "ascobie@microsoft.com",
+  "modifiedByUserType": "User",
+  "savedAt": "2026-02-10T23:53:12.4773338+00:00",
+  "tags": []
+}

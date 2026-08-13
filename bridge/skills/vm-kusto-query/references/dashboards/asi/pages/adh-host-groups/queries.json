@@ -1,0 +1,96 @@
+[
+  {
+    "id": "891bfd96-04ca-4a3f-b9fa-71de28e513de",
+    "name": "Retrieve Resource \"Host Groups\"",
+    "groupId": "488f05d2-fafc-4a85-8a48-0afe38ad6fe6",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "azcsupfollower.centralus.kusto.windows.net",
+    "database": "AzureCM",
+    "type": "ResourceGet",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "LogDedicatedHostSnapshot\r\n| where PreciseTimeStamp between ((globalFrom - 1h) .. (globalTo + 1h)) and assert(isnotempty(local_subscriptionId) or isnotempty(local_hostName), \"Either a container Id or VM Id must be specified\")\r\n| where (isempty(local_subscriptionId) or hostName == local_hostName)\r\n| summarize arg_max(PreciseTimeStamp, PreciseTimeStamp, dedicatedHostId, nodeId, creationDate, hostName, lifecycleState, stateChangeTime, RegionFriendlyName) by nodeId\r\n| distinct PreciseTimeStamp, dedicatedHostId, nodeId, creationDate, hostName, lifecycleState, stateChangeTime, RegionFriendlyName\r\n\r\n",
+    "params": [
+      {
+        "name": "globalFrom",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "globalTo",
+        "description": "",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_hostName",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "local_subscriptionId",
+        "description": "",
+        "type": "string",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "dedicatedHostId",
+        "type": "string"
+      },
+      {
+        "name": "nodeId",
+        "type": "string"
+      },
+      {
+        "name": "creationDate",
+        "type": "string"
+      },
+      {
+        "name": "hostName",
+        "type": "string"
+      },
+      {
+        "name": "lifecycleState",
+        "type": "string"
+      },
+      {
+        "name": "stateChangeTime",
+        "type": "string"
+      },
+      {
+        "name": "RegionFriendlyName",
+        "type": "string"
+      }
+    ],
+    "serviceId": "Azure Dedicated Host"
+  }
+]

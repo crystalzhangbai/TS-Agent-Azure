@@ -1,0 +1,58 @@
+[
+  {
+    "id": "2342ca31-8069-4fa4-9708-90f92ecf3668",
+    "name": "Copy Speed",
+    "groupId": "851ae0bd-02a3-4354-abcc-0e8bbd014c92",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "cluster": "azcrp.kusto.windows.net",
+    "database": "crp_allprod",
+    "type": "Single",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "PirCasBlobCopyManagerEvent\r\n| where TIMESTAMP > ago(30d) and artifactCategory == \"SIGImage\"\r\n| where copyStatus == \"Success\" and isnotempty(replicationMetadata) and sourceBlobUri !contains \"http://fake.blobvalidation/\" and occupiedBlobSizeInBytes != 0\r\n| extend replicateMetadataObj=parse_json(replicationMetadata)\r\n| extend physicalSizeInGb = round(todouble(occupiedBlobSizeInBytes) / 1024 / 1024 /1024),timeSpent=totimespan(blobCopyDuration)/time(1s) \r\n| where physicalSizeInGb > 0\r\n| sort by physicalSizeInGb desc\r\n| project PreciseTimeStamp, physicalSizeInGb, blobCopyDuration, copyFlags, copyStaysAt0ByteDuration, timeSpent, speed=physicalSizeInGb*1024/timeSpent \r\n| summarize FastCopy=avgif(speed, copyFlags contains \"SystemPriorityCopy\"), \r\n            None=avgif(speed, copyFlags contains \"None\"), \r\n            CopyV2=avgif(speed, copyFlags == \"CopyV2\"), \r\n            min(PreciseTimeStamp), max(PreciseTimeStamp) by bin(PreciseTimeStamp, 1d)\r\n| project PreciseTimeStamp, FastCopy, None, CopyV2\r\n| render timechart",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {
+          "enumTypeData": "[]"
+        },
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "FastCopy",
+        "type": "real"
+      },
+      {
+        "name": "None",
+        "type": "real"
+      },
+      {
+        "name": "CopyV2",
+        "type": "real"
+      }
+    ],
+    "serviceId": "Azure Compute Gallery"
+  }
+]

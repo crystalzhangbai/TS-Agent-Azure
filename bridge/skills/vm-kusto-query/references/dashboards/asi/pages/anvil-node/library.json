@@ -1,0 +1,159 @@
+{
+  "service": "Anvil Unhealthy",
+  "page": "Node",
+  "pageId": "766f9f6e-d692-4d9f-82bb-99c2fa824dd1",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "0c8920cc-aab9-45aa-ac77-d52bea2d9fc5",
+          "name": "Retrieve Resource \"Node\"",
+          "groupId": "3b11c8ef-0264-4319-b00a-c1274038577c",
+          "majorVersion": 1,
+          "minorVersion": 1,
+          "cluster": "https://hawkeyekustocluster.centralus.kusto.windows.net",
+          "database": "AzureCM",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_nodeId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "nodeState",
+              "type": "string"
+            },
+            {
+              "name": "nodeAvailabilityState",
+              "type": "string"
+            },
+            {
+              "name": "aliveContainerCount",
+              "type": "long"
+            },
+            {
+              "name": "containerCount",
+              "type": "string"
+            },
+            {
+              "name": "cmNodeChannelAggregatedHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "cmNodeWasChannelHealthStatus",
+              "type": "string"
+            },
+            {
+              "name": "hostingEnvironment",
+              "type": "string"
+            },
+            {
+              "name": "lastStateChangeTime",
+              "type": "datetime"
+            },
+            {
+              "name": "faultInfo",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_nodeId",
+              "externalSourceName": "nodeId",
+              "required": false
+            }
+          ],
+          "kustoQuery": "LogNodeSnapshot\r\n| where nodeId == local_nodeId\r\n| take 1\r\n| project PreciseTimeStamp, nodeState, nodeAvailabilityState, aliveContainerCount, containerCount, cmNodeChannelAggregatedHealthStatus, cmNodeWasChannelHealthStatus, hostingEnvironment, lastStateChangeTime = todatetime(lastStateChangeTime), faultInfo",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T13:27:08.066Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 1,
+    "totalWidgetRefs": 1
+  }
+}

@@ -1,0 +1,327 @@
+[
+  {
+    "groupId": "c228e478-b82a-43b9-b046-44101c21e458",
+    "majorVersion": 2,
+    "minorVersion": 1,
+    "panelPath": [],
+    "widgetType": "Container",
+    "widgetTitle": "",
+    "queryId": "a3d7137e-0363-46a1-87fe-f01e1de03c08",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "local_ContainerId",
+        "externalSourceName": "ContainerId",
+        "required": false
+      }
+    ],
+    "name": "Retrieve Resource \"Container\"",
+    "cluster": "mycroft.westcentralus.kusto.windows.net",
+    "database": "Mycroft",
+    "type": "ResourceGet",
+    "params": [
+      {
+        "name": "local_ContainerId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CloudName",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "Environment",
+        "type": "string"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "VirtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "ClusterName",
+        "type": "string"
+      },
+      {
+        "name": "SubscriptionId",
+        "type": "string"
+      },
+      {
+        "name": "AvailabilitySetName",
+        "type": "string"
+      },
+      {
+        "name": "UpdateDomain",
+        "type": "long"
+      },
+      {
+        "name": "OsIncarnationId",
+        "type": "string"
+      },
+      {
+        "name": "DataDisksIncarnationId",
+        "type": "string"
+      },
+      {
+        "name": "BillingContext",
+        "type": "string"
+      },
+      {
+        "name": "PolicyName",
+        "type": "string"
+      },
+      {
+        "name": "RoleType",
+        "type": "string"
+      },
+      {
+        "name": "OsBaseImage",
+        "type": "string"
+      },
+      {
+        "name": "GuestAgentPackage",
+        "type": "string"
+      },
+      {
+        "name": "CreationTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Priority",
+        "type": "long"
+      },
+      {
+        "name": "AdditionalContainerProperties",
+        "type": "string"
+      },
+      {
+        "name": "ActualCoreUsage",
+        "type": "real"
+      },
+      {
+        "name": "DedicatedHostInfo",
+        "type": "string"
+      },
+      {
+        "name": "IsReusedContainer",
+        "type": "bool"
+      },
+      {
+        "name": "IsReusedContainerInNetwork",
+        "type": "bool"
+      },
+      {
+        "name": "JSON",
+        "type": "dynamic"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "8e465b74-28f2-45b3-a661-068e59677e3e",
+    "majorVersion": 1,
+    "minorVersion": 1,
+    "panelPath": [
+      "Container Health"
+    ],
+    "widgetType": "Timeline",
+    "widgetTitle": "Container Health",
+    "queryId": "84ced8ce-b767-4a9b-9344-41c21fbb96db",
+    "inputMappings": [
+      {
+        "source": "page",
+        "majorVersion": 0,
+        "minorVersion": 0,
+        "internalDestinationName": "queryContainerId",
+        "externalSourceName": "ContainerId",
+        "required": false
+      }
+    ],
+    "name": "Container LifecycleState Timeline",
+    "cluster": "mycroft.westcentralus.kusto.windows.net",
+    "database": "Mycroft",
+    "type": "Timeline",
+    "params": [
+      {
+        "name": "queryContainerId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "StartTime",
+        "type": "datetime"
+      },
+      {
+        "name": "EndTime",
+        "type": "datetime"
+      },
+      {
+        "name": "Content",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  },
+  {
+    "groupId": "b84a5760-4a9a-4b10-9e9f-b61247bb39f5",
+    "majorVersion": 2,
+    "minorVersion": 0,
+    "panelPath": [
+      "Health Snapshots",
+      "Container Health Snapshots"
+    ],
+    "widgetType": "Table",
+    "widgetTitle": "Container Health Snapshots",
+    "queryId": "89bd2300-3012-4a19-b561-521fde2bb09f",
+    "inputMappings": [
+      {
+        "source": "Query_ColumnFromSingleRow",
+        "groupId": "c228e478-b82a-43b9-b046-44101c21e458",
+        "majorVersion": 2,
+        "minorVersion": 1,
+        "internalDestinationName": "queryContainerId",
+        "externalSourceName": "ContainerId",
+        "required": false
+      }
+    ],
+    "name": "Container Health Snapshot",
+    "cluster": "mycroft.westcentralus.kusto.windows.net",
+    "database": "Mycroft",
+    "type": "Table",
+    "params": [
+      {
+        "name": "queryContainerId",
+        "type": "string",
+        "optional": false
+      }
+    ],
+    "schema": [
+      {
+        "name": "RoleInstanceName",
+        "type": "string"
+      },
+      {
+        "name": "OsState",
+        "type": "string"
+      },
+      {
+        "name": "IsolationState",
+        "type": "string"
+      },
+      {
+        "name": "LifecycleState",
+        "type": "string"
+      },
+      {
+        "name": "ActualOperationalState",
+        "type": "string"
+      },
+      {
+        "name": "FaultInfo",
+        "type": "string"
+      },
+      {
+        "name": "LifecycleStateChangeTime",
+        "type": "datetime"
+      },
+      {
+        "name": "ContainerId",
+        "type": "string"
+      },
+      {
+        "name": "NodeId",
+        "type": "string"
+      },
+      {
+        "name": "Tenant",
+        "type": "string"
+      },
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CloudName",
+        "type": "string"
+      },
+      {
+        "name": "Environment",
+        "type": "string"
+      },
+      {
+        "name": "Cluster",
+        "type": "string"
+      },
+      {
+        "name": "Role",
+        "type": "string"
+      },
+      {
+        "name": "RoleInstance",
+        "type": "string"
+      },
+      {
+        "name": "VirtualMachineUniqueId",
+        "type": "string"
+      },
+      {
+        "name": "TenantName",
+        "type": "string"
+      },
+      {
+        "name": "ClusterName",
+        "type": "string"
+      },
+      {
+        "name": "NodeIdTrunc",
+        "type": "string"
+      },
+      {
+        "name": "ContainerIdTrunc",
+        "type": "string"
+      }
+    ],
+    "missing": false
+  }
+]

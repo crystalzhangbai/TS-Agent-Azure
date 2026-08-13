@@ -1,0 +1,316 @@
+{
+  "service": "Azure VM Image Builder",
+  "page": "serviceBuild",
+  "pageId": "e39f5f7b-bdc0-4b94-a0d0-ef69798cf5fd",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "28481b4d-24cd-48d4-be0e-e46bc1d9c774",
+          "name": "Retrieve Resource \"serviceBuild\"",
+          "groupId": "30e475b7-239b-4210-8a22-4a2d4d070ae7",
+          "majorVersion": 1,
+          "minorVersion": 2,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "local_serviceBuild",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_serviceBuild",
+              "externalSourceName": "serviceBuild",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "UsageKpiEvent\r\n| where serviceBuild ==  local_serviceBuild\r\n| take 1\r\n| project serviceBuild",
+          "panelPath": []
+        },
+        {
+          "id": "cb5b5432-a83b-42b4-99d0-6ef2530c4a50",
+          "name": "Service Build Saturation",
+          "groupId": "588cff98-ae21-49fd-b411-687a6aec99f7",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "Table",
+          "widgetType": "Table",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "Build",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "serviceBuild",
+              "type": "string"
+            },
+            {
+              "name": "RPTenant",
+              "type": "string"
+            },
+            {
+              "name": "count",
+              "type": "long"
+            },
+            {
+              "name": "firstSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "lastSeen",
+              "type": "datetime"
+            },
+            {
+              "name": "StartTime",
+              "type": "datetime"
+            },
+            {
+              "name": "EndTime",
+              "type": "datetime"
+            },
+            {
+              "name": "Tooltip",
+              "type": "long"
+            },
+            {
+              "name": "GroupBy",
+              "type": "string"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "30e475b7-239b-4210-8a22-4a2d4d070ae7",
+              "majorVersion": 1,
+              "minorVersion": 2,
+              "internalDestinationName": "Build",
+              "externalSourceName": "serviceBuild",
+              "required": false,
+              "rowSelectionCriteria": "default",
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "UsageKpiEvent\r\n| project serviceBuild, RPTenant, PreciseTimeStamp\r\n| where Build == \"\" or serviceBuild == Build\r\n| summarize count=count(), firstSeen=min(PreciseTimeStamp), lastSeen=max(PreciseTimeStamp) by serviceBuild, RPTenant\r\n| order by firstSeen desc\r\n| extend StartTime = firstSeen, EndTime = lastSeen, Tooltip = ['count'], GroupBy = RPTenant",
+          "panelPath": []
+        },
+        {
+          "id": "734f609f-0f9a-4d42-aa39-900be8469d3d",
+          "name": "Daily Build Success Rate",
+          "groupId": "5cdb941c-a698-4ccf-b424-6f7e53d8a93e",
+          "majorVersion": 4,
+          "minorVersion": 1,
+          "cluster": "azcrp.kusto.windows.net",
+          "database": "vmimagebuilder",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Daily Builds - {{ binTime }}",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "binTime",
+              "type": "timespan",
+              "optional": false
+            },
+            {
+              "name": "build",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "successRate",
+              "type": "real"
+            },
+            {
+              "name": "clientFailures",
+              "type": "long"
+            },
+            {
+              "name": "serverFailures",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "node_input",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "binTime",
+              "externalSourceName": "binTime",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            },
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "build",
+              "externalSourceName": "serviceBuild",
+              "required": false,
+              "multipleValuesProcessingMode": "PassValuesIntoOneField"
+            }
+          ],
+          "kustoQuery": "AsyncQoSEvents\r\n| where PreciseTimeStamp between (queryFrom .. queryTo)\r\n// | where not(IsAIBSubscription(subscriptionID))\r\n| where iff(build != \"\", serviceBuild == build, true)\r\n| summarize\r\n    callCount=todouble(count()),\r\n    clientFailures=countif(resultType == 1),\r\n    serverFailures=countif(resultType == 2),\r\n    // failures=countif(resultType != 0),\r\n    failedSubs=dcountif(subscriptionID, resultType != 0)\r\n    by bin(PreciseTimeStamp, binTime)\r\n| extend successRate = round(((callCount - clientFailures - serverFailures) * 100 ) / (callCount - clientFailures), 2)\r\n| project PreciseTimeStamp, successRate, clientFailures, serverFailures\r\n",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T12:12:11.779Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 3,
+    "totalWidgetRefs": 3
+  }
+}

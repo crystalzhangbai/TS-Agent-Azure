@@ -1,0 +1,62 @@
+[
+  {
+    "id": "e0fecef2-edb8-4c35-9ec3-91320d6efee5",
+    "name": "GRIP NodeCapabilitiesService Jobs",
+    "groupId": "312d66ad-a119-4fde-bfa6-4336d2831b64",
+    "majorVersion": 3,
+    "minorVersion": 0,
+    "cluster": "pubsubinfra.eastus2.kusto.windows.net",
+    "database": "PubSubInfraLogs",
+    "type": "Table",
+    "dataSource": "Kusto",
+    "language": "KQL",
+    "kustoQuery": "cluster('pubsubinfra.eastus2.kusto.windows.net').database('PubSubInfraLogs').GripProducer\r\n| where Key == NodeId\r\n| where PreciseTimeStamp > queryFrom and PreciseTimeStamp < queryTo\r\n| where Service contains \"NodeCapabilities\"\r\n| project PreciseTimeStamp, PayloadLower=tolower(Payload)\r\n| extend CriticalServicesUp=parse_json(PayloadLower).criticalservicesup, NodeCapabilities=parse_json(PayloadLower).nodecapabilities_\r\n| project-away PayloadLower\r\n| sort by PreciseTimeStamp asc\r\n",
+    "params": [
+      {
+        "name": "queryFrom",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-07-28 02:10:40.1740216",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "queryTo",
+        "description": "The ASI team recommends that all queries have a start and end time and these are linked to the GlobalTime",
+        "type": "datetime",
+        "default": "2022-07-28 03:29:02.5455713",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      },
+      {
+        "name": "NodeId",
+        "description": "",
+        "type": "string",
+        "default": "d899e838-c740-46c3-9f18-31aff516995e",
+        "optional": false,
+        "useTestValueAsDefault": false,
+        "typeSpecificOptions": {},
+        "displayConditions": []
+      }
+    ],
+    "schema": [
+      {
+        "name": "PreciseTimeStamp",
+        "type": "datetime"
+      },
+      {
+        "name": "CriticalServicesUp",
+        "type": "dynamic"
+      },
+      {
+        "name": "NodeCapabilities",
+        "type": "dynamic"
+      }
+    ],
+    "serviceId": "NodeService"
+  }
+]

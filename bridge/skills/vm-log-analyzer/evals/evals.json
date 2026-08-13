@@ -1,0 +1,166 @@
+{
+  "skill_name": "vm-log-analyzer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Analyze this syslog log file, identify the root cause, and provide repair recommendations. Log file path: evals/files/syslog_oom.log",
+      "expected_output": "Identify that the OOM Killer terminated the java process (PID 18234), causing the app-server service disruption. Provide memory-related repair recommendations.",
+      "files": ["evals/files/syslog_oom.log"],
+      "expectations": [
+        "Identifies OOM Killer as the root-cause event",
+        "Mentions that the killed process is java (PID 18234)",
+        "Provides at least one concrete repair recommendation (e.g. increase memory, tune JVM heap, configure OOM score adjust)",
+        "Cites at least one raw log line as evidence",
+        "Output length is proportional to the question — does not bloat a single-file analysis into a multi-section RCA report unless explicitly asked"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "User reports cannot connect to a Windows VM over RDP. Below are logs extracted from the IID package. Please analyze and produce an RCA.",
+      "expected_output": "Identify multiple RDP issues: TermDD Event 56 protocol error, Event 1158 maximum connection count exceeded, Event 4625 logon failure. Provide targeted repair steps.",
+      "files": ["evals/files/rdp_evt_system.txt", "evals/files/rdp_reg_TermServices.txt"],
+      "expectations": [
+        "Recognizes the input as Windows RDP-related logs and pulls branch-windows.md domain knowledge",
+        "Identifies Event 56 (TermDD) protocol error",
+        "Identifies Event 1158 maximum connection count exceeded and correlates it with the MaxInstanceCount=2 registry setting",
+        "Identifies Event 4625 logon failure and notes SubStatus 0xC0000064 indicates the account does not exist",
+        "User explicitly asked for RCA, so output uses a full RCA structure (root cause + evidence + recommendations)",
+        "Includes copy-paste-runnable repair commands"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "A web application is returning many 502 errors. Jointly analyze the OS syslog and Nginx error log to identify the root cause.",
+      "expected_output": "Identify the cross-layer causal chain: OS OOM kills the gunicorn process → Nginx upstream connection fails → 502 errors.",
+      "files": ["evals/files/crosslayer_syslog.log", "evals/files/crosslayer_nginx_error.log"],
+      "expectations": [
+        "Identifies the OOM Killer terminating gunicorn as the root cause",
+        "Establishes the cross-layer causal chain: OOM → gunicorn killed → Nginx upstream connection failure → 502",
+        "Includes a merged timeline interleaving events from both files",
+        "Points out the timing correlation between Nginx errors and the OOM event (uses correlation-rules.md domain knowledge)"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Analyze this Azure Linux VM serial console output. The VM cannot boot normally and dropped into emergency mode. Identify the root cause and provide repair steps.",
+      "expected_output": "Identify that /dev/sda3 fsck failure caused the /data mount to fail; the systemd dependency chain dropped the system into emergency mode. Provide fsck repair or fstab nofail option.",
+      "files": ["iteration-2/test-data/linux-boot-failure-serial.txt"],
+      "expectations": [
+        "Identifies /dev/sda3 filesystem check failure (fsck returned status 8) as the root cause of emergency mode",
+        "Identifies that the partition referenced by the /data mount point in fstab (UUID=cafebabe...) is the problem",
+        "Pulls boot-troubleshooting.md (and/or branch-linux.md) domain knowledge",
+        "Includes specific repair commands (e.g. fsck, modifying the fstab nofail option, or systemctl default)"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "This Windows Server 2022 VM blue-screened after patching. Help me analyze the System event log, identify the root cause, and provide a fix.",
+      "expected_output": "Identify the timing causality between the 0x7E BSOD and the KB5035857 update, with storage I/O anomalies as supporting evidence and IIS service crash as the consequence.",
+      "files": ["iteration-2/test-data/windows-bsod-system-events.txt"],
+      "expectations": [
+        "Pulls branch-windows.md and bsod-bugcheck-codes.md domain knowledge",
+        "Identifies Stop Code 0x7E (SYSTEM_THREAD_EXCEPTION_NOT_HANDLED) and BugcheckCode 126",
+        "Correlates the install of Windows Update KB5035857 with the subsequent BSOD via timing causality",
+        "Identifies Event 153 (disk I/O retry) and Event 129 (storahci reset) as supporting evidence at the storage layer",
+        "Identifies Event 7031/7034 (IIS service crashes) as a consequence of the BSOD",
+        "Includes runnable repair commands"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "A Windows Server 2022 VM cannot install cumulative update KB5035857 and reports 0x800F0838. Analyze CBS.log, the event logs, DISM, and the xray report.",
+      "expected_output": "Identify that CBS component-store corruption is causing the update failure; the xray pre-analysis conclusion should be cited first.",
+      "files": ["iteration-2/test-data/windows-dnd-cbs-corruption.txt"],
+      "expectations": [
+        "Reads the xray_ISSUES-FOUND_*.txt file FIRST (per the IID handling rule in SKILL.md) and cites its conclusion before drilling into raw logs",
+        "Identifies 0x800F0838 (CBS_E_MANIFEST_INVALID) as the direct cause of KB5035857 install failure",
+        "Identifies CBS component store corruption (5 corruption items)",
+        "Identifies Event 1015 (CBS repair failed) as evidence that automatic repair failed",
+        "Includes step-by-step repair commands: DISM /RestoreHealth, SFC /scannow, and the last-resort in-place upgrade"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Customer provided a sosreport. The VM exhibited multiple issues at runtime: intermittent network drops, java process hangs, nginx crashes. Please analyze.",
+      "expected_output": "Recognize the sosreport format; analyze Accelerated Networking VF failure, java hung task, nginx SEGV, SYN flooding; build cross-event correlations.",
+      "files": ["iteration-2/test-data/sosreport-azurevm01-2024-03-15/"],
+      "expectations": [
+        "Explicitly recognizes the input as sosreport format (mentions sos_commands/ + var/log/ markers, or similar discriminator)",
+        "Uses relative paths (var/log/...) when referencing files inside the sosreport, not /var/log/",
+        "Identifies Accelerated Networking VF registration failure and recovery events",
+        "Identifies java process PID 7890 hung task",
+        "Identifies nginx SEGV crash",
+        "Identifies TCP SYN flooding alert",
+        "Establishes cross-event correlation analysis (uses correlation-rules.md domain knowledge)"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "A Windows Server 2019 VM cannot contact the domain controller after joining the domain. Help me analyze the event log, Netlogon.log, network info, and w32tm output.",
+      "expected_output": "Identify DNS misconfiguration as the cause of the secure-channel break; W32Time is not in sync. Provide DNS change + nltest + w32tm repair.",
+      "files": ["iteration-2/test-data/windows-directory-services.txt"],
+      "expectations": [
+        "Pulls branch-windows.md domain knowledge (Directory Services section)",
+        "Identifies DNS misconfiguration as the root cause (DNS server set to 168.63.129.16 instead of the DC IP)",
+        "Identifies the ERROR_NO_SUCH_DOMAIN (0x54B) and NO_TRUST_SAM_ACCOUNT patterns in Netlogon.log",
+        "Identifies that W32Time is not in sync",
+        "Identifies Event 5719/3210/5722 as the evidence chain for the secure-channel break",
+        "Includes repair steps: change DNS to point to the DC IP, nltest /sc_reset, w32tm reconfiguration"
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "C:\\caselogs\\2605270030002651 — After this Linux VM was migrated from AWS to Azure, OS boot is slow. Look only at the console log and tell me why boot is slow.",
+      "expected_output": "Recognize the 'fast-path' scope (single concern: why is boot slow + 'only look at console log'). Look only at the console log file, do not expand to other files. Find cloud-init / systemd timing signals indicating the slow phase. Provide a short answer with the slow phase and its cause — not a full multi-section RCA.",
+      "expectations": [
+        "Honors the explicit scope: 'only look at console log' — does NOT view or grep other files in the directory",
+        "Does NOT grep for ERROR / FAIL on the console log (slow boot has no error — must look for timing signals like cloud-init duration, 'Starting <unit>' / 'Started <unit>' deltas, 'A start job is running for X')",
+        "Identifies the slow phase (e.g. cloud-init taking 300+ seconds because Azure metadata service is missing and it falls back to DataSourceNone)",
+        "If the cause is AWS-image-on-Azure (no Azure datasource), explicitly calls out that root cause",
+        "Output is a SHORT answer (5–15 lines) — not a full RCA template, because the user only asked 'why is boot slow'",
+        "Does NOT enter a loop of repeatedly grepping the same file with tweaked flags (the 5-grep-pattern convergence cap)"
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "I have a Windows VM unexpected-reboot case. The customer already collected an IID package at C:\\caselogs\\2601160030001591\\WHKEASDCSAPPS01-InspectIaaSDisk-pedemz2j.ztv_47587b50ef\\ , and the case root dir also has files like findings.txt / system_errors.txt / app_errors.txt. Help me analyze why this VM rebooted.",
+      "expected_output": "Recognize this as a Windows IID package. Read engineer pre-analysis files (findings.txt JSON / system_errors.txt) at the case-dir root FIRST before drilling into binary .evtx files. Identify the Event 41 (Kernel-Power) + Event 6008 pair indicating unexpected reboot. Decode Event 1074 (if present) using the 5-tuple decision tree (Source / User / Process / Reason / <computer>) before attributing to platform vs customer vs script. Do NOT try to `view` Security.evtx (1 GB binary). Do NOT scan all 70+ .evtx files when pre-analysis text files exist.",
+      "expectations": [
+        "Recognizes the case-dir contains BOTH an IID folder AND engineer pre-analysis files (findings.txt / *_errors.txt) at the root, and reads the pre-analysis files FIRST",
+        "Does NOT try to `view` or `Get-Content` Security.evtx (binary + 1 GB) without a filter; if discussing evtx access, mentions `Get-WinEvent -Path ... -FilterHashtable` or `wevtutil epl`",
+        "Finds the Event 41 (Kernel-Power) + Event 6008 (previous unexpected shutdown) pair from system_errors.txt as the primary reboot signal",
+        "When Event 1074 is discussed, uses the full 5-tuple (Source User32 + User + Process + Reason / Reason Code + <computer>) — does NOT collapse to a naive 'NT AUTHORITY\\SYSTEM = platform-initiated' shortcut",
+        "Does NOT prematurely attribute the reboot to either Azure platform or customer action without checking Event 1074 details — if 1074 is absent, says 'unplanned, pursue dump path' rather than guessing",
+        "Pulls branch-windows.md domain knowledge (recognizes findings.txt as ASC GuestAnalyzer JSON; recognizes the IID FAILED whitelist for ServiceFabric/HPC/FSLogix etc.)"
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "The customer says his Azure Windows VM rebooted at 2 PM this afternoon and is asking me why. I don't have any log files in hand right now.",
+      "expected_output": "Recognize there's no data to analyze yet. Do NOT attempt to investigate without logs. Ask the user clarifying questions before doing anything: (1) what timezone is '2 PM this afternoon' (customer local / VM / UTC / Azure region)? (2) can we get an IID or memory dump? (3) does Boot Diagnostics show anything? Do NOT make grep / view / Kusto calls. Do NOT speculate root cause (platform vs customer vs BSOD) without evidence.",
+      "expectations": [
+        "Recognizes the request has NO log files attached and asks for them before analyzing",
+        "Explicitly asks about timezone — customer's local time vs VM's configured timezone vs UTC vs Azure region time (per branch-windows.md timezone trap)",
+        "Asks for at least one concrete data source (IID package / memory dump / Boot Diagnostics / ASI link / VM resource ID), not a vague 'send me more info'",
+        "Does NOT execute any `view` / `grep` / Kusto query on hypothetical files",
+        "Does NOT attribute the reboot to either Azure platform OR customer OR BSOD without evidence — if it offers hypotheses, frames them as 'candidates to verify' not 'likely cause'",
+        "Output is short (≤ 15 lines) — does not produce a full RCA template for a question with no data"
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "Analyze this cloud-init.log and find the root cause. Customer problem: a Rocky Linux VM built from a VM Restore Point runs the OLD init script after boot, while the new user-data supplied at create time didn't take effect; the same user-data works fine when building from an Azure Compute Gallery image. Log: evals/files/restorepoint_stale_customdata_cloud-init.log",
+      "expected_output": "Identify that on the 2026-06-15 boot cloud-init did NOT get a fresh provisioning ISO (/dev/sr0 absent), fell back to the disk-cached OVF (/var/lib/waagent/ovf-env.xml), and re-ran the STALE CustomData script. Explain that cloud-init takes OVF CustomData with PRIORITY over IMDS userData (IMDS is only a fallback when OVF CustomData is empty), so the freshly-supplied userData never ran. Root cause = Restore Point is a specialized snapshot that carries the source VM's stale ovf-env.xml + /var/lib/cloud state on the disk. Recommend generalized image (waagent -deprovision) / cleaning ovf-env.xml before snapshot / Custom Script Extension as the fix.",
+      "files": ["evals/files/restorepoint_stale_customdata_cloud-init.log"],
+      "expectations": [
+        "Builds a multi-boot timeline distinguishing the 2026-06-02 boot (fresh ISO, seed=/dev/sr0) from the 2026-06-15 boot (cached, seed=/var/lib/waagent) — uses 'Found provisioning metadata in /dev/sr0' vs '/var/lib/waagent' as the discriminator",
+        "Identifies that /dev/sr0 not mountable → read_azure_ovf SUCCESS from /var/lib/waagent means cloud-init used the DISK-CACHED OVF, not a new provisioning medium",
+        "States the priority rule explicitly: cloud-init uses OVF CustomData first; IMDS userData is only consumed when OVF CustomData is empty ('Retrieved 0 keys from IMDS' / no 'Retrieved userdata from IMDS' line confirms IMDS userData was NOT used here)",
+        "Attributes the root cause to Restore Point being a specialized snapshot that carries the source VM's stale ovf-env.xml (CustomData) + /var/lib/cloud state on the OS disk — NOT to a shebang/script-permission/instance-id-collision issue",
+        "Does NOT conclude from a missing ovf-env.xml in a sosreport that the file is absent on the VM — if sosreport is mentioned, notes the azure plugin does not collect /var/lib/waagent/ and uses the decoded /var/lib/cloud/.../user-data.txt as proxy proof (sosreport-collection-gap trap)",
+        "Recommends at least one correct remediation: build a generalized image (waagent -deprovision) instead of using Restore Point, OR remove /var/lib/waagent/ovf-env.xml + /var/lib/cloud/* before snapshotting, OR move init logic to a Custom Script Extension / Run Command",
+        "Reasons about the cloud-init OVF-CustomData-vs-IMDS-userData priority correctly (IMDS userData is only a fallback when OVF CustomData is empty) — without the user spelling it out"
+      ]
+    }
+  ]
+}

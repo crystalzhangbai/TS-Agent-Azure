@@ -1,0 +1,1 @@
+Write-Host "NaniteAgent session complete. Have a good day."

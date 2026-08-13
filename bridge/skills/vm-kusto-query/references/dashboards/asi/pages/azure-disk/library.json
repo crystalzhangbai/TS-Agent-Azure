@@ -1,0 +1,306 @@
+{
+  "service": "Azure Host",
+  "page": "Azure Disk",
+  "pageId": "a80998cc-026e-4525-a243-58772155a8d3",
+  "pageInputs": {},
+  "paramAliases": {
+    "startTime": [
+      "starttime",
+      "StartTime",
+      "queryFrom",
+      "startTimeFilter",
+      "queryStart",
+      "query_startTime"
+    ],
+    "endTime": [
+      "endtime",
+      "EndTime",
+      "queryTo",
+      "endTimeFilter",
+      "queryEnd",
+      "query_endTime"
+    ],
+    "containerId": [
+      "containerid",
+      "queryContainerid",
+      "queryContainerId",
+      "ContainerId",
+      "query_ContainerId"
+    ],
+    "nodeId": [
+      "nodeid",
+      "NodeId",
+      "queryNodeId",
+      "query_NodeId"
+    ],
+    "vmId": [
+      "vmid",
+      "VmId",
+      "virtualMachineUniqueId",
+      "vmUniqueId",
+      "queryVmId",
+      "query_vmId"
+    ],
+    "cluster": [
+      "Tenant",
+      "Cluster",
+      "tenant",
+      "clusterName",
+      "queryCluster",
+      "query_cluster",
+      "queryTenant"
+    ],
+    "roleInstanceName": [
+      "queryRoleInstanceName",
+      "RoleInstanceName",
+      "query_VMName",
+      "queryroleInstanceName"
+    ],
+    "tenantName": [
+      "tenantname",
+      "tenantNameId",
+      "queryTenantName",
+      "query_TenantName",
+      "querytenantName"
+    ],
+    "subscriptionId": [
+      "SubscriptionId",
+      "querySubscription",
+      "query_SubscriptionId",
+      "querySubscriptionId"
+    ]
+  },
+  "panels": {
+    "(top-level)": {
+      "panelPath": [],
+      "queries": [
+        {
+          "id": "85db0e21-310f-4525-baec-fe08f421d9fb",
+          "name": "Retrieve Resource \"Azure Disk\"",
+          "groupId": "e6e14af7-efcf-4cdb-bc54-5053634155f8",
+          "majorVersion": 2,
+          "minorVersion": 5,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "ResourceGet",
+          "widgetType": "Container",
+          "widgetTitle": "",
+          "params": [
+            {
+              "name": "local_ArmId",
+              "type": "string",
+              "optional": false
+            },
+            {
+              "name": "globalFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "globalTo",
+              "type": "datetime",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "Region",
+              "type": "string"
+            },
+            {
+              "name": "DataCenter",
+              "type": "string"
+            },
+            {
+              "name": "Cluster",
+              "type": "string"
+            },
+            {
+              "name": "NodeId",
+              "type": "string"
+            },
+            {
+              "name": "SubscriptionId",
+              "type": "string"
+            },
+            {
+              "name": "ContainerId",
+              "type": "string"
+            },
+            {
+              "name": "ArmId",
+              "type": "string"
+            },
+            {
+              "name": "StorageTenant",
+              "type": "string"
+            },
+            {
+              "name": "DiskTier",
+              "type": "string"
+            },
+            {
+              "name": "IOPSLimit",
+              "type": "string"
+            },
+            {
+              "name": "ThroughputLimit",
+              "type": "string"
+            },
+            {
+              "name": "BurstIOPSLimit",
+              "type": "string"
+            },
+            {
+              "name": "BurstThroughputLimit",
+              "type": "string"
+            },
+            {
+              "name": "DiskCreationTime",
+              "type": "string"
+            },
+            {
+              "name": "count_",
+              "type": "long"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "page",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "local_ArmId",
+              "externalSourceName": "ArmId",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "globalTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            }
+          ],
+          "kustoQuery": "union \r\nOsXIOHealthSignalEvent,\r\nOsUltraSSDHealthSignalEvent\r\n| where PreciseTimeStamp between (globalFrom .. globalTo) and isnotempty(ArmId) and ArmId contains local_ArmId and (isempty(Type) or Type in (0, 4))\r\n| extend ContainerId = case(isnotempty(ContainerId), ContainerId, tostring(split(SurfaceName, \"_\")[0]))\r\n| join kind=leftouter (\r\n    OsXIOSurfaceCounterTable\r\n    | where PreciseTimeStamp between (globalFrom .. globalTo) and isnotempty(ArmId) and ArmId contains local_ArmId and (isempty(Type) or Type in (0, 4))\r\n    | distinct ArmId, StorageTenant, SurfaceName\r\n) on SurfaceName\r\n| parse ArmId with \"/subscriptions/\" SubscriptionId \"/\" *\r\n| join kind=leftouter (\r\n     OsConfigTable\r\n        | where PreciseTimeStamp between ((globalFrom - 6h).. (globalTo + 6h)) and ConfigValue contains local_ArmId\r\n        | take 1\r\n        | extend BlobProperties = parse_json(ConfigValue).blobproperties\r\n        | extend ArmId = tostring(BlobProperties[\"x-ms-disk-resource-uri\"]),\r\n                 DiskTier = tostring(BlobProperties[\"x-ms-access-tier\"]),\r\n                 IOPSLimit = tostring(BlobProperties[\"x-ms-blob-iops-limit\"]),\r\n                 ThroughputLimit = tostring(BlobProperties[\"x-ms-blob-throughput-limit\"]),\r\n                 BurstIOPSLimit = tostring(BlobProperties[\"x-ms-blob-burst-iops-limit\"]),\r\n                 BurstThroughputLimit = tostring(BlobProperties[\"x-ms-blob-burst-throughput-limit\"]),\r\n                 DiskCreationTime = tostring(BlobProperties[\"x-ms-creation-time\"])\r\n) on ArmId\r\n| summarize count() by Region, DataCenter, Cluster, NodeId, SubscriptionId, ContainerId, ArmId, StorageTenant, DiskTier, IOPSLimit, ThroughputLimit, BurstIOPSLimit, BurstThroughputLimit, DiskCreationTime",
+          "panelPath": []
+        },
+        {
+          "id": "e0419fbf-cc43-4f7a-85aa-d8a58b8afb93",
+          "name": "Azure Disks IO Stats",
+          "groupId": "6958c095-d8ac-4ed0-9d6c-f6e528652df2",
+          "majorVersion": 1,
+          "minorVersion": 0,
+          "cluster": "azcore.centralus.kusto.windows.net",
+          "database": "Fa",
+          "type": "TimeSeries",
+          "widgetType": "TimeSeries",
+          "widgetTitle": "Disk IO Stats",
+          "params": [
+            {
+              "name": "queryFrom",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "queryTo",
+              "type": "datetime",
+              "optional": false
+            },
+            {
+              "name": "_armId",
+              "type": "string",
+              "optional": false
+            }
+          ],
+          "schema": [
+            {
+              "name": "PreciseTimeStamp",
+              "type": "datetime"
+            },
+            {
+              "name": "IOPS",
+              "type": "real"
+            },
+            {
+              "name": "MBPS",
+              "type": "real"
+            },
+            {
+              "name": "ReadIOPS",
+              "type": "real"
+            },
+            {
+              "name": "WriteIOPS",
+              "type": "real"
+            },
+            {
+              "name": "ReadMBPS",
+              "type": "real"
+            },
+            {
+              "name": "WriteMBPS",
+              "type": "real"
+            },
+            {
+              "name": "AvgReadIOSizeInBytes",
+              "type": "real"
+            },
+            {
+              "name": "AvgWriteIOSizeInBytes",
+              "type": "real"
+            },
+            {
+              "name": "QD",
+              "type": "real"
+            }
+          ],
+          "inputMappings": [
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryFrom",
+              "externalSourceName": "globalFrom",
+              "required": false
+            },
+            {
+              "source": "asi_values",
+              "majorVersion": 0,
+              "minorVersion": 0,
+              "internalDestinationName": "queryTo",
+              "externalSourceName": "globalTo",
+              "required": false
+            },
+            {
+              "source": "Query_ColumnFromSingleRow",
+              "groupId": "e6e14af7-efcf-4cdb-bc54-5053634155f8",
+              "majorVersion": 2,
+              "minorVersion": 5,
+              "internalDestinationName": "_armId",
+              "externalSourceName": "ArmId",
+              "required": false,
+              "rowSelectionCriteria": "default"
+            }
+          ],
+          "kustoQuery": "union \r\nOsXIOSurfaceCounterTable,\r\nOsUltraSSDCounterTable\r\n| where PreciseTimeStamp between (queryFrom .. queryTo) and isnotempty(ArmId) and ArmId contains _armId and (isempty(Type) or Type in (0, 4)) and IsNewDisk == 0\r\n| summarize IOPS = sum(IOPS), \r\n            MBPS = sum(MBPS),\r\n            ReadIOPS = sum(ReadIOPS),\r\n            WriteIOPS = sum(WriteIOPS),\r\n            ReadMBPS = sum(ReadMBPS),\r\n            WriteMBPS = sum(WriteMBPS),\r\n            AvgReadIOSizeInBytes = avg(AvgReadIOSizeInBytes),\r\n            AvgWriteIOSizeInBytes = avg(AvgWriteIOSizeInBytes),\r\n            QD = sum(QD)\r\n            by bin(PreciseTimeStamp, 5m)",
+          "panelPath": []
+        }
+      ]
+    }
+  },
+  "meta": {
+    "extractedAt": "2026-05-13T08:35:59.212Z",
+    "totalPanels": 1,
+    "totalUniqueQueries": 2,
+    "totalWidgetRefs": 2
+  }
+}

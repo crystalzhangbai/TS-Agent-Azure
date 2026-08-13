@@ -1,0 +1,101 @@
+{
+  "skill_name": "vm-knowledge-search",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "查一下 SUSE Pacemaker 集群 SBD fencing 问题的 TSG",
+      "expected_output": "Routes csswiki to AzureIaaSVM + AzureLinuxNinjas (Linux/SAP-HA topic trigger per §3 Step 2.5). Translates Chinese keywords to English before searching (wiki content is English-only per §5). If defaults thin/empty, fires SUSE-scoped web_search (Step 4 Trigger B Linux Vendor KB). Final answer in Chinese.",
+      "files": [],
+      "expectations": [
+        "csswiki-search_wiki call includes BOTH 'AzureIaaSVM' AND 'AzureLinuxNinjas' in the project list (§3 Step 2.5 Linux/SAP HA row)",
+        "Chinese question translated to English keywords before searching (e.g. 'SUSE Pacemaker SBD fencing' not the original Chinese tokens)",
+        "csswiki-search_wiki and mslearn-microsoft_docs_search both fired in the SAME response (parallel, per §3 Step 3)",
+        "If defaults come up empty AND topic detected as SUSE, fires SUSE-scoped web_search containing 'site:suse.com' or 'site:documentation.suse.com' (Step 4 Trigger B)",
+        "Final answer text is in Chinese (matches user's question language per §8 / output format)",
+        "All cited sources have clickable URLs, not just titles (§8 citation rules)",
+        "No fabricated pageId — every csswiki link has a real pageId from get_page response (§4)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Find docs about SNAT outbound connection drop on Azure VM",
+      "expected_output": "Routes csswiki to AzureIaaSVM + AzureNetworking. Fires csswiki + mslearn in parallel as default sources. Does NOT auto-fire on-demand sources (icm/enghub/azurewiki/workitem) unless defaults empty.",
+      "files": [],
+      "expectations": [
+        "csswiki project list contains BOTH 'AzureIaaSVM' AND 'AzureNetworking' (§3 Step 2.5 Network row)",
+        "csswiki-search_wiki and mslearn-microsoft_docs_search are issued in the SAME response (parallel default)",
+        "icm-*, enghub-*, azurewiki-* tools are NOT called (only auto-fire on Step 4 empty fallback)",
+        "csswiki-search_workitem is NOT called (opt-in only per §2 — user didn't say 'known issue / work item')",
+        "web_search is NOT called (no Linux/SAP-HA topic, defaults haven't failed)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Azure Files SMB mount permission denied — looking for a TSG",
+      "expected_output": "Routes csswiki to AzureIaaSVM ONLY (NOT AzureDev). Per routing-disambiguation #1, Azure Files belongs to CSS IaaS team scope, not CSS Storage team.",
+      "files": [],
+      "expectations": [
+        "csswiki project list is exactly ['AzureIaaSVM'] — does NOT include 'AzureDev'",
+        "Skill reasoning explicitly notes Azure Files is CSS IaaS-team scope per routing-disambiguation.md #1 (or equivalent rationale)"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Investigate blob storage 503 ServerBusy throttling errors during high egress",
+      "expected_output": "Routes csswiki to AzureIaaSVM + AzureDev. Per routing-disambiguation #1, Blob is CSS Storage team scope. Should NOT confuse with AzureStorageDevices (that's block-storage products like Ultra Disk).",
+      "files": [],
+      "expectations": [
+        "csswiki project list contains BOTH 'AzureIaaSVM' AND 'AzureDev' (Blob → CSS Storage team scope)",
+        "Project list does NOT contain 'AzureStorageDevices' (that's for Ultra Disk / Elastic SAN / block products, not blob/queue/table per routing-disambig #2)",
+        "mslearn query mentions 'blob 503' or 'ServerBusy throttling' specifically (uses high-IDF token per §3 Step 3 MS Learn query strategy)"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "SQL Server AlwaysOn AG failover problem on Azure VM — find me the TSG",
+      "expected_output": "Routes csswiki to AzureIaaSVM + AzureSQLVM + SQLServerWindows (3 projects, under §2.5 cap of 4). Per routing-disambiguation #4, this is IaaS SQL, NOT PaaS — must not route to AzureSQLDB/AzureSQLMI.",
+      "files": [],
+      "expectations": [
+        "csswiki project list contains all three: 'AzureIaaSVM', 'AzureSQLVM', AND 'SQLServerWindows'",
+        "Project list does NOT contain 'AzureSQLDB' or 'AzureSQLMI' (PaaS — out of scope per routing-disambig #4)",
+        "Total project count ≤ 4 (routing cap §2.5 / routing-disambiguation 🧢 block)"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Windows VM BSOD INACCESSIBLE_BOOT_DEVICE 0x7B after disk swap",
+      "expected_output": "Routes csswiki to AzureIaaSVM + WindowsEE + WindowsEEPreboot (boot/recovery scope per routing-disambig #5). Must NOT route to WindowsDevicesDeployment. mslearn query leads with the error code 0x7B (high-IDF token per §3 mslearn strategy), drops 'Azure VM' prefix to find Windows kernel docs.",
+      "files": [],
+      "expectations": [
+        "csswiki project list contains 'WindowsEE' AND 'WindowsEEPreboot' (boot/recovery scope per disambig #5)",
+        "Project list does NOT contain 'WindowsDevicesDeployment' (that's for sysprep/KMS/image, not boot)",
+        "At least one mslearn query string leads with '0x7B' or 'INACCESSIBLE_BOOT_DEVICE' (most specific token first per Step 3 MS Learn query strategy)",
+        "At least one mslearn query is symptom-only (drops 'Azure VM' prefix) since the BSOD doc lives under /windows-hardware/ not /azure/"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Find similar live-site incidents about VM allocation failures in the last month",
+      "expected_output": "Triggers ICM on-demand source (§2 Trigger A — user signal: 'live-site incidents' / 'similar incidents'). Fires icm-search_incidents in parallel with default csswiki+mslearn, not blocked behind them.",
+      "files": [],
+      "expectations": [
+        "icm-search_incidents is called with incidentAdvancedSearchRequest containing keywords about 'VM allocation failure' (Trigger A signal: 'live-site incidents')",
+        "ICM call fires in the SAME response as default csswiki+mslearn (parallel, per §3 Step 3 'matching source(s) fire in parallel with the default search')",
+        "Results show actual incident IDs and titles from the ICM response (no fabrication — per §8 'no invented IDs')",
+        "csswiki-search_workitem is NOT called (different question, opt-in only)"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "找一个 Microsoft 内部的关于 Compute OneFleet 的 PG 设计文档",
+      "expected_output": "Triggers EngHub on-demand (§2 Trigger A — user signal: 'PG 文档' / 'OneFleet'). Does NOT escalate to Step 4.5 public web_search even if enghub empty — purely internal question per §3 Step 4.5 skip rule.",
+      "files": [],
+      "expectations": [
+        "enghub-search is called (Trigger A signal: 'PG 文档' or 'OneFleet')",
+        "If enghub returns empty results, web_search (Step 4.5) is NOT fired — question is purely internal per §3 Step 4.5 skip rule ('PG / OneFleet / Compute internal design docs')",
+        "Final answer is in Chinese (matches user's question language)",
+        "Csswiki + mslearn still fire as default (Trigger A doesn't suppress defaults, only adds on-demand source)"
+      ]
+    }
+  ]
+}
